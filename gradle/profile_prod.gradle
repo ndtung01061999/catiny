@@ -1,48 +1,49 @@
 dependencies {
-    testImplementation "com.h2database:h2"
+  testImplementation "com.h2database:h2"
 }
 
 def profiles = "prod"
 if (project.hasProperty("no-liquibase")) {
-    profiles += ",no-liquibase"
+  profiles += ",no-liquibase"
 }
 
 if (project.hasProperty("api-docs")) {
-    profiles += ",api-docs"
+  profiles += ",api-docs"
 }
 
 springBoot {
-    buildInfo()
+  buildInfo()
 }
 
 bootRun {
-    args = []
+  args = []
 }
 
 task webapp_test(type: NpmTask, dependsOn: "npmInstall") {
-    args = ["run", "webapp:test"]
+  args = ["run", "webapp:test"]
 }
 
 task webapp(type: NpmTask, dependsOn: "npmInstall") {
-    args = ["run", "webapp:prod"]
-    environment = [APP_VERSION: project.version]
+  args = ["run", "webapp:prod"]
+  environment = [APP_VERSION: project.version]
 }
 
 processResources {
-    inputs.property('version', version)
-    inputs.property('springProfiles', profiles)
-    filesMatching("**/application.yml") {
-        filter {
-            it.replace("#project.version#", version)
-        }
+  inputs.property('version', version)
+  inputs.property('springProfiles', profiles)
+  filesMatching("**/application.yml") {
+    filter {
+      it.replace("#project.version#", version)
     }
-    filesMatching("**/bootstrap.yml") {
-        filter {
-            it.replace("#spring.profiles.active#", profiles)
-        }
+  }
+  filesMatching("**/bootstrap.yml") {
+    filter {
+      it.replace("#spring.profiles.active#", profiles)
     }
+  }
 }
 
 test.dependsOn webapp_test
 processResources.dependsOn webapp
 bootJar.dependsOn processResources
+webapp.dependsOn buildOpenApiFrontend

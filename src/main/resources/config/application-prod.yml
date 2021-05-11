@@ -12,19 +12,42 @@
 # Full reference is available at:
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
+catiny:
+  value:
+    number-of-cities: 0 # mặc định là không import và tối đa 63 thành phố
+  server:
+    main:
+      host: localhost
+    ffmpeg:
+      host: localhost
+      port: 10022
+      username: root
+      password: rootVs.
+      data:
+        video:
+          folder-original: /data/catiny/dev/ffmpeg/video/original/
+          folder-processed: /data/catiny/dev/ffmpeg/video/processed/
+        image:
+          folder-original: /data/catiny/dev/ffmpeg/image/original/
+          folder-processed: /data/catiny/dev/ffmpeg/image/processed/
 
 logging:
   level:
-    ROOT: INFO
-    tech.jhipster: INFO
-    com.regitiny.catiny: INFO
+    ROOT: DEBUG
+    tech.jhipster: DEBUG
+    #    org.hibernate.SQL: DEBUG
+    org.regitiny.catiny: DEBUG
+    _org.springframework.web.servlet.HandlerMapping: INFO
+    Validator: INFO
+    jdk.event.security: INFO
+    org.springframework.data.convert.CustomConversions: ERROR
 
 eureka:
   instance:
     prefer-ip-address: true
   client:
     service-url:
-      defaultZone: http://admin:${jhipster.registry.password}@localhost:8761/eureka/
+      defaultZone: http://admin:${jhipster.registry.password}@${catiny.server.main.host}:8761/eureka/
 
 management:
   metrics:
@@ -44,7 +67,7 @@ spring:
         initial-interval: 1000
         max-interval: 2000
         max-attempts: 100
-      uri: http://admin:${jhipster.registry.password}@localhost:8761/config
+      uri: http://admin:${jhipster.registry.password}${catiny.server.main.host}:8761/config
       # name of the config server's property source (file.yml) that we want to use
       name: catiny
       profile: prod
@@ -52,7 +75,7 @@ spring:
       # it can be set to any label, branch or commit of the configuration source Git repository
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mariadb://localhost:3306/catiny?useLegacyDatetimeCode=false&serverTimezone=UTC
+    url: jdbc:mariadb://${catiny.server.main.host}:3306/catiny?useLegacyDatetimeCode=false&serverTimezone=UTC
     username: root
     password:
     hikari:
@@ -63,10 +86,15 @@ spring:
         prepStmtCacheSize: 250
         prepStmtCacheSqlLimit: 2048
         useServerPrepStmts: true
-  jpa:
+  #  jpa:
+  #    # show query
+  #    properties:
+  #    hibernate:
+  #      format_sql: true
+  #    show-sql: true
   elasticsearch:
     rest:
-      uris: http://localhost:9200
+      uris: http://${catiny.server.main.host}:9200
   # Replace by 'prod, faker' to add the faker context and have sample data loaded in production
   liquibase:
     contexts: prod
@@ -81,7 +109,7 @@ spring:
     sampler:
       probability: 1 # report 100% of traces
   zipkin: # Use the "zipkin" Maven profile to have the Spring Cloud Zipkin dependencies
-    base-url: http://localhost:9411
+    base-url: http://${catiny.server.main.host}:9411
     enabled: false
     locator:
       discovery:
@@ -113,6 +141,8 @@ server:
     enabled: true
     mime-types: text/html,text/xml,text/plain,text/css, application/javascript, application/json
     min-response-size: 1024
+  error:
+    include-stacktrace: always
 
 # ===================================================================
 # JHipster specific properties
@@ -127,7 +157,8 @@ jhipster:
   cache: # Cache configuration
     redis: # Redis configuration
       expiration: 3600 # By default objects stay 1 hour (in seconds) in the cache
-      server: redis://localhost:6379
+      server: redis://${catiny.server.main.host}:6379
+      #      server: redis://localhost:6379
       cluster: false
       # server: redis://localhost:6379,redis://localhost:16379,redis://localhost:26379
       # cluster: true

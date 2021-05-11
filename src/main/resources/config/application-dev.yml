@@ -12,6 +12,24 @@
 # Full reference is available at:
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
+catiny:
+  value:
+    number-of-cities: 0 # mặc định là không import và tối đa 63 thành phố
+  server:
+    main:
+      host: localhost
+    ffmpeg:
+      host: localhost
+      port: 10022
+      username: root
+      password: rootVs.
+      data:
+        video:
+          folder-original: /data/catiny/dev/ffmpeg/video/original/
+          folder-processed: /data/catiny/dev/ffmpeg/video/processed/
+        image:
+          folder-original: /data/catiny/dev/ffmpeg/image/original/
+          folder-processed: /data/catiny/dev/ffmpeg/image/processed/
 
 logging:
   level:
@@ -26,7 +44,7 @@ eureka:
   client:
     enabled: false # By default, the JHipster Registry is not used in the "dev" profile
     service-url:
-      defaultZone: http://admin:${jhipster.registry.password}@localhost:8761/eureka/
+      defaultZone: http://admin:${jhipster.registry.password}@${catiny.server.main.host}:8761/eureka/
 
 management:
   health:
@@ -36,7 +54,7 @@ management:
 spring:
   devtools:
     restart:
-      enabled: true
+      enabled: false
       additional-exclude: static/**,.h2.server.properties
     livereload:
       enabled: false # we use Webpack dev server + BrowserSync for livereload
@@ -45,7 +63,7 @@ spring:
       indent-output: true
   cloud:
     config:
-      uri: http://admin:${jhipster.registry.password}@localhost:8761/config
+      uri: http://admin:${jhipster.registry.password}@${catiny.server.main.host}:8761/config
       # name of the config server's property source (file.yml) that we want to use
       name: catiny
       profile: dev
@@ -68,7 +86,7 @@ spring:
   data:
   elasticsearch:
     rest:
-      uris: http://localhost:9200
+      uris: http://${catiny.server.main.host}:9200
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
     contexts: dev, faker
@@ -85,7 +103,7 @@ spring:
     sampler:
       probability: 1 # report 100% of traces
   zipkin: # Use the "zipkin" Maven profile to have the Spring Cloud Zipkin dependencies
-    base-url: http://localhost:9411
+    base-url: http://${catiny.server.main.host}:9411
     enabled: false
     locator:
       discovery:
@@ -104,7 +122,7 @@ jhipster:
   cache: # Cache configuration
     redis: # Redis configuration
       expiration: 3600 # By default objects stay 1 hour (in seconds) in the cache
-      server: redis://localhost:6379
+      server: redis://${catiny.server.main.host}:6379
       cluster: false
       # server: redis://localhost:6379,redis://localhost:16379,redis://localhost:26379
       # cluster: true

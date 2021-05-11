@@ -1,5 +1,6 @@
 package com.regitiny.catiny.security;
 
+import com.regitiny.catiny.tools.exception.NhechException;
 import java.util.Optional;
 import java.util.stream.Stream;
 import org.springframework.security.core.Authentication;
@@ -73,5 +74,11 @@ public final class SecurityUtils {
 
     private static Stream<String> getAuthorities(Authentication authentication) {
         return authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority);
+    }
+
+    public static void checkAuthenticationAndAuthority(String authority) {
+        if (!isAuthenticated() || !hasCurrentUserThisAuthority(authority) || getCurrentUserLogin().isEmpty()) throw new NhechException(
+            "kiểm tra lại xem đã đăng nhập hoặc đc cấp quyền chưa bạn êy"
+        );
     }
 }

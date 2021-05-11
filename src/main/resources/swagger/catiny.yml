@@ -1,0 +1,506 @@
+openapi: '3.0.3'
+info:
+  title: 'Catiny'
+  version: 0.0.1
+  description: 'This is a Catiny server.  You can find out more about     Swagger
+    at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For
+    this sample, you can use the api key `special-key` to test the authorization     filters.'
+  termsOfService: http://swagger.io/terms/
+  contact:
+    name: yuvytung
+    email: yuvytung@gmail.com
+    url: http://catiny.com/yuvytung
+  license:
+    name: Unlicense
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+externalDocs:
+  description: Find out more about Catiny
+  url: http://catiny.com
+servers:
+  - url: http://dev.catiny.com/api
+  - url: http://localhost:8080/api
+    description: Development server
+  - url: https://localhost:8080/api
+    description: Development server with TLS Profile
+  - url: http://catiny.com:8080/api
+    description: Development server
+  - url: https://catiny.com/api
+    description: Product server with TLS Profile
+#security:
+#  - jwt: [ ]
+#  - basic: [ ]
+# TAGS ############################################################################################
+
+tags:
+  - name: video
+    description: Everything about your videos
+    externalDocs:
+      description: Find out more
+      url: http://catiny.com/api/*/file/videos
+  - name: file
+    description: Everything about your file
+    externalDocs:
+      description: Find out more the File
+      url: http://catiny.com/api/*/files
+  - name: open-api
+    description: api public (no need to login)
+    externalDocs:
+      description: Find out more the api (open)
+      url: http://catiny.com/api/open/**
+  - name: image
+    description: api related to the image
+    externalDocs:
+      description: Find out more the File
+      url: http://catiny/com/api/*/file/images
+  - name: management
+    description: api related to the role:magagement
+    externalDocs:
+      description: Find out more the role:magagement
+      url: http://catiny/com/api/management/**
+  - name: user-utility
+    description: api related to the utility of user
+    externalDocs:
+      description: Find out more the utility of user
+      url: http://catiny/com/api/user/utility/**
+# PATHS ###########################################################################################
+paths:
+  /open/file/videos/download/{videoName}:
+    get:
+      tags:
+        - video
+        - open-api
+      summary: get file (video download data) by videoName
+      description: api use to get data of a video by name of the video
+      operationId: getVideoDataByName
+      parameters:
+        - name: videoName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: video data
+          content:
+            video/mp4:
+              schema:
+                type: string
+                format: byte
+        404:
+          description: File not found
+          content: {}
+  /open/file/videos/stream/{videoName}:
+    get:
+      tags:
+        - video
+        - open-api
+      summary: get video ( stream data ) by videoName
+      description: api use to get data (stream) of a video by name of the video
+      operationId: getVideoStreamDataByName
+      parameters:
+        - name: videoName
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: Range
+          in: header
+          required: false
+          schema:
+            type: string
+          description: this
+      responses:
+        206:
+          description: video data
+          content:
+            video/*:
+              schema:
+                type: string
+                format: org.springframework.core.io.support.ResourceRegion
+        404:
+          description: File not found
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'https://opensource.zalando.com/problem/schema.yaml#/Problem'
+  /file/videos/upload:
+    post:
+      tags:
+        - video
+      summary: uploads an video or list video
+      operationId: uploadVideos
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                videoData:
+                  type: array
+                  description: video to upload
+                  items:
+                    type: string
+                    format: binary
+                uploadByFroala:
+                  type: string
+                  description: is true if upload by froala
+                  default: false
+              required:
+                - 'videoData'
+            encoding:
+              videoData:
+                contentType: video/mp4
+      responses:
+        200:
+          description: successfully uploaded
+          content:
+            application/json:
+              schema:
+                properties:
+                  result:
+                    type: object
+        405:
+          description: Invalid videoData value
+          content: {}
+      security:
+        - jwt: []
+  /management/file/videos/show-all:
+    get:
+      tags:
+        - management
+        - video
+      summary: show all file-videos in database
+      operationId: showAllVideos
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                videoDatas:
+                  type: array
+                  description: video to upload
+                  items:
+                    type: string
+                    format: binary
+            encoding:
+              videoData:
+                contentType: video/mp4
+      responses:
+        200:
+          description: successfully uploaded
+          content:
+            application/json:
+              schema:
+                type: string
+                format: tyke.byte.Oc
+        405:
+          description: Invalid videoData value
+          content: {}
+      security:
+        - jwt: []
+  /file/videos/upload/original-data:
+    post:
+      tags:
+        - video
+      summary: uploads an video or list video (original data)
+      operationId: uploadVideosOriginalData
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                videoDatas:
+                  type: array
+                  description: video to upload
+                  items:
+                    type: string
+                    format: binary
+            encoding:
+              videoData:
+                contentType: video/mp4
+      responses:
+        200:
+          description: successfully uploaded
+          content:
+            application/json:
+              schema:
+                properties:
+                  result:
+                    type: object
+        405:
+          description: Invalid videoData value
+          content: {}
+      security:
+        - jwt: []
+  ##File#############################################################################################
+  /open/files/download/{fileName}:
+    get:
+      tags:
+        - file
+        - open-api
+      summary: download file (data) by fileName
+      description: api use to get data of file by fileName of the File
+      operationId: downloadFileByName
+      parameters:
+        - name: fileName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: file data
+          content:
+            application/*: {}
+        400:
+          description: File not found
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'https://opensource.zalando.com/problem/schema.yaml#/Problem'
+  /files/upload:
+    post:
+      tags:
+        - file
+      summary: uploads an file or list file
+      operationId: uploadFiles
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                fileData:
+                  type: array
+                  description: data of file to upload
+                  items:
+                    type: string
+                    format: binary
+                uploadByFroala:
+                  type: boolean
+                  description: is true if upload by froala
+                  default: false
+              required:
+                - 'fileData'
+            encoding:
+              videoData:
+                contentType: video/mp4
+      responses:
+        200:
+          description: successfully uploaded
+          content:
+            application/json:
+              schema:
+                properties:
+                  result:
+                    type: object
+        405:
+          description: Invalid fileData value
+          content: {}
+      security:
+        - jwt: []
+  ##-Image-#############################################################################################
+  /file/images/upload:
+    post:
+      tags:
+        - image
+      summary: uploads an image or list video
+      operationId: uploadImages
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                imageData:
+                  type: array
+                  description: an image to upload
+                  items:
+                    type: string
+                    format: binary
+                uploadByFroala:
+                  type: string
+                  description: is true if upload by froala
+                  default: false
+              required:
+                - 'imageData'
+            encoding:
+              videoData:
+                contentType: image/*
+      responses:
+        200:
+          description: successfully uploaded
+          content:
+            application/json:
+              schema:
+                properties:
+                  result:
+                    type: object
+        405:
+          description: Invalid imageDatas value
+          content: {}
+      security:
+        - jwt: []
+  /file/images/upload/original-data:
+    post:
+      tags:
+        - image
+      summary: uploads an image or list image (original data)
+      operationId: uploadImagesOriginalData
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                imageDatas:
+                  type: array
+                  description: an image to upload
+                  items:
+                    type: string
+                    format: binary
+            encoding:
+              videoData:
+                contentType: image/*
+      responses:
+        200:
+          description: successfully uploaded
+          content:
+            application/json:
+              schema:
+                properties:
+                  result:
+                    type: object
+        405:
+          description: Invalid imageDatas value
+          content: {}
+      security:
+        - jwt: []
+  /open/file/images/{imageName}:
+    get:
+      tags:
+        - image
+        - open-api
+      summary: get image by name of image
+      operationId: getImageByName
+      parameters:
+        - name: imageName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: file data
+          content:
+            image/*:
+              schema:
+                type: string
+                format: byte
+        400:
+          description: File not found
+          content:
+            application/problem+json:
+              schema:
+                $ref: 'https://opensource.zalando.com/problem/schema.yaml#/Problem'
+  /user/utility/rating:
+    post:
+      tags:
+        - user-utility
+      summary: user rating for product
+      operationId: userRatingProfuct
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                productId:
+                  type: string
+                  description: uuid of the product
+                scores:
+                  type: number
+                  description: scores of the product
+      responses:
+        200:
+          description: successfully uploaded
+          content:
+            application/json:
+              schema:
+                properties:
+                  message:
+                    type: string
+                    default: Thank you have successfully rating
+                  detail:
+                    type: string
+        405:
+          description: Invalid imageDatas value
+          content: {}
+      security:
+        - jwt: []
+
+components:
+  schemas:
+    ResponseDefaultModel:
+      description: response default
+      type: object
+      properties:
+        title:
+          type: string
+          default: Created successfully
+          example: Created successfully
+        type:
+          type: string
+          default: Create
+          example: Create
+        status:
+          type: integer
+          format: int32
+          default: 200
+          example: 200
+        message:
+          type: string
+          default: Done.
+        detail:
+          type: string
+          example: You have successfully uploaded
+        path:
+          type: string
+          example: /api/file/upload
+        id:
+          type: integer
+          format: int64
+          example: 10194211
+        uuid:
+          type: string
+          format: uuid
+          example: 31c202af-5ea5-4e3c-9a3d-b00ba866ba25
+        time:
+          type: string
+          format: date-time
+          example: 2020-02-01 19:31:34.489910
+        dataResponse:
+          type: object
+          description: đây là dữ liệu trả về kèm theo nếu có
+  securitySchemes:
+    petstore_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: http://petstore.swagger.io/oauth/dialog
+          scopes:
+            write:pets: modify pets in your account
+            read:pets: read your pets
+    jwt:
+      name: jwt-token
+      type: http
+      description: JWT Authentication
+      scheme: bearer
+      bearerFormat: JWT
+      in: header
+    basic:
+      type: http
+      description: Basic Authentication
+      scheme: basic
+  responses:
+    Problem:
+      description: error occurred - see status code and problem object for more information.
+      content:
+        'application/problem+json':
+          schema:
+            $ref: 'https://opensource.zalando.com/problem/schema.yaml#/Problem'

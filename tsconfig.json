@@ -17,12 +17,13 @@
     "checkJs": false,
     "baseUrl": "./",
     "paths": {
-      "app/*": ["src/main/webapp/app/*"]
+      "app/*": ["src/main/webapp/app/*"],
+      "open-api/*": ["build/openapi/src/main/typescript/open-api/*"]
     },
     "importHelpers": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true
   },
-  "include": ["src/main/webapp/app", "src/test/javascript/spec"],
+  "include": ["src/main/webapp/app", "src/test/javascript/spec", "build/openapi/src/main/typescript/open-api"],
   "exclude": ["node_modules"]
 }
