@@ -1,0 +1,47 @@
+{
+  "catinyApp": {
+    "messageGroup": {
+      "home": {
+        "title": "Message Groups",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Message Group",
+        "createOrEditLabel": "Create or edit a Message Group",
+        "search": "Search for Message Group",
+        "notFound": "No Message Groups found"
+      },
+      "created": "A new Message Group is created with identifier {{ param }}",
+      "updated": "A Message Group is updated with identifier {{ param }}",
+      "deleted": "A Message Group is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Message Group {{ id }}?"
+      },
+      "detail": {
+        "title": "Message Group"
+      },
+      "id": "ID",
+      "uuid": "Uuid",
+      "userId": "User Id",
+      "groupId": "Group Id",
+      "groupName": "Group Name",
+      "addBy": "Add By",
+      "lastContent": "Last Content",
+      "searchField": "Search Field",
+      "role": "Role",
+      "createdDate": "Created Date",
+      "modifiedDate": "Modified Date",
+      "createdBy": "Created By",
+      "modifiedBy": "Modified By",
+      "comment": "Comment",
+      "help": {
+        "uuid": "uuid",
+        "searchField": "searchField",
+        "role": "role",
+        "createdDate": "createdDate",
+        "modifiedDate": "modifiedDate",
+        "createdBy": "createdBy",
+        "modifiedBy": "modifiedBy",
+        "comment": "comment"
+      }
+    }
+  }
+}

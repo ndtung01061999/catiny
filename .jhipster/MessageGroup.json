@@ -1,0 +1,85 @@
+{
+  "name": "MessageGroup",
+  "fields": [
+    {
+      "fieldName": "uuid",
+      "fieldType": "UUID",
+      "javadoc": "uuid",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "userId",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "groupId",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "groupName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "addBy",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "lastContent",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "searchField",
+      "fieldType": "byte[]",
+      "javadoc": "searchField",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "role",
+      "fieldType": "String",
+      "javadoc": "role",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "8091"
+    },
+    {
+      "fieldName": "createdDate",
+      "fieldType": "Instant",
+      "javadoc": "createdDate"
+    },
+    {
+      "fieldName": "modifiedDate",
+      "fieldType": "Instant",
+      "javadoc": "modifiedDate"
+    },
+    {
+      "fieldName": "createdBy",
+      "fieldType": "String",
+      "javadoc": "createdBy"
+    },
+    {
+      "fieldName": "modifiedBy",
+      "fieldType": "String",
+      "javadoc": "modifiedBy"
+    },
+    {
+      "fieldName": "comment",
+      "fieldType": "String",
+      "javadoc": "comment",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "8091"
+    }
+  ],
+  "relationships": [],
+  "javadoc": "The PostDetails entity.\\n@author A true hipster",
+  "entityTableName": "message_group",
+  "dto": "mapstruct",
+  "pagination": "infinite-scroll",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "searchEngine": "elasticsearch",
+  "changelogDate": "20210523062729"
+}
