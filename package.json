@@ -94,6 +94,7 @@
     "availity-reactstrap-validation": "2.7.1",
     "axios": "0.21.1",
     "bootstrap": "4.6.0",
+    "bootstrap-icons": "^1.5.0",
     "bootswatch": "4.6.0",
     "dayjs": "1.10.4",
     "js-base64": "^3.6.0",

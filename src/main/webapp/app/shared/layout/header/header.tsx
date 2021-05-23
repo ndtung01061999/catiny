@@ -6,7 +6,7 @@ import { Navbar, Nav, NavbarToggler, Collapse } from 'reactstrap';
 
 import LoadingBar from 'react-redux-loading-bar';
 
-import { Home, Brand } from './header-components';
+import { Home, Brand, Other } from './header-components';
 import { AdminMenu, EntitiesMenu, AccountMenu, LocaleMenu } from '../menus';
 
 export interface IHeaderProps {
@@ -45,20 +45,23 @@ const Header = (props: IHeaderProps) => {
     <div id="app-header">
       {renderDevRibbon()}
       <LoadingBar className="loading-bar" />
-      <Navbar data-cy="navbar" dark expand="sm" fixed="top" className="bg-primary">
-        <NavbarToggler aria-label="Menu" onClick={toggleMenu} />
-        <Brand />
-        <Collapse isOpen={menuOpen} navbar>
-          <Nav id="header-tabs" className="ml-auto" navbar>
-            <Home />
-            {props.isAuthenticated && <EntitiesMenu />}
-            {props.isAuthenticated && props.isAdmin && (
-              <AdminMenu showOpenAPI={props.isOpenAPIEnabled} showDatabase={!props.isInProduction} />
-            )}
-            <LocaleMenu currentLocale={props.currentLocale} onClick={handleLocaleChange} />
-            <AccountMenu isAuthenticated={props.isAuthenticated} />
-          </Nav>
-        </Collapse>
+      <Navbar data-cy="navbar" dark expand="sm" fixed="top" className="bg-primary p-0">
+        <div className="container-xl">
+          <Brand />
+          <Collapse isOpen={menuOpen} navbar>
+            <Nav id="header-tabs" className="ml-auto" navbar>
+              <Home />
+              {props.isAuthenticated && <EntitiesMenu />}
+              {props.isAuthenticated && props.isAdmin && (
+                <AdminMenu showOpenAPI={props.isOpenAPIEnabled} showDatabase={!props.isInProduction} />
+              )}
+              <Other></Other>
+              <LocaleMenu currentLocale={props.currentLocale} onClick={handleLocaleChange} />
+              <AccountMenu isAuthenticated={props.isAuthenticated} />
+            </Nav>
+          </Collapse>
+          <NavbarToggler aria-label="Menu" onClick={toggleMenu} />
+        </div>
       </Navbar>
     </div>
   );

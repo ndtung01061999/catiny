@@ -16,6 +16,8 @@ import PageNotFound from 'app/shared/error/page-not-found';
 import { AUTHORITIES } from 'app/config/constants';
 import { sendActivity } from 'app/config/websocket-middleware';
 
+import Chat from 'app/modules/component/chat';
+
 const Account = Loadable({
   loader: () => import(/* webpackChunkName: "account" */ 'app/modules/account'),
   loading: () => <div>loading ...</div>,
@@ -43,6 +45,7 @@ const Routes = () => {
         <PrivateRoute path="/admin" component={Admin} hasAnyAuthorities={[AUTHORITIES.ADMIN]} />
         <PrivateRoute path="/account" component={Account} hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.USER]} />
         <ErrorBoundaryRoute path="/" exact component={Home} />
+        <PrivateRoute path="/chat" component={Chat} hasAnyAuthorities={[AUTHORITIES.USER]} />
         <PrivateRoute path="/" component={Entities} hasAnyAuthorities={[AUTHORITIES.USER]} />
         <ErrorBoundaryRoute component={PageNotFound} />
       </Switch>

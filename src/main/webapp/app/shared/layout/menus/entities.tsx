@@ -11,6 +11,12 @@ export const EntitiesMenu = props => (
     data-cy="entity"
     style={{ maxHeight: '80vh', overflow: 'auto' }}
   >
+    <MenuItem icon="asterisk" to="/message-group">
+      <Translate contentKey="global.menu.entities.messageGroup" />
+    </MenuItem>
+    <MenuItem icon="asterisk" to="/message-content">
+      <Translate contentKey="global.menu.entities.messageContent" />
+    </MenuItem>
     {/* jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here */}
   </NavDropdown>
 );

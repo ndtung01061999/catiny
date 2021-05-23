@@ -1,27 +1,27 @@
 # This configuration is intended for development purpose, it's **your** responsibility to harden it for production
 version: '3.8'
 services:
-#  catiny-app:
-#    image: catiny
-#    environment:
-#      - _JAVA_OPTIONS=-Xmx512m -Xms256m
-#      - SPRING_PROFILES_ACTIVE=prod,api-docs
-#      - MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED=true
-#      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/eureka
-#      - SPRING_CLOUD_CONFIG_URI=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/config
-#      - SPRING_DATASOURCE_URL=jdbc:mariadb://catiny-mariadb:3306/catiny?useLegacyDatetimeCode=false&serverTimezone=UTC
-#      - SPRING_LIQUIBASE_URL=jdbc:mariadb://catiny-mariadb:3306/catiny?useLegacyDatetimeCode=false&serverTimezone=UTC
-#      - JHIPSTER_CACHE_REDIS_SERVER=redis://catiny-redis:6379
-#      - JHIPSTER_CACHE_REDIS_CLUSTER=false
-#      # - JHIPSTER_CACHE_REDIS_SERVER=redis://catiny-redis:6379
-#      # - JHIPSTER_CACHE_REDIS_CLUSTER=true
-#      - JHIPSTER_SLEEP=120 # gives time for mariadb server to start
-#      - SPRING_ELASTICSEARCH_REST_URIS=http://catiny-elasticsearch:9200
-#      - KAFKA_BOOTSTRAPSERVERS=kafka:9092
-#    # If you want to expose these ports outside your dev PC,
-#    # remove the "127.0.0.1:" prefix
-#    ports:
-#      - 127.0.0.1:8080:8080
+  catiny-app:
+    image: yuvytung/catiny
+    environment:
+      - _JAVA_OPTIONS=-Xmx512m -Xms256m
+      - SPRING_PROFILES_ACTIVE=prod,api-docs
+      - MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED=true
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/eureka
+      - SPRING_CLOUD_CONFIG_URI=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/config
+      - SPRING_DATASOURCE_URL=jdbc:mariadb://catiny-mariadb:3306/catiny?useLegacyDatetimeCode=false&serverTimezone=UTC
+      - SPRING_LIQUIBASE_URL=jdbc:mariadb://catiny-mariadb:3306/catiny?useLegacyDatetimeCode=false&serverTimezone=UTC
+      - JHIPSTER_CACHE_REDIS_SERVER=redis://catiny-redis:6379
+      - JHIPSTER_CACHE_REDIS_CLUSTER=false
+      # - JHIPSTER_CACHE_REDIS_SERVER=redis://catiny-redis:6379
+      # - JHIPSTER_CACHE_REDIS_CLUSTER=true
+      - JHIPSTER_SLEEP=20 # gives time for mariadb server to start
+      - SPRING_ELASTICSEARCH_REST_URIS=http://catiny-elasticsearch:9200
+      - KAFKA_BOOTSTRAPSERVERS=kafka:9092
+    # If you want to expose these ports outside your dev PC,
+    # remove the "127.0.0.1:" prefix
+    ports:
+      - 80:8080
   catiny-mariadb:
     image: mariadb:10.5.9
     # volumes:
@@ -85,7 +85,7 @@ services:
       - SPRING_SECURITY_USER_PASSWORD=admin
       - JHIPSTER_REGISTRY_PASSWORD=admin
       - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_TYPE=native
-      - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_SEARCH_LOCATIONS=file:./central-config/localhost-config/
+      - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_SEARCH_LOCATIONS=file:./central-config/docker-config/
       # - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_TYPE=git
       # - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_URI=https://github.com/jhipster/jhipster-registry/
       # - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_SEARCH_PATHS=central-config

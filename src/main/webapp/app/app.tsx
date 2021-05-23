@@ -30,7 +30,7 @@ export const App = (props: IAppProps) => {
     props.getProfile();
   }, []);
 
-  const paddingTop = '60px';
+  const paddingTop = '52px';
   return (
     <Router basename={baseHref}>
       <div className="app-container" style={{ paddingTop }}>
@@ -46,12 +46,12 @@ export const App = (props: IAppProps) => {
             isOpenAPIEnabled={props.isOpenAPIEnabled}
           />
         </ErrorBoundary>
-        <div className="container-fluid view-container" id="app-view-container">
-          <Card className="jh-card">
+        <div className="container-xl px-0 px-md-1" id="app-view-container">
+          <div className="jh-card">
             <ErrorBoundary>
               <AppRoutes />
             </ErrorBoundary>
-          </Card>
+          </div>
           <Footer />
         </div>
       </div>

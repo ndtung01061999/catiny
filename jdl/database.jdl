@@ -1,0 +1,71 @@
+DEFAULT_MIN_LENGTH = 1
+DEFAULT_MAX_LENGTH = 8091
+MAX_STRING=16383
+DEFAULT_MIN_BYTES = 1
+DEFAULT_MAX_BYTES = 52428800
+DEFAULT_MIN = 0
+DEFAULT_MAX = 63
+
+
+/**
+ * The PostDetails entity.
+ * @author A true hipster
+ */
+entity MessageGroup {
+    /** uuid */
+    uuid UUID required unique
+    userId Long
+    groupId String
+    groupName String
+    addBy String
+    lastContent TextBlob
+
+    /** searchField */
+    searchField TextBlob
+    /** role */
+    role String maxlength(DEFAULT_MAX_LENGTH)
+    /** createdDate */
+    createdDate  Instant
+    /** modifiedDate */
+    modifiedDate  Instant
+    /** createdBy */
+    createdBy String
+    /** modifiedBy */
+    modifiedBy String
+    /** comment */
+    comment String maxlength(DEFAULT_MAX_LENGTH)
+}
+
+/**
+ * The PostDetails entity.
+ * @author A true hipster
+ */
+entity MessageContent {
+    /** uuid */
+    uuid UUID required unique
+    groupId String required unique
+    content TextBlob
+    sender String
+    status String
+
+    /** searchField */
+    searchField TextBlob
+    /** role */
+    role String maxlength(DEFAULT_MAX_LENGTH)
+    /** createdDate */
+    createdDate  Instant
+    /** modifiedDate */
+    modifiedDate  Instant
+    /** createdBy */
+    createdBy String
+    /** modifiedBy */
+    modifiedBy String
+    /** comment */
+    comment String maxlength(DEFAULT_MAX_LENGTH)
+}
+
+
+dto * with mapstruct
+paginate * with  infinite-scroll
+search * with elasticsearch
+service * with serviceImpl

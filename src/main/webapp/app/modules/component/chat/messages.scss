@@ -1,0 +1,26 @@
+.messages {
+  .left {
+    .media-object {
+      border-radius: 50%;
+      width: 50px;
+    }
+
+    .media-heading {
+      margin-bottom: 0px;
+      font-size: 16px;
+    }
+
+    i {
+      font-size: 12px;
+    }
+  }
+  .right {
+    .media-object {
+      border-radius: 50%;
+      width: 30px;
+    }
+    .media-body {
+      max-width: 300px;
+    }
+  }
+}
