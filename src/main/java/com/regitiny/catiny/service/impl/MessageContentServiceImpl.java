@@ -23,82 +23,82 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class MessageContentServiceImpl implements MessageContentService {
 
-    private final Logger log = LoggerFactory.getLogger(MessageContentServiceImpl.class);
+  private final Logger log = LoggerFactory.getLogger(MessageContentServiceImpl.class);
 
-    private final MessageContentRepository messageContentRepository;
+  private final MessageContentRepository messageContentRepository;
 
-    private final MessageContentMapper messageContentMapper;
+  private final MessageContentMapper messageContentMapper;
 
-    private final MessageContentSearchRepository messageContentSearchRepository;
+  private final MessageContentSearchRepository messageContentSearchRepository;
 
-    public MessageContentServiceImpl(
-        MessageContentRepository messageContentRepository,
-        MessageContentMapper messageContentMapper,
-        MessageContentSearchRepository messageContentSearchRepository
-    ) {
-        this.messageContentRepository = messageContentRepository;
-        this.messageContentMapper = messageContentMapper;
-        this.messageContentSearchRepository = messageContentSearchRepository;
-    }
+  public MessageContentServiceImpl(
+    MessageContentRepository messageContentRepository,
+    MessageContentMapper messageContentMapper,
+    MessageContentSearchRepository messageContentSearchRepository
+  ) {
+    this.messageContentRepository = messageContentRepository;
+    this.messageContentMapper = messageContentMapper;
+    this.messageContentSearchRepository = messageContentSearchRepository;
+  }
 
-    @Override
-    public MessageContentDTO save(MessageContentDTO messageContentDTO) {
-        log.debug("Request to save MessageContent : {}", messageContentDTO);
-        MessageContent messageContent = messageContentMapper.toEntity(messageContentDTO);
-        messageContent = messageContentRepository.save(messageContent);
-        MessageContentDTO result = messageContentMapper.toDto(messageContent);
-        messageContentSearchRepository.save(messageContent);
-        return result;
-    }
+  @Override
+  public MessageContentDTO save(MessageContentDTO messageContentDTO) {
+    log.debug("Request to save MessageContent : {}", messageContentDTO);
+    MessageContent messageContent = messageContentMapper.toEntity(messageContentDTO);
+    messageContent = messageContentRepository.save(messageContent);
+    MessageContentDTO result = messageContentMapper.toDto(messageContent);
+    messageContentSearchRepository.save(messageContent);
+    return result;
+  }
 
-    @Override
-    public Optional<MessageContentDTO> partialUpdate(MessageContentDTO messageContentDTO) {
-        log.debug("Request to partially update MessageContent : {}", messageContentDTO);
+  @Override
+  public Optional<MessageContentDTO> partialUpdate(MessageContentDTO messageContentDTO) {
+    log.debug("Request to partially update MessageContent : {}", messageContentDTO);
 
-        return messageContentRepository
-            .findById(messageContentDTO.getId())
-            .map(
-                existingMessageContent -> {
-                    messageContentMapper.partialUpdate(existingMessageContent, messageContentDTO);
-                    return existingMessageContent;
-                }
-            )
-            .map(messageContentRepository::save)
-            .map(
-                savedMessageContent -> {
-                    messageContentSearchRepository.save(savedMessageContent);
+    return messageContentRepository
+      .findById(messageContentDTO.getId())
+      .map(
+        existingMessageContent -> {
+          messageContentMapper.partialUpdate(existingMessageContent, messageContentDTO);
+          return existingMessageContent;
+        }
+      )
+      .map(messageContentRepository::save)
+      .map(
+        savedMessageContent -> {
+          messageContentSearchRepository.save(savedMessageContent);
 
-                    return savedMessageContent;
-                }
-            )
-            .map(messageContentMapper::toDto);
-    }
+          return savedMessageContent;
+        }
+      )
+      .map(messageContentMapper::toDto);
+  }
 
-    @Override
-    @Transactional(readOnly = true)
-    public Page<MessageContentDTO> findAll(Pageable pageable) {
-        log.debug("Request to get all MessageContents");
-        return messageContentRepository.findAll(pageable).map(messageContentMapper::toDto);
-    }
+  @Override
+  @Transactional(readOnly = true)
+  public Page<MessageContentDTO> findAll(Pageable pageable) {
+    log.debug("Request to get all MessageContents");
+    return messageContentRepository.findAll(pageable).map(messageContentMapper::toDto);
+  }
 
-    @Override
-    @Transactional(readOnly = true)
-    public Optional<MessageContentDTO> findOne(Long id) {
-        log.debug("Request to get MessageContent : {}", id);
-        return messageContentRepository.findById(id).map(messageContentMapper::toDto);
-    }
+  @Override
+  @Transactional(readOnly = true)
+  public Optional<MessageContentDTO> findOne(Long id) {
+    log.debug("Request to get MessageContent : {}", id);
+    return messageContentRepository.findById(id).map(messageContentMapper::toDto);
+  }
 
-    @Override
-    public void delete(Long id) {
-        log.debug("Request to delete MessageContent : {}", id);
-        messageContentRepository.deleteById(id);
-        messageContentSearchRepository.deleteById(id);
-    }
+  @Override
+  public void delete(Long id) {
+    log.debug("Request to delete MessageContent : {}", id);
+    messageContentRepository.deleteById(id);
+    messageContentSearchRepository.deleteById(id);
+  }
 
-    @Override
-    @Transactional(readOnly = true)
-    public Page<MessageContentDTO> search(String query, Pageable pageable) {
-        log.debug("Request to search for a page of MessageContents for query {}", query);
-        return messageContentSearchRepository.search(queryStringQuery(query), pageable).map(messageContentMapper::toDto);
-    }
+  @Override
+  @Transactional(readOnly = true)
+  public Page<MessageContentDTO> search(String query, Pageable pageable) {
+    log.debug("Request to search for a page of MessageContents for query {}", query);
+    return messageContentSearchRepository.search(queryStringQuery(query), pageable).map(messageContentMapper::toDto);
+  }
 }

@@ -14,8 +14,8 @@ DEFAULT_MAX = 63
 entity MessageGroup {
     /** uuid */
     uuid UUID required unique
-    userId Long
-    groupId String
+    userId Long required
+    groupId String required
     groupName String
     addBy String
     lastContent TextBlob

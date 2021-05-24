@@ -15,4 +15,6 @@ jsxBracketSameLine: false
 overrides:
   - files: "*.java"
     options:
-      tabWidth: 4
+      tabWidth: 2
+      endOfLine: "lf"
+      proseWrap: never

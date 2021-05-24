@@ -18,10 +18,10 @@
                 <constraints nullable="false" unique="true" uniqueConstraintName="ux_message_group__uuid" />
             </column>
             <column name="user_id" type="bigint">
-                <constraints nullable="true" />
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_message_group__user_id" />
             </column>
             <column name="group_id" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_message_group__group_id" />
             </column>
             <column name="group_name" type="varchar(255)">
                 <constraints nullable="true" />

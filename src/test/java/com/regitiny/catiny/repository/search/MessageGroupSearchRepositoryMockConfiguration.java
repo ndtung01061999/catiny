@@ -10,6 +10,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MessageGroupSearchRepositoryMockConfiguration {
 
-    @MockBean
-    private MessageGroupSearchRepository mockMessageGroupSearchRepository;
+  @MockBean
+  private MessageGroupSearchRepository mockMessageGroupSearchRepository;
 }

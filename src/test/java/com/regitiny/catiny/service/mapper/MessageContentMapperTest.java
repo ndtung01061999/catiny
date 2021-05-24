@@ -7,10 +7,10 @@ import org.junit.jupiter.api.Test;
 
 class MessageContentMapperTest {
 
-    private MessageContentMapper messageContentMapper;
+  private MessageContentMapper messageContentMapper;
 
-    @BeforeEach
-    public void setUp() {
-        messageContentMapper = new MessageContentMapperImpl();
-    }
+  @BeforeEach
+  public void setUp() {
+    messageContentMapper = new MessageContentMapperImpl();
+  }
 }

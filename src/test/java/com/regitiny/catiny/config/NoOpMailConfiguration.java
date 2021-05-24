@@ -11,15 +11,15 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class NoOpMailConfiguration {
 
-    private final MailService mockMailService;
+  private final MailService mockMailService;
 
-    public NoOpMailConfiguration() {
-        mockMailService = mock(MailService.class);
-        doNothing().when(mockMailService).sendActivationEmail(any());
-    }
+  public NoOpMailConfiguration() {
+    mockMailService = mock(MailService.class);
+    doNothing().when(mockMailService).sendActivationEmail(any());
+  }
 
-    @Bean
-    public MailService mailService() {
-        return mockMailService;
-    }
+  @Bean
+  public MailService mailService() {
+    return mockMailService;
+  }
 }

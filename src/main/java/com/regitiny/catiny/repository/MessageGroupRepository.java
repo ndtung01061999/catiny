@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface MessageGroupRepository extends JpaRepository<MessageGroup, Long> {
-    Optional<List<MessageGroup>> findAllByGroupId(String groupId);
-    Optional<MessageGroup> findByGroupIdAndUserId(String groupId, Long userId);
+  Optional<List<MessageGroup>> findAllByGroupId(String groupId);
+  Optional<MessageGroup> findByGroupIdAndUserId(String groupId, Long userId);
 }

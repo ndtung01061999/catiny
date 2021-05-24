@@ -29,131 +29,126 @@ import tech.jhipster.config.JHipsterProperties;
 @EnableWebSocketMessageBroker
 public class WebsocketConfiguration implements WebSocketMessageBrokerConfigurer {
 
-    public static final String IP_ADDRESS = "IP_ADDRESS";
+  public static final String IP_ADDRESS = "IP_ADDRESS";
 
-    private final JHipsterProperties jHipsterProperties;
+  private final JHipsterProperties jHipsterProperties;
 
-    public WebsocketConfiguration(JHipsterProperties jHipsterProperties) {
-        this.jHipsterProperties = jHipsterProperties;
-    }
+  public WebsocketConfiguration(JHipsterProperties jHipsterProperties) {
+    this.jHipsterProperties = jHipsterProperties;
+  }
 
-    @Override
-    public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/topic");
-    }
+  @Override
+  public void configureMessageBroker(MessageBrokerRegistry config) {
+    config.enableSimpleBroker("/topic");
+  }
 
-    @Override
-    public void registerStompEndpoints(StompEndpointRegistry registry) {
-        String[] allowedOrigins = Optional
-            .ofNullable(jHipsterProperties.getCors().getAllowedOrigins())
-            .map(origins -> origins.toArray(new String[0]))
-            .orElse(new String[0]);
-        registry
-            .addEndpoint("/websocket/tracker")
-            .setHandshakeHandler(defaultHandshakeHandler())
-            .setAllowedOrigins(allowedOrigins)
-            .withSockJS()
-            .setInterceptors(httpSessionHandshakeInterceptor());
-        registry
-            .addEndpoint("/websocket/message")
-            .setHandshakeHandler(defaultHandshakeHandler())
-            .setAllowedOrigins(allowedOrigins)
-            .withSockJS()
-            .setInterceptors(httpSessionHandshakeInterceptor());
-        registry
-            .addEndpoint("/websocket/live-streaming")
-            .setHandshakeHandler(defaultHandshakeHandler())
-            .setAllowedOrigins(allowedOrigins)
-            .withSockJS()
-            .setInterceptors(httpSessionHandshakeInterceptor());
-        registry
-            .addEndpoint("/websocket/video-call")
-            .setHandshakeHandler(defaultHandshakeHandler())
-            .setAllowedOrigins(allowedOrigins)
-            .withSockJS()
-            .setInterceptors(httpSessionHandshakeInterceptor());
-    }
+  @Override
+  public void registerStompEndpoints(StompEndpointRegistry registry) {
+    String[] allowedOrigins = Optional
+      .ofNullable(jHipsterProperties.getCors().getAllowedOrigins())
+      .map(origins -> origins.toArray(new String[0]))
+      .orElse(new String[0]);
+    registry
+      .addEndpoint("/websocket/tracker")
+      .setHandshakeHandler(defaultHandshakeHandler())
+      .setAllowedOrigins(allowedOrigins)
+      .withSockJS()
+      .setInterceptors(httpSessionHandshakeInterceptor());
+    registry
+      .addEndpoint("/websocket/message")
+      .setHandshakeHandler(defaultHandshakeHandler())
+      .setAllowedOrigins(allowedOrigins)
+      .withSockJS()
+      .setInterceptors(httpSessionHandshakeInterceptor());
+    registry
+      .addEndpoint("/websocket/live-streaming")
+      .setHandshakeHandler(defaultHandshakeHandler())
+      .setAllowedOrigins(allowedOrigins)
+      .withSockJS()
+      .setInterceptors(httpSessionHandshakeInterceptor());
+    registry
+      .addEndpoint("/websocket/video-call")
+      .setHandshakeHandler(defaultHandshakeHandler())
+      .setAllowedOrigins(allowedOrigins)
+      .withSockJS()
+      .setInterceptors(httpSessionHandshakeInterceptor());
+  }
 
-    @Bean
-    public HandshakeInterceptor httpSessionHandshakeInterceptor() {
-        return new HandshakeInterceptor() {
-            @Override
-            public boolean beforeHandshake(
-                ServerHttpRequest request,
-                ServerHttpResponse response,
-                WebSocketHandler wsHandler,
-                Map<String, Object> attributes
-            ) throws Exception {
-                if (request instanceof ServletServerHttpRequest) {
-                    ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
-                    attributes.put(IP_ADDRESS, servletRequest.getRemoteAddress());
-                }
-                return true;
-            }
+  @Bean
+  public HandshakeInterceptor httpSessionHandshakeInterceptor() {
+    return new HandshakeInterceptor() {
+      @Override
+      public boolean beforeHandshake(
+        ServerHttpRequest request,
+        ServerHttpResponse response,
+        WebSocketHandler wsHandler,
+        Map<String, Object> attributes
+      ) throws Exception {
+        if (request instanceof ServletServerHttpRequest) {
+          ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
+          attributes.put(IP_ADDRESS, servletRequest.getRemoteAddress());
+        }
+        return true;
+      }
 
-            @Override
-            public void afterHandshake(
-                ServerHttpRequest request,
-                ServerHttpResponse response,
-                WebSocketHandler wsHandler,
-                Exception exception
-            ) {}
-        };
-    }
+      @Override
+      public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Exception exception) {}
+    };
+  }
 
-    @Override
-    public void configureClientInboundChannel(@Nonnull ChannelRegistration registration) {
-        WebSocketMessageBrokerConfigurer.super.configureClientInboundChannel(registration);
-        registration.interceptors(
-            new ChannelInterceptor() {
-                /**
-                 *
-                 * @param message
-                 * @param channel
-                 * @return
-                 */
-                @Override
-                public Message<?> preSend(@Nonnull Message<?> message, @Nonnull MessageChannel channel) {
-                    var accessor = StompHeaderAccessor.wrap(message);
-                    var username = Objects.requireNonNull(accessor.getUser()).getName();
-                    var destination = Objects.requireNonNull(accessor.getDestination());
+  @Override
+  public void configureClientInboundChannel(@Nonnull ChannelRegistration registration) {
+    WebSocketMessageBrokerConfigurer.super.configureClientInboundChannel(registration);
+    registration.interceptors(
+      new ChannelInterceptor() {
+        /**
+         *
+         * @param message
+         * @param channel
+         * @return
+         */
+        @Override
+        public Message<?> preSend(@Nonnull Message<?> message, @Nonnull MessageChannel channel) {
+          var accessor = StompHeaderAccessor.wrap(message);
+          var username = Objects.requireNonNull(accessor.getUser()).getName();
+          var destination = Objects.requireNonNull(accessor.getDestination());
 
-                    var commandSubscribeCheck = StompCommand.SUBSCRIBE.equals(accessor.getCommand());
-                    if (commandSubscribeCheck) {
-                        if (destination.contains("/" + username + "/")) return ChannelInterceptor.super.preSend(message, channel);
+          var commandSubscribeCheck = StompCommand.SUBSCRIBE.equals(accessor.getCommand());
+          if (commandSubscribeCheck) {
+            if (destination.contains("/" + username + "/")) return ChannelInterceptor.super.preSend(message, channel);
 
-                        // don't subscribe /topic/**
-                        var destinationRegex = "/topic/[[\\w-]+/]*[*]{1,2}";
-                        var destinationRegexCheck = Pattern.matches(destinationRegex, accessor.getDestination());
-                        if (destinationRegexCheck) return null;
-                    }
+            // don't subscribe /topic/**
+            var destinationRegex = "/topic/[[\\w-]+/]*[*]{1,2}";
+            var destinationRegexCheck = Pattern.matches(destinationRegex, accessor.getDestination());
+            if (destinationRegexCheck) return null;
+          }
 
-                    return ChannelInterceptor.super.preSend(message, channel);
-                }
-            }
-        );
-    }
+          return ChannelInterceptor.super.preSend(message, channel);
+        }
+      }
+    );
+  }
 
-    @Override
-    public void configureWebSocketTransport(@Nonnull WebSocketTransportRegistration registry) {
-        WebSocketMessageBrokerConfigurer.super.configureWebSocketTransport(registry);
-        registry.setSendBufferSizeLimit(2 * 1024 * 1024);
-        registry.setMessageSizeLimit(2 * 1024 * 1024);
-        registry.setSendTimeLimit(10 * 1000);
-    }
+  @Override
+  public void configureWebSocketTransport(@Nonnull WebSocketTransportRegistration registry) {
+    WebSocketMessageBrokerConfigurer.super.configureWebSocketTransport(registry);
+    registry.setSendBufferSizeLimit(2 * 1024 * 1024);
+    registry.setMessageSizeLimit(2 * 1024 * 1024);
+    registry.setSendTimeLimit(10 * 1000);
+  }
 
-    private DefaultHandshakeHandler defaultHandshakeHandler() {
-        return new DefaultHandshakeHandler() {
-            @Override
-            protected Principal determineUser(ServerHttpRequest request, WebSocketHandler wsHandler, Map<String, Object> attributes) {
-                Principal principal = request.getPrincipal();
-                if (principal == null) {
-                    Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-                    authorities.add(new SimpleGrantedAuthority(AuthoritiesConstants.ANONYMOUS));
-                    principal = new AnonymousAuthenticationToken("WebsocketConfiguration", "anonymous", authorities);
-                }
-                return principal;
-            }
-        };
-    }
+  private DefaultHandshakeHandler defaultHandshakeHandler() {
+    return new DefaultHandshakeHandler() {
+      @Override
+      protected Principal determineUser(ServerHttpRequest request, WebSocketHandler wsHandler, Map<String, Object> attributes) {
+        Principal principal = request.getPrincipal();
+        if (principal == null) {
+          Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+          authorities.add(new SimpleGrantedAuthority(AuthoritiesConstants.ANONYMOUS));
+          principal = new AnonymousAuthenticationToken("WebsocketConfiguration", "anonymous", authorities);
+        }
+        return principal;
+      }
+    };
+  }
 }

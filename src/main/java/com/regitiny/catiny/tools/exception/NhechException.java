@@ -19,21 +19,21 @@ import org.zalando.problem.StatusType;
 @Getter
 public class NhechException extends AbstractThrowableProblem {
 
-    private static final String nhechSay = "ối zời ơi . nhếch đang ngồi ở đây. đuổi nó đi chỗ khác đã (gọi yuvytung để bắt nhếch)";
-    private final Instant time = Instant.now();
+  private static final String nhechSay = "ối zời ơi . nhếch đang ngồi ở đây. đuổi nó đi chỗ khác đã (gọi yuvytung để bắt nhếch)";
+  private final Instant time = Instant.now();
 
-    public NhechException(URI type, String title, StatusType status, String detail) {
-        super(type, title, status, detail);
-        log.info(detail);
-    }
+  public NhechException(URI type, String title, StatusType status, String detail) {
+    super(type, title, status, detail);
+    log.info(detail);
+  }
 
-    public NhechException() {
-        super(null, null, Status.INTERNAL_SERVER_ERROR, nhechSay);
-        log.error(nhechSay);
-    }
+  public NhechException() {
+    super(null, null, Status.INTERNAL_SERVER_ERROR, nhechSay);
+    log.error(nhechSay);
+  }
 
-    public NhechException(String youSay) {
-        super(null, null, Status.BAD_REQUEST, youSay);
-        log.warn(youSay);
-    }
+  public NhechException(String youSay) {
+    super(null, null, Status.BAD_REQUEST, youSay);
+    log.warn(youSay);
+  }
 }

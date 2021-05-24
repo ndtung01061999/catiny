@@ -3,8 +3,8 @@ import dayjs from 'dayjs';
 export interface IMessageGroup {
   id?: number;
   uuid?: string;
-  userId?: number | null;
-  groupId?: string | null;
+  userId?: number;
+  groupId?: string;
   groupName?: string | null;
   addBy?: string | null;
   lastContent?: string | null;

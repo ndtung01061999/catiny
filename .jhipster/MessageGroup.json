@@ -9,11 +9,13 @@
     },
     {
       "fieldName": "userId",
-      "fieldType": "Long"
+      "fieldType": "Long",
+      "fieldValidateRules": ["required", "unique"]
     },
     {
       "fieldName": "groupId",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
     },
     {
       "fieldName": "groupName",

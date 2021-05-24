@@ -24,41 +24,41 @@ import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 @Controller
 public class WebSocket implements ApplicationListener<SessionDisconnectEvent> {
 
-    private final SimpMessageSendingOperations messagingTemplate;
+  private final SimpMessageSendingOperations messagingTemplate;
 
-    public WebSocket(SimpMessageSendingOperations messagingTemplate) {
-        this.messagingTemplate = messagingTemplate;
-    }
+  public WebSocket(SimpMessageSendingOperations messagingTemplate) {
+    this.messagingTemplate = messagingTemplate;
+  }
 
-    @MessageMapping("/topic/video-call/activity")
-    public VideoCallDTO sendActivity(@Payload VideoCallDTO x, StompHeaderAccessor stompHeaderAccessor, Principal principal) {
-        //    byte[] decodedBytes = Base64.getDecoder().decode(x.getData().split(",")[2]);
-        //    File tempFile = new File("/data/test/test.webm");
-        //    try (FileOutputStream out = new FileOutputStream(tempFile, true))
-        //    {
-        //      log.debug("create new file output VideoCall (webcam) is: {}", tempFile.createNewFile());
-        //      out.write(decodedBytes);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //      log.debug(e);
-        //    }
+  @MessageMapping("/topic/video-call/activity")
+  public VideoCallDTO sendActivity(@Payload VideoCallDTO x, StompHeaderAccessor stompHeaderAccessor, Principal principal) {
+    //    byte[] decodedBytes = Base64.getDecoder().decode(x.getData().split(",")[2]);
+    //    File tempFile = new File("/data/test/test.webm");
+    //    try (FileOutputStream out = new FileOutputStream(tempFile, true))
+    //    {
+    //      log.debug("create new file output VideoCall (webcam) is: {}", tempFile.createNewFile());
+    //      out.write(decodedBytes);
+    //    }
+    //    catch (Exception e)
+    //    {
+    //      log.debug(e);
+    //    }
 
-        messagingTemplate.convertAndSend("/topic/video-call/group/admin/" + x.getDetails(), x);
-        //    messagingTemplate.convertAndSendToUser("user","/topic/video-call/group2/"+x.getDetails(), x,stompHeaderAccessor.getMessageHeaders());
-        //    messagingTemplate.convertAndSend("/topic/video-call/group/"+x.getDetails(), x);
-        return x;
-    }
+    messagingTemplate.convertAndSend("/topic/video-call/group/admin/" + x.getDetails(), x);
+    //    messagingTemplate.convertAndSendToUser("user","/topic/video-call/group2/"+x.getDetails(), x,stompHeaderAccessor.getMessageHeaders());
+    //    messagingTemplate.convertAndSend("/topic/video-call/group/"+x.getDetails(), x);
+    return x;
+  }
 
-    @SubscribeMapping("/topic/video-call/group2/*")
-    public Object s() {
-        log.debug("SecurityUtils.getCurrentUserLogin().get()");
+  @SubscribeMapping("/topic/video-call/group2/*")
+  public Object s() {
+    log.debug("SecurityUtils.getCurrentUserLogin().get()");
 
-        return null;
-    }
+    return null;
+  }
 
-    @Override
-    public void onApplicationEvent(SessionDisconnectEvent event) {
-        log.debug(SecurityUtils.getCurrentUserLogin().get());
-    }
+  @Override
+  public void onApplicationEvent(SessionDisconnectEvent event) {
+    log.debug(SecurityUtils.getCurrentUserLogin().get());
+  }
 }

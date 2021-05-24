@@ -9,14 +9,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserUtils {
 
-    private static UserRepository userRepository = null;
+  private static UserRepository userRepository = null;
 
-    @Autowired
-    private void setUserRepository(UserRepository userRepository) {
-        UserUtils.userRepository = userRepository;
-    }
+  @Autowired
+  private void setUserRepository(UserRepository userRepository) {
+    UserUtils.userRepository = userRepository;
+  }
 
-    public static User thisUser() {
-        return SecurityUtils.getCurrentUserLogin().flatMap(userLogin -> userRepository.findOneByLogin(userLogin)).orElse(null);
-    }
+  public static User thisUser() {
+    return SecurityUtils.getCurrentUserLogin().flatMap(userLogin -> userRepository.findOneByLogin(userLogin)).orElse(null);
+  }
 }

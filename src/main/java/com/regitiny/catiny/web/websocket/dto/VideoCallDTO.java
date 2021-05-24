@@ -7,6 +7,6 @@ import lombok.Setter;
 @Setter
 public class VideoCallDTO {
 
-    private String data;
-    private String details;
+  private String data;
+  private String details;
 }

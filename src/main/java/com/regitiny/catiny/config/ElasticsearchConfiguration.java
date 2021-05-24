@@ -16,90 +16,90 @@ import org.springframework.data.elasticsearch.core.convert.ElasticsearchCustomCo
 @Configuration
 public class ElasticsearchConfiguration extends ElasticsearchConfigurationSupport {
 
-    @Bean
+  @Bean
+  @Override
+  public ElasticsearchCustomConversions elasticsearchCustomConversions() {
+    return new ElasticsearchCustomConversions(
+      Arrays.asList(
+        new ZonedDateTimeWritingConverter(),
+        new ZonedDateTimeReadingConverter(),
+        new InstantWritingConverter(),
+        new InstantReadingConverter(),
+        new LocalDateWritingConverter(),
+        new LocalDateReadingConverter()
+      )
+    );
+  }
+
+  @WritingConverter
+  static class ZonedDateTimeWritingConverter implements Converter<ZonedDateTime, String> {
+
     @Override
-    public ElasticsearchCustomConversions elasticsearchCustomConversions() {
-        return new ElasticsearchCustomConversions(
-            Arrays.asList(
-                new ZonedDateTimeWritingConverter(),
-                new ZonedDateTimeReadingConverter(),
-                new InstantWritingConverter(),
-                new InstantReadingConverter(),
-                new LocalDateWritingConverter(),
-                new LocalDateReadingConverter()
-            )
-        );
+    public String convert(ZonedDateTime source) {
+      if (source == null) {
+        return null;
+      }
+      return source.toInstant().toString();
     }
+  }
 
-    @WritingConverter
-    static class ZonedDateTimeWritingConverter implements Converter<ZonedDateTime, String> {
+  @ReadingConverter
+  static class ZonedDateTimeReadingConverter implements Converter<String, ZonedDateTime> {
 
-        @Override
-        public String convert(ZonedDateTime source) {
-            if (source == null) {
-                return null;
-            }
-            return source.toInstant().toString();
-        }
+    @Override
+    public ZonedDateTime convert(String source) {
+      if (source == null) {
+        return null;
+      }
+      return Instant.parse(source).atZone(ZoneId.systemDefault());
     }
+  }
 
-    @ReadingConverter
-    static class ZonedDateTimeReadingConverter implements Converter<String, ZonedDateTime> {
+  @WritingConverter
+  static class InstantWritingConverter implements Converter<Instant, String> {
 
-        @Override
-        public ZonedDateTime convert(String source) {
-            if (source == null) {
-                return null;
-            }
-            return Instant.parse(source).atZone(ZoneId.systemDefault());
-        }
+    @Override
+    public String convert(Instant source) {
+      if (source == null) {
+        return null;
+      }
+      return source.toString();
     }
+  }
 
-    @WritingConverter
-    static class InstantWritingConverter implements Converter<Instant, String> {
+  @ReadingConverter
+  static class InstantReadingConverter implements Converter<String, Instant> {
 
-        @Override
-        public String convert(Instant source) {
-            if (source == null) {
-                return null;
-            }
-            return source.toString();
-        }
+    @Override
+    public Instant convert(String source) {
+      if (source == null) {
+        return null;
+      }
+      return Instant.parse(source);
     }
+  }
 
-    @ReadingConverter
-    static class InstantReadingConverter implements Converter<String, Instant> {
+  @WritingConverter
+  static class LocalDateWritingConverter implements Converter<LocalDate, String> {
 
-        @Override
-        public Instant convert(String source) {
-            if (source == null) {
-                return null;
-            }
-            return Instant.parse(source);
-        }
+    @Override
+    public String convert(LocalDate source) {
+      if (source == null) {
+        return null;
+      }
+      return source.toString();
     }
+  }
 
-    @WritingConverter
-    static class LocalDateWritingConverter implements Converter<LocalDate, String> {
+  @ReadingConverter
+  static class LocalDateReadingConverter implements Converter<String, LocalDate> {
 
-        @Override
-        public String convert(LocalDate source) {
-            if (source == null) {
-                return null;
-            }
-            return source.toString();
-        }
+    @Override
+    public LocalDate convert(String source) {
+      if (source == null) {
+        return null;
+      }
+      return LocalDate.parse(source);
     }
-
-    @ReadingConverter
-    static class LocalDateReadingConverter implements Converter<String, LocalDate> {
-
-        @Override
-        public LocalDate convert(String source) {
-            if (source == null) {
-                return null;
-            }
-            return LocalDate.parse(source);
-        }
-    }
+  }
 }

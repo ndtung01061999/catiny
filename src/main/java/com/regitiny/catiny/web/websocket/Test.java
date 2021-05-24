@@ -16,12 +16,12 @@ import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBr
 @EnableWebSocketMessageBroker
 public class Test extends ChannelInterceptorAdapter {
 
-    @Override
-    public Message<?> preSend(Message<?> message, MessageChannel channel) {
-        StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(message);
-        if (StompCommand.SUBSCRIBE.equals(headerAccessor.getCommand())) {
-            System.out.println("");
-        }
-        return message;
+  @Override
+  public Message<?> preSend(Message<?> message, MessageChannel channel) {
+    StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(message);
+    if (StompCommand.SUBSCRIBE.equals(headerAccessor.getCommand())) {
+      System.out.println("");
     }
+    return message;
+  }
 }

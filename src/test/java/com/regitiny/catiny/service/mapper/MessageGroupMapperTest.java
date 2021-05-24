@@ -7,10 +7,10 @@ import org.junit.jupiter.api.Test;
 
 class MessageGroupMapperTest {
 
-    private MessageGroupMapper messageGroupMapper;
+  private MessageGroupMapper messageGroupMapper;
 
-    @BeforeEach
-    public void setUp() {
-        messageGroupMapper = new MessageGroupMapperImpl();
-    }
+  @BeforeEach
+  public void setUp() {
+    messageGroupMapper = new MessageGroupMapperImpl();
+  }
 }

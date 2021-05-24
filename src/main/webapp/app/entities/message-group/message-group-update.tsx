@@ -107,13 +107,31 @@ export const MessageGroupUpdate = (props: IMessageGroupUpdateProps) => {
                 <Label id="userIdLabel" for="message-group-userId">
                   <Translate contentKey="catinyApp.messageGroup.userId">User Id</Translate>
                 </Label>
-                <AvField id="message-group-userId" data-cy="userId" type="string" className="form-control" name="userId" />
+                <AvField
+                  id="message-group-userId"
+                  data-cy="userId"
+                  type="string"
+                  className="form-control"
+                  name="userId"
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                    number: { value: true, errorMessage: translate('entity.validation.number') },
+                  }}
+                />
               </AvGroup>
               <AvGroup>
                 <Label id="groupIdLabel" for="message-group-groupId">
                   <Translate contentKey="catinyApp.messageGroup.groupId">Group Id</Translate>
                 </Label>
-                <AvField id="message-group-groupId" data-cy="groupId" type="text" name="groupId" />
+                <AvField
+                  id="message-group-groupId"
+                  data-cy="groupId"
+                  type="text"
+                  name="groupId"
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                  }}
+                />
               </AvGroup>
               <AvGroup>
                 <Label id="groupNameLabel" for="message-group-groupName">
