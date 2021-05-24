@@ -214,23 +214,24 @@ public class MessageGroupDTO implements Serializable {
     }
 
     // prettier-ignore
-    @Override
-    public String toString() {
-        return "MessageGroupDTO{" +
-            "id=" + getId() +
-            ", uuid='" + getUuid() + "'" +
-            ", userId=" + getUserId() +
-            ", groupId='" + getGroupId() + "'" +
-            ", groupName='" + getGroupName() + "'" +
-            ", addBy='" + getAddBy() + "'" +
-            ", lastContent='" + getLastContent() + "'" +
-            ", searchField='" + getSearchField() + "'" +
-            ", role='" + getRole() + "'" +
-            ", createdDate='" + getCreatedDate() + "'" +
-            ", modifiedDate='" + getModifiedDate() + "'" +
-            ", createdBy='" + getCreatedBy() + "'" +
-            ", modifiedBy='" + getModifiedBy() + "'" +
-            ", comment='" + getComment() + "'" +
-            "}";
-    }
+  @Override
+  public String toString()
+  {
+    return "MessageGroupDTO{" +
+      "id=" + getId() +
+      ", uuid='" + getUuid() + "'" +
+      ", userId=" + getUserId() +
+      ", groupId='" + getGroupId() + "'" +
+      ", groupName='" + getGroupName() + "'" +
+      ", addBy='" + getAddBy() + "'" +
+      ", lastContent='" + getLastContent() + "'" +
+      ", searchField='" + getSearchField() + "'" +
+      ", role='" + getRole() + "'" +
+      ", createdDate='" + getCreatedDate() + "'" +
+      ", modifiedDate='" + getModifiedDate() + "'" +
+      ", createdBy='" + getCreatedBy() + "'" +
+      ", modifiedBy='" + getModifiedBy() + "'" +
+      ", comment='" + getComment() + "'" +
+      "}";
+  }
 }

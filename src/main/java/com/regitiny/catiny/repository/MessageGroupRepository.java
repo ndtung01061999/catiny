@@ -1,6 +1,8 @@
 package com.regitiny.catiny.repository;
 
 import com.regitiny.catiny.domain.MessageGroup;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
@@ -9,4 +11,7 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface MessageGroupRepository extends JpaRepository<MessageGroup, Long> {}
+public interface MessageGroupRepository extends JpaRepository<MessageGroup, Long> {
+    Optional<List<MessageGroup>> findAllByGroupId(String groupId);
+    Optional<MessageGroup> findByGroupIdAndUserId(String groupId, Long userId);
+}

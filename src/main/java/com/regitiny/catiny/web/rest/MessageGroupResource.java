@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
+import javax.persistence.Lob;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
@@ -75,7 +76,7 @@ public class MessageGroupResource {
     /**
      * {@code PUT  /message-groups/:id} : Updates an existing messageGroup.
      *
-     * @param id the id of the messageGroupDTO to save.
+     * @param id              the id of the messageGroupDTO to save.
      * @param messageGroupDTO the messageGroupDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated messageGroupDTO,
      * or with status {@code 400 (Bad Request)} if the messageGroupDTO is not valid,
@@ -109,7 +110,7 @@ public class MessageGroupResource {
     /**
      * {@code PATCH  /message-groups/:id} : Partial updates given fields of an existing messageGroup, field will ignore if it is null
      *
-     * @param id the id of the messageGroupDTO to save.
+     * @param id              the id of the messageGroupDTO to save.
      * @param messageGroupDTO the messageGroupDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated messageGroupDTO,
      * or with status {@code 400 (Bad Request)} if the messageGroupDTO is not valid,
@@ -189,7 +190,7 @@ public class MessageGroupResource {
      * {@code SEARCH  /_search/message-groups?query=:query} : search for the messageGroup corresponding
      * to the query.
      *
-     * @param query the query of the messageGroup search.
+     * @param query    the query of the messageGroup search.
      * @param pageable the pagination information.
      * @return the result of the search.
      */
@@ -199,5 +200,44 @@ public class MessageGroupResource {
         Page<MessageGroupDTO> page = messageGroupService.search(query, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    // custom
+
+    /**
+     * {@code POST  /message-groups} : Create a new messageGroup.
+     *
+     * @param userIds danh sách những user được thêm vào trong lúc tạo group
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new messageGroupDTO, or with status {@code 400 (Bad Request)} if the messageGroup has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PostMapping("/message-groups/new-group")
+    public ResponseEntity<List<MessageGroupDTO>> createNewMessageGroup(
+        @RequestParam("groupName") String groupName,
+        @RequestParam("lastContent") String lastContent,
+        @RequestParam("userIds") List<Long> userIds
+    ) throws URISyntaxException {
+        log.debug("REST request to save MessageGroup . groupName : {} , lastContent : {}", groupName, lastContent);
+        if (userIds.isEmpty()) throw new BadRequestAlertException(
+            "create group but not add any user to the group , so what you want?",
+            ENTITY_NAME,
+            "idexists"
+        );
+        var result = messageGroupService.createMessageGroup(groupName, lastContent, userIds);
+        if (Objects.isNull(result) || result.isEmpty()) throw new BadRequestAlertException(
+            "not create new messageGroup ",
+            ENTITY_NAME,
+            "err"
+        );
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/message-groups/{groupId}")
+    public ResponseEntity<List<MessageGroupDTO>> addUserToGroup(@RequestParam List<Long> userIds, @PathVariable String groupId)
+        throws URISyntaxException {
+        log.debug("REST request to save userId : {} , groupId : {}", userIds, groupId);
+        var result = messageGroupService.addUserToGroup(userIds, groupId);
+        if (result.size() == 0) ResponseEntity.status(HttpStatus.BAD_REQUEST).body("si đa quá bạn ơi không có thằng user nào đc add vào");
+        return ResponseEntity.ok(result);
     }
 }

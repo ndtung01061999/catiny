@@ -1,6 +1,7 @@
 package com.regitiny.catiny.service;
 
 import com.regitiny.catiny.service.dto.MessageGroupDTO;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -51,10 +52,14 @@ public interface MessageGroupService {
     /**
      * Search for the messageGroup corresponding to the query.
      *
-     * @param query the query of the search.
-     *
+     * @param query    the query of the search.
      * @param pageable the pagination information.
      * @return the list of entities.
      */
     Page<MessageGroupDTO> search(String query, Pageable pageable);
+    // custom by yuvytung
+
+    List<MessageGroupDTO> createMessageGroup(String groupName, String lastContent, List<Long> userIds);
+
+    List<MessageGroupDTO> addUserToGroup(List<Long> userIds, String groupId);
 }
