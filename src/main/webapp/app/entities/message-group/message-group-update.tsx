@@ -22,7 +22,8 @@ export const MessageGroupUpdate = (props: IMessageGroupUpdateProps) =>
 
   const {lastContent, searchField} = messageGroupEntity;
 
-  const handleClose = () => {
+  const handleClose = () =>
+  {
     props.history.push('/message-group');
   };
 

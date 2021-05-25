@@ -24,8 +24,10 @@ export const MessageGroupDeleteDialog = (props: IMessageGroupDeleteDialogProps) 
     props.history.push('/message-group');
   };
 
-  useEffect(() => {
-    if (props.updateSuccess) {
+  useEffect(() =>
+  {
+    if (props.updateSuccess)
+    {
       handleClose();
     }
   }, [props.updateSuccess]);

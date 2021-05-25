@@ -24,8 +24,10 @@ export const MessageContentDeleteDialog = (props: IMessageContentDeleteDialogPro
     props.history.push('/message-content');
   };
 
-  useEffect(() => {
-    if (props.updateSuccess) {
+  useEffect(() =>
+  {
+    if (props.updateSuccess)
+    {
       handleClose();
     }
   }, [props.updateSuccess]);

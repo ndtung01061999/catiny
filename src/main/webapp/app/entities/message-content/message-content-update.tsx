@@ -22,7 +22,8 @@ export const MessageContentUpdate = (props: IMessageContentUpdateProps) =>
 
   const {content, searchField} = messageContentEntity;
 
-  const handleClose = () => {
+  const handleClose = () =>
+  {
     props.history.push('/message-content');
   };
 

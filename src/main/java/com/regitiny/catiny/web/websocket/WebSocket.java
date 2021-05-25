@@ -1,24 +1,17 @@
 package com.regitiny.catiny.web.websocket;
 
-import com.regitiny.catiny.security.SecurityUtils;
-import com.regitiny.catiny.tools.utils.EntityDefaultPropertiesServiceUtils;
-import com.regitiny.catiny.web.websocket.dto.ActivityDTO;
 import com.regitiny.catiny.web.websocket.dto.VideoCallDTO;
-import io.swagger.annotations.ApiModelProperty;
-import java.security.Principal;
-import jodd.util.StringPool;
-import lombok.Data;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.ApplicationListener;
-import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
+
+import java.security.Principal;
 
 @Log4j2
 @Controller
@@ -59,6 +52,6 @@ public class WebSocket implements ApplicationListener<SessionDisconnectEvent> {
 
   @Override
   public void onApplicationEvent(SessionDisconnectEvent event) {
-    log.debug(SecurityUtils.getCurrentUserLogin().get());
+//    log.debug(SecurityUtils.getCurrentUserLogin().get());
   }
 }

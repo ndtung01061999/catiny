@@ -4,27 +4,32 @@ import configureStore from 'redux-mock-store';
 import promiseMiddleware from 'redux-promise-middleware';
 import thunk from 'redux-thunk';
 import sinon from 'sinon';
-import { parseHeaderForLinks } from 'react-jhipster';
+import {parseHeaderForLinks} from 'react-jhipster';
 
 import reducer, {
   ACTION_TYPES,
   createEntity,
   deleteEntity,
   getEntities,
-  getSearchEntities,
   getEntity,
-  updateEntity,
+  getSearchEntities,
   partialUpdate,
   reset,
+  updateEntity,
 } from './message-group.reducer';
-import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
-import { IMessageGroup, defaultValue } from 'app/shared/model/message-group.model';
+import {FAILURE, REQUEST, SUCCESS} from 'app/shared/reducers/action-type.util';
+import {defaultValue, IMessageGroup} from 'app/shared/model/message-group.model';
 
-describe('Entities reducer tests', () => {
-  function isEmpty(element): boolean {
-    if (element instanceof Array) {
+describe('Entities reducer tests', () =>
+{
+  function isEmpty(element): boolean
+  {
+    if (element instanceof Array)
+    {
       return element.length === 0;
-    } else {
+    }
+    else
+    {
       return Object.keys(element).length === 0;
     }
   }

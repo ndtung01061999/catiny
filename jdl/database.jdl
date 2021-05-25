@@ -43,7 +43,7 @@ entity MessageGroup {
 entity MessageContent {
     /** uuid */
     uuid UUID required unique
-    groupId String required unique
+    groupId String required
     content TextBlob
     sender String
     status String

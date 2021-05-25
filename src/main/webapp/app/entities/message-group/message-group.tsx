@@ -25,8 +25,10 @@ export const MessageGroup = (props: IMessageGroupProps) =>
   );
   const [sorting, setSorting] = useState(false);
 
-  const getAllEntities = () => {
-    if (search) {
+  const getAllEntities = () =>
+  {
+    if (search)
+    {
       props.getSearchEntities(
         search,
         paginationState.activePage - 1,

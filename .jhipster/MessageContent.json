@@ -10,7 +10,9 @@
     {
       "fieldName": "groupId",
       "fieldType": "String",
-      "fieldValidateRules": ["required", "unique"]
+      "fieldValidateRules": [
+        "required"
+      ]
     },
     {
       "fieldName": "content",

@@ -102,21 +102,21 @@ export default (state: MessageComponentState = initialState, action): MessageCom
     }
     case SUCCESS(ACTION_TYPES.FETCH_CONTENT_IN_GROUP_LIST):
     {
-      const payload = action.payload;
+      const data = action.payload.data;
       const links = parseHeaderForLinks(action.payload.headers.link);
       const messageContentListCurrent =
-        payload.data &&
-        payload.data.length > 0 &&
-        state.groupIdCurrent === payload.data[0].groupId
-          ? state.messageContentList : []
+        data.length > 0 &&
+        state.groupIdCurrent === data[0].groupId
+          ? state.messageContentList : [];
+      const groupId = messageContentListCurrent.length > 0 ? messageContentListCurrent[0].groupId : null;
       window.console.log(messageContentListCurrent)
       return {
         ...state,
         loading: false,
         links,
-        groupIdCurrent: payload.groupId,
-        messageContentList: loadMoreDataWhenScrolled(messageContentListCurrent, payload.data, links),
-        totalItems: parseInt(payload.headers['x-total-count'], 10),
+        groupIdCurrent: groupId,
+        messageContentList: loadMoreDataWhenScrolled(messageContentListCurrent, data, links),
+        totalItems: parseInt(action.payload.headers['x-total-count'], 10),
       };
     }
     case SUCCESS(ACTION_TYPES.FETCH_MESSAGEGROUP_LIST):
