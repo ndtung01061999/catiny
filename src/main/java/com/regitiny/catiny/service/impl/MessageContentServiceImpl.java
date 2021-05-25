@@ -1,20 +1,23 @@
 package com.regitiny.catiny.service.impl;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
-
 import com.regitiny.catiny.domain.MessageContent;
 import com.regitiny.catiny.repository.MessageContentRepository;
 import com.regitiny.catiny.repository.search.MessageContentSearchRepository;
 import com.regitiny.catiny.service.MessageContentService;
+import com.regitiny.catiny.service.MessageGroupService;
 import com.regitiny.catiny.service.dto.MessageContentDTO;
 import com.regitiny.catiny.service.mapper.MessageContentMapper;
-import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Objects;
+import java.util.Optional;
+
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 
 /**
  * Service Implementation for managing {@link MessageContent}.
@@ -26,19 +29,20 @@ public class MessageContentServiceImpl implements MessageContentService {
   private final Logger log = LoggerFactory.getLogger(MessageContentServiceImpl.class);
 
   private final MessageContentRepository messageContentRepository;
-
   private final MessageContentMapper messageContentMapper;
-
   private final MessageContentSearchRepository messageContentSearchRepository;
+  private final MessageGroupService messageGroupService;
 
   public MessageContentServiceImpl(
     MessageContentRepository messageContentRepository,
     MessageContentMapper messageContentMapper,
-    MessageContentSearchRepository messageContentSearchRepository
-  ) {
+    MessageContentSearchRepository messageContentSearchRepository,
+    MessageGroupService messageGroupService)
+  {
     this.messageContentRepository = messageContentRepository;
     this.messageContentMapper = messageContentMapper;
     this.messageContentSearchRepository = messageContentSearchRepository;
+    this.messageGroupService = messageGroupService;
   }
 
   @Override
@@ -97,8 +101,27 @@ public class MessageContentServiceImpl implements MessageContentService {
 
   @Override
   @Transactional(readOnly = true)
-  public Page<MessageContentDTO> search(String query, Pageable pageable) {
+  public Page<MessageContentDTO> search(String query, Pageable pageable)
+  {
     log.debug("Request to search for a page of MessageContents for query {}", query);
     return messageContentSearchRepository.search(queryStringQuery(query), pageable).map(messageContentMapper::toDto);
   }
+
+  @Override
+  public Page<MessageContentDTO> getContentInGroup(String groupId, Pageable pageable)
+  {
+    var messageGroup = messageGroupService.getMessageGroupByGroupId(groupId);
+    if (Objects.nonNull(messageGroup))
+      return messageContentRepository.findAllByGroupIdAndCreatedDateGreaterThanEqual(groupId, messageGroup.getCreatedDate(), pageable).map(messageContentMapper::toDto);
+    return Page.empty();
+  }
+
+//  @Override
+//  public Page<MessageContentDTO> getContentInGroup(String groupId, Pageable pageable)
+//  {
+//    var messageGroup =messageGroupService.getMessageGroupByGroupId(groupId);
+//    if (Objects.nonNull(messageGroup))
+//      return messageContentRepository.findAllByGroupIdAndCreatedDateGreaterThanEqual(groupId,messageGroup.getCreatedDate(),pageable).map(messageContentMapper::toDto);
+//    return Page.empty();
+//  }
 }

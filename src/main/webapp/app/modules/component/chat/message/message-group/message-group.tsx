@@ -1,22 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, InputGroup, Col, Row, Table } from 'reactstrap';
-import { AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
-import { byteSize, Translate, translate, ICrudSearchAction, TextFormat, getSortState, IPaginationBaseState } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, InputGroup, Row, Table} from 'reactstrap';
+import {AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
+import {getSortState, TextFormat, Translate, translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { IRootState } from 'app/shared/reducers';
-import { getSearchEntities, getEntities, reset } from './message-group.reducer';
-import { IMessageGroup } from 'app/shared/model/message-group.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
-import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
-import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
+import {IRootState} from 'app/shared/reducers';
+import {getEntities, getSearchEntities, reset} from '../messages.reducer';
+import {APP_DATE_FORMAT} from 'app/config/constants';
+import {ITEMS_PER_PAGE} from 'app/shared/util/pagination.constants';
+import {overridePaginationStateWithQueryParams} from 'app/shared/util/entity-utils';
 
-export interface IMessageGroupProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
+export interface IMessageGroupProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }>
+{
+}
 
-export const MessageGroup = (props: IMessageGroupProps) => {
+export const MessageGroup = (props: IMessageGroupProps) =>
+{
   const [search, setSearch] = useState('');
   const [paginationState, setPaginationState] = useState(
     overridePaginationStateWithQueryParams(getSortState(props.location, ITEMS_PER_PAGE, 'id'), props.location.search)

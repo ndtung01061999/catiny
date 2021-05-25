@@ -18,7 +18,8 @@ logging:
   pattern:
     console: '%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:%5p}) %clr(%-5.20thread{19}){magenta} %clr(%-40.40logger{39} %5L){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}'
     file: '%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:%5p}) %clr(%-40.40logger{39} %5L){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}'
-
+user:
+  timezone: Asia/Ho_Chi_Minh
 eureka:
   client:
     enabled: true

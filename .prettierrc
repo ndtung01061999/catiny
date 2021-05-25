@@ -4,6 +4,7 @@ printWidth: 140
 singleQuote: true
 tabWidth: 2
 useTabs: false
+endOfLine: "lf"
 
 # js and ts rules:
 arrowParens: avoid
@@ -16,5 +17,3 @@ overrides:
   - files: "*.java"
     options:
       tabWidth: 2
-      endOfLine: "lf"
-      proseWrap: never

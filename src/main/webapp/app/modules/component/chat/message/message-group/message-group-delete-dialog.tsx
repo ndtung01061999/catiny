@@ -1,21 +1,26 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { RouteComponentProps } from 'react-router-dom';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
-import { Translate } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {RouteComponentProps} from 'react-router-dom';
+import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
+import {Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { IRootState } from 'app/shared/reducers';
-import { getEntity, deleteEntity } from './message-group.reducer';
+import {IRootState} from 'app/shared/reducers';
+import {deleteEntity, getEntity} from '../messages.reducer';
 
-export interface IMessageGroupDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface IMessageGroupDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }>
+{
+}
 
-export const MessageGroupDeleteDialog = (props: IMessageGroupDeleteDialogProps) => {
-  useEffect(() => {
+export const MessageGroupDeleteDialog = (props: IMessageGroupDeleteDialogProps) =>
+{
+  useEffect(() =>
+  {
     props.getEntity(props.match.params.id);
   }, []);
 
-  const handleClose = () => {
+  const handleClose = () =>
+  {
     props.history.push('/message-group');
   };
 

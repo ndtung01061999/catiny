@@ -1,15 +1,18 @@
 package com.regitiny.catiny.service;
 
+import com.regitiny.catiny.domain.MessageGroup;
 import com.regitiny.catiny.service.dto.MessageGroupDTO;
-import java.util.List;
-import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Service Interface for managing {@link com.regitiny.catiny.domain.MessageGroup}.
  */
-public interface MessageGroupService {
+public interface MessageGroupService
+{
   /**
    * Save a messageGroup.
    *
@@ -59,7 +62,15 @@ public interface MessageGroupService {
   Page<MessageGroupDTO> search(String query, Pageable pageable);
   // custom by yuvytung
 
+
   List<MessageGroupDTO> createMessageGroup(String groupName, String lastContent, List<Long> userIds);
 
+
   List<MessageGroupDTO> addUserToGroup(List<Long> userIds, String groupId);
+
+
+  Page<MessageGroupDTO> getAllGroupsJoined(Pageable pageable);
+
+
+  MessageGroup getMessageGroupByGroupId(String groupId);
 }

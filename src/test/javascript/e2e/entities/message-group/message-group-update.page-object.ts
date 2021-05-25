@@ -1,9 +1,10 @@
-import { element, by, ElementFinder, protractor } from 'protractor';
-import { waitUntilDisplayed, waitUntilHidden, isVisible } from '../../util/utils';
+import {by, element, ElementFinder, protractor} from 'protractor';
+import {isVisible, waitUntilDisplayed, waitUntilHidden} from '../../util/utils';
 
 const expect = chai.expect;
 
-export default class MessageGroupUpdatePage {
+export default class MessageGroupUpdatePage
+{
   pageTitle: ElementFinder = element(by.id('catinyApp.messageGroup.home.createOrEditLabel'));
   saveButton: ElementFinder = element(by.id('save-entity'));
   cancelButton: ElementFinder = element(by.id('cancel-save'));

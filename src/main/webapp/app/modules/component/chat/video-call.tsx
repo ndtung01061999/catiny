@@ -1,14 +1,14 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Storage } from 'react-jhipster';
-import { Observable } from 'rxjs';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {Storage} from 'react-jhipster';
+import {Observable} from 'rxjs';
 import SockJS from 'sockjs-client';
 import Stomp from 'webstomp-client';
-import { IUserSettingsProps, SettingsPage } from 'app/modules/account/settings/settings';
-import { IRootState } from 'app/shared/reducers';
-import { getSession } from 'app/shared/reducers/authentication';
-import { reset, saveAccountSettings } from 'app/modules/account/settings/settings.reducer';
-import { connect as reduxConnect } from 'react-redux';
-import { v4 } from 'uuid';
+import {IUserSettingsProps} from 'app/modules/account/settings/settings';
+import {IRootState} from 'app/shared/reducers';
+import {getSession} from 'app/shared/reducers/authentication';
+import {reset, saveAccountSettings} from 'app/modules/account/settings/settings.reducer';
+import {connect as reduxConnect} from 'react-redux';
+import {v4} from 'uuid';
 
 let sourceBuffer = null;
 let mediaSource = new MediaSource();
@@ -148,8 +148,6 @@ const VideoCall = (props: IUserSettingsProps) => {
 
       mediaSource = new MediaSource();
       if (type === 'camera') {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
         mediaRecorderRef.current = new MediaRecorder(await navigator.mediaDevices.getUserMedia(videoConstraints), {
           mimeType: 'video/webm;codecs=vp8,opus',
         });

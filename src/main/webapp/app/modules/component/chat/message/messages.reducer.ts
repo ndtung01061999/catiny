@@ -1,18 +1,19 @@
 import axios from 'axios';
 import {
-  ICrudSearchAction,
-  parseHeaderForLinks,
-  loadMoreDataWhenScrolled,
+  ICrudDeleteAction,
   ICrudGetAction,
   ICrudGetAllAction,
   ICrudPutAction,
-  ICrudDeleteAction,
+  ICrudSearchAction,
+  loadMoreDataWhenScrolled,
+  parseHeaderForLinks,
 } from 'react-jhipster';
 
-import { cleanEntity } from 'app/shared/util/entity-utils';
-import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
+import {cleanEntity} from 'app/shared/util/entity-utils';
+import {FAILURE, REQUEST, SUCCESS} from 'app/shared/reducers/action-type.util';
 
-import { IMessageGroup, defaultValue } from 'app/shared/model/message-group.model';
+import {defaultValue, IMessageGroup} from 'app/shared/model/message-group.model';
+import {IMessageContent} from "app/shared/model/message-content.model";
 
 export const ACTION_TYPES = {
   SEARCH_MESSAGEGROUPS: 'messageGroup/SEARCH_MESSAGEGROUPS',
@@ -24,26 +25,34 @@ export const ACTION_TYPES = {
   DELETE_MESSAGEGROUP: 'messageGroup/DELETE_MESSAGEGROUP',
   SET_BLOB: 'messageGroup/SET_BLOB',
   RESET: 'messageGroup/RESET',
+  FETCH_ALL_GROUPS_JOINED_LIST: 'messages/FETCH_ALL_GROUPS_JOINED_LIST',
+  FETCH_CONTENT_IN_GROUP_LIST: 'messages/FETCH_CONTENT_IN_GROUP_LIST'
 };
 
 const initialState = {
   loading: false,
   errorMessage: null,
-  entities: [] as ReadonlyArray<IMessageGroup>,
+  messageGroupList: [] as ReadonlyArray<IMessageGroup>,
+  messageContentList: [] as ReadonlyArray<IMessageContent>,
   entity: defaultValue,
-  links: { next: 0 },
+  links: {next: 0},
   updating: false,
   totalItems: 0,
   updateSuccess: false,
+  groupIdCurrent: null,
 };
 
-export type MessageGroupState = Readonly<typeof initialState>;
+export type MessageComponentState = Readonly<typeof initialState>;
 
 // Reducer
 
-export default (state: MessageGroupState = initialState, action): MessageGroupState => {
-  switch (action.type) {
+export default (state: MessageComponentState = initialState, action): MessageComponentState =>
+{
+  switch (action.type)
+  {
     case REQUEST(ACTION_TYPES.SEARCH_MESSAGEGROUPS):
+    case REQUEST(ACTION_TYPES.FETCH_ALL_GROUPS_JOINED_LIST):
+    case REQUEST(ACTION_TYPES.FETCH_CONTENT_IN_GROUP_LIST):
     case REQUEST(ACTION_TYPES.FETCH_MESSAGEGROUP_LIST):
     case REQUEST(ACTION_TYPES.FETCH_MESSAGEGROUP):
       return {
@@ -63,6 +72,8 @@ export default (state: MessageGroupState = initialState, action): MessageGroupSt
         updating: true,
       };
     case FAILURE(ACTION_TYPES.SEARCH_MESSAGEGROUPS):
+    case FAILURE(ACTION_TYPES.FETCH_ALL_GROUPS_JOINED_LIST):
+    case FAILURE(ACTION_TYPES.FETCH_CONTENT_IN_GROUP_LIST):
     case FAILURE(ACTION_TYPES.FETCH_MESSAGEGROUP_LIST):
     case FAILURE(ACTION_TYPES.FETCH_MESSAGEGROUP):
     case FAILURE(ACTION_TYPES.CREATE_MESSAGEGROUP):
@@ -77,14 +88,46 @@ export default (state: MessageGroupState = initialState, action): MessageGroupSt
         errorMessage: action.payload,
       };
     case SUCCESS(ACTION_TYPES.SEARCH_MESSAGEGROUPS):
-    case SUCCESS(ACTION_TYPES.FETCH_MESSAGEGROUP_LIST): {
+    case SUCCESS(ACTION_TYPES.FETCH_ALL_GROUPS_JOINED_LIST):
+    {
+      const links = parseHeaderForLinks(action.payload.headers.link);
+      window.console.log(action)
+      return {
+        ...state,
+        loading: false,
+        links,
+        messageGroupList: loadMoreDataWhenScrolled(state.messageGroupList, action.payload.data, links),
+        totalItems: parseInt(action.payload.headers['x-total-count'], 10),
+      };
+    }
+    case SUCCESS(ACTION_TYPES.FETCH_CONTENT_IN_GROUP_LIST):
+    {
+      const payload = action.payload;
+      const links = parseHeaderForLinks(action.payload.headers.link);
+      const messageContentListCurrent =
+        payload.data &&
+        payload.data.length > 0 &&
+        state.groupIdCurrent === payload.data[0].groupId
+          ? state.messageContentList : []
+      window.console.log(messageContentListCurrent)
+      return {
+        ...state,
+        loading: false,
+        links,
+        groupIdCurrent: payload.groupId,
+        messageContentList: loadMoreDataWhenScrolled(messageContentListCurrent, payload.data, links),
+        totalItems: parseInt(payload.headers['x-total-count'], 10),
+      };
+    }
+    case SUCCESS(ACTION_TYPES.FETCH_MESSAGEGROUP_LIST):
+    {
       const links = parseHeaderForLinks(action.payload.headers.link);
 
       return {
         ...state,
         loading: false,
         links,
-        entities: loadMoreDataWhenScrolled(state.entities, action.payload.data, links),
+        messageGroupList: loadMoreDataWhenScrolled(state.messageGroupList, action.payload.data, links),
         totalItems: parseInt(action.payload.headers['x-total-count'], 10),
       };
     }
@@ -110,8 +153,9 @@ export default (state: MessageGroupState = initialState, action): MessageGroupSt
         updateSuccess: true,
         entity: {},
       };
-    case ACTION_TYPES.SET_BLOB: {
-      const { name, data, contentType } = action.payload;
+    case ACTION_TYPES.SET_BLOB:
+    {
+      const {name, data, contentType} = action.payload;
       return {
         ...state,
         entity: {
@@ -131,6 +175,7 @@ export default (state: MessageGroupState = initialState, action): MessageGroupSt
 };
 
 const apiUrl = 'api/message-groups';
+const apiUrlMessageContent = 'api/message-contents';
 const apiSearchUrl = 'api/_search/message-groups';
 
 // Actions
@@ -140,7 +185,8 @@ export const getSearchEntities: ICrudSearchAction<IMessageGroup> = (query, page,
   payload: axios.get<IMessageGroup>(`${apiSearchUrl}?query=${query}${sort ? `&page=${page}&size=${size}&sort=${sort}` : ''}`),
 });
 
-export const getEntities: ICrudGetAllAction<IMessageGroup> = (page, size, sort) => {
+export const getEntities: ICrudGetAllAction<IMessageGroup> = (page, size, sort) =>
+{
   const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
   return {
     type: ACTION_TYPES.FETCH_MESSAGEGROUP_LIST,
@@ -148,7 +194,8 @@ export const getEntities: ICrudGetAllAction<IMessageGroup> = (page, size, sort) 
   };
 };
 
-export const getEntity: ICrudGetAction<IMessageGroup> = id => {
+export const getEntity: ICrudGetAction<IMessageGroup> = id =>
+{
   const requestUrl = `${apiUrl}/${id}`;
   return {
     type: ACTION_TYPES.FETCH_MESSAGEGROUP,
@@ -156,7 +203,8 @@ export const getEntity: ICrudGetAction<IMessageGroup> = id => {
   };
 };
 
-export const createEntity: ICrudPutAction<IMessageGroup> = entity => async dispatch => {
+export const createEntity: ICrudPutAction<IMessageGroup> = entity => async dispatch =>
+{
   const result = await dispatch({
     type: ACTION_TYPES.CREATE_MESSAGEGROUP,
     payload: axios.post(apiUrl, cleanEntity(entity)),
@@ -164,7 +212,8 @@ export const createEntity: ICrudPutAction<IMessageGroup> = entity => async dispa
   return result;
 };
 
-export const updateEntity: ICrudPutAction<IMessageGroup> = entity => async dispatch => {
+export const updateEntity: ICrudPutAction<IMessageGroup> = entity => async dispatch =>
+{
   const result = await dispatch({
     type: ACTION_TYPES.UPDATE_MESSAGEGROUP,
     payload: axios.put(`${apiUrl}/${entity.id}`, cleanEntity(entity)),
@@ -172,7 +221,8 @@ export const updateEntity: ICrudPutAction<IMessageGroup> = entity => async dispa
   return result;
 };
 
-export const partialUpdate: ICrudPutAction<IMessageGroup> = entity => async dispatch => {
+export const partialUpdate: ICrudPutAction<IMessageGroup> = entity => async dispatch =>
+{
   const result = await dispatch({
     type: ACTION_TYPES.PARTIAL_UPDATE_MESSAGEGROUP,
     payload: axios.patch(`${apiUrl}/${entity.id}`, cleanEntity(entity)),
@@ -180,13 +230,33 @@ export const partialUpdate: ICrudPutAction<IMessageGroup> = entity => async disp
   return result;
 };
 
-export const deleteEntity: ICrudDeleteAction<IMessageGroup> = id => async dispatch => {
+export const deleteEntity: ICrudDeleteAction<IMessageGroup> = id => async dispatch =>
+{
   const requestUrl = `${apiUrl}/${id}`;
   const result = await dispatch({
     type: ACTION_TYPES.DELETE_MESSAGEGROUP,
     payload: axios.delete(requestUrl),
   });
   return result;
+};
+
+export const getAllGroupsJoined: ICrudGetAllAction<IMessageGroup> = (page, size, sort) =>
+{
+  const requestUrl = `${apiUrl}/joined`;
+  return {
+    type: ACTION_TYPES.FETCH_ALL_GROUPS_JOINED_LIST,
+    payload: axios.get(`${requestUrl}?${sort ? `page=${page}&size=${size}` : ''}`),
+  };
+};
+
+export const getContentInGroup = (groupId, page, size) =>
+{
+  const queryParams = `?${page && size ? `page=${page}&size=${size}` : ''}`
+  const requestUrl = `${apiUrlMessageContent}/message-groups/${groupId}${queryParams}`;
+  return {
+    type: ACTION_TYPES.FETCH_CONTENT_IN_GROUP_LIST,
+    payload: axios.get(`${requestUrl}`),
+  };
 };
 
 export const setBlob = (name, data, contentType?) => ({

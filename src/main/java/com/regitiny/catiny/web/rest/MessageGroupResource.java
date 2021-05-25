@@ -1,20 +1,9 @@
 package com.regitiny.catiny.web.rest;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
-
 import com.regitiny.catiny.repository.MessageGroupRepository;
 import com.regitiny.catiny.service.MessageGroupService;
 import com.regitiny.catiny.service.dto.MessageGroupDTO;
 import com.regitiny.catiny.web.rest.errors.BadRequestAlertException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.StreamSupport;
-import javax.persistence.Lob;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,6 +17,14 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * REST controller for managing {@link com.regitiny.catiny.domain.MessageGroup}.
@@ -229,10 +226,20 @@ public class MessageGroupResource {
 
   @PostMapping("/message-groups/{groupId}")
   public ResponseEntity<List<MessageGroupDTO>> addUserToGroup(@RequestParam List<Long> userIds, @PathVariable String groupId)
-    throws URISyntaxException {
+    throws URISyntaxException
+  {
     log.debug("REST request to save userId : {} , groupId : {}", userIds, groupId);
     var result = messageGroupService.addUserToGroup(userIds, groupId);
     if (result.size() == 0) ResponseEntity.status(HttpStatus.BAD_REQUEST).body("si đa quá bạn ơi không có thằng user nào đc add vào");
     return ResponseEntity.ok(result);
+  }
+
+  @GetMapping("/message-groups/joined")
+  public ResponseEntity<List<MessageGroupDTO>> getAllGroupsJoined(Pageable pageable) throws URISyntaxException
+  {
+    log.debug("REST request get all groups user joined");
+    var result = messageGroupService.getAllGroupsJoined(pageable);
+    HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), result);
+    return ResponseEntity.ok().headers(headers).body(result.getContent());
   }
 }

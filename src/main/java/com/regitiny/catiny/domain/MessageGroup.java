@@ -1,14 +1,15 @@
 package com.regitiny.catiny.domain;
 
-import java.io.Serializable;
-import java.time.Instant;
-import java.util.UUID;
-import javax.persistence.*;
-import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
-import org.springframework.data.elasticsearch.annotations.FieldType;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.io.Serializable;
+import java.time.Instant;
+import java.util.UUID;
 
 /**
  * The PostDetails entity.\n@author A true hipster
@@ -35,11 +36,11 @@ public class MessageGroup implements Serializable {
   private UUID uuid;
 
   @NotNull
-  @Column(name = "user_id", nullable = false, unique = true)
+  @Column(name = "user_id", nullable = false)
   private Long userId;
 
   @NotNull
-  @Column(name = "group_id", nullable = false, unique = true)
+  @Column(name = "group_id", nullable = false)
   private String groupId;
 
   @Column(name = "group_name")
