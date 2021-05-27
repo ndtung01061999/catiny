@@ -1,5 +1,5 @@
 DEFAULT_MIN_LENGTH = 1
-DEFAULT_MAX_LENGTH = 8091
+DEFAULT_MAX_LENGTH = 2048
 MAX_STRING=16383
 DEFAULT_MIN_BYTES = 1
 DEFAULT_MAX_BYTES = 52428800
@@ -23,7 +23,7 @@ entity MessageGroup {
     /** searchField */
     searchField TextBlob
     /** role */
-    role String maxlength(DEFAULT_MAX_LENGTH)
+    role String maxlength(511)
     /** createdDate */
     createdDate  Instant
     /** modifiedDate */
@@ -33,7 +33,7 @@ entity MessageGroup {
     /** modifiedBy */
     modifiedBy String
     /** comment */
-    comment String maxlength(DEFAULT_MAX_LENGTH)
+    comment String maxlength(511)
 }
 
 /**
@@ -51,7 +51,7 @@ entity MessageContent {
     /** searchField */
     searchField TextBlob
     /** role */
-    role String maxlength(DEFAULT_MAX_LENGTH)
+    role String maxlength(511)
     /** createdDate */
     createdDate  Instant
     /** modifiedDate */
@@ -61,7 +61,7 @@ entity MessageContent {
     /** modifiedBy */
     modifiedBy String
     /** comment */
-    comment String maxlength(DEFAULT_MAX_LENGTH)
+    comment String maxlength(511)
 }
 
 

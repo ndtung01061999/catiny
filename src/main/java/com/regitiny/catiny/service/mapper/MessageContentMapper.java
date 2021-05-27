@@ -1,8 +1,8 @@
 package com.regitiny.catiny.service.mapper;
 
-import com.regitiny.catiny.domain.*;
+import com.regitiny.catiny.domain.MessageContent;
 import com.regitiny.catiny.service.dto.MessageContentDTO;
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
 
 /**
  * Mapper for the entity {@link MessageContent} and its DTO {@link MessageContentDTO}.

@@ -1,4 +1,5 @@
-export interface IMessageContent {
+export interface IMessageContent
+{
   id?: number;
   uuid?: string;
   groupId?: string;

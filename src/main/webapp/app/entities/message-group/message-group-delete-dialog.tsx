@@ -32,11 +32,12 @@ export const MessageGroupDeleteDialog = (props: IMessageGroupDeleteDialogProps) 
     }
   }, [props.updateSuccess]);
 
-  const confirmDelete = () => {
+  const confirmDelete = () =>
+  {
     props.deleteEntity(props.messageGroupEntity.id);
   };
 
-  const { messageGroupEntity } = props;
+  const {messageGroupEntity} = props;
   return (
     <Modal isOpen toggle={handleClose}>
       <ModalHeader toggle={handleClose} data-cy="messageGroupDeleteDialogHeading">

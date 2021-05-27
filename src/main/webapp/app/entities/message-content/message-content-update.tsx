@@ -156,7 +156,7 @@ export const MessageContentUpdate = (props: IMessageContentUpdateProps) =>
                   type="text"
                   name="role"
                   validate={{
-                    maxLength: { value: 8091, errorMessage: translate('entity.validation.maxlength', { max: 8091 }) },
+                    maxLength: {value: 511, errorMessage: translate('entity.validation.maxlength', {max: 511})},
                   }}
                 />
                 <UncontrolledTooltip target="roleLabel">
@@ -225,7 +225,7 @@ export const MessageContentUpdate = (props: IMessageContentUpdateProps) =>
                   type="text"
                   name="comment"
                   validate={{
-                    maxLength: { value: 8091, errorMessage: translate('entity.validation.maxlength', { max: 8091 }) },
+                    maxLength: {value: 511, errorMessage: translate('entity.validation.maxlength', {max: 511})},
                   }}
                 />
                 <UncontrolledTooltip target="commentLabel">

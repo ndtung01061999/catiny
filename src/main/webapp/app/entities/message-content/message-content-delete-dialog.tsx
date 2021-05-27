@@ -32,11 +32,12 @@ export const MessageContentDeleteDialog = (props: IMessageContentDeleteDialogPro
     }
   }, [props.updateSuccess]);
 
-  const confirmDelete = () => {
+  const confirmDelete = () =>
+  {
     props.deleteEntity(props.messageContentEntity.id);
   };
 
-  const { messageContentEntity } = props;
+  const {messageContentEntity} = props;
   return (
     <Modal isOpen toggle={handleClose}>
       <ModalHeader toggle={handleClose} data-cy="messageContentDeleteDialogHeading">

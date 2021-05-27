@@ -1,8 +1,8 @@
 package com.regitiny.catiny.service.mapper;
 
-import com.regitiny.catiny.domain.*;
+import com.regitiny.catiny.domain.MessageGroup;
 import com.regitiny.catiny.service.dto.MessageGroupDTO;
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
 
 /**
  * Mapper for the entity {@link MessageGroup} and its DTO {@link MessageGroupDTO}.

@@ -1,14 +1,16 @@
 package com.regitiny.catiny.service.dto;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import com.regitiny.catiny.web.rest.TestUtil;
 import org.junit.jupiter.api.Test;
 
-class MessageContentDTOTest {
+import static org.assertj.core.api.Assertions.assertThat;
+
+class MessageContentDTOTest
+{
 
   @Test
-  void dtoEqualsVerifier() throws Exception {
+  void dtoEqualsVerifier() throws Exception
+  {
     TestUtil.equalsVerifier(MessageContentDTO.class);
     MessageContentDTO messageContentDTO1 = new MessageContentDTO();
     messageContentDTO1.setId(1L);

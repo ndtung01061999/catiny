@@ -1,4 +1,5 @@
-export interface IMessageGroup {
+export interface IMessageGroup
+{
   id?: number;
   uuid?: string;
   userId?: number;

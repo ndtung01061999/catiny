@@ -23,36 +23,36 @@
       </column>
       <column name="group_name" type="varchar(255)">
         <constraints nullable="true"/>
-            </column>
-            <column name="add_by" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-            <column name="last_content" type="${clobType}">
-                <constraints nullable="true" />
-            </column>
-            <column name="search_field" type="${clobType}" remarks="searchField">
-                <constraints nullable="true" />
-            </column>
-            <column name="role" type="varchar(8091)" remarks="role">
-                <constraints nullable="true" />
-            </column>
-            <column name="created_date" type="${datetimeType}" remarks="createdDate">
-                <constraints nullable="true" />
-            </column>
-            <column name="modified_date" type="${datetimeType}" remarks="modifiedDate">
-                <constraints nullable="true" />
-            </column>
-            <column name="created_by" type="varchar(255)" remarks="createdBy">
-                <constraints nullable="true" />
-            </column>
-            <column name="modified_by" type="varchar(255)" remarks="modifiedBy">
-                <constraints nullable="true" />
-            </column>
-            <column name="comment" type="varchar(8091)" remarks="comment">
-                <constraints nullable="true" />
-            </column>
-            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
-        </createTable>
+      </column>
+      <column name="add_by" type="varchar(255)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="last_content" type="${clobType}">
+        <constraints nullable="true"/>
+      </column>
+      <column name="search_field" type="${clobType}" remarks="searchField">
+        <constraints nullable="true"/>
+      </column>
+      <column name="role" type="varchar(511)" remarks="role">
+        <constraints nullable="true"/>
+      </column>
+      <column name="created_date" type="${datetimeType}" remarks="createdDate">
+        <constraints nullable="true"/>
+      </column>
+      <column name="modified_date" type="${datetimeType}" remarks="modifiedDate">
+        <constraints nullable="true"/>
+      </column>
+      <column name="created_by" type="varchar(255)" remarks="createdBy">
+        <constraints nullable="true"/>
+      </column>
+      <column name="modified_by" type="varchar(255)" remarks="modifiedBy">
+        <constraints nullable="true"/>
+      </column>
+      <column name="comment" type="varchar(511)" remarks="comment">
+        <constraints nullable="true"/>
+      </column>
+      <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+    </createTable>
         <dropDefaultValue tableName="message_group" columnName="created_date" columnDataType="${datetimeType}"/>
         <dropDefaultValue tableName="message_group" columnName="modified_date" columnDataType="${datetimeType}"/>
     </changeSet>

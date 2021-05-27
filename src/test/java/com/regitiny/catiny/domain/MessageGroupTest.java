@@ -1,14 +1,16 @@
 package com.regitiny.catiny.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import com.regitiny.catiny.web.rest.TestUtil;
 import org.junit.jupiter.api.Test;
 
-class MessageGroupTest {
+import static org.assertj.core.api.Assertions.assertThat;
+
+class MessageGroupTest
+{
 
   @Test
-  void equalsVerifier() throws Exception {
+  void equalsVerifier() throws Exception
+  {
     TestUtil.equalsVerifier(MessageGroup.class);
     MessageGroup messageGroup1 = new MessageGroup();
     messageGroup1.setId(1L);

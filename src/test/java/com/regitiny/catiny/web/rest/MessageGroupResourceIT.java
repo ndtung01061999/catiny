@@ -1,30 +1,14 @@
 package com.regitiny.catiny.web.rest;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 import com.regitiny.catiny.IntegrationTest;
 import com.regitiny.catiny.domain.MessageGroup;
 import com.regitiny.catiny.repository.MessageGroupRepository;
 import com.regitiny.catiny.repository.search.MessageGroupSearchRepository;
 import com.regitiny.catiny.service.dto.MessageGroupDTO;
 import com.regitiny.catiny.service.mapper.MessageGroupMapper;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
-import java.util.concurrent.atomic.AtomicLong;
-import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -34,7 +18,22 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Base64Utils;
+
+import javax.persistence.EntityManager;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicLong;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
+import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Integration tests for the {@link MessageGroupResource} REST controller.
@@ -88,8 +87,8 @@ class MessageGroupResourceIT {
   private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
   private static final String ENTITY_SEARCH_API_URL = "/api/_search/message-groups";
 
-  private static Random random = new Random();
-  private static AtomicLong count = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
+  private static final Random random = new Random();
+  private static final AtomicLong count = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
 
   @Autowired
   private MessageGroupRepository messageGroupRepository;
@@ -291,8 +290,8 @@ class MessageGroupResourceIT {
       .andExpect(jsonPath("$.[*].groupId").value(hasItem(DEFAULT_GROUP_ID)))
       .andExpect(jsonPath("$.[*].groupName").value(hasItem(DEFAULT_GROUP_NAME)))
       .andExpect(jsonPath("$.[*].addBy").value(hasItem(DEFAULT_ADD_BY)))
-      .andExpect(jsonPath("$.[*].lastContent").value(hasItem(DEFAULT_LAST_CONTENT.toString())))
-      .andExpect(jsonPath("$.[*].searchField").value(hasItem(DEFAULT_SEARCH_FIELD.toString())))
+      .andExpect(jsonPath("$.[*].lastContent").value(hasItem(DEFAULT_LAST_CONTENT)))
+      .andExpect(jsonPath("$.[*].searchField").value(hasItem(DEFAULT_SEARCH_FIELD)))
       .andExpect(jsonPath("$.[*].role").value(hasItem(DEFAULT_ROLE)))
       .andExpect(jsonPath("$.[*].createdDate").value(hasItem(DEFAULT_CREATED_DATE.toString())))
       .andExpect(jsonPath("$.[*].modifiedDate").value(hasItem(DEFAULT_MODIFIED_DATE.toString())))
@@ -318,8 +317,8 @@ class MessageGroupResourceIT {
       .andExpect(jsonPath("$.groupId").value(DEFAULT_GROUP_ID))
       .andExpect(jsonPath("$.groupName").value(DEFAULT_GROUP_NAME))
       .andExpect(jsonPath("$.addBy").value(DEFAULT_ADD_BY))
-      .andExpect(jsonPath("$.lastContent").value(DEFAULT_LAST_CONTENT.toString()))
-      .andExpect(jsonPath("$.searchField").value(DEFAULT_SEARCH_FIELD.toString()))
+      .andExpect(jsonPath("$.lastContent").value(DEFAULT_LAST_CONTENT))
+      .andExpect(jsonPath("$.searchField").value(DEFAULT_SEARCH_FIELD))
       .andExpect(jsonPath("$.role").value(DEFAULT_ROLE))
       .andExpect(jsonPath("$.createdDate").value(DEFAULT_CREATED_DATE.toString()))
       .andExpect(jsonPath("$.modifiedDate").value(DEFAULT_MODIFIED_DATE.toString()))
@@ -687,8 +686,8 @@ class MessageGroupResourceIT {
       .andExpect(jsonPath("$.[*].groupId").value(hasItem(DEFAULT_GROUP_ID)))
       .andExpect(jsonPath("$.[*].groupName").value(hasItem(DEFAULT_GROUP_NAME)))
       .andExpect(jsonPath("$.[*].addBy").value(hasItem(DEFAULT_ADD_BY)))
-      .andExpect(jsonPath("$.[*].lastContent").value(hasItem(DEFAULT_LAST_CONTENT.toString())))
-      .andExpect(jsonPath("$.[*].searchField").value(hasItem(DEFAULT_SEARCH_FIELD.toString())))
+      .andExpect(jsonPath("$.[*].lastContent").value(hasItem(DEFAULT_LAST_CONTENT)))
+      .andExpect(jsonPath("$.[*].searchField").value(hasItem(DEFAULT_SEARCH_FIELD)))
       .andExpect(jsonPath("$.[*].role").value(hasItem(DEFAULT_ROLE)))
       .andExpect(jsonPath("$.[*].createdDate").value(hasItem(DEFAULT_CREATED_DATE.toString())))
       .andExpect(jsonPath("$.[*].modifiedDate").value(hasItem(DEFAULT_MODIFIED_DATE.toString())))

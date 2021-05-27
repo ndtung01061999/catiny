@@ -35,7 +35,9 @@ export const MessageContent = (props: IMessageContentProps) =>
         paginationState.itemsPerPage,
         `${paginationState.sort},${paginationState.order}`
       );
-    } else {
+    }
+    else
+    {
       props.getEntities(paginationState.activePage - 1, paginationState.itemsPerPage, `${paginationState.sort},${paginationState.order}`);
     }
   };

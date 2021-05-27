@@ -13,13 +13,18 @@ import password, {PasswordState} from 'app/modules/account/password/password.red
 import settings, {SettingsState} from 'app/modules/account/settings/settings.reducer';
 import passwordReset, {PasswordResetState} from 'app/modules/account/password-reset/password-reset.reducer';
 // prettier-ignore
+// import  { default as messageContentCustom , MessageGroupState as MessageGroupStateCustom
+// } from 'app/modules/component/chat/message/message-group/message-group.reducer';
+// prettier-ignore
+// prettier-ignore
 import messageGroup, {MessageGroupState} from 'app/entities/message-group/message-group.reducer';
+// prettier-ignore
+// prettier-ignore
 // prettier-ignore
 import messageContent, {MessageContentState} from 'app/entities/message-content/message-content.reducer';
 // prettier-ignore
 import messageComponent, {MessageComponentState} from 'app/modules/component/chat/message/messages.reducer';
-// import  { default as messageContentCustom , MessageGroupState as MessageGroupStateCustom
-// } from 'app/modules/component/chat/message/message-group/message-group.reducer';
+
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState

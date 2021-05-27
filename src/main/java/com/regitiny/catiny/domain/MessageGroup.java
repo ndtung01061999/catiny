@@ -63,8 +63,8 @@ public class MessageGroup implements Serializable {
   /**
    * role
    */
-  @Size(max = 8091)
-  @Column(name = "role", length = 8091)
+  @Size(max = 511)
+  @Column(name = "role", length = 511)
   private String role;
 
   /**
@@ -94,8 +94,8 @@ public class MessageGroup implements Serializable {
   /**
    * comment
    */
-  @Size(max = 8091)
-  @Column(name = "comment", length = 8091)
+  @Size(max = 511)
+  @Column(name = "comment", length = 511)
   private String comment;
 
   // jhipster-needle-entity-add-field - JHipster will add fields here

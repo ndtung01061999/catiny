@@ -45,7 +45,7 @@
       "fieldType": "String",
       "javadoc": "role",
       "fieldValidateRules": ["maxlength"],
-      "fieldValidateRulesMaxlength": "8091"
+      "fieldValidateRulesMaxlength": "511"
     },
     {
       "fieldName": "createdDate",
@@ -72,7 +72,7 @@
       "fieldType": "String",
       "javadoc": "comment",
       "fieldValidateRules": ["maxlength"],
-      "fieldValidateRulesMaxlength": "8091"
+      "fieldValidateRulesMaxlength": "511"
     }
   ],
   "relationships": [],
