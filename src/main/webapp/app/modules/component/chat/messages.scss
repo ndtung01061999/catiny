@@ -1,8 +1,26 @@
 .messages {
+  border: 2px solid rgba(250, 225, 1, 0.22);;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.5);
+
   .left {
+    border-right: 5px solid rgba(250, 225, 1, 0.22);;
+    height: calc(100vh - 162px);
+
     .media-object {
       border-radius: 50%;
       width: 50px;
+      height: 50px;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 100%;
+      border: 2px solid white;
+
+      svg {
+        margin-top: 35px !important;
+        margin-left: 35px;
+      }
+
     }
 
     .media-heading {
@@ -19,12 +37,28 @@
     }
   }
   .right {
+    height: calc(100vh - 162px);
+
     .media-object {
       border-radius: 50%;
       width: 30px;
     }
+
     .media-body {
-      max-width: 300px;
+      max-width: 75%;
     }
+
+    .media-body:disabled {
+      flex: 1;
+    }
+
+    .pre-scrollable {
+      max-height: 100%;
+    }
+
+    .media-list {
+      height: calc(100vh - 262px);
+    }
+
   }
 }

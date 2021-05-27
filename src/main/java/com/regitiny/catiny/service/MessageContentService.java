@@ -66,4 +66,7 @@ public interface MessageContentService
 
 
   Page<MessageContentDTO> getContentInGroup(String groupId, Pageable pageable);
+
+
+  MessageContentDTO saveMessage(String content, String groupId);
 }

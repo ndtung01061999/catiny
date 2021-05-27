@@ -15,5 +15,5 @@ import java.time.Instant;
 @Repository
 public interface MessageContentRepository extends JpaRepository<MessageContent, Long>
 {
-  Page<MessageContent> findAllByGroupIdAndCreatedDateGreaterThanEqual(String groupId, Instant createdDate, Pageable pageable);
+  Page<MessageContent> findAllByGroupIdAndCreatedDateGreaterThanEqualOrderByCreatedDateDesc(String groupId, Instant createdDate, Pageable pageable);
 }

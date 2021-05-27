@@ -115,12 +115,12 @@ public class WebsocketConfiguration implements WebSocketMessageBrokerConfigurer 
         public Message<?> preSend(@Nonnull Message<?> message, @Nonnull MessageChannel channel) {
           var accessor = StompHeaderAccessor.wrap(message);
           var username = Objects.requireNonNull(accessor.getUser()).getName();
-          var destination = Objects.requireNonNull(accessor.getDestination());
+
 
           var commandSubscribeCheck = StompCommand.SUBSCRIBE.equals(accessor.getCommand());
           if (commandSubscribeCheck) {
+            var destination = Objects.requireNonNull(accessor.getDestination());
             if (destination.contains("/" + username + "/")) return ChannelInterceptor.super.preSend(message, channel);
-
             // don't subscribe /topic/**
             var destinationRegex = "/topic/[[\\w-]+/]*[*]{1,2}";
             var destinationRegexCheck = Pattern.matches(destinationRegex, accessor.getDestination());

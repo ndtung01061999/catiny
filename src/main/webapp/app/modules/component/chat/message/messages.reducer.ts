@@ -10,7 +10,7 @@ import {
 } from 'react-jhipster';
 
 import {cleanEntity} from 'app/shared/util/entity-utils';
-import {FAILURE, REQUEST, SUCCESS} from 'app/shared/reducers/action-type.util';
+import {FAILURE, REQUEST, SUCCESS, WS_MESSAGE} from 'app/shared/reducers/action-type.util';
 
 import {defaultValue, IMessageGroup} from 'app/shared/model/message-group.model';
 import {IMessageContent} from "app/shared/model/message-content.model";
@@ -26,7 +26,9 @@ export const ACTION_TYPES = {
   SET_BLOB: 'messageGroup/SET_BLOB',
   RESET: 'messageGroup/RESET',
   FETCH_ALL_GROUPS_JOINED_LIST: 'messages/FETCH_ALL_GROUPS_JOINED_LIST',
-  FETCH_CONTENT_IN_GROUP_LIST: 'messages/FETCH_CONTENT_IN_GROUP_LIST'
+  FETCH_CONTENT_IN_GROUP_LIST: 'messages/FETCH_CONTENT_IN_GROUP_LIST',
+
+  MESSAGE_USER_NEW_MESSAGE: "message/MESSAGE_USER_NEW_MESSAGE"
 };
 
 const initialState = {
@@ -91,7 +93,6 @@ export default (state: MessageComponentState = initialState, action): MessageCom
     case SUCCESS(ACTION_TYPES.FETCH_ALL_GROUPS_JOINED_LIST):
     {
       const links = parseHeaderForLinks(action.payload.headers.link);
-      window.console.log(action)
       return {
         ...state,
         loading: false,
@@ -104,18 +105,14 @@ export default (state: MessageComponentState = initialState, action): MessageCom
     {
       const data = action.payload.data;
       const links = parseHeaderForLinks(action.payload.headers.link);
-      const messageContentListCurrent =
-        data.length > 0 &&
-        state.groupIdCurrent === data[0].groupId
-          ? state.messageContentList : [];
-      const groupId = messageContentListCurrent.length > 0 ? messageContentListCurrent[0].groupId : null;
-      window.console.log(messageContentListCurrent)
+      const messageContentListCurrent = data.length > 0 && state.groupIdCurrent === action.payload.groupId
+        ? state.messageContentList : [];
       return {
         ...state,
         loading: false,
         links,
-        groupIdCurrent: groupId,
-        messageContentList: loadMoreDataWhenScrolled(messageContentListCurrent, data, links),
+        groupIdCurrent: action.payload.groupId,
+        messageContentList: [...data, ...messageContentListCurrent],
         totalItems: parseInt(action.payload.headers['x-total-count'], 10),
       };
     }
@@ -153,6 +150,16 @@ export default (state: MessageComponentState = initialState, action): MessageCom
         updateSuccess: true,
         entity: {},
       };
+    case WS_MESSAGE(ACTION_TYPES.MESSAGE_USER_NEW_MESSAGE):
+    {
+      const data = JSON.parse(action.payload.body);
+      const messageContentListCurrent = data && state.groupIdCurrent === data.groupId
+        ? state.messageContentList : [];
+      return {
+        ...state,
+        messageContentList: [...messageContentListCurrent, data]
+      };
+    }
     case ACTION_TYPES.SET_BLOB:
     {
       const {name, data, contentType} = action.payload;
@@ -249,15 +256,26 @@ export const getAllGroupsJoined: ICrudGetAllAction<IMessageGroup> = (page, size,
   };
 };
 
-export const getContentInGroup = (groupId, page, size) =>
+export const getContentInGroup = (groupId: string, page: number, size: number) =>
 {
-  const queryParams = `?${page && size ? `page=${page}&size=${size}` : ''}`
+  const queryParams = `?${page != null && size != null ? `page=${page}&size=${size}` : ''}`
   const requestUrl = `${apiUrlMessageContent}/message-groups/${groupId}${queryParams}`;
   return {
     type: ACTION_TYPES.FETCH_CONTENT_IN_GROUP_LIST,
-    payload: axios.get(`${requestUrl}`),
+    payload: axios.get(`${requestUrl}`).then(data =>
+    {
+      return {...data, groupId};
+    }),
   };
 };
+
+export const messageUserNewMessage = data =>
+{
+  return {
+    type: WS_MESSAGE(ACTION_TYPES.MESSAGE_USER_NEW_MESSAGE),
+    payload: data
+  }
+}
 
 export const setBlob = (name, data, contentType?) => ({
   type: ACTION_TYPES.SET_BLOB,

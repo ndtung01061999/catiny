@@ -235,4 +235,10 @@ public class MessageGroupServiceImpl implements MessageGroupService
   {
     return messageGroupRepository.findByGroupIdAndUserId(groupId, UserUtils.thisUser().getId()).orElse(null);
   }
+
+  @Override
+  public List<MessageGroupDTO> getAllUserIdInGroupByGroupId(String groupId)
+  {
+    return messageGroupRepository.findAllByGroupId(groupId).map(messageGroupMapper::toDto).orElse(new ArrayList<>());
+  }
 }

@@ -73,4 +73,7 @@ public interface MessageGroupService
 
 
   MessageGroup getMessageGroupByGroupId(String groupId);
+
+
+  List<MessageGroupDTO> getAllUserIdInGroupByGroupId(String groupId);
 }

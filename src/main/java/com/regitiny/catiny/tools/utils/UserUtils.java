@@ -7,16 +7,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserUtils {
+public class UserUtils
+{
 
   private static UserRepository userRepository = null;
 
-  @Autowired
-  private void setUserRepository(UserRepository userRepository) {
-    UserUtils.userRepository = userRepository;
+  public static final User thisUser()
+  {
+    return SecurityUtils.getCurrentUserLogin().flatMap(userLogin -> userRepository.findOneByLogin(userLogin)).orElse(null);
   }
 
-  public static User thisUser() {
-    return SecurityUtils.getCurrentUserLogin().flatMap(userLogin -> userRepository.findOneByLogin(userLogin)).orElse(null);
+  public static final User getUserById(Long id)
+  {
+    return userRepository.findById(id).orElse(null);
+  }
+
+  @Autowired
+  private void setUserRepository(UserRepository userRepository)
+  {
+    UserUtils.userRepository = userRepository;
   }
 }
