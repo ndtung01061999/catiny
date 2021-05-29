@@ -27,7 +27,7 @@ public class EntityDefaultPropertiesServiceUtils {
       Instant now = Instant.now();
       String thisUser = SecurityUtils.getCurrentUserLogin().orElse(null);
 
-      object.getClass().getDeclaredMethod("setRole", String.class).invoke(object, AuthoritiesConstants.MANAGEMENT);
+//      object.getClass().getDeclaredMethod("setRole", String.class).invoke(object, AuthoritiesConstants.MANAGEMENT);
       object.getClass().getDeclaredMethod("setUuid", UUID.class).invoke(object, UUID.randomUUID());
       object.getClass().getDeclaredMethod("setCreatedDate", now.getClass()).invoke(object, now);
       object.getClass().getDeclaredMethod("setModifiedDate", now.getClass()).invoke(object, now);

@@ -1,10 +1,16 @@
 package com.regitiny.catiny.advance.service;
 
-public interface LocalService<S,QS>
+/**
+ * if you like using EntityService and EntityQueryService of jhipster
+ * then you add extends this Interface to EntityAdvancedService
+ * and add extends Class LocalServiceImpl to EntityAdvancedServiceImpl
+ * @see LocalServiceImpl
+ * @param <S> EntityService
+ * @param <Q> EntityQueryService
+ */
+public interface LocalService<S,Q>
 {
-
-  QS LocalQueryService();
+  Q LocalQueryService();
 
   S LocalService ();
-
 }

@@ -8,27 +8,63 @@ import org.springframework.stereotype.Component;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
+/**
+ *
+ * @param <S> EntityService
+ * @param <Q> EntityQueryService
+ */
 @Log4j2
 @Component
-public class LocalServiceImpl<S, QS> implements LocalService<S, QS>
+public class LocalServiceImpl<S, Q> implements LocalService<S, Q>
 {
   @Autowired
   protected ApplicationContext applicationContext;
 
   protected S localService;
-  protected QS localQueryService;
+  protected Q localQueryService;
 
   @Override
   public S LocalService()
   {
+    if (Objects.isNull(localService))
+      setup();
+    else
+      log.warn("not found LocalService");
+    return localService;
+  }
+
+  @Override
+  public Q LocalQueryService()
+  {
+    if (Objects.isNull(localService))
+      setup();
+    else
+      log.warn("not found LocalQueryService");
+    return localQueryService;
+  }
+
+  public void setup()
+  {
     var thisName = getClass().getSimpleName();
+    var matcher =Pattern.compile("^[A-Z]+").matcher(thisName);
+    matcher.find();
+    var firstUpper =  matcher.group(0);
+    thisName=thisName.replaceFirst("^[A-Z]+",firstUpper.toLowerCase() );
+
+    if (Objects.isNull(localService))
+    {
+      var serviceName = thisName.replace("AdvanceServiceImpl", "QueryService");
+      var bean = applicationContext.getBean(serviceName);
+      localQueryService = (Q) bean;
+    }
+    else
+    {
+      log.debug("not found LocalQueryService");
+    }
+
     if (Objects.isNull(localService))
     {
       var serviceName = thisName.replace("AdvanceServiceImpl", "ServiceImpl");
-      var matcher =Pattern.compile("^[A-Z]+").matcher(serviceName);
-      matcher.find();
-      var firstUpper =  matcher.group(0);
-      serviceName=serviceName.replaceFirst("^[A-Z]+",firstUpper.toLowerCase() );
       var bean = applicationContext.getBean(serviceName);
       localService = (S) bean;
     }
@@ -36,27 +72,5 @@ public class LocalServiceImpl<S, QS> implements LocalService<S, QS>
     {
       log.debug("not found LocalService");
     }
-    return localService;
-  }
-
-  @Override
-  public QS LocalQueryService()
-  {
-    var thisName = getClass().getSimpleName();
-    if (Objects.isNull(localService))
-    {
-      var serviceName = thisName.replace("AdvanceServiceImpl", "QueryService");
-      var matcher =Pattern.compile("^[A-Z]+").matcher(serviceName);
-      matcher.find();
-      var firstUpper =  matcher.group(0);
-      serviceName=serviceName.replaceFirst("^[A-Z]+",firstUpper.toLowerCase() );
-      var bean = applicationContext.getBean(serviceName);
-      localQueryService = (QS) bean;
-    }
-    else
-    {
-      log.debug("not found LocalService");
-    }
-    return localQueryService;
   }
 }

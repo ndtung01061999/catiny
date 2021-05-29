@@ -49,20 +49,6 @@ public class MessageGroupModel implements Serializable
   private String lastContent;
 
   /**
-   * searchField
-   */
-  @ApiModelProperty(value = "searchField")
-  @Lob
-  private String searchField;
-
-  /**
-   * role
-   */
-  @Size(max = 511)
-  @ApiModelProperty(value = "role")
-  private String role;
-
-  /**
    * createdDate
    */
   @ApiModelProperty(value = "createdDate")
@@ -85,13 +71,6 @@ public class MessageGroupModel implements Serializable
    */
   @ApiModelProperty(value = "modifiedBy")
   private String modifiedBy;
-
-  /**
-   * comment
-   */
-  @Size(max = 511)
-  @ApiModelProperty(value = "comment")
-  private String comment;
 
   @Data
   public static class MessageContentModelIn implements Serializable
