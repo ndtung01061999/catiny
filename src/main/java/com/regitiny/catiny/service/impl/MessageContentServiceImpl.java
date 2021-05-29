@@ -112,35 +112,4 @@ public class MessageContentServiceImpl implements MessageContentService {
     return messageContentSearchRepository.search(queryStringQuery(query), pageable).map(messageContentMapper::toDto);
   }
 
-  @Override
-  public Page<MessageContentDTO> getContentInGroup(String groupId, Pageable pageable)
-  {
-
-    var messageGroup = messageGroupService.getMessageGroupByGroupId(groupId);
-    var result = Objects.isNull(messageGroup) ? Page.empty() : messageContentRepository.findAllByGroupIdAndCreatedDateGreaterThanEqualOrderByCreatedDateDesc(groupId, messageGroup.getCreatedDate(), pageable).map(messageContentMapper::toDto);
-    var resultx = result.toList().stream()
-      .map(o -> (MessageContentDTO) o)
-      .sorted(Comparator.comparing(MessageContentDTO::getCreatedDate))
-      .collect(Collectors.toList());
-    resultx.forEach(x -> System.out.println(x.getId()));
-    return new PageImpl<>(resultx);
-  }
-
-  @Override
-  public MessageContentDTO saveMessage(String content, String groupId)
-  {
-    var messageGroup = messageGroupService.getMessageGroupByGroupId(groupId);
-    if (Objects.nonNull(messageGroup))
-    {
-      var messageContent = new MessageContent();
-      EntityDefaultPropertiesServiceUtils.setPropertiesBeforeCreate(messageContent);
-      messageContent.groupId(messageGroup.getGroupId())
-        .content(content)
-        .sender(UserUtils.thisUser().getLogin())
-        .status("Đã gửi");
-      return messageContentMapper.toDto(messageContentRepository.save(messageContent));
-    }
-    return null;
-
-  }
 }

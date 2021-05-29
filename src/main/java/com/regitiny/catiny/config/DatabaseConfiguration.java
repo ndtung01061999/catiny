@@ -1,6 +1,5 @@
 package com.regitiny.catiny.config;
 
-import java.sql.SQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -14,11 +13,19 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import tech.jhipster.config.JHipsterConstants;
 import tech.jhipster.config.h2.H2ConfigurationHelper;
 
+import java.sql.SQLException;
+
 @Configuration
-@EnableJpaRepositories("com.regitiny.catiny.repository")
+@EnableJpaRepositories({
+  "com.regitiny.catiny.repository",
+  "com.regitiny.catiny.advance.repository"
+})
 @EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
 @EnableTransactionManagement
-@EnableElasticsearchRepositories("com.regitiny.catiny.repository.search")
+@EnableElasticsearchRepositories({
+  "com.regitiny.catiny.repository.search",
+  "com.regitiny.catiny.advance.repository.search"
+})
 public class DatabaseConfiguration {
 
   private final Logger log = LoggerFactory.getLogger(DatabaseConfiguration.class);

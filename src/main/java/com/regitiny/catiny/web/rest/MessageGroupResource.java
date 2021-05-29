@@ -198,48 +198,4 @@ public class MessageGroupResource {
     return ResponseEntity.ok().headers(headers).body(page.getContent());
   }
 
-  // custom by yuvytung
-
-  /**
-   * {@code POST  /message-groups} : Create a new messageGroup.
-   *
-   * @param userIds danh sách những user được thêm vào trong lúc tạo group
-   * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new messageGroupDTO, or with status {@code 400 (Bad Request)} if the messageGroup has already an ID.
-   * @throws URISyntaxException if the Location URI syntax is incorrect.
-   */
-  @PostMapping("/message-groups/new-group")
-  public ResponseEntity<List<MessageGroupDTO>> createNewMessageGroup(
-    @RequestParam("groupName") String groupName,
-    @RequestParam("lastContent") String lastContent,
-    @RequestParam("userIds") List<Long> userIds
-  ) throws URISyntaxException {
-    log.debug("REST request to save MessageGroup . groupName : {} , lastContent : {}", groupName, lastContent);
-    if (userIds.isEmpty()) throw new BadRequestAlertException(
-      "create group but not add any user to the group , so what you want?",
-      ENTITY_NAME,
-      "idexists"
-    );
-    var result = messageGroupService.createMessageGroup(groupName, lastContent, userIds);
-    if (Objects.isNull(result) || result.isEmpty()) throw new BadRequestAlertException("not create new messageGroup ", ENTITY_NAME, "err");
-    return ResponseEntity.ok(result);
-  }
-
-  @PostMapping("/message-groups/{groupId}")
-  public ResponseEntity<List<MessageGroupDTO>> addUserToGroup(@RequestParam List<Long> userIds, @PathVariable String groupId)
-    throws URISyntaxException
-  {
-    log.debug("REST request to save userId : {} , groupId : {}", userIds, groupId);
-    var result = messageGroupService.addUserToGroup(userIds, groupId);
-    if (result.size() == 0) ResponseEntity.status(HttpStatus.BAD_REQUEST).body("si đa quá bạn ơi không có thằng user nào đc add vào");
-    return ResponseEntity.ok(result);
-  }
-
-  @GetMapping("/message-groups/joined")
-  public ResponseEntity<List<MessageGroupDTO>> getAllGroupsJoined(Pageable pageable) throws URISyntaxException
-  {
-    log.debug("REST request get all groups user joined");
-    var result = messageGroupService.getAllGroupsJoined(pageable);
-    HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), result);
-    return ResponseEntity.ok().headers(headers).body(result.getContent());
-  }
 }

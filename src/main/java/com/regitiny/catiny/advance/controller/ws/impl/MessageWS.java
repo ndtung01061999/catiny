@@ -1,8 +1,8 @@
-package com.regitiny.catiny.web.websocket;
+package com.regitiny.catiny.advance.controller.ws.impl;
 
+import com.regitiny.catiny.advance.service.MessageContentAdvanceService;
+import com.regitiny.catiny.advance.service.MessageGroupAdvanceService;
 import com.regitiny.catiny.domain.User;
-import com.regitiny.catiny.service.MessageContentService;
-import com.regitiny.catiny.service.MessageGroupService;
 import com.regitiny.catiny.service.dto.MessageContentDTO;
 import com.regitiny.catiny.tools.exception.constant.StringPool;
 import com.regitiny.catiny.tools.utils.UserUtils;
@@ -24,14 +24,14 @@ public class MessageWS implements ApplicationListener<SessionDisconnectEvent>
 {
 
   private final SimpMessageSendingOperations messagingTemplate;
-  private final MessageContentService messageContentService;
-  private final MessageGroupService messageGroupService;
+  private final MessageContentAdvanceService messageContentAdvanceService;
+  private final MessageGroupAdvanceService messageGroupAdvanceService;
 
-  public MessageWS(SimpMessageSendingOperations messagingTemplate, MessageContentService messageContentService, MessageGroupService messageGroupService)
+  public MessageWS(SimpMessageSendingOperations messagingTemplate, MessageContentAdvanceService messageContentService, MessageGroupAdvanceService messageGroupService)
   {
     this.messagingTemplate = messagingTemplate;
-    this.messageContentService = messageContentService;
-    this.messageGroupService = messageGroupService;
+    this.messageContentAdvanceService = messageContentService;
+    this.messageGroupAdvanceService = messageGroupService;
   }
 
   @MessageMapping("/topic/message/send")
@@ -40,13 +40,13 @@ public class MessageWS implements ApplicationListener<SessionDisconnectEvent>
     var bodyJson = new JSONObject(body);
     var messageContent = bodyJson.has("content") ? bodyJson.getString("content") : StringPool.BLANK;
     var groupId = bodyJson.has("groupId") ? bodyJson.getString("groupId") : StringPool.BLANK;
-    var result = messageContentService.saveMessage(messageContent, groupId);
+    var result = messageContentAdvanceService.saveMessage(messageContent, groupId);
     sendMessagesToUserInGroup(result);
   }
 
   private void sendMessagesToUserInGroup(MessageContentDTO messageContentDTO)
   {
-    messageGroupService.getAllUserIdInGroupByGroupId(messageContentDTO.getGroupId()).stream()
+    messageGroupAdvanceService.getAllUserIdInGroupByGroupId(messageContentDTO.getGroupId()).stream()
       .map(messageGroupDTO -> UserUtils.getUserById(messageGroupDTO.getUserId()))
       .map(User::getLogin)
       .map(login -> "/topic/message/user/${user}/group/new-message".replace("${user}", login))

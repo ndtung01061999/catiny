@@ -14,12 +14,4 @@ import java.util.Optional;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface MessageGroupRepository extends JpaRepository<MessageGroup, Long> {
-  Optional<List<MessageGroup>> findAllByGroupId(String groupId);
-
-
-  Page<MessageGroup> findAllByUserId(Long userId, Pageable pageable);
-
-
-  Optional<MessageGroup> findByGroupIdAndUserId(String groupId, Long userId);
-}
+public interface MessageGroupRepository extends JpaRepository<MessageGroup, Long> { }

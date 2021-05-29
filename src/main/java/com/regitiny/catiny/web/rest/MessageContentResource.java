@@ -199,13 +199,4 @@ public class MessageContentResource {
     return ResponseEntity.ok().headers(headers).body(page.getContent());
   }
 
-  @GetMapping("/message-contents/message-groups/{groupId}")
-  public ResponseEntity<List<MessageContentDTO>> getContentInGroup(@PathVariable String groupId, Pageable pageable) throws URISyntaxException
-  {
-    log.debug("REST request get all groups user joined");
-    var result = messageContentService.getContentInGroup(groupId, pageable);
-    HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), result);
-    return ResponseEntity.ok().headers(headers).body(result.getContent());
-  }
-
 }

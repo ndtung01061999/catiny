@@ -60,20 +60,5 @@ public interface MessageGroupService
    * @return the list of entities.
    */
   Page<MessageGroupDTO> search(String query, Pageable pageable);
-  // custom by yuvytung
 
-
-  List<MessageGroupDTO> createMessageGroup(String groupName, String lastContent, List<Long> userIds);
-
-
-  List<MessageGroupDTO> addUserToGroup(List<Long> userIds, String groupId);
-
-
-  Page<MessageGroupDTO> getAllGroupsJoined(Pageable pageable);
-
-
-  MessageGroup getMessageGroupByGroupId(String groupId);
-
-
-  List<MessageGroupDTO> getAllUserIdInGroupByGroupId(String groupId);
 }
