@@ -43,6 +43,7 @@
     "clientPackageManager": "npm",
     "languages": ["vi", "en"],
     "entities": ["MessageGroup", "MessageContent"],
-    "lastLiquibaseTimestamp": 1621751250000
+    "lastLiquibaseTimestamp": 1621751250000,
+    "withGeneratedFlag": true
   }
 }

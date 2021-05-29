@@ -2,10 +2,12 @@ package com.regitiny.catiny.advance.service.impl;
 
 import com.regitiny.catiny.advance.repository.MessageContentAdvanceRepository;
 import com.regitiny.catiny.advance.repository.search.MessageContentAdvanceSearch;
+import com.regitiny.catiny.advance.service.LocalServiceImpl;
 import com.regitiny.catiny.advance.service.MessageContentAdvanceService;
 import com.regitiny.catiny.advance.service.MessageGroupAdvanceService;
 import com.regitiny.catiny.advance.service.mapper.MessageContentAdvanceMapper;
 import com.regitiny.catiny.domain.MessageContent;
+import com.regitiny.catiny.service.MessageContentQueryService;
 import com.regitiny.catiny.service.MessageContentService;
 import com.regitiny.catiny.service.dto.MessageContentDTO;
 import com.regitiny.catiny.tools.utils.EntityDefaultPropertiesServiceUtils;
@@ -27,7 +29,7 @@ import java.util.stream.Collectors;
 @Log4j2
 @Service
 @Transactional
-public class MessageContentAdvanceServiceImpl implements MessageContentAdvanceService
+public class MessageContentAdvanceServiceImpl extends LocalServiceImpl<MessageContentService, MessageContentQueryService> implements MessageContentAdvanceService
 {
   private final MessageContentAdvanceRepository messageContentAdvanceRepository;
 
@@ -81,9 +83,4 @@ public class MessageContentAdvanceServiceImpl implements MessageContentAdvanceSe
 
   }
 
-  @Override
-  public MessageContentService LocalService()
-  {
-    return messageContentService;
-  }
 }

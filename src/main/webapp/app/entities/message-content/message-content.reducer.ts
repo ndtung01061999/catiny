@@ -1,18 +1,18 @@
 import axios from 'axios';
 import {
-  ICrudDeleteAction,
+  ICrudSearchAction,
+  parseHeaderForLinks,
+  loadMoreDataWhenScrolled,
   ICrudGetAction,
   ICrudGetAllAction,
   ICrudPutAction,
-  ICrudSearchAction,
-  loadMoreDataWhenScrolled,
-  parseHeaderForLinks,
+  ICrudDeleteAction,
 } from 'react-jhipster';
 
-import {cleanEntity} from 'app/shared/util/entity-utils';
-import {FAILURE, REQUEST, SUCCESS} from 'app/shared/reducers/action-type.util';
+import { cleanEntity } from 'app/shared/util/entity-utils';
+import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 
-import {defaultValue, IMessageContent} from 'app/shared/model/message-content.model';
+import { IMessageContent, defaultValue } from 'app/shared/model/message-content.model';
 
 export const ACTION_TYPES = {
   SEARCH_MESSAGECONTENTS: 'messageContent/SEARCH_MESSAGECONTENTS',

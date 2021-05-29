@@ -69,3 +69,4 @@ dto * with mapstruct
 paginate * with  infinite-scroll
 search * with elasticsearch
 service * with serviceImpl
+filter *

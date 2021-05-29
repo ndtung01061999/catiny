@@ -3,6 +3,7 @@ package com.regitiny.catiny.advance.service;
 import com.regitiny.catiny.advance.controller.model.MessageGroupModel;
 import com.regitiny.catiny.domain.MessageGroup;
 import com.regitiny.catiny.service.MessageContentService;
+import com.regitiny.catiny.service.MessageGroupQueryService;
 import com.regitiny.catiny.service.MessageGroupService;
 import com.regitiny.catiny.service.dto.MessageGroupDTO;
 import org.springframework.data.domain.Page;
@@ -13,7 +14,7 @@ import java.util.List;
 /**
  * Service Interface for managing {@link MessageGroup}.
  */
-public interface MessageGroupAdvanceService extends LocalService<MessageGroupService>
+public interface MessageGroupAdvanceService extends LocalService<MessageGroupService, MessageGroupQueryService>
 {
   // custom by yuvytung
   List<MessageGroupDTO> createMessageGroup(String groupName, String lastContent, List<Long> userIds);

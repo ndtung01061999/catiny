@@ -12,13 +12,14 @@ import activate, { ActivateState } from 'app/modules/account/activate/activate.r
 import password, { PasswordState } from 'app/modules/account/password/password.reducer';
 import settings, { SettingsState } from 'app/modules/account/settings/settings.reducer';
 import passwordReset, { PasswordResetState } from 'app/modules/account/password-reset/password-reset.reducer';
-import messageGroup, {
-  MessageGroupState
-} from 'app/entities/message-group/message-group.reducer';
 // prettier-ignore
 import messageContent, {
   MessageContentState
 } from 'app/entities/message-content/message-content.reducer';
+// prettier-ignore
+import messageGroup, {
+  MessageGroupState
+} from 'app/entities/message-group/message-group.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 // prettier-ignore
 import messageComponent, {MessageComponentState} from 'app/modules/component/chat/message/messages.reducer';

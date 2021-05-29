@@ -1,43 +1,35 @@
-import React, {useEffect} from 'react';
-import {connect} from 'react-redux';
-import {RouteComponentProps} from 'react-router-dom';
-import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
-import {Translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router-dom';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
+import { Translate } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import {IRootState} from 'app/shared/reducers';
-import {deleteEntity, getEntity} from './message-content.reducer';
+import { IRootState } from 'app/shared/reducers';
+import { getEntity, deleteEntity } from './message-content.reducer';
 
-export interface IMessageContentDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }>
-{
-}
+export interface IMessageContentDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
-export const MessageContentDeleteDialog = (props: IMessageContentDeleteDialogProps) =>
-{
-  useEffect(() =>
-  {
+export const MessageContentDeleteDialog = (props: IMessageContentDeleteDialogProps) => {
+  useEffect(() => {
     props.getEntity(props.match.params.id);
   }, []);
 
-  const handleClose = () =>
-  {
+  const handleClose = () => {
     props.history.push('/message-content');
   };
 
-  useEffect(() =>
-  {
-    if (props.updateSuccess)
-    {
+  useEffect(() => {
+    if (props.updateSuccess) {
       handleClose();
     }
   }, [props.updateSuccess]);
 
-  const confirmDelete = () =>
-  {
+  const confirmDelete = () => {
     props.deleteEntity(props.messageContentEntity.id);
   };
 
-  const {messageContentEntity} = props;
+  const { messageContentEntity } = props;
   return (
     <Modal isOpen toggle={handleClose}>
       <ModalHeader toggle={handleClose} data-cy="messageContentDeleteDialogHeading">

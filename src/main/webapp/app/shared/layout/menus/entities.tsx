@@ -1,7 +1,7 @@
 import React from 'react';
 import MenuItem from 'app/shared/layout/menus/menu-item';
-import {Translate, translate} from 'react-jhipster';
-import {NavDropdown} from './menu-components';
+import { Translate, translate } from 'react-jhipster';
+import { NavDropdown } from './menu-components';
 
 export const EntitiesMenu = props => (
   <NavDropdown
@@ -9,7 +9,7 @@ export const EntitiesMenu = props => (
     name={translate('global.menu.entities.main')}
     id="entity-menu"
     data-cy="entity"
-    style={{maxHeight: '80vh', overflow: 'auto'}}
+    style={{ maxHeight: '80vh', overflow: 'auto' }}
   >
     <MenuItem icon="asterisk" to="/message-group">
       <Translate contentKey="global.menu.entities.messageGroup" />

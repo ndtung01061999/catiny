@@ -1,5 +1,6 @@
-export interface IMessageGroup
-{
+import dayjs from 'dayjs';
+
+export interface IMessageGroup {
   id?: number;
   uuid?: string;
   userId?: number;

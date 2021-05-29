@@ -1,26 +1,22 @@
-import React, {useEffect} from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Row, UncontrolledTooltip} from 'reactstrap';
-import {TextFormat, Translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, UncontrolledTooltip, Row, Col } from 'reactstrap';
+import { Translate, byteSize, TextFormat } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import {IRootState} from 'app/shared/reducers';
-import {getEntity} from './message-content.reducer';
-import {APP_DATE_FORMAT} from 'app/config/constants';
+import { IRootState } from 'app/shared/reducers';
+import { getEntity } from './message-content.reducer';
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface IMessageContentDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }>
-{
-}
+export interface IMessageContentDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
-export const MessageContentDetail = (props: IMessageContentDetailProps) =>
-{
-  useEffect(() =>
-  {
+export const MessageContentDetail = (props: IMessageContentDetailProps) => {
+  useEffect(() => {
     props.getEntity(props.match.params.id);
   }, []);
 
-  const {messageContentEntity} = props;
+  const { messageContentEntity } = props;
   return (
     <Row>
       <Col md="8">

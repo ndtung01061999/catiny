@@ -1,29 +1,27 @@
-import React, {useEffect, useState} from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Label, Row, UncontrolledTooltip} from 'reactstrap';
-import {AvField, AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
-import {setFileData, Translate, translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {IRootState} from 'app/shared/reducers';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col, Label, UncontrolledTooltip } from 'reactstrap';
+import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
+import { setFileData, byteSize, Translate, translate } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IRootState } from 'app/shared/reducers';
 
-import {createEntity, getEntity, reset, setBlob, updateEntity} from './message-content.reducer';
-import {convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime} from 'app/shared/util/date-utils';
+import { getEntity, updateEntity, createEntity, setBlob, reset } from './message-content.reducer';
+import { IMessageContent } from 'app/shared/model/message-content.model';
+import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface IMessageContentUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }>
-{
-}
+export interface IMessageContentUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
-export const MessageContentUpdate = (props: IMessageContentUpdateProps) =>
-{
+export const MessageContentUpdate = (props: IMessageContentUpdateProps) => {
   const [isNew] = useState(!props.match.params || !props.match.params.id);
 
-  const {messageContentEntity, loading, updating} = props;
+  const { messageContentEntity, loading, updating } = props;
 
-  const {content, searchField} = messageContentEntity;
+  const { content, searchField } = messageContentEntity;
 
-  const handleClose = () =>
-  {
+  const handleClose = () => {
     props.history.push('/message-content');
   };
 
@@ -156,7 +154,7 @@ export const MessageContentUpdate = (props: IMessageContentUpdateProps) =>
                   type="text"
                   name="role"
                   validate={{
-                    maxLength: {value: 511, errorMessage: translate('entity.validation.maxlength', {max: 511})},
+                    maxLength: { value: 511, errorMessage: translate('entity.validation.maxlength', { max: 511 }) },
                   }}
                 />
                 <UncontrolledTooltip target="roleLabel">
@@ -225,7 +223,7 @@ export const MessageContentUpdate = (props: IMessageContentUpdateProps) =>
                   type="text"
                   name="comment"
                   validate={{
-                    maxLength: {value: 511, errorMessage: translate('entity.validation.maxlength', {max: 511})},
+                    maxLength: { value: 511, errorMessage: translate('entity.validation.maxlength', { max: 511 }) },
                   }}
                 />
                 <UncontrolledTooltip target="commentLabel">

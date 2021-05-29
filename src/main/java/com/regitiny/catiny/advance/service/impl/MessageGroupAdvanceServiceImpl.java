@@ -2,11 +2,12 @@ package com.regitiny.catiny.advance.service.impl;
 
 import com.regitiny.catiny.advance.repository.MessageGroupAdvanceRepository;
 import com.regitiny.catiny.advance.repository.search.MessageGroupAdvanceSearch;
+import com.regitiny.catiny.advance.service.LocalServiceImpl;
 import com.regitiny.catiny.advance.service.MessageGroupAdvanceService;
 import com.regitiny.catiny.advance.service.mapper.MessageGroupAdvanceMapper;
 import com.regitiny.catiny.domain.MessageGroup;
 import com.regitiny.catiny.repository.UserRepository;
-import com.regitiny.catiny.service.MessageContentService;
+import com.regitiny.catiny.service.MessageGroupQueryService;
 import com.regitiny.catiny.service.MessageGroupService;
 import com.regitiny.catiny.service.dto.MessageGroupDTO;
 import com.regitiny.catiny.tools.exception.constant.StringPool;
@@ -29,7 +30,7 @@ import static java.util.stream.Collectors.toList;
 @Log4j2
 @Service
 @Transactional
-public class MessageGroupAdvanceServiceImpl implements MessageGroupAdvanceService
+public class MessageGroupAdvanceServiceImpl extends LocalServiceImpl<MessageGroupService, MessageGroupQueryService> implements MessageGroupAdvanceService
 {
 
 
@@ -172,9 +173,5 @@ public class MessageGroupAdvanceServiceImpl implements MessageGroupAdvanceServic
     return messageGroupAdvanceRepository.findAllByGroupId(groupId).map(messageGroupAdvanceMapper::toDto).orElse(new ArrayList<>());
   }
 
-  @Override
-  public MessageGroupService LocalService()
-  {
-    return messageGroupService;
-  }
+
 }

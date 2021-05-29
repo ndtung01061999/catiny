@@ -1,17 +1,14 @@
 package com.regitiny.catiny.repository;
 
+import com.regitiny.catiny.GeneratedByJHipster;
 import com.regitiny.catiny.domain.MessageGroup;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
-import java.util.Optional;
 
 /**
  * Spring Data SQL repository for the MessageGroup entity.
  */
 @SuppressWarnings("unused")
 @Repository
-public interface MessageGroupRepository extends JpaRepository<MessageGroup, Long> { }
+@GeneratedByJHipster
+public interface MessageGroupRepository extends JpaRepository<MessageGroup, Long>, JpaSpecificationExecutor<MessageGroup> {}

@@ -1,12 +1,12 @@
 import {
-  entityConfirmDeleteButtonSelector,
+  entityTableSelector,
+  entityDetailsButtonSelector,
+  entityDetailsBackButtonSelector,
   entityCreateButtonSelector,
   entityCreateSaveButtonSelector,
-  entityDeleteButtonSelector,
-  entityDetailsBackButtonSelector,
-  entityDetailsButtonSelector,
   entityEditButtonSelector,
-  entityTableSelector,
+  entityDeleteButtonSelector,
+  entityConfirmDeleteButtonSelector,
 } from '../../support/entity';
 
 describe('MessageContent e2e test', () => {

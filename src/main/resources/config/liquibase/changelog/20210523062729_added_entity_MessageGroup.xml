@@ -1,58 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <databaseChangeLog
-  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-  <!--
-      Added the entity MessageGroup.
-  -->
-  <changeSet id="20210523062729-1" author="jhipster">
-    <createTable tableName="message_group" remarks="The PostDetails entity.\n@author A true hipster">
-      <column name="id" type="bigint">
-        <constraints primaryKey="true" nullable="false"/>
-      </column>
-      <column name="uuid" type="${uuidType}" remarks="uuid">
-        <constraints nullable="false" unique="true" uniqueConstraintName="ux_message_group__uuid"/>
-      </column>
-      <column name="user_id" type="bigint">
-        <constraints nullable="false"/>
-      </column>
-      <column name="group_id" type="varchar(255)">
-        <constraints nullable="false"/>
-      </column>
-      <column name="group_name" type="varchar(255)">
-        <constraints nullable="true"/>
-      </column>
-      <column name="add_by" type="varchar(255)">
-        <constraints nullable="true"/>
-      </column>
-      <column name="last_content" type="${clobType}">
-        <constraints nullable="true"/>
-      </column>
-      <column name="search_field" type="${clobType}" remarks="searchField">
-        <constraints nullable="true"/>
-      </column>
-      <column name="role" type="varchar(511)" remarks="role">
-        <constraints nullable="true"/>
-      </column>
-      <column name="created_date" type="${datetimeType}" remarks="createdDate">
-        <constraints nullable="true"/>
-      </column>
-      <column name="modified_date" type="${datetimeType}" remarks="modifiedDate">
-        <constraints nullable="true"/>
-      </column>
-      <column name="created_by" type="varchar(255)" remarks="createdBy">
-        <constraints nullable="true"/>
-      </column>
-      <column name="modified_by" type="varchar(255)" remarks="modifiedBy">
-        <constraints nullable="true"/>
-      </column>
-      <column name="comment" type="varchar(511)" remarks="comment">
-        <constraints nullable="true"/>
-      </column>
-      <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
-    </createTable>
+    <!--
+        Added the entity MessageGroup.
+    -->
+    <changeSet id="20210523062729-1" author="jhipster">
+        <createTable tableName="message_group" remarks="The PostDetails entity.\n@author A true hipster">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="uuid" type="${uuidType}" remarks="uuid">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_message_group__uuid" />
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="group_id" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="group_name" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="add_by" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="last_content" type="${clobType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="search_field" type="${clobType}" remarks="searchField">
+                <constraints nullable="true" />
+            </column>
+            <column name="role" type="varchar(511)" remarks="role">
+                <constraints nullable="true" />
+            </column>
+            <column name="created_date" type="${datetimeType}" remarks="createdDate">
+                <constraints nullable="true" />
+            </column>
+            <column name="modified_date" type="${datetimeType}" remarks="modifiedDate">
+                <constraints nullable="true" />
+            </column>
+            <column name="created_by" type="varchar(255)" remarks="createdBy">
+                <constraints nullable="true" />
+            </column>
+            <column name="modified_by" type="varchar(255)" remarks="modifiedBy">
+                <constraints nullable="true" />
+            </column>
+            <column name="comment" type="varchar(511)" remarks="comment">
+                <constraints nullable="true" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
         <dropDefaultValue tableName="message_group" columnName="created_date" columnDataType="${datetimeType}"/>
         <dropDefaultValue tableName="message_group" columnName="modified_date" columnDataType="${datetimeType}"/>
     </changeSet>

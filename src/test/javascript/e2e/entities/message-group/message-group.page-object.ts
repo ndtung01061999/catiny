@@ -1,6 +1,6 @@
-import {by, element, ElementArrayFinder, ElementFinder} from 'protractor';
+import { element, by, ElementFinder, ElementArrayFinder } from 'protractor';
 
-import {click, isVisible, waitUntilAnyDisplayed, waitUntilDisplayed, waitUntilHidden} from '../../util/utils';
+import { waitUntilAnyDisplayed, waitUntilDisplayed, click, waitUntilHidden, isVisible } from '../../util/utils';
 
 import NavBarPage from './../../page-objects/navbar-page';
 

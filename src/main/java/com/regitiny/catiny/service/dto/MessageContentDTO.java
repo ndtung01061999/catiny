@@ -1,20 +1,20 @@
 package com.regitiny.catiny.service.dto;
 
+import com.regitiny.catiny.GeneratedByJHipster;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
-import javax.persistence.Lob;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
+import javax.persistence.Lob;
+import javax.validation.constraints.*;
 
 /**
  * A DTO for the {@link com.regitiny.catiny.domain.MessageContent} entity.
  */
 @ApiModel(description = "The PostDetails entity.\n@author A true hipster")
+@GeneratedByJHipster
 public class MessageContentDTO implements Serializable {
 
   private Long id;

@@ -1,16 +1,16 @@
 package com.regitiny.catiny.service.dto;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import com.regitiny.catiny.GeneratedByJHipster;
 import com.regitiny.catiny.web.rest.TestUtil;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-class MessageGroupDTOTest
-{
+@GeneratedByJHipster
+class MessageGroupDTOTest {
 
   @Test
-  void dtoEqualsVerifier() throws Exception
-  {
+  void dtoEqualsVerifier() throws Exception {
     TestUtil.equalsVerifier(MessageGroupDTO.class);
     MessageGroupDTO messageGroupDTO1 = new MessageGroupDTO();
     messageGroupDTO1.setId(1L);

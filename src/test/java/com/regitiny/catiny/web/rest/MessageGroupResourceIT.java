@@ -1,14 +1,32 @@
 package com.regitiny.catiny.web.rest;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
+import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import com.regitiny.catiny.GeneratedByJHipster;
 import com.regitiny.catiny.IntegrationTest;
 import com.regitiny.catiny.domain.MessageGroup;
 import com.regitiny.catiny.repository.MessageGroupRepository;
 import com.regitiny.catiny.repository.search.MessageGroupSearchRepository;
+import com.regitiny.catiny.service.criteria.MessageGroupCriteria;
 import com.regitiny.catiny.service.dto.MessageGroupDTO;
 import com.regitiny.catiny.service.mapper.MessageGroupMapper;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicLong;
+import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -18,22 +36,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.EntityManager;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
-import java.util.concurrent.atomic.AtomicLong;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import org.springframework.util.Base64Utils;
 
 /**
  * Integration tests for the {@link MessageGroupResource} REST controller.
@@ -42,6 +45,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
+@GeneratedByJHipster
 class MessageGroupResourceIT {
 
   private static final UUID DEFAULT_UUID = UUID.randomUUID();
@@ -49,6 +53,7 @@ class MessageGroupResourceIT {
 
   private static final Long DEFAULT_USER_ID = 1L;
   private static final Long UPDATED_USER_ID = 2L;
+  private static final Long SMALLER_USER_ID = 1L - 1L;
 
   private static final String DEFAULT_GROUP_ID = "AAAAAAAAAA";
   private static final String UPDATED_GROUP_ID = "BBBBBBBBBB";
@@ -87,8 +92,8 @@ class MessageGroupResourceIT {
   private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
   private static final String ENTITY_SEARCH_API_URL = "/api/_search/message-groups";
 
-  private static final Random random = new Random();
-  private static final AtomicLong count = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
+  private static Random random = new Random();
+  private static AtomicLong count = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
 
   @Autowired
   private MessageGroupRepository messageGroupRepository;
@@ -290,8 +295,8 @@ class MessageGroupResourceIT {
       .andExpect(jsonPath("$.[*].groupId").value(hasItem(DEFAULT_GROUP_ID)))
       .andExpect(jsonPath("$.[*].groupName").value(hasItem(DEFAULT_GROUP_NAME)))
       .andExpect(jsonPath("$.[*].addBy").value(hasItem(DEFAULT_ADD_BY)))
-      .andExpect(jsonPath("$.[*].lastContent").value(hasItem(DEFAULT_LAST_CONTENT)))
-      .andExpect(jsonPath("$.[*].searchField").value(hasItem(DEFAULT_SEARCH_FIELD)))
+      .andExpect(jsonPath("$.[*].lastContent").value(hasItem(DEFAULT_LAST_CONTENT.toString())))
+      .andExpect(jsonPath("$.[*].searchField").value(hasItem(DEFAULT_SEARCH_FIELD.toString())))
       .andExpect(jsonPath("$.[*].role").value(hasItem(DEFAULT_ROLE)))
       .andExpect(jsonPath("$.[*].createdDate").value(hasItem(DEFAULT_CREATED_DATE.toString())))
       .andExpect(jsonPath("$.[*].modifiedDate").value(hasItem(DEFAULT_MODIFIED_DATE.toString())))
@@ -317,14 +322,888 @@ class MessageGroupResourceIT {
       .andExpect(jsonPath("$.groupId").value(DEFAULT_GROUP_ID))
       .andExpect(jsonPath("$.groupName").value(DEFAULT_GROUP_NAME))
       .andExpect(jsonPath("$.addBy").value(DEFAULT_ADD_BY))
-      .andExpect(jsonPath("$.lastContent").value(DEFAULT_LAST_CONTENT))
-      .andExpect(jsonPath("$.searchField").value(DEFAULT_SEARCH_FIELD))
+      .andExpect(jsonPath("$.lastContent").value(DEFAULT_LAST_CONTENT.toString()))
+      .andExpect(jsonPath("$.searchField").value(DEFAULT_SEARCH_FIELD.toString()))
       .andExpect(jsonPath("$.role").value(DEFAULT_ROLE))
       .andExpect(jsonPath("$.createdDate").value(DEFAULT_CREATED_DATE.toString()))
       .andExpect(jsonPath("$.modifiedDate").value(DEFAULT_MODIFIED_DATE.toString()))
       .andExpect(jsonPath("$.createdBy").value(DEFAULT_CREATED_BY))
       .andExpect(jsonPath("$.modifiedBy").value(DEFAULT_MODIFIED_BY))
       .andExpect(jsonPath("$.comment").value(DEFAULT_COMMENT));
+  }
+
+  @Test
+  @Transactional
+  void getMessageGroupsByIdFiltering() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    Long id = messageGroup.getId();
+
+    defaultMessageGroupShouldBeFound("id.equals=" + id);
+    defaultMessageGroupShouldNotBeFound("id.notEquals=" + id);
+
+    defaultMessageGroupShouldBeFound("id.greaterThanOrEqual=" + id);
+    defaultMessageGroupShouldNotBeFound("id.greaterThan=" + id);
+
+    defaultMessageGroupShouldBeFound("id.lessThanOrEqual=" + id);
+    defaultMessageGroupShouldNotBeFound("id.lessThan=" + id);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByUuidIsEqualToSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where uuid equals to DEFAULT_UUID
+    defaultMessageGroupShouldBeFound("uuid.equals=" + DEFAULT_UUID);
+
+    // Get all the messageGroupList where uuid equals to UPDATED_UUID
+    defaultMessageGroupShouldNotBeFound("uuid.equals=" + UPDATED_UUID);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByUuidIsNotEqualToSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where uuid not equals to DEFAULT_UUID
+    defaultMessageGroupShouldNotBeFound("uuid.notEquals=" + DEFAULT_UUID);
+
+    // Get all the messageGroupList where uuid not equals to UPDATED_UUID
+    defaultMessageGroupShouldBeFound("uuid.notEquals=" + UPDATED_UUID);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByUuidIsInShouldWork() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where uuid in DEFAULT_UUID or UPDATED_UUID
+    defaultMessageGroupShouldBeFound("uuid.in=" + DEFAULT_UUID + "," + UPDATED_UUID);
+
+    // Get all the messageGroupList where uuid equals to UPDATED_UUID
+    defaultMessageGroupShouldNotBeFound("uuid.in=" + UPDATED_UUID);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByUuidIsNullOrNotNull() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where uuid is not null
+    defaultMessageGroupShouldBeFound("uuid.specified=true");
+
+    // Get all the messageGroupList where uuid is null
+    defaultMessageGroupShouldNotBeFound("uuid.specified=false");
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByUserIdIsEqualToSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where userId equals to DEFAULT_USER_ID
+    defaultMessageGroupShouldBeFound("userId.equals=" + DEFAULT_USER_ID);
+
+    // Get all the messageGroupList where userId equals to UPDATED_USER_ID
+    defaultMessageGroupShouldNotBeFound("userId.equals=" + UPDATED_USER_ID);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByUserIdIsNotEqualToSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where userId not equals to DEFAULT_USER_ID
+    defaultMessageGroupShouldNotBeFound("userId.notEquals=" + DEFAULT_USER_ID);
+
+    // Get all the messageGroupList where userId not equals to UPDATED_USER_ID
+    defaultMessageGroupShouldBeFound("userId.notEquals=" + UPDATED_USER_ID);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByUserIdIsInShouldWork() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where userId in DEFAULT_USER_ID or UPDATED_USER_ID
+    defaultMessageGroupShouldBeFound("userId.in=" + DEFAULT_USER_ID + "," + UPDATED_USER_ID);
+
+    // Get all the messageGroupList where userId equals to UPDATED_USER_ID
+    defaultMessageGroupShouldNotBeFound("userId.in=" + UPDATED_USER_ID);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByUserIdIsNullOrNotNull() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where userId is not null
+    defaultMessageGroupShouldBeFound("userId.specified=true");
+
+    // Get all the messageGroupList where userId is null
+    defaultMessageGroupShouldNotBeFound("userId.specified=false");
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByUserIdIsGreaterThanOrEqualToSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where userId is greater than or equal to DEFAULT_USER_ID
+    defaultMessageGroupShouldBeFound("userId.greaterThanOrEqual=" + DEFAULT_USER_ID);
+
+    // Get all the messageGroupList where userId is greater than or equal to UPDATED_USER_ID
+    defaultMessageGroupShouldNotBeFound("userId.greaterThanOrEqual=" + UPDATED_USER_ID);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByUserIdIsLessThanOrEqualToSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where userId is less than or equal to DEFAULT_USER_ID
+    defaultMessageGroupShouldBeFound("userId.lessThanOrEqual=" + DEFAULT_USER_ID);
+
+    // Get all the messageGroupList where userId is less than or equal to SMALLER_USER_ID
+    defaultMessageGroupShouldNotBeFound("userId.lessThanOrEqual=" + SMALLER_USER_ID);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByUserIdIsLessThanSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where userId is less than DEFAULT_USER_ID
+    defaultMessageGroupShouldNotBeFound("userId.lessThan=" + DEFAULT_USER_ID);
+
+    // Get all the messageGroupList where userId is less than UPDATED_USER_ID
+    defaultMessageGroupShouldBeFound("userId.lessThan=" + UPDATED_USER_ID);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByUserIdIsGreaterThanSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where userId is greater than DEFAULT_USER_ID
+    defaultMessageGroupShouldNotBeFound("userId.greaterThan=" + DEFAULT_USER_ID);
+
+    // Get all the messageGroupList where userId is greater than SMALLER_USER_ID
+    defaultMessageGroupShouldBeFound("userId.greaterThan=" + SMALLER_USER_ID);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByGroupIdIsEqualToSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where groupId equals to DEFAULT_GROUP_ID
+    defaultMessageGroupShouldBeFound("groupId.equals=" + DEFAULT_GROUP_ID);
+
+    // Get all the messageGroupList where groupId equals to UPDATED_GROUP_ID
+    defaultMessageGroupShouldNotBeFound("groupId.equals=" + UPDATED_GROUP_ID);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByGroupIdIsNotEqualToSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where groupId not equals to DEFAULT_GROUP_ID
+    defaultMessageGroupShouldNotBeFound("groupId.notEquals=" + DEFAULT_GROUP_ID);
+
+    // Get all the messageGroupList where groupId not equals to UPDATED_GROUP_ID
+    defaultMessageGroupShouldBeFound("groupId.notEquals=" + UPDATED_GROUP_ID);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByGroupIdIsInShouldWork() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where groupId in DEFAULT_GROUP_ID or UPDATED_GROUP_ID
+    defaultMessageGroupShouldBeFound("groupId.in=" + DEFAULT_GROUP_ID + "," + UPDATED_GROUP_ID);
+
+    // Get all the messageGroupList where groupId equals to UPDATED_GROUP_ID
+    defaultMessageGroupShouldNotBeFound("groupId.in=" + UPDATED_GROUP_ID);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByGroupIdIsNullOrNotNull() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where groupId is not null
+    defaultMessageGroupShouldBeFound("groupId.specified=true");
+
+    // Get all the messageGroupList where groupId is null
+    defaultMessageGroupShouldNotBeFound("groupId.specified=false");
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByGroupIdContainsSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where groupId contains DEFAULT_GROUP_ID
+    defaultMessageGroupShouldBeFound("groupId.contains=" + DEFAULT_GROUP_ID);
+
+    // Get all the messageGroupList where groupId contains UPDATED_GROUP_ID
+    defaultMessageGroupShouldNotBeFound("groupId.contains=" + UPDATED_GROUP_ID);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByGroupIdNotContainsSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where groupId does not contain DEFAULT_GROUP_ID
+    defaultMessageGroupShouldNotBeFound("groupId.doesNotContain=" + DEFAULT_GROUP_ID);
+
+    // Get all the messageGroupList where groupId does not contain UPDATED_GROUP_ID
+    defaultMessageGroupShouldBeFound("groupId.doesNotContain=" + UPDATED_GROUP_ID);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByGroupNameIsEqualToSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where groupName equals to DEFAULT_GROUP_NAME
+    defaultMessageGroupShouldBeFound("groupName.equals=" + DEFAULT_GROUP_NAME);
+
+    // Get all the messageGroupList where groupName equals to UPDATED_GROUP_NAME
+    defaultMessageGroupShouldNotBeFound("groupName.equals=" + UPDATED_GROUP_NAME);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByGroupNameIsNotEqualToSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where groupName not equals to DEFAULT_GROUP_NAME
+    defaultMessageGroupShouldNotBeFound("groupName.notEquals=" + DEFAULT_GROUP_NAME);
+
+    // Get all the messageGroupList where groupName not equals to UPDATED_GROUP_NAME
+    defaultMessageGroupShouldBeFound("groupName.notEquals=" + UPDATED_GROUP_NAME);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByGroupNameIsInShouldWork() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where groupName in DEFAULT_GROUP_NAME or UPDATED_GROUP_NAME
+    defaultMessageGroupShouldBeFound("groupName.in=" + DEFAULT_GROUP_NAME + "," + UPDATED_GROUP_NAME);
+
+    // Get all the messageGroupList where groupName equals to UPDATED_GROUP_NAME
+    defaultMessageGroupShouldNotBeFound("groupName.in=" + UPDATED_GROUP_NAME);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByGroupNameIsNullOrNotNull() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where groupName is not null
+    defaultMessageGroupShouldBeFound("groupName.specified=true");
+
+    // Get all the messageGroupList where groupName is null
+    defaultMessageGroupShouldNotBeFound("groupName.specified=false");
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByGroupNameContainsSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where groupName contains DEFAULT_GROUP_NAME
+    defaultMessageGroupShouldBeFound("groupName.contains=" + DEFAULT_GROUP_NAME);
+
+    // Get all the messageGroupList where groupName contains UPDATED_GROUP_NAME
+    defaultMessageGroupShouldNotBeFound("groupName.contains=" + UPDATED_GROUP_NAME);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByGroupNameNotContainsSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where groupName does not contain DEFAULT_GROUP_NAME
+    defaultMessageGroupShouldNotBeFound("groupName.doesNotContain=" + DEFAULT_GROUP_NAME);
+
+    // Get all the messageGroupList where groupName does not contain UPDATED_GROUP_NAME
+    defaultMessageGroupShouldBeFound("groupName.doesNotContain=" + UPDATED_GROUP_NAME);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByAddByIsEqualToSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where addBy equals to DEFAULT_ADD_BY
+    defaultMessageGroupShouldBeFound("addBy.equals=" + DEFAULT_ADD_BY);
+
+    // Get all the messageGroupList where addBy equals to UPDATED_ADD_BY
+    defaultMessageGroupShouldNotBeFound("addBy.equals=" + UPDATED_ADD_BY);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByAddByIsNotEqualToSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where addBy not equals to DEFAULT_ADD_BY
+    defaultMessageGroupShouldNotBeFound("addBy.notEquals=" + DEFAULT_ADD_BY);
+
+    // Get all the messageGroupList where addBy not equals to UPDATED_ADD_BY
+    defaultMessageGroupShouldBeFound("addBy.notEquals=" + UPDATED_ADD_BY);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByAddByIsInShouldWork() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where addBy in DEFAULT_ADD_BY or UPDATED_ADD_BY
+    defaultMessageGroupShouldBeFound("addBy.in=" + DEFAULT_ADD_BY + "," + UPDATED_ADD_BY);
+
+    // Get all the messageGroupList where addBy equals to UPDATED_ADD_BY
+    defaultMessageGroupShouldNotBeFound("addBy.in=" + UPDATED_ADD_BY);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByAddByIsNullOrNotNull() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where addBy is not null
+    defaultMessageGroupShouldBeFound("addBy.specified=true");
+
+    // Get all the messageGroupList where addBy is null
+    defaultMessageGroupShouldNotBeFound("addBy.specified=false");
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByAddByContainsSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where addBy contains DEFAULT_ADD_BY
+    defaultMessageGroupShouldBeFound("addBy.contains=" + DEFAULT_ADD_BY);
+
+    // Get all the messageGroupList where addBy contains UPDATED_ADD_BY
+    defaultMessageGroupShouldNotBeFound("addBy.contains=" + UPDATED_ADD_BY);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByAddByNotContainsSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where addBy does not contain DEFAULT_ADD_BY
+    defaultMessageGroupShouldNotBeFound("addBy.doesNotContain=" + DEFAULT_ADD_BY);
+
+    // Get all the messageGroupList where addBy does not contain UPDATED_ADD_BY
+    defaultMessageGroupShouldBeFound("addBy.doesNotContain=" + UPDATED_ADD_BY);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByRoleIsEqualToSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where role equals to DEFAULT_ROLE
+    defaultMessageGroupShouldBeFound("role.equals=" + DEFAULT_ROLE);
+
+    // Get all the messageGroupList where role equals to UPDATED_ROLE
+    defaultMessageGroupShouldNotBeFound("role.equals=" + UPDATED_ROLE);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByRoleIsNotEqualToSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where role not equals to DEFAULT_ROLE
+    defaultMessageGroupShouldNotBeFound("role.notEquals=" + DEFAULT_ROLE);
+
+    // Get all the messageGroupList where role not equals to UPDATED_ROLE
+    defaultMessageGroupShouldBeFound("role.notEquals=" + UPDATED_ROLE);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByRoleIsInShouldWork() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where role in DEFAULT_ROLE or UPDATED_ROLE
+    defaultMessageGroupShouldBeFound("role.in=" + DEFAULT_ROLE + "," + UPDATED_ROLE);
+
+    // Get all the messageGroupList where role equals to UPDATED_ROLE
+    defaultMessageGroupShouldNotBeFound("role.in=" + UPDATED_ROLE);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByRoleIsNullOrNotNull() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where role is not null
+    defaultMessageGroupShouldBeFound("role.specified=true");
+
+    // Get all the messageGroupList where role is null
+    defaultMessageGroupShouldNotBeFound("role.specified=false");
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByRoleContainsSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where role contains DEFAULT_ROLE
+    defaultMessageGroupShouldBeFound("role.contains=" + DEFAULT_ROLE);
+
+    // Get all the messageGroupList where role contains UPDATED_ROLE
+    defaultMessageGroupShouldNotBeFound("role.contains=" + UPDATED_ROLE);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByRoleNotContainsSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where role does not contain DEFAULT_ROLE
+    defaultMessageGroupShouldNotBeFound("role.doesNotContain=" + DEFAULT_ROLE);
+
+    // Get all the messageGroupList where role does not contain UPDATED_ROLE
+    defaultMessageGroupShouldBeFound("role.doesNotContain=" + UPDATED_ROLE);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByCreatedDateIsEqualToSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where createdDate equals to DEFAULT_CREATED_DATE
+    defaultMessageGroupShouldBeFound("createdDate.equals=" + DEFAULT_CREATED_DATE);
+
+    // Get all the messageGroupList where createdDate equals to UPDATED_CREATED_DATE
+    defaultMessageGroupShouldNotBeFound("createdDate.equals=" + UPDATED_CREATED_DATE);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByCreatedDateIsNotEqualToSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where createdDate not equals to DEFAULT_CREATED_DATE
+    defaultMessageGroupShouldNotBeFound("createdDate.notEquals=" + DEFAULT_CREATED_DATE);
+
+    // Get all the messageGroupList where createdDate not equals to UPDATED_CREATED_DATE
+    defaultMessageGroupShouldBeFound("createdDate.notEquals=" + UPDATED_CREATED_DATE);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByCreatedDateIsInShouldWork() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where createdDate in DEFAULT_CREATED_DATE or UPDATED_CREATED_DATE
+    defaultMessageGroupShouldBeFound("createdDate.in=" + DEFAULT_CREATED_DATE + "," + UPDATED_CREATED_DATE);
+
+    // Get all the messageGroupList where createdDate equals to UPDATED_CREATED_DATE
+    defaultMessageGroupShouldNotBeFound("createdDate.in=" + UPDATED_CREATED_DATE);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByCreatedDateIsNullOrNotNull() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where createdDate is not null
+    defaultMessageGroupShouldBeFound("createdDate.specified=true");
+
+    // Get all the messageGroupList where createdDate is null
+    defaultMessageGroupShouldNotBeFound("createdDate.specified=false");
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByModifiedDateIsEqualToSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where modifiedDate equals to DEFAULT_MODIFIED_DATE
+    defaultMessageGroupShouldBeFound("modifiedDate.equals=" + DEFAULT_MODIFIED_DATE);
+
+    // Get all the messageGroupList where modifiedDate equals to UPDATED_MODIFIED_DATE
+    defaultMessageGroupShouldNotBeFound("modifiedDate.equals=" + UPDATED_MODIFIED_DATE);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByModifiedDateIsNotEqualToSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where modifiedDate not equals to DEFAULT_MODIFIED_DATE
+    defaultMessageGroupShouldNotBeFound("modifiedDate.notEquals=" + DEFAULT_MODIFIED_DATE);
+
+    // Get all the messageGroupList where modifiedDate not equals to UPDATED_MODIFIED_DATE
+    defaultMessageGroupShouldBeFound("modifiedDate.notEquals=" + UPDATED_MODIFIED_DATE);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByModifiedDateIsInShouldWork() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where modifiedDate in DEFAULT_MODIFIED_DATE or UPDATED_MODIFIED_DATE
+    defaultMessageGroupShouldBeFound("modifiedDate.in=" + DEFAULT_MODIFIED_DATE + "," + UPDATED_MODIFIED_DATE);
+
+    // Get all the messageGroupList where modifiedDate equals to UPDATED_MODIFIED_DATE
+    defaultMessageGroupShouldNotBeFound("modifiedDate.in=" + UPDATED_MODIFIED_DATE);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByModifiedDateIsNullOrNotNull() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where modifiedDate is not null
+    defaultMessageGroupShouldBeFound("modifiedDate.specified=true");
+
+    // Get all the messageGroupList where modifiedDate is null
+    defaultMessageGroupShouldNotBeFound("modifiedDate.specified=false");
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByCreatedByIsEqualToSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where createdBy equals to DEFAULT_CREATED_BY
+    defaultMessageGroupShouldBeFound("createdBy.equals=" + DEFAULT_CREATED_BY);
+
+    // Get all the messageGroupList where createdBy equals to UPDATED_CREATED_BY
+    defaultMessageGroupShouldNotBeFound("createdBy.equals=" + UPDATED_CREATED_BY);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByCreatedByIsNotEqualToSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where createdBy not equals to DEFAULT_CREATED_BY
+    defaultMessageGroupShouldNotBeFound("createdBy.notEquals=" + DEFAULT_CREATED_BY);
+
+    // Get all the messageGroupList where createdBy not equals to UPDATED_CREATED_BY
+    defaultMessageGroupShouldBeFound("createdBy.notEquals=" + UPDATED_CREATED_BY);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByCreatedByIsInShouldWork() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where createdBy in DEFAULT_CREATED_BY or UPDATED_CREATED_BY
+    defaultMessageGroupShouldBeFound("createdBy.in=" + DEFAULT_CREATED_BY + "," + UPDATED_CREATED_BY);
+
+    // Get all the messageGroupList where createdBy equals to UPDATED_CREATED_BY
+    defaultMessageGroupShouldNotBeFound("createdBy.in=" + UPDATED_CREATED_BY);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByCreatedByIsNullOrNotNull() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where createdBy is not null
+    defaultMessageGroupShouldBeFound("createdBy.specified=true");
+
+    // Get all the messageGroupList where createdBy is null
+    defaultMessageGroupShouldNotBeFound("createdBy.specified=false");
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByCreatedByContainsSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where createdBy contains DEFAULT_CREATED_BY
+    defaultMessageGroupShouldBeFound("createdBy.contains=" + DEFAULT_CREATED_BY);
+
+    // Get all the messageGroupList where createdBy contains UPDATED_CREATED_BY
+    defaultMessageGroupShouldNotBeFound("createdBy.contains=" + UPDATED_CREATED_BY);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByCreatedByNotContainsSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where createdBy does not contain DEFAULT_CREATED_BY
+    defaultMessageGroupShouldNotBeFound("createdBy.doesNotContain=" + DEFAULT_CREATED_BY);
+
+    // Get all the messageGroupList where createdBy does not contain UPDATED_CREATED_BY
+    defaultMessageGroupShouldBeFound("createdBy.doesNotContain=" + UPDATED_CREATED_BY);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByModifiedByIsEqualToSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where modifiedBy equals to DEFAULT_MODIFIED_BY
+    defaultMessageGroupShouldBeFound("modifiedBy.equals=" + DEFAULT_MODIFIED_BY);
+
+    // Get all the messageGroupList where modifiedBy equals to UPDATED_MODIFIED_BY
+    defaultMessageGroupShouldNotBeFound("modifiedBy.equals=" + UPDATED_MODIFIED_BY);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByModifiedByIsNotEqualToSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where modifiedBy not equals to DEFAULT_MODIFIED_BY
+    defaultMessageGroupShouldNotBeFound("modifiedBy.notEquals=" + DEFAULT_MODIFIED_BY);
+
+    // Get all the messageGroupList where modifiedBy not equals to UPDATED_MODIFIED_BY
+    defaultMessageGroupShouldBeFound("modifiedBy.notEquals=" + UPDATED_MODIFIED_BY);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByModifiedByIsInShouldWork() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where modifiedBy in DEFAULT_MODIFIED_BY or UPDATED_MODIFIED_BY
+    defaultMessageGroupShouldBeFound("modifiedBy.in=" + DEFAULT_MODIFIED_BY + "," + UPDATED_MODIFIED_BY);
+
+    // Get all the messageGroupList where modifiedBy equals to UPDATED_MODIFIED_BY
+    defaultMessageGroupShouldNotBeFound("modifiedBy.in=" + UPDATED_MODIFIED_BY);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByModifiedByIsNullOrNotNull() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where modifiedBy is not null
+    defaultMessageGroupShouldBeFound("modifiedBy.specified=true");
+
+    // Get all the messageGroupList where modifiedBy is null
+    defaultMessageGroupShouldNotBeFound("modifiedBy.specified=false");
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByModifiedByContainsSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where modifiedBy contains DEFAULT_MODIFIED_BY
+    defaultMessageGroupShouldBeFound("modifiedBy.contains=" + DEFAULT_MODIFIED_BY);
+
+    // Get all the messageGroupList where modifiedBy contains UPDATED_MODIFIED_BY
+    defaultMessageGroupShouldNotBeFound("modifiedBy.contains=" + UPDATED_MODIFIED_BY);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByModifiedByNotContainsSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where modifiedBy does not contain DEFAULT_MODIFIED_BY
+    defaultMessageGroupShouldNotBeFound("modifiedBy.doesNotContain=" + DEFAULT_MODIFIED_BY);
+
+    // Get all the messageGroupList where modifiedBy does not contain UPDATED_MODIFIED_BY
+    defaultMessageGroupShouldBeFound("modifiedBy.doesNotContain=" + UPDATED_MODIFIED_BY);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByCommentIsEqualToSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where comment equals to DEFAULT_COMMENT
+    defaultMessageGroupShouldBeFound("comment.equals=" + DEFAULT_COMMENT);
+
+    // Get all the messageGroupList where comment equals to UPDATED_COMMENT
+    defaultMessageGroupShouldNotBeFound("comment.equals=" + UPDATED_COMMENT);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByCommentIsNotEqualToSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where comment not equals to DEFAULT_COMMENT
+    defaultMessageGroupShouldNotBeFound("comment.notEquals=" + DEFAULT_COMMENT);
+
+    // Get all the messageGroupList where comment not equals to UPDATED_COMMENT
+    defaultMessageGroupShouldBeFound("comment.notEquals=" + UPDATED_COMMENT);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByCommentIsInShouldWork() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where comment in DEFAULT_COMMENT or UPDATED_COMMENT
+    defaultMessageGroupShouldBeFound("comment.in=" + DEFAULT_COMMENT + "," + UPDATED_COMMENT);
+
+    // Get all the messageGroupList where comment equals to UPDATED_COMMENT
+    defaultMessageGroupShouldNotBeFound("comment.in=" + UPDATED_COMMENT);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByCommentIsNullOrNotNull() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where comment is not null
+    defaultMessageGroupShouldBeFound("comment.specified=true");
+
+    // Get all the messageGroupList where comment is null
+    defaultMessageGroupShouldNotBeFound("comment.specified=false");
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByCommentContainsSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where comment contains DEFAULT_COMMENT
+    defaultMessageGroupShouldBeFound("comment.contains=" + DEFAULT_COMMENT);
+
+    // Get all the messageGroupList where comment contains UPDATED_COMMENT
+    defaultMessageGroupShouldNotBeFound("comment.contains=" + UPDATED_COMMENT);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageGroupsByCommentNotContainsSomething() throws Exception {
+    // Initialize the database
+    messageGroupRepository.saveAndFlush(messageGroup);
+
+    // Get all the messageGroupList where comment does not contain DEFAULT_COMMENT
+    defaultMessageGroupShouldNotBeFound("comment.doesNotContain=" + DEFAULT_COMMENT);
+
+    // Get all the messageGroupList where comment does not contain UPDATED_COMMENT
+    defaultMessageGroupShouldBeFound("comment.doesNotContain=" + UPDATED_COMMENT);
+  }
+
+  /**
+   * Executes the search, and checks that the default entity is returned.
+   */
+  private void defaultMessageGroupShouldBeFound(String filter) throws Exception {
+    restMessageGroupMockMvc
+      .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+      .andExpect(status().isOk())
+      .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+      .andExpect(jsonPath("$.[*].id").value(hasItem(messageGroup.getId().intValue())))
+      .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
+      .andExpect(jsonPath("$.[*].userId").value(hasItem(DEFAULT_USER_ID.intValue())))
+      .andExpect(jsonPath("$.[*].groupId").value(hasItem(DEFAULT_GROUP_ID)))
+      .andExpect(jsonPath("$.[*].groupName").value(hasItem(DEFAULT_GROUP_NAME)))
+      .andExpect(jsonPath("$.[*].addBy").value(hasItem(DEFAULT_ADD_BY)))
+      .andExpect(jsonPath("$.[*].lastContent").value(hasItem(DEFAULT_LAST_CONTENT.toString())))
+      .andExpect(jsonPath("$.[*].searchField").value(hasItem(DEFAULT_SEARCH_FIELD.toString())))
+      .andExpect(jsonPath("$.[*].role").value(hasItem(DEFAULT_ROLE)))
+      .andExpect(jsonPath("$.[*].createdDate").value(hasItem(DEFAULT_CREATED_DATE.toString())))
+      .andExpect(jsonPath("$.[*].modifiedDate").value(hasItem(DEFAULT_MODIFIED_DATE.toString())))
+      .andExpect(jsonPath("$.[*].createdBy").value(hasItem(DEFAULT_CREATED_BY)))
+      .andExpect(jsonPath("$.[*].modifiedBy").value(hasItem(DEFAULT_MODIFIED_BY)))
+      .andExpect(jsonPath("$.[*].comment").value(hasItem(DEFAULT_COMMENT)));
+
+    // Check, that the count call also returns 1
+    restMessageGroupMockMvc
+      .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+      .andExpect(status().isOk())
+      .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+      .andExpect(content().string("1"));
+  }
+
+  /**
+   * Executes the search, and checks that the default entity is not returned.
+   */
+  private void defaultMessageGroupShouldNotBeFound(String filter) throws Exception {
+    restMessageGroupMockMvc
+      .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+      .andExpect(status().isOk())
+      .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+      .andExpect(jsonPath("$").isArray())
+      .andExpect(jsonPath("$").isEmpty());
+
+    // Check, that the count call also returns 0
+    restMessageGroupMockMvc
+      .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+      .andExpect(status().isOk())
+      .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+      .andExpect(content().string("0"));
   }
 
   @Test
@@ -686,8 +1565,8 @@ class MessageGroupResourceIT {
       .andExpect(jsonPath("$.[*].groupId").value(hasItem(DEFAULT_GROUP_ID)))
       .andExpect(jsonPath("$.[*].groupName").value(hasItem(DEFAULT_GROUP_NAME)))
       .andExpect(jsonPath("$.[*].addBy").value(hasItem(DEFAULT_ADD_BY)))
-      .andExpect(jsonPath("$.[*].lastContent").value(hasItem(DEFAULT_LAST_CONTENT)))
-      .andExpect(jsonPath("$.[*].searchField").value(hasItem(DEFAULT_SEARCH_FIELD)))
+      .andExpect(jsonPath("$.[*].lastContent").value(hasItem(DEFAULT_LAST_CONTENT.toString())))
+      .andExpect(jsonPath("$.[*].searchField").value(hasItem(DEFAULT_SEARCH_FIELD.toString())))
       .andExpect(jsonPath("$.[*].role").value(hasItem(DEFAULT_ROLE)))
       .andExpect(jsonPath("$.[*].createdDate").value(hasItem(DEFAULT_CREATED_DATE.toString())))
       .andExpect(jsonPath("$.[*].modifiedDate").value(hasItem(DEFAULT_MODIFIED_DATE.toString())))

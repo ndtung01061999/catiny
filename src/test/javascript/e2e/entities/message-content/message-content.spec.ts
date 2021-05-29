@@ -1,10 +1,18 @@
-import {browser} from 'protractor';
+import { browser, element, by } from 'protractor';
 
 import NavBarPage from './../../page-objects/navbar-page';
 import SignInPage from './../../page-objects/signin-page';
 import MessageContentComponentsPage from './message-content.page-object';
 import MessageContentUpdatePage from './message-content-update.page-object';
-import {getRecordsCount, isVisible, waitUntilCount, waitUntilDisplayed,} from '../../util/utils';
+import {
+  waitUntilDisplayed,
+  waitUntilAnyDisplayed,
+  click,
+  getRecordsCount,
+  waitUntilHidden,
+  waitUntilCount,
+  isVisible,
+} from '../../util/utils';
 
 const expect = chai.expect;
 

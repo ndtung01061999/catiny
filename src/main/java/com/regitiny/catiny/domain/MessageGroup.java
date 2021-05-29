@@ -1,15 +1,15 @@
 package com.regitiny.catiny.domain;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Type;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import com.regitiny.catiny.GeneratedByJHipster;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.UUID;
+import javax.persistence.*;
+import javax.validation.constraints.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Type;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 /**
  * The PostDetails entity.\n@author A true hipster
@@ -18,6 +18,7 @@ import java.util.UUID;
 @Table(name = "message_group")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @org.springframework.data.elasticsearch.annotations.Document(indexName = "messagegroup")
+@GeneratedByJHipster
 public class MessageGroup implements Serializable {
 
   private static final long serialVersionUID = 1L;

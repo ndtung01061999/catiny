@@ -1,43 +1,37 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, InputGroup, Row, Table} from 'reactstrap';
-import {AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
-import {getSortState, TextFormat, Translate, translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, InputGroup, Col, Row, Table } from 'reactstrap';
+import { AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
+import { byteSize, Translate, translate, ICrudSearchAction, TextFormat, getSortState, IPaginationBaseState } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import {IRootState} from 'app/shared/reducers';
-import {getEntities, getSearchEntities, reset} from './message-content.reducer';
-import {APP_DATE_FORMAT} from 'app/config/constants';
-import {ITEMS_PER_PAGE} from 'app/shared/util/pagination.constants';
-import {overridePaginationStateWithQueryParams} from 'app/shared/util/entity-utils';
+import { IRootState } from 'app/shared/reducers';
+import { getSearchEntities, getEntities, reset } from './message-content.reducer';
+import { IMessageContent } from 'app/shared/model/message-content.model';
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
+import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
 
-export interface IMessageContentProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }>
-{
-}
+export interface IMessageContentProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
-export const MessageContent = (props: IMessageContentProps) =>
-{
+export const MessageContent = (props: IMessageContentProps) => {
   const [search, setSearch] = useState('');
   const [paginationState, setPaginationState] = useState(
     overridePaginationStateWithQueryParams(getSortState(props.location, ITEMS_PER_PAGE, 'id'), props.location.search)
   );
   const [sorting, setSorting] = useState(false);
 
-  const getAllEntities = () =>
-  {
-    if (search)
-    {
+  const getAllEntities = () => {
+    if (search) {
       props.getSearchEntities(
         search,
         paginationState.activePage - 1,
         paginationState.itemsPerPage,
         `${paginationState.sort},${paginationState.order}`
       );
-    }
-    else
-    {
+    } else {
       props.getEntities(paginationState.activePage - 1, paginationState.itemsPerPage, `${paginationState.sort},${paginationState.order}`);
     }
   };

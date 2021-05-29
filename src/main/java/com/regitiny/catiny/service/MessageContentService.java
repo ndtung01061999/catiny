@@ -1,16 +1,16 @@
 package com.regitiny.catiny.service;
 
+import com.regitiny.catiny.GeneratedByJHipster;
 import com.regitiny.catiny.service.dto.MessageContentDTO;
+import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-import java.util.Optional;
 
 /**
  * Service Interface for managing {@link com.regitiny.catiny.domain.MessageContent}.
  */
-public interface MessageContentService
-{
+@GeneratedByJHipster
+public interface MessageContentService {
   /**
    * Save a messageContent.
    *
@@ -18,7 +18,6 @@ public interface MessageContentService
    * @return the persisted entity.
    */
   MessageContentDTO save(MessageContentDTO messageContentDTO);
-
 
   /**
    * Partially updates a messageContent.
@@ -28,7 +27,6 @@ public interface MessageContentService
    */
   Optional<MessageContentDTO> partialUpdate(MessageContentDTO messageContentDTO);
 
-
   /**
    * Get all the messageContents.
    *
@@ -36,7 +34,6 @@ public interface MessageContentService
    * @return the list of entities.
    */
   Page<MessageContentDTO> findAll(Pageable pageable);
-
 
   /**
    * Get the "id" messageContent.
@@ -46,7 +43,6 @@ public interface MessageContentService
    */
   Optional<MessageContentDTO> findOne(Long id);
 
-
   /**
    * Delete the "id" messageContent.
    *
@@ -54,14 +50,13 @@ public interface MessageContentService
    */
   void delete(Long id);
 
-
   /**
    * Search for the messageContent corresponding to the query.
    *
-   * @param query    the query of the search.
+   * @param query the query of the search.
+   *
    * @param pageable the pagination information.
    * @return the list of entities.
    */
   Page<MessageContentDTO> search(String query, Pageable pageable);
-
 }

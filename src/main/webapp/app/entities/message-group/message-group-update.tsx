@@ -1,29 +1,27 @@
-import React, {useEffect, useState} from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Label, Row, UncontrolledTooltip} from 'reactstrap';
-import {AvField, AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
-import {setFileData, Translate, translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {IRootState} from 'app/shared/reducers';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col, Label, UncontrolledTooltip } from 'reactstrap';
+import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
+import { setFileData, byteSize, Translate, translate } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IRootState } from 'app/shared/reducers';
 
-import {createEntity, getEntity, reset, setBlob, updateEntity} from './message-group.reducer';
-import {convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime} from 'app/shared/util/date-utils';
+import { getEntity, updateEntity, createEntity, setBlob, reset } from './message-group.reducer';
+import { IMessageGroup } from 'app/shared/model/message-group.model';
+import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface IMessageGroupUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }>
-{
-}
+export interface IMessageGroupUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
-export const MessageGroupUpdate = (props: IMessageGroupUpdateProps) =>
-{
+export const MessageGroupUpdate = (props: IMessageGroupUpdateProps) => {
   const [isNew] = useState(!props.match.params || !props.match.params.id);
 
-  const {messageGroupEntity, loading, updating} = props;
+  const { messageGroupEntity, loading, updating } = props;
 
-  const {lastContent, searchField} = messageGroupEntity;
+  const { lastContent, searchField } = messageGroupEntity;
 
-  const handleClose = () =>
-  {
+  const handleClose = () => {
     props.history.push('/message-group');
   };
 
@@ -172,7 +170,7 @@ export const MessageGroupUpdate = (props: IMessageGroupUpdateProps) =>
                   type="text"
                   name="role"
                   validate={{
-                    maxLength: {value: 511, errorMessage: translate('entity.validation.maxlength', {max: 511})},
+                    maxLength: { value: 511, errorMessage: translate('entity.validation.maxlength', { max: 511 }) },
                   }}
                 />
                 <UncontrolledTooltip target="roleLabel">
@@ -241,7 +239,7 @@ export const MessageGroupUpdate = (props: IMessageGroupUpdateProps) =>
                   type="text"
                   name="comment"
                   validate={{
-                    maxLength: {value: 511, errorMessage: translate('entity.validation.maxlength', {max: 511})},
+                    maxLength: { value: 511, errorMessage: translate('entity.validation.maxlength', { max: 511 }) },
                   }}
                 />
                 <UncontrolledTooltip target="commentLabel">

@@ -1,6 +1,10 @@
 package com.regitiny.catiny.advance.service;
 
-public interface LocalService<T>
+public interface LocalService<S,QS>
 {
-  T LocalService ();
+
+  QS LocalQueryService();
+
+  S LocalService ();
+
 }
