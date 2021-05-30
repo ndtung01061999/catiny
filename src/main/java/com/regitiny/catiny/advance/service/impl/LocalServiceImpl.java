@@ -1,5 +1,6 @@
-package com.regitiny.catiny.advance.service;
+package com.regitiny.catiny.advance.service.impl;
 
+import com.regitiny.catiny.advance.service.LocalService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -18,10 +19,10 @@ import java.util.regex.Pattern;
 public class LocalServiceImpl<S, Q> implements LocalService<S, Q>
 {
   @Autowired
-  protected ApplicationContext applicationContext;
+  private ApplicationContext applicationContext;
 
-  protected S localService;
-  protected Q localQueryService;
+  private S localService;
+  private Q localQueryService;
 
   @Override
   public S LocalService()

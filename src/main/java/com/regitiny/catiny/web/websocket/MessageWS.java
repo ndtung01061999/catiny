@@ -4,7 +4,7 @@ import com.regitiny.catiny.advance.service.MessageContentAdvanceService;
 import com.regitiny.catiny.advance.service.MessageGroupAdvanceService;
 import com.regitiny.catiny.domain.User;
 import com.regitiny.catiny.service.dto.MessageContentDTO;
-import com.regitiny.catiny.tools.exception.constant.StringPool;
+import com.regitiny.catiny.tools.utils.StringPool;
 import com.regitiny.catiny.tools.utils.UserUtils;
 import lombok.extern.log4j.Log4j2;
 import org.json.JSONObject;

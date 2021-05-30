@@ -2,7 +2,6 @@ package com.regitiny.catiny.advance.service.impl;
 
 import com.regitiny.catiny.advance.repository.MessageContentAdvanceRepository;
 import com.regitiny.catiny.advance.repository.search.MessageContentAdvanceSearch;
-import com.regitiny.catiny.advance.service.LocalServiceImpl;
 import com.regitiny.catiny.advance.service.MessageContentAdvanceService;
 import com.regitiny.catiny.advance.service.MessageGroupAdvanceService;
 import com.regitiny.catiny.advance.service.mapper.MessageContentAdvanceMapper;

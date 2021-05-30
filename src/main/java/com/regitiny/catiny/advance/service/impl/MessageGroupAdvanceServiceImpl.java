@@ -2,7 +2,6 @@ package com.regitiny.catiny.advance.service.impl;
 
 import com.regitiny.catiny.advance.repository.MessageGroupAdvanceRepository;
 import com.regitiny.catiny.advance.repository.search.MessageGroupAdvanceSearch;
-import com.regitiny.catiny.advance.service.LocalServiceImpl;
 import com.regitiny.catiny.advance.service.MessageGroupAdvanceService;
 import com.regitiny.catiny.advance.service.mapper.MessageGroupAdvanceMapper;
 import com.regitiny.catiny.domain.MessageGroup;
@@ -10,8 +9,8 @@ import com.regitiny.catiny.repository.UserRepository;
 import com.regitiny.catiny.service.MessageGroupQueryService;
 import com.regitiny.catiny.service.MessageGroupService;
 import com.regitiny.catiny.service.dto.MessageGroupDTO;
-import com.regitiny.catiny.tools.exception.constant.StringPool;
 import com.regitiny.catiny.tools.utils.EntityDefaultPropertiesServiceUtils;
+import com.regitiny.catiny.tools.utils.StringPool;
 import com.regitiny.catiny.tools.utils.UserUtils;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.codec.digest.DigestUtils;

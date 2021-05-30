@@ -1,4 +1,4 @@
-package com.regitiny.catiny.tools.exception.constant;
+package com.regitiny.catiny.tools.utils;
 
 import java.nio.charset.Charset;
 
