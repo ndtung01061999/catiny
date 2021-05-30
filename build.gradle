@@ -337,6 +337,7 @@ dependencies {
   implementation "io.vavr:vavr:${vavrVersion}"
   implementation "com.jcraft:jsch:${jschVersion}"
   runtimeClasspath "org.webjars:bootstrap:${bootstrapVersion}"
+  implementation "com.squareup:javapoet:${javapoestVersion}"
 }
 
 if (project.hasProperty("gae"))

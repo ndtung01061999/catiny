@@ -1,25 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col, Label, UncontrolledTooltip } from 'reactstrap';
-import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
-import { setFileData, byteSize, Translate, translate } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IRootState } from 'app/shared/reducers';
+import React, {useEffect, useState} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, Label, Row, UncontrolledTooltip} from 'reactstrap';
+import {AvField, AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
+import {setFileData, Translate, translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {IRootState} from 'app/shared/reducers';
 
-import { getEntity, updateEntity, createEntity, setBlob, reset } from './message-group.reducer';
-import { IMessageGroup } from 'app/shared/model/message-group.model';
-import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import {createEntity, getEntity, reset, setBlob, updateEntity} from './message-group.reducer';
+import {convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime} from 'app/shared/util/date-utils';
 
-export interface IMessageGroupUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface IMessageGroupUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }>
+{
+}
 
-export const MessageGroupUpdate = (props: IMessageGroupUpdateProps) => {
+export const MessageGroupUpdate = (props: IMessageGroupUpdateProps) =>
+{
   const [isNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { messageGroupEntity, loading, updating } = props;
+  const {messageGroupEntity, loading, updating} = props;
 
-  const { lastContent, searchField } = messageGroupEntity;
+  const {lastContent, searchField} = messageGroupEntity;
 
   const handleClose = () => {
     props.history.push('/message-group');
@@ -164,17 +165,9 @@ export const MessageGroupUpdate = (props: IMessageGroupUpdateProps) => {
                 <Label id="roleLabel" for="message-group-role">
                   <Translate contentKey="catinyApp.messageGroup.role">Role</Translate>
                 </Label>
-                <AvField
-                  id="message-group-role"
-                  data-cy="role"
-                  type="text"
-                  name="role"
-                  validate={{
-                    maxLength: { value: 511, errorMessage: translate('entity.validation.maxlength', { max: 511 }) },
-                  }}
-                />
+                <AvField id="message-group-role" data-cy="role" type="text" name="role"/>
                 <UncontrolledTooltip target="roleLabel">
-                  <Translate contentKey="catinyApp.messageGroup.help.role" />
+                  <Translate contentKey="catinyApp.messageGroup.help.role"/>
                 </UncontrolledTooltip>
               </AvGroup>
               <AvGroup>
@@ -233,17 +226,9 @@ export const MessageGroupUpdate = (props: IMessageGroupUpdateProps) => {
                 <Label id="commentLabel" for="message-group-comment">
                   <Translate contentKey="catinyApp.messageGroup.comment">Comment</Translate>
                 </Label>
-                <AvField
-                  id="message-group-comment"
-                  data-cy="comment"
-                  type="text"
-                  name="comment"
-                  validate={{
-                    maxLength: { value: 511, errorMessage: translate('entity.validation.maxlength', { max: 511 }) },
-                  }}
-                />
+                <AvField id="message-group-comment" data-cy="comment" type="text" name="comment"/>
                 <UncontrolledTooltip target="commentLabel">
-                  <Translate contentKey="catinyApp.messageGroup.help.comment" />
+                  <Translate contentKey="catinyApp.messageGroup.help.comment"/>
                 </UncontrolledTooltip>
               </AvGroup>
               <Button tag={Link} id="cancel-save" to="/message-group" replace color="info">

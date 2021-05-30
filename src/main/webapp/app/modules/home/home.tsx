@@ -1,17 +1,16 @@
 import './home.scss';
 
-import React, { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Translate } from 'react-jhipster';
-import { connect } from 'react-redux';
-import { Row, Col, Alert, Card, CardBody, CardTitle, CardText, CardHeader, Progress, Tooltip } from 'reactstrap';
-import { faAngleRight, faEllipsisH } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useEffect, useRef, useState} from 'react';
+import {connect} from 'react-redux';
+import {Card, CardBody, CardHeader, CardText, CardTitle, Col, Progress, Row, Tooltip} from 'reactstrap';
+import {faAngleRight, faEllipsisH} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 export type IHomeProp = StateProps;
 let prevScrollProp = window.pageYOffset;
-export const Home = (props: IHomeProp) => {
-  const { account } = props;
+export const Home = (props: IHomeProp) =>
+{
+  const {account} = props;
 
   // return (
   //   <Row>
@@ -125,9 +124,6 @@ export const Home = (props: IHomeProp) => {
 
   return (
     <div>
-      {/*<Row className="home-top">*/}
-      {/*  <Col>dsada</Col>*/}
-      {/*</Row>*/}
       <Row className="home">
         <Col className="home-left col-12 col-sm-7 col-lg-8  pr-0 overflow-hidden">
           <Card>

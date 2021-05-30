@@ -3,7 +3,7 @@
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.5);
 
-  .left {
+  .message-group {
     border-right: 5px solid rgba(250, 225, 1, 0.22);;
     height: calc(100vh - 162px);
 
@@ -36,7 +36,8 @@
       font-size: 10px;
     }
   }
-  .right {
+
+  .message-content {
     height: calc(100vh - 162px);
 
     .media-object {

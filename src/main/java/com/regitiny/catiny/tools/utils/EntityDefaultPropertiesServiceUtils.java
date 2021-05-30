@@ -2,11 +2,12 @@ package com.regitiny.catiny.tools.utils;
 
 import com.regitiny.catiny.security.AuthoritiesConstants;
 import com.regitiny.catiny.security.SecurityUtils;
+import lombok.extern.log4j.Log4j2;
+
 import java.lang.reflect.InvocationTargetException;
 import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
-import lombok.extern.log4j.Log4j2;
 
 /**
  * author : @yuvytung
@@ -27,7 +28,7 @@ public class EntityDefaultPropertiesServiceUtils {
       Instant now = Instant.now();
       String thisUser = SecurityUtils.getCurrentUserLogin().orElse(null);
 
-//      object.getClass().getDeclaredMethod("setRole", String.class).invoke(object, AuthoritiesConstants.MANAGEMENT);
+      object.getClass().getDeclaredMethod("setRole", String.class).invoke(object, AuthoritiesConstants.MANAGEMENT);
       object.getClass().getDeclaredMethod("setUuid", UUID.class).invoke(object, UUID.randomUUID());
       object.getClass().getDeclaredMethod("setCreatedDate", now.getClass()).invoke(object, now);
       object.getClass().getDeclaredMethod("setModifiedDate", now.getClass()).invoke(object, now);

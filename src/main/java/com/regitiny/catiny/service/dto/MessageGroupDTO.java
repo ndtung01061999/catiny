@@ -3,12 +3,13 @@ package com.regitiny.catiny.service.dto;
 import com.regitiny.catiny.GeneratedByJHipster;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
+import javax.persistence.Lob;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
-import javax.persistence.Lob;
-import javax.validation.constraints.*;
 
 /**
  * A DTO for the {@link com.regitiny.catiny.domain.MessageGroup} entity.
@@ -49,7 +50,6 @@ public class MessageGroupDTO implements Serializable {
   /**
    * role
    */
-  @Size(max = 511)
   @ApiModelProperty(value = "role")
   private String role;
 
@@ -80,7 +80,6 @@ public class MessageGroupDTO implements Serializable {
   /**
    * comment
    */
-  @Size(max = 511)
   @ApiModelProperty(value = "comment")
   private String comment;
 

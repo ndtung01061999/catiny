@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 /**
  * Service Interface for managing {@link com.regitiny.catiny.domain.MessageContent}.
  */
-public interface MessageContentAdvanceService extends  LocalService<MessageContentService, MessageContentQueryService>
+public interface MessageContentAdvanceService extends LocalService<MessageContentService, MessageContentQueryService>
 {
   Page<MessageContentDTO> getContentInGroup(String groupId, Pageable pageable);
 

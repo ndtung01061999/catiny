@@ -1,4 +1,4 @@
-package com.regitiny.catiny.advance.controller.ws.impl;
+package com.regitiny.catiny.web.websocket;
 
 import com.regitiny.catiny.advance.service.MessageContentAdvanceService;
 import com.regitiny.catiny.advance.service.MessageGroupAdvanceService;

@@ -1,15 +1,15 @@
 package com.regitiny.catiny.domain;
 
 import com.regitiny.catiny.GeneratedByJHipster;
-import java.io.Serializable;
-import java.time.Instant;
-import java.util.UUID;
-import javax.persistence.*;
-import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
-import org.springframework.data.elasticsearch.annotations.FieldType;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.time.Instant;
+import java.util.UUID;
 
 /**
  * The PostDetails entity.\n@author A true hipster
@@ -60,8 +60,7 @@ public class MessageContent implements Serializable {
   /**
    * role
    */
-  @Size(max = 511)
-  @Column(name = "role", length = 511)
+  @Column(name = "role")
   private String role;
 
   /**
@@ -91,8 +90,7 @@ public class MessageContent implements Serializable {
   /**
    * comment
    */
-  @Size(max = 511)
-  @Column(name = "comment", length = 511)
+  @Column(name = "comment")
   private String comment;
 
   // jhipster-needle-entity-add-field - JHipster will add fields here

@@ -23,7 +23,7 @@ entity MessageGroup {
     /** searchField */
     searchField TextBlob
     /** role */
-    role String maxlength(511)
+    role String
     /** createdDate */
     createdDate  Instant
     /** modifiedDate */
@@ -33,7 +33,7 @@ entity MessageGroup {
     /** modifiedBy */
     modifiedBy String
     /** comment */
-    comment String maxlength(511)
+    comment String
 }
 
 /**
@@ -51,7 +51,7 @@ entity MessageContent {
     /** searchField */
     searchField TextBlob
     /** role */
-    role String maxlength(511)
+    role String
     /** createdDate */
     createdDate  Instant
     /** modifiedDate */
@@ -61,7 +61,7 @@ entity MessageContent {
     /** modifiedBy */
     modifiedBy String
     /** comment */
-    comment String maxlength(511)
+    comment String
 }
 
 

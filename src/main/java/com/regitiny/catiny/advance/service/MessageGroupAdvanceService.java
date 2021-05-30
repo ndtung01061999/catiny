@@ -1,8 +1,6 @@
 package com.regitiny.catiny.advance.service;
 
-import com.regitiny.catiny.advance.controller.model.MessageGroupModel;
 import com.regitiny.catiny.domain.MessageGroup;
-import com.regitiny.catiny.service.MessageContentService;
 import com.regitiny.catiny.service.MessageGroupQueryService;
 import com.regitiny.catiny.service.MessageGroupService;
 import com.regitiny.catiny.service.dto.MessageGroupDTO;

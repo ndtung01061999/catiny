@@ -197,7 +197,6 @@ const VideoCall = (props: IUserSettingsProps) => {
   return (
     <div>
       <h1>chat</h1>
-      {/*<Webcam audio={true} ref={webcamRef} videoConstraints={videoConstraints}/>*/}
       {capturing ? (
         <button onClick={handleStopCaptureClick}>Stop Capture</button>
       ) : (
@@ -205,7 +204,6 @@ const VideoCall = (props: IUserSettingsProps) => {
           <button onClick={() => handleStartCaptureClick('camera')}>Start camera</button>
           <button onClick={() => handleStartCaptureClick('display')}>Start display</button>
           <button onClick={subscribe}>subscribe</button>
-          {/*<button onClick={listen}>listen</button>*/}
         </div>
       )}
 
