@@ -10,5 +10,6 @@ import org.mapstruct.Mapper;
  * Mapper for the entity {@link MessageGroup} and its DTO {@link MessageGroupDTO}.
  */
 @Mapper(componentModel = "spring", uses = {})
-public interface MessageGroupAdvanceMapper extends EntityAdvanceMapper<MessageGroupModel, MessageGroup> , EntityMapper<MessageGroupDTO, MessageGroup>
-{}
+public interface MessageGroupAdvanceMapper extends EntityAdvanceMapper<MessageGroupModel, MessageGroupDTO>, EntityMapper<MessageGroupDTO, MessageGroup>
+{
+}

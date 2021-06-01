@@ -38,15 +38,12 @@ public class MessageContentAdvanceServiceImpl extends LocalServiceImpl<MessageCo
 
   private final MessageGroupAdvanceService messageGroupAdvanceService;
 
-  private final MessageContentService messageContentService;
-
-  public MessageContentAdvanceServiceImpl(MessageContentAdvanceRepository messageContentAdvanceRepository, MessageContentAdvanceMapper messageContentAdvanceMapper, MessageContentAdvanceSearch messageContentAdvanceSearch, MessageGroupAdvanceService messageGroupAdvanceService, MessageContentService messageContentService)
+  public MessageContentAdvanceServiceImpl(MessageContentAdvanceRepository messageContentAdvanceRepository, MessageContentAdvanceMapper messageContentAdvanceMapper, MessageContentAdvanceSearch messageContentAdvanceSearch, MessageGroupAdvanceService messageGroupAdvanceService)
   {
     this.messageContentAdvanceRepository = messageContentAdvanceRepository;
     this.messageContentAdvanceMapper = messageContentAdvanceMapper;
     this.messageContentAdvanceSearch = messageContentAdvanceSearch;
     this.messageGroupAdvanceService = messageGroupAdvanceService;
-    this.messageContentService = messageContentService;
   }
 
 
@@ -57,7 +54,7 @@ public class MessageContentAdvanceServiceImpl extends LocalServiceImpl<MessageCo
     var messageGroup = messageGroupAdvanceService.getMessageGroupByGroupId(groupId);
     var result = Objects.isNull(messageGroup) ? Page.empty() : messageContentAdvanceRepository.findAllByGroupIdAndCreatedDateGreaterThanEqualOrderByCreatedDateDesc(groupId, messageGroup.getCreatedDate(), pageable).map(messageContentAdvanceMapper::toDto);
     var resultx = result.toList().stream()
-      .map(o -> (MessageContentDTO) o)
+      .map(MessageContentDTO.class::cast)
       .sorted(Comparator.comparing(MessageContentDTO::getCreatedDate))
       .collect(Collectors.toList());
     resultx.forEach(x -> System.out.println(x.getId()));

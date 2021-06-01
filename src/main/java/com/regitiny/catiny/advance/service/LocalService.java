@@ -13,7 +13,8 @@ import com.regitiny.catiny.advance.service.impl.LocalServiceImpl;
  */
 public interface LocalService<S, Q>
 {
-  Q LocalQueryService();
+  Q localQueryService();
 
-  S LocalService ();
+
+  S localService();
 }

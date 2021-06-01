@@ -1,27 +1,25 @@
 package com.regitiny.catiny.advance.service.mapper;
 
-import com.regitiny.catiny.service.mapper.EntityMapper;
-
 import java.util.List;
 
 
 /**
  * Contract for a generic dto to entity mapper.
  *
- * @param <D> - AdvanceDTO type parameter.
- * @param <E> - Entity type parameter.
+ * @param <M> - Model type parameter.
+ * @param <D> - DTO type parameter.
  */
 
-public interface EntityAdvanceMapper<D, E>
+public interface EntityAdvanceMapper<M, D>
 {
-  E modelToDto(D dto);
+  D modelToDto(M dto);
 
 
-  D dtoToModel(E entity);
+  M dtoToModel(D entity);
 
 
-  List<E> modelToDto(List<D> dtoList);
+  List<D> modelToDto(List<M> dtoList);
 
 
-  List<D> dtoToModel(List<E> entityList);
+  List<M> dtoToModel(List<D> entityList);
 }

@@ -21,26 +21,30 @@ public class LocalServiceImpl<S, Q> implements LocalService<S, Q>
   @Autowired
   private ApplicationContext applicationContext;
 
-  private S localService;
-  private Q localQueryService;
+  protected S localService;
+  protected Q localQueryService;
 
   @Override
-  public S LocalService()
+  public S localService()
   {
     if (Objects.isNull(localService))
       setup();
     else
-      log.warn("not found LocalService");
+      log.warn("LocalService already exist");
+    if (Objects.isNull(localQueryService))
+      log.warn("LocalService really doesn't exist");
     return localService;
   }
 
   @Override
-  public Q LocalQueryService()
+  public Q localQueryService()
   {
-    if (Objects.isNull(localService))
+    if (Objects.isNull(localQueryService))
       setup();
     else
-      log.warn("not found LocalQueryService");
+      log.warn("LocalQueryService already exist");
+    if (Objects.isNull(localQueryService))
+      log.warn("LocalQueryService really doesn't exist");
     return localQueryService;
   }
 
