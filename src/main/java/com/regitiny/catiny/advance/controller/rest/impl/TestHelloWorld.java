@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Arrays;
 
 @Log4j2
 @RestController
@@ -30,13 +29,14 @@ public class TestHelloWorld
   @GetMapping("/test/hello")
   public void helloWorld()
   {
-//    GenerateEntityAdvanceUtils.genRepoAdvance("MeoStatus");
-//    GenerateEntityAdvanceUtils.genSearchRepoAdvance("MeoStatus");
-//    GenerateEntityAdvanceUtils.genService("MeoStatus");
+    GenerateEntityAdvanceUtils.genRepoAdvance("MeoStatus");
+    GenerateEntityAdvanceUtils.genSearchRepoAdvance("MeoStatus");
+    GenerateEntityAdvanceUtils.genService("MeoStatus");
     GenerateEntityAdvanceUtils.genMapper("MeoMay");
+    GenerateEntityAdvanceUtils.genModel("MessageContent");
     var projectPath = "C:/Users/yuvytung/IdeaProjects/catiny";
     try (
-      var fg = new FileInputStream(projectPath + "/generate/generate-advance.json");
+      var fg = new FileInputStream(projectPath + "/.generate/generate-advance.json");
       var fj = new FileInputStream(projectPath + "/.yo-rc.json"))
     {
       var allBytesGeneratedInfo = fg.readAllBytes();
@@ -57,11 +57,6 @@ public class TestHelloWorld
     log.debug("run {}", a.get());
     log.debug("run {}", messageContentAdvanceService.localService().findOne(1L).get());
 
-    Arrays.stream(String.class.getMethods()).map(method ->
-    {
-      log.debug("pika {}", method.getName());
-      return null;
-    });
     log.debug("run {}", a.get());
 
   }
