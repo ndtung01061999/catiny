@@ -16,7 +16,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang.WordUtils;
+import org.mapstruct.Mapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.lang.model.element.Modifier;
 import java.io.File;
@@ -65,7 +68,7 @@ public class GenerateEntityAdvanceUtils
       .filter(javaFile -> Try.of(() ->
       {
         var fileGenerate = new File(CODE_JAVA_OUTPUT_PATH, javaFile.toJavaFileObject().toUri().toString());
-        return !fileGenerate.exists() && fileGenerate.canWrite() && !fileGenerate.isDirectory();
+        return !fileGenerate.exists() && !fileGenerate.isDirectory();
       }).getOrElse(false))
       .map(javaFile -> Try.of(() -> javaFile.writeToFile(new File(CODE_JAVA_OUTPUT_PATH)))
         .onSuccess(file1 -> log.info("generated a file , isExist = {}, path : {}", file1.exists(), file1.getPath())).getOrElse(() -> null))
@@ -131,20 +134,23 @@ public class GenerateEntityAdvanceUtils
 
   public static JavaFile genBaseSearch(String entityName)
   {
-    String packageAdvanceRepository = BASE_PACKAGE + ".advance.repository.search";
-    String entityAdvanceRepository = entityName + "AdvanceSearch";
-    String packageRepository = BASE_PACKAGE + ".repository.search";
-    String entityRepository = entityName + "SearchRepository";
+    String packageAdvanceSearch = BASE_PACKAGE + ".advance.repository.search";
+    String entityAdvanceSearch = entityName + "AdvanceSearch";
+    String packageSearch = BASE_PACKAGE + ".repository.search";
+    String entitySearch = entityName + "SearchRepository";
     String entity = BASE_PACKAGE + ".domain." + entityName;
 
-    var javadoc = "";
-
+    var javadoc = "Spring Data Elasticsearch repository for the {@link ${entity}} entity.\n\n" +
+      "here contains simple queries same as JPA syntax.\n" +
+      "if you want to write simple query then you should write to {@link ${advanceSearch}}";
+    javadoc = javadoc.replace("${entity}", entity)
+      .replace("${advanceSearch}", packageAdvanceSearch + StringPool.PERIOD + entityAdvanceSearch);
     var interfaceBaseSearch = TypeSpec.interfaceBuilder(entityName + "BaseSearch")
       .addModifiers(Modifier.PUBLIC)
       .addJavadoc(javadoc)
-      .addSuperinterface(ClassName.get(packageRepository, entityRepository))
+      .addSuperinterface(ClassName.get(packageSearch, entitySearch))
       .build();
-    var javaFileBaseSearch = JavaFile.builder(packageAdvanceRepository + ".base", interfaceBaseSearch)
+    var javaFileBaseSearch = JavaFile.builder(packageAdvanceSearch + ".base", interfaceBaseSearch)
       .build();
 //    log.info("...BaseSearch after generated : {}", javaFileBaseSearch.toString());
 
@@ -190,12 +196,12 @@ public class GenerateEntityAdvanceUtils
     String javadoc = " Spring Data Elasticsearch advance-repository extends jhipster-search-repository for the {@link ${entityDomain}} entityDomain.\n" +
       "@see ${searchRepository} is base repository generate by jhipster";
     javadoc = javadoc.replace("${entityDomain}", entityDomain)
-      .replace("${searchRepository}", entityInput);
+      .replace("${searchRepository}", packageInput + StringPool.PERIOD + entityInput);
 
     TypeSpec interfaceAdvanceService = TypeSpec.interfaceBuilder(entityAdvanceOutput)
       .addModifiers(Modifier.PUBLIC)
       .addJavadoc(javadoc)
-      .addSuperinterface(ParameterizedTypeName.get(ClassName.get(LocalService.class), TypeVariableName.get(entityInput), TypeVariableName.get(entityName + "QueryService")))
+      .addSuperinterface(ParameterizedTypeName.get(ClassName.get(LocalService.class), ClassName.get(packageInput, entityInput), ClassName.get(packageInput, entityName + "QueryService")))
       .build();
 
     var javaFile = JavaFile.builder(packageAdvanceOutput, interfaceAdvanceService)
@@ -227,8 +233,11 @@ public class GenerateEntityAdvanceUtils
     var advanceServiceImpl = TypeSpec.classBuilder(entityAdvanceImplOutput)
       .addModifiers(Modifier.PUBLIC)
       .addJavadoc(javadoc)
+      .addAnnotation(Log4j2.class)
+      .addAnnotation(Service.class)
+      .addAnnotation(Transactional.class)
       .superclass(ParameterizedTypeName.get(ClassName.get(LocalServiceImpl.class), ClassName.get(packageInput, entityInput), ClassName.get(packageInput, entityName + "QueryService")))
-      .addSuperinterface(TypeVariableName.get(entityAdvanceOutput));
+      .addSuperinterface(ClassName.get(packageAdvanceOutput, entityAdvanceOutput));
 
     var constructor = MethodSpec.constructorBuilder()
       .addModifiers(Modifier.PUBLIC);
@@ -260,7 +269,7 @@ public class GenerateEntityAdvanceUtils
     final String packageInput = BASE_PACKAGE + ".service.mapper";
     final String entityInput = entityName + "ServiceMapper";
     final String packageAdvanceOutput = BASE_PACKAGE + ".advance.service.mapper";
-    final String entityAdvanceOutput = entityName + "AdvanceServiceMapper";
+    final String entityAdvanceOutput = entityName + "AdvanceMapper";
     final String entityDomain = BASE_PACKAGE + ".domain." + entityName;
 
     var javadoc = "";
@@ -268,6 +277,9 @@ public class GenerateEntityAdvanceUtils
     var advanceMapper = TypeSpec.interfaceBuilder(entityAdvanceOutput)
       .addModifiers(Modifier.PUBLIC)
       .addJavadoc(javadoc)
+      .addAnnotation(AnnotationSpec.builder(Mapper.class)
+        .addMember("componentModel", "$S", "spring")
+        .addMember("uses", "$L", "{}").build())
       .addSuperinterface(
         ParameterizedTypeName.get(
           ClassName.get(EntityMapper.class),
