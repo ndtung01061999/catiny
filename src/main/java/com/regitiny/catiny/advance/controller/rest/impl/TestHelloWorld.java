@@ -1,9 +1,7 @@
 package com.regitiny.catiny.advance.controller.rest.impl;
 
-import com.regitiny.catiny.advance.service.MessageContentAdvanceService;
-import com.regitiny.catiny.advance.service.MessageGroupAdvanceService;
 import com.regitiny.catiny.tools.generate.GenerateEntityAdvanceUtils;
-import io.vavr.Tuple2;
+import com.squareup.javapoet.JavaFile;
 import lombok.extern.log4j.Log4j2;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -15,7 +13,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Optional;
 
 @Log4j2
@@ -23,13 +20,9 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class TestHelloWorld
 {
-  private final MessageGroupAdvanceService messageGroupAdvanceService;
-  private final MessageContentAdvanceService messageContentAdvanceService;
 
-  public TestHelloWorld(MessageGroupAdvanceService messageGroupAdvanceService, MessageContentAdvanceService messageContentAdvanceService)
+  public TestHelloWorld()
   {
-    this.messageGroupAdvanceService = messageGroupAdvanceService;
-    this.messageContentAdvanceService = messageContentAdvanceService;
   }
 
   @GetMapping("/test/hello")
@@ -52,7 +45,7 @@ public class TestHelloWorld
       var jsonGenRoot = new JSONObject(new String(allBytesGeneratedInfo));
       var entitiesGenerated = new JSONArray();
 
-      var entityHasGenerate = new HashSet<String>();
+      var entityCanGenerate = new HashSet<String>();
       Optional.of(jsonJhipsterRoot)
         .filter(jsonObject -> jsonObject.has("generator-jhipster"))
         .map(jsonObject -> jsonObject.getJSONObject("generator-jhipster"))
@@ -61,28 +54,47 @@ public class TestHelloWorld
         .ifPresent(objects ->
         {
           for (int i = 0; i < objects.length(); i++)
-            entityHasGenerate.add(objects.getString(i));
+            entityCanGenerate.add(objects.getString(i));
         });
       Optional.of(jsonGenRoot)
-        .filter(jsonObject -> jsonObject.has("entities") && !entityHasGenerate.isEmpty())
-        .map(jsonObject -> jsonObject.getJSONArray("entities"))
+        .filter(jsonObject -> jsonObject.has("entities") && !entityCanGenerate.isEmpty())
+        .map(jsonObject -> jsonObject.getJSONObject("entities"))
         .ifPresent(objects ->
         {
-          for (int i = 0; i < objects.length(); i++)
+          var entities = objects.keys();
+          while (entities.hasNext())
           {
-            entitiesGenerated.put(objects.getString(i));
-            entityHasGenerate.remove(objects.getString(i));
+            var entity = entities.next();
+            entitiesGenerated.put(entity);
+            entityCanGenerate.remove(entity);
           }
         });
-      entityHasGenerate.forEach(s -> log.debug("entity has generate : {}", s));
-      entityHasGenerate.stream().map(GenerateEntityAdvanceUtils::Generate)
-        .filter(Objects::nonNull)
-        .map(Tuple2::_2).forEach(entitiesGenerated::put);
+      entityCanGenerate.forEach(s -> log.debug("entity has generate : {}", s));
+      entityCanGenerate.stream().forEach(s ->
+      {
+        var result = GenerateEntityAdvanceUtils.Generate(s);
+        var entities = jsonGenRoot.getJSONObject("entities");
+        var json = entities.has(s)
+          ? jsonGenRoot.getJSONObject("entities").getJSONObject(s)
+          : new JSONObject();
 
-      jsonGenRoot.put("entities", entitiesGenerated);
+        var generated = json.has("generated")
+          ? json.getJSONObject("generated")
+          : new JSONObject();
+        assert result != null;
+        result._1().stream().map(JavaFile::toJavaFileObject)
+          .forEach(javaFileObject -> generated.put(javaFileObject.getName(), true));
+        result._2().stream().map(JavaFile::toJavaFileObject)
+          .forEach(javaFileObject -> generated.put(javaFileObject.getName(), false));
+
+        json.put("generated", generated);
+        entities.put(s, json);
+        jsonGenRoot.put("entities", entities);
+      });
       var fgWriter = new FileOutputStream(projectPath + "/.generate/generate-advance.json");
       fgWriter.write(jsonGenRoot.toString().getBytes());
       fgWriter.flush();
+      fgWriter.close();
     }
     catch (IOException e)
     {

@@ -24,23 +24,31 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.lang.model.element.Modifier;
 import java.io.File;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Log4j2()
+@Log4j2
 public class GenerateEntityAdvanceUtils
 {
   private static final String BASE_PACKAGE = "com.regitiny.catiny";
   private static final String BASE_PATH_GENERATED_OUTPUT = "C:/Users/yuvytung/IdeaProjects/catiny";
   private static final String CODE_JAVA_OUTPUT_PATH = BASE_PATH_GENERATED_OUTPUT + "/src/main/java/";
 
+  private static final String ENTITY_NAME = "${entityName}";
+
+  private static String entityName(String entityName)
+  {
+    return BASE_PACKAGE + ".domain." + entityName;
+  }
+
   private GenerateEntityAdvanceUtils()
   {
     throw new IllegalStateException("GenerateEntityAdvanceUtils Class");
   }
 
-  public static Tuple2<List<File>, String> Generate(String entityName)
+  public static Tuple2<List<JavaFile>, List<JavaFile>> Generate(String entityName)
   {
     var file = new File(CODE_JAVA_OUTPUT_PATH);
     if (!file.exists() || !file.isDirectory())
@@ -53,6 +61,8 @@ public class GenerateEntityAdvanceUtils
         return null;
       }
     }
+    var listFileErrors = new ArrayList<JavaFile>();
+    var listFileGenerated = new ArrayList<JavaFile>();
 
     final var javaFiles = List.of(
       genBaseRepo(entityName),
@@ -65,16 +75,22 @@ public class GenerateEntityAdvanceUtils
       genModel(entityName));
 //    kiểm tra nếu đã tồn tại thì bỏ qua nếu chưa tồn tại thì bắt đầu generate.
     var result = javaFiles.stream()
-      .filter(javaFile -> Try.of(() ->
+      .filter(javaFile ->
       {
         var fileGenerate = new File(CODE_JAVA_OUTPUT_PATH, javaFile.toJavaFileObject().toUri().toString());
-        return !fileGenerate.exists() && !fileGenerate.isDirectory();
-      }).getOrElse(false))
+        if (!fileGenerate.exists() && !fileGenerate.isDirectory())
+          return true;
+        log.info("file exist , {}", javaFile.toJavaFileObject().getName());
+        listFileGenerated.add(javaFile);
+        return false;
+      })
       .map(javaFile -> Try.of(() -> javaFile.writeToFile(new File(CODE_JAVA_OUTPUT_PATH)))
-        .onSuccess(file1 -> log.info("generated a file , isExist = {}, path : {}", file1.exists(), file1.getPath())).getOrElse(() -> null))
+        .onSuccess(file1 -> listFileGenerated.add(javaFile))
+        .onFailure(throwable -> listFileErrors.add(javaFile))
+        .getOrElse(() -> null))
       .collect(Collectors.toList());
-    log.debug("Generated {}/{}", result.size(), javaFiles.size());
-    return Tuple.of(result, entityName);
+    log.info("Generated {}/{}", result.size(), javaFiles.size());
+    return Tuple.of(listFileGenerated, listFileErrors);
   }
 
   public static JavaFile genBaseRepo(String entityName)
@@ -88,7 +104,7 @@ public class GenerateEntityAdvanceUtils
       "here contains simple query JPA syntax.\n" +
       "if you want to write complex query pure (SQL or HQL) then you should write to :\n" +
       "{@link ${advanceRepository}}";
-    javadoc = javadoc.replace("${entityName}", BASE_PACKAGE + ".domain." + entityName)
+    javadoc = javadoc.replace(ENTITY_NAME, entityName(entityName))
       .replace("${advanceRepository}", packageAdvanceRepository + StringPool.PERIOD + entityAdvanceRepository);
 
     var interfaceBaseRepository = TypeSpec.interfaceBuilder(entityName + "BaseRepository")
@@ -98,7 +114,7 @@ public class GenerateEntityAdvanceUtils
       .build();
 
     var javaFileBaseRepository = JavaFile.builder(packageAdvanceRepository + ".base", interfaceBaseRepository).build();
-//    log.info("...BaseRepository after generated : {}", javaFileBaseRepository.toString());
+    log.debug("...BaseRepository after generated : {}", javaFileBaseRepository.toString());
     return javaFileBaseRepository;
   }
 
@@ -116,7 +132,7 @@ public class GenerateEntityAdvanceUtils
         " if you want to write simple query then you should write to :\n" +
         " {@link ${baseRepository}}";
     javadoc = javadoc.replace("${baseRepository}", entityName + "BaseRepository")
-      .replace("${entityName}", BASE_PACKAGE + ".domain." + entityName);
+      .replace(ENTITY_NAME, entityName(entityName));
 
     TypeSpec interfaceAdvanceRepository = TypeSpec.interfaceBuilder(entityAdvanceRepository)
       .addModifiers(Modifier.PUBLIC)
@@ -126,9 +142,8 @@ public class GenerateEntityAdvanceUtils
       .addSuperinterface(ClassName.get(packageAdvanceRepository + ".base", entityName + "BaseRepository"))
       .build();
 
-    var javaFile = JavaFile.builder(packageAdvanceRepository, interfaceAdvanceRepository)
-      .build();
-//    log.info("...AdvanceRepository after generated :  {}", javaFile.toString());
+    var javaFile = JavaFile.builder(packageAdvanceRepository, interfaceAdvanceRepository).build();
+    log.debug("...AdvanceRepository after generated :  {}", javaFile.toString());
     return javaFile;
   }
 
@@ -138,21 +153,20 @@ public class GenerateEntityAdvanceUtils
     String entityAdvanceSearch = entityName + "AdvanceSearch";
     String packageSearch = BASE_PACKAGE + ".repository.search";
     String entitySearch = entityName + "SearchRepository";
-    String entity = BASE_PACKAGE + ".domain." + entityName;
+    String entityBaseSearch = entityName + "BaseSearch";
 
-    var javadoc = "Spring Data Elasticsearch repository for the {@link ${entity}} entity.\n\n" +
+    var javadoc = "Spring Data Elasticsearch repository for the {@link ${entityName}} entity.\n\n" +
       "here contains simple queries same as JPA syntax.\n" +
       "if you want to write simple query then you should write to {@link ${advanceSearch}}";
-    javadoc = javadoc.replace("${entity}", entity)
+    javadoc = javadoc.replace(ENTITY_NAME, entityName(entityName))
       .replace("${advanceSearch}", packageAdvanceSearch + StringPool.PERIOD + entityAdvanceSearch);
-    var interfaceBaseSearch = TypeSpec.interfaceBuilder(entityName + "BaseSearch")
+    var interfaceBaseSearch = TypeSpec.interfaceBuilder(entityBaseSearch)
       .addModifiers(Modifier.PUBLIC)
       .addJavadoc(javadoc)
       .addSuperinterface(ClassName.get(packageSearch, entitySearch))
       .build();
-    var javaFileBaseSearch = JavaFile.builder(packageAdvanceSearch + ".base", interfaceBaseSearch)
-      .build();
-//    log.info("...BaseSearch after generated : {}", javaFileBaseSearch.toString());
+    var javaFileBaseSearch = JavaFile.builder(packageAdvanceSearch + ".base", interfaceBaseSearch).build();
+    log.debug("...BaseSearch after generated : {}", javaFileBaseSearch.toString());
 
     return javaFileBaseSearch;
   }
@@ -163,24 +177,23 @@ public class GenerateEntityAdvanceUtils
     String entityAdvanceRepository = entityName + "AdvanceSearch";
     String packageRepository = BASE_PACKAGE + ".repository.search";
     String entityRepository = entityName + "SearchRepository";
-    String entity = BASE_PACKAGE + ".domain." + entityName;
+    String entityBaseSearch = entityName + "BaseSearch";
 
     String javadoc =
       " Spring Data Elasticsearch repository for the {@link ${entityName}} entity.\n\n" +
         " here contains complex queries with pure Elasticsearch syntax.\n" +
         "if you want to write simple query then you should write to {@link ${baseSearch}}";
-    javadoc = javadoc.replace("${entityName}", entity)
-      .replace("${baseSearch}", packageAdvanceRepository + ".base." + entityName + "BaseSearch");
+    javadoc = javadoc.replace(ENTITY_NAME, entityName(entityName))
+      .replace("${baseSearch}", packageAdvanceRepository + ".base." + entityBaseSearch);
 
     TypeSpec interfaceAdvanceRepository = TypeSpec.interfaceBuilder(entityAdvanceRepository)
       .addModifiers(Modifier.PUBLIC)
       .addJavadoc(javadoc)
-      .addSuperinterface(ClassName.get(packageAdvanceRepository + ".base", entityName + "BaseSearch"))
+      .addSuperinterface(ClassName.get(packageAdvanceRepository + ".base", entityBaseSearch))
       .build();
 
-    var javaFile = JavaFile.builder(packageAdvanceRepository, interfaceAdvanceRepository)
-      .build();
-//    log.info("...AdvanceSearch after generated : {}", javaFile.toString());
+    var javaFile = JavaFile.builder(packageAdvanceRepository, interfaceAdvanceRepository).build();
+    log.debug("...AdvanceSearch after generated : {}", javaFile.toString());
 
     return javaFile;
   }
@@ -191,11 +204,10 @@ public class GenerateEntityAdvanceUtils
     final String entityInput = entityName + "Service";
     final String packageAdvanceOutput = BASE_PACKAGE + ".advance.service";
     final String entityAdvanceOutput = entityName + "AdvanceService";
-    final String entityDomain = BASE_PACKAGE + ".domain." + entityName;
 
-    String javadoc = " Spring Data Elasticsearch advance-repository extends jhipster-search-repository for the {@link ${entityDomain}} entityDomain.\n" +
+    String javadoc = " Spring Data Elasticsearch advance-repository extends jhipster-search-repository for the {@link ${entityName}} entityDomain.\n" +
       "@see ${searchRepository} is base repository generate by jhipster";
-    javadoc = javadoc.replace("${entityDomain}", entityDomain)
+    javadoc = javadoc.replace(ENTITY_NAME, entityName(entityName))
       .replace("${searchRepository}", packageInput + StringPool.PERIOD + entityInput);
 
     TypeSpec interfaceAdvanceService = TypeSpec.interfaceBuilder(entityAdvanceOutput)
@@ -204,11 +216,8 @@ public class GenerateEntityAdvanceUtils
       .addSuperinterface(ParameterizedTypeName.get(ClassName.get(LocalService.class), ClassName.get(packageInput, entityInput), ClassName.get(packageInput, entityName + "QueryService")))
       .build();
 
-    var javaFile = JavaFile.builder(packageAdvanceOutput, interfaceAdvanceService)
-      .build();
-
-//    log.info("...AdvanceRepository after generated : \n {}", javaFile.toString());
-
+    var javaFile = JavaFile.builder(packageAdvanceOutput, interfaceAdvanceService).build();
+    log.debug("...AdvanceRepository after generated : \n {}", javaFile.toString());
     return javaFile;
   }
 
@@ -218,7 +227,6 @@ public class GenerateEntityAdvanceUtils
     final String entityInput = entityName + "Service";
     final String packageAdvanceOutput = BASE_PACKAGE + ".advance.service";
     final String entityAdvanceOutput = entityName + "AdvanceService";
-    final String entityDomain = BASE_PACKAGE + ".domain." + entityName;
 
     final var packageImplInput = packageInput + ".impl";
     final var entityImplInput = entityInput + "Impl";
@@ -258,9 +266,7 @@ public class GenerateEntityAdvanceUtils
     advanceServiceImpl.addMethod(constructor.build());
 
     var javaFileImpl = JavaFile.builder(packageAdvanceImplOutput, advanceServiceImpl.build()).build();
-
-//    log.info("...AdvanceRepository after generated : \n {}", javaFileImpl.toString());
-
+    log.debug("...AdvanceRepository after generated : \n {}", javaFileImpl.toString());
     return javaFileImpl;
   }
 
@@ -270,7 +276,6 @@ public class GenerateEntityAdvanceUtils
     final String entityInput = entityName + "ServiceMapper";
     final String packageAdvanceOutput = BASE_PACKAGE + ".advance.service.mapper";
     final String entityAdvanceOutput = entityName + "AdvanceMapper";
-    final String entityDomain = BASE_PACKAGE + ".domain." + entityName;
 
     var javadoc = "";
 
@@ -287,8 +292,7 @@ public class GenerateEntityAdvanceUtils
           ClassName.get(BASE_PACKAGE + ".service.dto", entityName + "DTO")));
 
     var javaFile = JavaFile.builder(packageAdvanceOutput, advanceMapper.build()).build();
-//    log.info("...Mapper after generated : \n {}", javaFile.toString());
-
+    log.debug("...Mapper after generated : \n {}", javaFile.toString());
     return javaFile;
   }
 
@@ -299,7 +303,6 @@ public class GenerateEntityAdvanceUtils
     final String entityInput = entityName + "DTO";
     final String packageAdvanceOutput = BASE_PACKAGE + ".advance.controller.model";
     final String entityAdvanceOutput = entityName + "Model";
-    final String entityDomain = BASE_PACKAGE + ".domain." + entityName;
 
     var javadoc = "";
 
@@ -355,8 +358,7 @@ public class GenerateEntityAdvanceUtils
       .addType(entityOutputModel.build());
 
     var javaFile = JavaFile.builder(packageAdvanceOutput, entityModel.build()).build();
-//    log.info(javaFile.toString());
-
+    log.debug(javaFile.toString());
     return javaFile;
   }
 

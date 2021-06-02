@@ -1,6 +1,28 @@
 {
-  "entities": [
-    "MessageContent",
-    "MessageGroup"
-  ]
+  "entities": {
+    "MessageContent": {
+      "generated": {
+        "com/regitiny/catiny/advance/service/impl/MessageContentAdvanceServiceImpl.java": true,
+        "com/regitiny/catiny/advance/repository/base/MessageContentBaseRepository.java": true,
+        "com/regitiny/catiny/advance/repository/search/base/MessageContentBaseSearch.java": true,
+        "com/regitiny/catiny/advance/repository/search/MessageContentAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/repository/MessageContentAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/service/MessageContentAdvanceService.java": true,
+        "com/regitiny/catiny/advance/controller/model/MessageContentModel.java": true,
+        "com/regitiny/catiny/advance/service/mapper/MessageContentAdvanceMapper.java": true
+      }
+    },
+    "MessageGroup": {
+      "generated": {
+        "com/regitiny/catiny/advance/repository/search/base/MessageGroupBaseSearch.java": true,
+        "com/regitiny/catiny/advance/repository/base/MessageGroupBaseRepository.java": true,
+        "com/regitiny/catiny/advance/service/MessageGroupAdvanceService.java": true,
+        "com/regitiny/catiny/advance/repository/MessageGroupAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/controller/model/MessageGroupModel.java": true,
+        "com/regitiny/catiny/advance/service/impl/MessageGroupAdvanceServiceImpl.java": true,
+        "com/regitiny/catiny/advance/repository/search/MessageGroupAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/service/mapper/MessageGroupAdvanceMapper.java": true
+      }
+    }
+  }
 }
