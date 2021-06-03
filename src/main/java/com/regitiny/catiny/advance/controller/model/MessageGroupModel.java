@@ -1,6 +1,5 @@
 package com.regitiny.catiny.advance.controller.model;
 
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,30 +8,23 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Lob;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.Objects;
 import java.util.UUID;
 
-/**
- * A DTO for the {@link com.regitiny.catiny.domain.MessageGroup} entity.
- */
-@ApiModel(description = "The PostDetails entity.\n@author A true hipster")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class MessageGroupModel implements Serializable
 {
-
   private Long id;
 
-  /**
-   * uuid
-   */
   @NotNull
-  @ApiModelProperty(value = "uuid", required = true)
+  @ApiModelProperty(
+    required = true,
+    value = "uuid"
+  )
   private UUID uuid;
 
   @NotNull
@@ -48,98 +40,106 @@ public class MessageGroupModel implements Serializable
   @Lob
   private String lastContent;
 
-  /**
-   * createdDate
-   */
-  @ApiModelProperty(value = "createdDate")
+  @ApiModelProperty("searchField")
+  @Lob
+  private String searchField;
+
+  @ApiModelProperty("role")
+  private String role;
+
+  @ApiModelProperty("createdDate")
   private Instant createdDate;
 
-  /**
-   * modifiedDate
-   */
-  @ApiModelProperty(value = "modifiedDate")
+  @ApiModelProperty("modifiedDate")
   private Instant modifiedDate;
 
-  /**
-   * createdBy
-   */
-  @ApiModelProperty(value = "createdBy")
+  @ApiModelProperty("createdBy")
   private String createdBy;
 
-  /**
-   * modifiedBy
-   */
-  @ApiModelProperty(value = "modifiedBy")
+  @ApiModelProperty("modifiedBy")
   private String modifiedBy;
 
-  @Data
-  public static class MessageContentModelIn implements Serializable
-  {
+  @ApiModelProperty("comment")
+  private String comment;
 
+  @Data
+  @Builder
+  @NoArgsConstructor
+  @AllArgsConstructor
+  public static class InputModel implements Serializable
+  {
     private Long id;
 
-    /**
-     * uuid
-     */
     @NotNull
-    @ApiModelProperty(value = "uuid", required = true)
+    @ApiModelProperty(
+      required = true,
+      value = "uuid"
+    )
     private UUID uuid;
+
+    @NotNull
+    private Long userId;
 
     @NotNull
     private String groupId;
 
+    private String groupName;
+
+    private String addBy;
+
     @Lob
-    private String content;
+    private String lastContent;
 
-    private String sender;
-
-    private String status;
-
-    /**
-     * searchField
-     */
-    @ApiModelProperty(value = "searchField")
+    @ApiModelProperty("searchField")
     @Lob
     private String searchField;
 
-    /**
-     * role
-     */
-    @Size(max = 511)
-    @ApiModelProperty(value = "role")
+    @ApiModelProperty("role")
     private String role;
 
-    /**
-     * createdDate
-     */
-    @ApiModelProperty(value = "createdDate")
+    @ApiModelProperty("createdDate")
     private Instant createdDate;
 
-    /**
-     * modifiedDate
-     */
-    @ApiModelProperty(value = "modifiedDate")
+    @ApiModelProperty("modifiedDate")
     private Instant modifiedDate;
 
-    /**
-     * createdBy
-     */
-    @ApiModelProperty(value = "createdBy")
+    @ApiModelProperty("createdBy")
     private String createdBy;
 
-    /**
-     * modifiedBy
-     */
-    @ApiModelProperty(value = "modifiedBy")
+    @ApiModelProperty("modifiedBy")
     private String modifiedBy;
 
-    /**
-     * comment
-     */
-    @Size(max = 511)
-    @ApiModelProperty(value = "comment")
+    @ApiModelProperty("comment")
     private String comment;
-
   }
 
+  @Data
+  @Builder
+  @NoArgsConstructor
+  @AllArgsConstructor
+  public static class OutputModel implements Serializable
+  {
+    private Long id;
+
+    @NotNull
+    @ApiModelProperty(required = true, value = "uuid")
+    private UUID uuid;
+
+    @NotNull
+    private Long userId;
+
+    @NotNull
+    private String groupId;
+
+    private String groupName;
+
+    @Lob
+    private String lastContent;
+
+    @ApiModelProperty("modifiedDate")
+    private Instant modifiedDate;
+
+    private String currentStatus;
+
+  }
 }

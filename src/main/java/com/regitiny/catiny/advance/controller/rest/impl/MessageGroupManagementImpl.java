@@ -1,8 +1,9 @@
 package com.regitiny.catiny.advance.controller.rest.impl;
 
+import com.regitiny.catiny.advance.controller.model.MessageGroupModel;
 import com.regitiny.catiny.advance.controller.rest.MessageGroupManagement;
-import com.regitiny.catiny.advance.repository.MessageGroupAdvanceRepository;
 import com.regitiny.catiny.advance.service.MessageGroupAdvanceService;
+import com.regitiny.catiny.advance.service.mapper.MessageGroupAdvanceMapper;
 import com.regitiny.catiny.service.dto.MessageGroupDTO;
 import com.regitiny.catiny.web.rest.errors.BadRequestAlertException;
 import lombok.extern.log4j.Log4j2;
@@ -37,10 +38,12 @@ public class MessageGroupManagementImpl implements MessageGroupManagement
   private String applicationName;
 
   private final MessageGroupAdvanceService messageGroupAdvanceService;
+  private final MessageGroupAdvanceMapper messageGroupAdvanceMapper;
 
-  public MessageGroupManagementImpl(MessageGroupAdvanceService messageGroupAdvanceService, MessageGroupAdvanceRepository messageGroupAdvanceRepository)
+  public MessageGroupManagementImpl(MessageGroupAdvanceService messageGroupAdvanceService, MessageGroupAdvanceMapper messageGroupAdvanceMapper)
   {
     this.messageGroupAdvanceService = messageGroupAdvanceService;
+    this.messageGroupAdvanceMapper = messageGroupAdvanceMapper;
   }
 
   @Override
@@ -67,11 +70,13 @@ public class MessageGroupManagementImpl implements MessageGroupManagement
   }
 
   @Override
-  public ResponseEntity<List<MessageGroupDTO>> getAllGroupsJoined(Pageable pageable) throws URISyntaxException
+  public ResponseEntity<List<MessageGroupModel.OutputModel>> getAllGroupsJoined(Pageable pageable) throws URISyntaxException
   {
     log.debug("REST request get all groups user joined");
     var result = messageGroupAdvanceService.getAllGroupsJoined(pageable);
     HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), result);
-    return ResponseEntity.ok().headers(headers).body(result.getContent());
+
+    var out = messageGroupAdvanceMapper.dto2OutputModel(result.getContent());
+    return ResponseEntity.ok().headers(headers).body(out);
   }
 }

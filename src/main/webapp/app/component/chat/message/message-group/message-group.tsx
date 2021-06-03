@@ -5,6 +5,7 @@ import {getAllGroupsJoined, setGroupIdCurrent} from './message-group.reducer';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCircle, faPlusCircle} from '@fortawesome/free-solid-svg-icons';
 import Media from 'reactstrap/es/Media';
+import {Link} from 'react-router-dom';
 
 const MessageGroupComponent = (props: IMessageGroupProps) =>
 {
@@ -21,14 +22,8 @@ const MessageGroupComponent = (props: IMessageGroupProps) =>
   const time = (lastTimeVisit) => new Date(Date.now() - new Date(lastTimeVisit).getTime()).toLocaleTimeString();
 
 
-  const handleClickToGroup = (groupId) =>
-  {
-    setGroupIdCurrent(groupId);
-    props.setGroupIdCurrent(groupId);
-  }
-
   const messageGroups = messageGroup => (
-    <a id={messageGroup.groupId} onClick={() => handleClickToGroup(messageGroup.groupId)}>
+    <Link to={`/chat/messages/${messageGroup.groupId}`} id={messageGroup.groupId}>
       <Media className="mb-2">
         <Media left href="">
           <div className="media-object mr-2 "
@@ -44,7 +39,7 @@ const MessageGroupComponent = (props: IMessageGroupProps) =>
           </div>
         </Media>
       </Media>
-    </a>
+    </Link>
   );
 
   return (
@@ -53,11 +48,10 @@ const MessageGroupComponent = (props: IMessageGroupProps) =>
         <h5>follow status</h5>
         <FontAwesomeIcon icon={faPlusCircle}/>
       </div>
-      <div className="display-block pre-scrollable">
+      <div className="display-block">
         {messageGroupList
           ? (
-            <div
-              // loadMore={handleLoadMore}
+            <div className="pre-scrollable"// loadMore={handleLoadMore}
             >
               {messageGroupList.map(messageGroup => (
                 <>{messageGroups(messageGroup)}</>

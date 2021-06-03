@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {Storage} from 'react-jhipster';
 
 import {IRootState} from 'app/shared/reducers';
-import {ITEMS_PER_PAGE} from 'app/shared/util/pagination.constants';
+
 import Media from 'reactstrap/es/Media';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faPhone, faVideo} from '@fortawesome/free-solid-svg-icons';
@@ -11,14 +11,14 @@ import Button from 'reactstrap/es/Button';
 import Input from 'reactstrap/es/Input';
 import {connect as wsConnect, sendData as wsSendData, subscribe as wsSubscribe} from "app/component/chat/process/websocket-util";
 import {getContentInGroup, messageUserNewMessage} from "app/component/chat/message/message-content/message-content.reducer";
+import {RouteComponentProps} from 'react-router-dom';
 
-export interface IMessageContentProps extends StateProps, DispatchProps
-{
-}
 
 const MessageContentComponent = (props: IMessageContentProps) =>
 {
-  const {messageContentList, groupIdCurrent} = props;
+  const ITEMS_PER_PAGE = 5;
+  const {messageContentList} = props;
+  const [groupIdCurrent, setGroupIdCurrent] = useState(props.match.params.groupId);
 
   const [contentTyping, setContentTyping] = useState("");
   const [pageCurrent, setPageCurrent] = useState(0);
@@ -49,9 +49,11 @@ const MessageContentComponent = (props: IMessageContentProps) =>
 
   useEffect(() =>
   {
-    props.getContentInGroup(groupIdCurrent, 0, ITEMS_PER_PAGE * 3);
+    setPageCurrent(0);
+    setGroupIdCurrent(props.match.params.groupId);
+    props.getContentInGroup(props.match.params.groupId, 0, ITEMS_PER_PAGE * 3);
     setPageCurrent(prev => prev + 3);
-  }, [groupIdCurrent]);
+  }, [props.match.params.groupId]);
 
 
   // function support
@@ -63,7 +65,8 @@ const MessageContentComponent = (props: IMessageContentProps) =>
 
   const handleLoadMore = (event) =>
   {
-    if (event.target.scrollTop === 0)
+    const target = event.target;
+    if (event.target.scrollTop === 0 && target.scrollHeight > target.offsetHeight)
     {
       props.getContentInGroup(groupIdCurrent, pageCurrent, ITEMS_PER_PAGE);
       setPageCurrent(prev => ++prev);
@@ -172,5 +175,9 @@ const mapDispatchToProps = {
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
+
+export interface IMessageContentProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string, groupId: string }>
+{
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessageContentComponent);

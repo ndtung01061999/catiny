@@ -1,5 +1,6 @@
 package com.regitiny.catiny.advance.controller.rest;
 
+import com.regitiny.catiny.advance.controller.model.MessageGroupModel;
 import com.regitiny.catiny.service.dto.MessageGroupDTO;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -35,5 +36,5 @@ public interface MessageGroupManagement
 
 
   @GetMapping("/message-groups/joined")
-  ResponseEntity<List<MessageGroupDTO>> getAllGroupsJoined(Pageable pageable) throws URISyntaxException;
+  ResponseEntity<List<MessageGroupModel.OutputModel>> getAllGroupsJoined(Pageable pageable) throws URISyntaxException;
 }

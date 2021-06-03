@@ -23,6 +23,12 @@
 
     }
 
+    .pre-scrollable {
+      height: calc(100vh - 212px);
+      overflow-y: scroll;
+      max-height: 100%;
+    }
+
     .media-heading {
       margin-bottom: 0px;
       font-size: 16px;
