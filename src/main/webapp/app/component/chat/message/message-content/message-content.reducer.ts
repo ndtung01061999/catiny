@@ -55,9 +55,9 @@ export default (state: MessageContentComponentState = initialState, action): Mes
   }
 };
 
-const apiUrl = 'api/message-groups';
-const apiUrlMessageContent = 'api/message-contents';
-const apiSearchUrl = 'api/_search/message-groups';
+const apiUrl = 'api/o/message-groups';
+const apiUrlMessageContent = 'api/o/message-contents';
+const apiSearchUrl = 'api/o/_search/message-groups';
 
 // Actions
 

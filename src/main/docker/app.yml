@@ -52,6 +52,12 @@ services:
     environment:
       - 'ES_JAVA_OPTS=-Xms1024m -Xmx1024m'
       - 'discovery.type=single-node'
+  #  catiny-kibana:
+  #    image: docker.elastic.co/kibana/kibana:7.9.3
+  #    ports:
+  #      - 127.0.0.1:5601:5601
+  #    environment:
+  #      - "ELASTICSEARCH_HOSTS=http://catiny-elasticsearch:9200"
   kafka:
     image: confluentinc/cp-kafka:5.5.3
     # If you want to expose these ports outside your dev PC,
@@ -85,7 +91,7 @@ services:
       - SPRING_SECURITY_USER_PASSWORD=admin
       - JHIPSTER_REGISTRY_PASSWORD=admin
       - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_TYPE=native
-      - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_SEARCH_LOCATIONS=file:./central-config/docker-config/
+      - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_SEARCH_LOCATIONS=file:./central-config/localhost-config/
       # - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_TYPE=git
       # - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_URI=https://github.com/jhipster/jhipster-registry/
       # - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_SEARCH_PATHS=central-config

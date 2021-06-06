@@ -4,14 +4,12 @@ import com.regitiny.catiny.advance.controller.model.MessageGroupModel;
 import com.regitiny.catiny.service.dto.MessageGroupDTO;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URISyntaxException;
 import java.util.List;
 
+@RequestMapping("/api/o")
 public interface MessageGroupManagement
 {
 

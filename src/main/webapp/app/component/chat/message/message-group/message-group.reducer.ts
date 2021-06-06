@@ -45,7 +45,7 @@ export default (state: MessageGroupComponentState = initialState, action): Messa
   }
 };
 
-const apiUrl = 'api/message-groups';
+const apiUrl = 'api/o/message-groups';
 const apiSearchUrl = 'api/_search/message-groups';
 
 // Actions
@@ -59,12 +59,5 @@ export const getAllGroupsJoined: ICrudGetAllAction<IMessageGroup> = (page, size,
   };
 };
 
-export const setGroupIdCurrent = (groupId: string) =>
-{
-  return {
-    type: ACTION_TYPES.SET_GROUP_ID_CURRENT,
-    payload: {groupId},
-  }
-};
 
 const log = xx => window.console.log(xx);

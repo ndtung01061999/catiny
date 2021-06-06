@@ -12,7 +12,11 @@ import Input from 'reactstrap/es/Input';
 import {connect as wsConnect, sendData as wsSendData, subscribe as wsSubscribe} from "app/component/chat/process/websocket-util";
 import {getContentInGroup, messageUserNewMessage} from "app/component/chat/message/message-content/message-content.reducer";
 import {RouteComponentProps} from 'react-router-dom';
+import {IMessageContent} from 'app/shared/model/message-content.model';
+import dayjs from 'dayjs'
+import utc from "dayjs/plugin/utc";
 
+dayjs.extend(utc)
 
 const MessageContentComponent = (props: IMessageContentProps) =>
 {
@@ -58,7 +62,10 @@ const MessageContentComponent = (props: IMessageContentProps) =>
 
   // function support
 
-  const time = (lastTimeVisit) => new Date(Date.now() - new Date(lastTimeVisit).getTime()).toLocaleTimeString();
+  const time = (messageContent: IMessageContent) =>
+  {
+    return dayjs(new Date(Date.now() - new Date(messageContent.createdDate).getTime())).utc().format("HH:MM");
+  }
 
 
   // Handle
@@ -93,7 +100,7 @@ const MessageContentComponent = (props: IMessageContentProps) =>
           <div className="d-flex justify-content-end ">
             <span className="alert-info">{messageContent.content}</span>
           </div>
-          <p className="d-flex justify-content-end ">{time(messageContent.createdDate)}</p>
+          <p className="d-flex justify-content-end ">{time(messageContent)}</p>
         </Media>
         <Media object className="mr-2" alt="Generic placeholder image" src="https://i.pinimg.com/564x/e1/24/04/e124041a63e3a93437603fbb93255169.jpg"/>
       </>
@@ -106,14 +113,13 @@ const MessageContentComponent = (props: IMessageContentProps) =>
           <div className="d-flex justify-content-start">
             <span className="alert-info">{messageContent.content}</span>
           </div>
-          <p className="d-flex justify-content-start">{time(messageContent.createdDate)}</p>
+          <p className="d-flex justify-content-start">{time(messageContent)}</p>
         </Media>
       </>
     );
     return (
       <Media className={isSender ? 'justify-content-end' : 'justify-content-start'}>
         {isSender ? thisUserIsSender() : thisUserNotIsSender()}
-
       </Media>
     );
   };

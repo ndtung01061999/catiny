@@ -1,7 +1,8 @@
 package com.regitiny.catiny.config;
 
-import com.regitiny.catiny.security.*;
-import com.regitiny.catiny.security.jwt.*;
+import com.regitiny.catiny.security.AuthoritiesConstants;
+import com.regitiny.catiny.security.jwt.JWTConfigurer;
+import com.regitiny.catiny.security.jwt.TokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
@@ -107,13 +108,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
       .antMatchers("/api/activate").permitAll()
       .antMatchers("/api/account/reset-password/init").permitAll()
       .antMatchers("/api/account/reset-password/finish").permitAll()
+      .antMatchers("/api/account").authenticated()
       .antMatchers("/api/admin/**").hasAuthority(AuthoritiesConstants.ADMIN)
 
       .antMatchers(HttpMethod.GET, "/api/open/**").permitAll()
       .antMatchers("/api/open/**").permitAll()
       .antMatchers("/api/management/admin/**").hasAuthority(AuthoritiesConstants.ADMIN)
+      .antMatchers("/api/o/**").authenticated()
 
-      .antMatchers("/api/**").authenticated()
+      .antMatchers("/api/**").hasAuthority(AuthoritiesConstants.ADMIN)
       .antMatchers("/websocket/**").authenticated()
       .antMatchers("/management/health").permitAll()
       .antMatchers("/management/health/**").permitAll()

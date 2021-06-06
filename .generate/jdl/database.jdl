@@ -18,7 +18,16 @@ entity MessageGroup {
     groupId String required
     groupName String
     addBy String
+    /** số người đang online (hiện tại) này */
+    onlineMember Integer
+    /**tổng số người trong group này*/
+    member Integer
+    /** nội dung tin nhắn cuối cùng */
     lastContent TextBlob
+    /** id của tin nhắn cuối cùng đọc */
+    lastContentId UUID
+    /** số tin nhắn mới chưa đọc */
+    messageUnread Integer
 
     /** searchField */
     searchField TextBlob
@@ -64,6 +73,26 @@ entity MessageContent {
     comment String
 }
 
+/**
+  * The UserStatus entity.
+  * @author a true jhipster
+  */
+entity UserStatus
+{
+    userId Long
+    isOnline Boolean
+
+
+
+    /** createdDate */
+    createdDate  Instant
+    /** modifiedDate */
+    modifiedDate  Instant
+    /** createdBy */
+    createdBy String
+    /** modifiedBy */
+    modifiedBy String
+}
 
 dto * with mapstruct
 paginate * with  infinite-scroll
