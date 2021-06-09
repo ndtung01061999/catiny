@@ -6,10 +6,22 @@ import com.regitiny.catiny.service.dto.MessageContentDTO;
 import com.regitiny.catiny.service.mapper.EntityMapper;
 import org.mapstruct.Mapper;
 
-/**
- * Mapper for the entity {@link MessageContent} and its DTO {@link MessageContentDTO}.
- */
-@Mapper(componentModel = "spring", uses = {})
+import java.util.List;
+
+@Mapper(
+  componentModel = "spring",
+  uses = {}
+)
 public interface MessageContentAdvanceMapper extends EntityAdvanceMapper<MessageContentModel, MessageContentDTO>, EntityMapper<MessageContentDTO, MessageContent>
 {
+  MessageContentDTO requestToDto(MessageContentModel.Request request);
+
+
+  List<MessageContentDTO> requestToDto(List<MessageContentModel.Request> request);
+
+
+  MessageContentModel.Response dtoToResponse(MessageContentDTO dto);
+
+
+  List<MessageContentModel.Response> dtoToResponse(List<MessageContentDTO> dto);
 }

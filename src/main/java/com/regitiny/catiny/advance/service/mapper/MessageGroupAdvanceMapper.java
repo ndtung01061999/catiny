@@ -8,20 +8,20 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-/**
- * Mapper for the entity {@link MessageGroup} and its DTO {@link MessageGroupDTO}.
- */
-@Mapper(componentModel = "spring", uses = {})
+@Mapper(
+  componentModel = "spring",
+  uses = {}
+)
 public interface MessageGroupAdvanceMapper extends EntityAdvanceMapper<MessageGroupModel, MessageGroupDTO>, EntityMapper<MessageGroupDTO, MessageGroup>
 {
-  MessageGroupModel.OutputModel dto2OutputModel(MessageGroupDTO messageGroupDTO);
+  MessageGroupDTO requestToDto(MessageGroupModel.Request request);
 
 
-  List<MessageGroupModel.OutputModel> dto2OutputModel(List<MessageGroupDTO> messageGroupDTO);
+  List<MessageGroupDTO> requestToDto(List<MessageGroupModel.Request> request);
 
 
-  MessageGroupDTO inputModel2DTO(MessageGroupModel.InputModel inputModel);
+  MessageGroupModel.Response dtoToResponse(MessageGroupDTO dto);
 
 
-  List<MessageGroupDTO> inputModel2DTO(List<MessageGroupModel.InputModel> inputModel);
+  List<MessageGroupModel.Response> dtoToResponse(List<MessageGroupDTO> dto);
 }

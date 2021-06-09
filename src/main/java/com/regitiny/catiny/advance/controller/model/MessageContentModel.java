@@ -63,7 +63,7 @@ public class MessageContentModel implements Serializable
   @Builder
   @NoArgsConstructor
   @AllArgsConstructor
-  public static class InputModel implements Serializable
+  public static class Request implements Serializable
   {
     private Long id;
 
@@ -111,7 +111,7 @@ public class MessageContentModel implements Serializable
   @Builder
   @NoArgsConstructor
   @AllArgsConstructor
-  public static class OutputModel implements Serializable
+  public static class Response implements Serializable
   {
     private Long id;
 

@@ -68,13 +68,13 @@ public class MessageGroupManagementImpl implements MessageGroupManagement
   }
 
   @Override
-  public ResponseEntity<List<MessageGroupModel.OutputModel>> getAllGroupsJoined(Pageable pageable) throws URISyntaxException
+  public ResponseEntity<List<MessageGroupModel.Response>> getAllGroupsJoined(Pageable pageable) throws URISyntaxException
   {
     log.debug("REST request get all groups user joined");
     var result = messageGroupAdvanceService.getAllGroupsJoined(pageable);
     HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), result);
 
-    var out = messageGroupAdvanceMapper.dto2OutputModel(result.getContent());
+    var out = messageGroupAdvanceMapper.dtoToResponse(result.getContent());
     return ResponseEntity.ok().headers(headers).body(out);
   }
 }
