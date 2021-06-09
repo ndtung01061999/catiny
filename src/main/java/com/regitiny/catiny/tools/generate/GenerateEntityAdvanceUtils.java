@@ -2,6 +2,7 @@ package com.regitiny.catiny.tools.generate;
 
 import com.regitiny.catiny.advance.service.LocalService;
 import com.regitiny.catiny.advance.service.impl.LocalServiceImpl;
+import com.regitiny.catiny.advance.service.mapper.EntityAdvanceMapper;
 import com.regitiny.catiny.service.mapper.EntityMapper;
 import com.regitiny.catiny.tools.utils.StringPool;
 import com.squareup.javapoet.*;
@@ -287,15 +288,37 @@ public class GenerateEntityAdvanceUtils
         .addMember("uses", "$L", "{}").build())
       .addSuperinterface(
         ParameterizedTypeName.get(
-          ClassName.get(EntityMapper.class),
+          ClassName.get(EntityAdvanceMapper.class),
           ClassName.get(BASE_PACKAGE + ".advance.controller.model", entityName + "Model"),
-          ClassName.get(BASE_PACKAGE + ".service.dto", entityName + "DTO")));
+          ClassName.get(BASE_PACKAGE + ".service.dto", entityName + "DTO")))
+      .addSuperinterface(
+        ParameterizedTypeName.get(
+          ClassName.get(EntityMapper.class),
+          ClassName.get(BASE_PACKAGE + ".service.dto", entityName + "DTO"),
+          ClassName.get(BASE_PACKAGE + ".domain", entityName)))
+//    EntityDTO requestToDto(EntityModel.Request request)
+      .addMethod(MethodSpec.methodBuilder("requestToDto").addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
+        .addParameter(ParameterSpec.builder(ClassName.get(BASE_PACKAGE + ".advance.controller.model", entityName + "Model").nestedClass("Request"), "request").build())
+        .returns(ClassName.get(BASE_PACKAGE + ".service.dto", entityName + "DTO")).build())
+//    List<EntityDTO> requestToDto(List<EntityModel.Request> request)
+      .addMethod(MethodSpec.methodBuilder("requestToDto").addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
+        .addParameter(ParameterSpec.builder(
+          ParameterizedTypeName.get(ClassName.get(List.class), ClassName.get(BASE_PACKAGE + ".advance.controller.model", entityName + "Model").nestedClass("Request")), "request").build())
+        .returns(ParameterizedTypeName.get(ClassName.get(List.class), ClassName.get(BASE_PACKAGE + ".service.dto", entityName + "DTO"))).build())
+//    EntityModel.Response requestToDto(EntityDTO dto)
+      .addMethod(MethodSpec.methodBuilder("dtoToResponse").addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
+        .addParameter(ParameterSpec.builder(ClassName.get(BASE_PACKAGE + ".service.dto", entityName + "DTO"), "dto").build())
+        .returns(ClassName.get(BASE_PACKAGE + ".advance.controller.model", entityName + "Model").nestedClass("Response")).build())
+//    List<EntityModel.Response> requestToDto(List<EntityDTO> dto)
+      .addMethod(MethodSpec.methodBuilder("dtoToResponse").addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
+        .addParameter(ParameterSpec.builder(
+          ParameterizedTypeName.get(ClassName.get(List.class), ClassName.get(BASE_PACKAGE + ".service.dto", entityName + "DTO")), "dto").build())
+        .returns(ParameterizedTypeName.get(ClassName.get(List.class), ClassName.get(BASE_PACKAGE + ".advance.controller.model", entityName + "Model").nestedClass("Response"))).build());
 
     var javaFile = JavaFile.builder(packageAdvanceOutput, advanceMapper.build()).build();
     log.debug("...Mapper after generated : \n {}", javaFile.toString());
     return javaFile;
   }
-
 
   public static JavaFile genModel(String entityName)
   {
@@ -306,7 +329,7 @@ public class GenerateEntityAdvanceUtils
 
     var javadoc = "";
 
-    Function1<TypeSpec.Builder, Void> addAnnotationLombok = (typeSpec) ->
+    Function1<TypeSpec.Builder, Void> addAnnotationLombok = typeSpec ->
     {
       typeSpec.addAnnotation(Data.class)
         .addAnnotation(Builder.class)
@@ -319,14 +342,14 @@ public class GenerateEntityAdvanceUtils
     var entityModel = TypeSpec.classBuilder(entityAdvanceOutput)
       .addModifiers(Modifier.PUBLIC)
       .addJavadoc(javadoc);
-    var entityInputModel = TypeSpec.classBuilder("InputModel")
+    var entityRequest = TypeSpec.classBuilder("Request")
       .addModifiers(Modifier.PUBLIC, Modifier.STATIC);
-    var entityOutputModel = TypeSpec.classBuilder("OutputModel")
+    var entityResponse = TypeSpec.classBuilder("Response")
       .addModifiers(Modifier.PUBLIC, Modifier.STATIC);
 
     addAnnotationLombok.apply(entityModel);
-    addAnnotationLombok.apply(entityInputModel);
-    addAnnotationLombok.apply(entityOutputModel);
+    addAnnotationLombok.apply(entityRequest);
+    addAnnotationLombok.apply(entityResponse);
 
     try
     {
@@ -345,8 +368,8 @@ public class GenerateEntityAdvanceUtils
           .build();
 
         entityModel.addField(fieldBuilder);
-        entityInputModel.addField(fieldBuilder);
-        entityOutputModel.addField(fieldBuilder);
+        entityRequest.addField(fieldBuilder);
+        entityResponse.addField(fieldBuilder);
       });
     }
     catch (ClassNotFoundException e)
@@ -354,8 +377,8 @@ public class GenerateEntityAdvanceUtils
       log.debug("ClassNotFoundException when generate Model:", e);
     }
 
-    entityModel.addType(entityInputModel.build())
-      .addType(entityOutputModel.build());
+    entityModel.addType(entityRequest.build())
+      .addType(entityResponse.build());
 
     var javaFile = JavaFile.builder(packageAdvanceOutput, entityModel.build()).build();
     log.debug(javaFile.toString());

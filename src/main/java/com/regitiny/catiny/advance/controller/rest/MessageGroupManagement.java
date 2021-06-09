@@ -34,5 +34,5 @@ public interface MessageGroupManagement
 
 
   @GetMapping("/message-groups/joined")
-  ResponseEntity<List<MessageGroupModel.OutputModel>> getAllGroupsJoined(Pageable pageable) throws URISyntaxException;
+  ResponseEntity<List<MessageGroupModel.Response>> getAllGroupsJoined(Pageable pageable) throws URISyntaxException;
 }

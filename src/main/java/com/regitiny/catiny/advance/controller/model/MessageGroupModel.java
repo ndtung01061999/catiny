@@ -66,7 +66,7 @@ public class MessageGroupModel implements Serializable
   @Builder
   @NoArgsConstructor
   @AllArgsConstructor
-  public static class InputModel implements Serializable
+  public static class Request implements Serializable
   {
     private Long id;
 
@@ -117,12 +117,15 @@ public class MessageGroupModel implements Serializable
   @Builder
   @NoArgsConstructor
   @AllArgsConstructor
-  public static class OutputModel implements Serializable
+  public static class Response implements Serializable
   {
     private Long id;
 
     @NotNull
-    @ApiModelProperty(required = true, value = "uuid")
+    @ApiModelProperty(
+      required = true,
+      value = "uuid"
+    )
     private UUID uuid;
 
     @NotNull
@@ -133,13 +136,31 @@ public class MessageGroupModel implements Serializable
 
     private String groupName;
 
+    private String addBy;
+
     @Lob
     private String lastContent;
+
+    @ApiModelProperty("searchField")
+    @Lob
+    private String searchField;
+
+    @ApiModelProperty("role")
+    private String role;
+
+    @ApiModelProperty("createdDate")
+    private Instant createdDate;
 
     @ApiModelProperty("modifiedDate")
     private Instant modifiedDate;
 
-    private String currentStatus;
+    @ApiModelProperty("createdBy")
+    private String createdBy;
 
+    @ApiModelProperty("modifiedBy")
+    private String modifiedBy;
+
+    @ApiModelProperty("comment")
+    private String comment;
   }
 }
