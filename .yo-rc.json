@@ -41,9 +41,16 @@
     "packageFolder": "com/regitiny/catiny",
     "jwtSecretKey": "OWVmN2ZjOTAzMDlmODRkYjg1MmJmMDhjNjU1NzZiNDU5YjU2MTIzZDk5M2Q3YzU4MTY2YjdhYzcxMDY2MDJmOWFkZjFmZjUyNzY3M2ZhMDJkYjJlM2ZjMDQ2Yjk3ZjBiOGFlMmZlZWM3NDdhOWUzMGM5YmM4ZTZmNjQ3MjFiNjk=",
     "clientPackageManager": "npm",
-    "languages": ["vi", "en"],
-    "entities": ["MessageGroup", "MessageContent"],
-    "lastLiquibaseTimestamp": 1621751250000,
-    "withGeneratedFlag": true
+    "languages": [
+      "vi",
+      "en"
+    ],
+    "entities": [
+      "MessageGroup",
+      "MessageContent"
+    ],
+    "lastLiquibaseTimestamp": 1623079045000,
+    "withGeneratedFlag": true,
+    "incrementalChangelog": true
   }
 }

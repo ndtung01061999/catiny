@@ -184,13 +184,13 @@ liquibase {
       classpath "src/main/resources/"
     }
     diffLog {
-      driver "org.h2.Driver"
-      url "jdbc:h2:file:./build/h2db/db/catiny"
-      username "catiny"
+      driver "org.mariadb.jdbc.Driver"
+      url "jdbc:mariadb://localhost:3306"
+      username "root"
       password ""
       changeLogFile project.ext.diffChangelogFile
-      referenceUrl "hibernate:spring:com.regitiny.catiny.domain?dialect=org.hibernate.dialect.H2Dialect&hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy"
-      defaultSchemaName ""
+      referenceUrl "hibernate:spring:com.regitiny.catiny.domain?dialect=org.hibernate.dialect.MariaDBDialect&hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy"
+      defaultSchemaName "catiny"
       logLevel "debug"
       classpath "$buildDir/classes/java/main"
     }
