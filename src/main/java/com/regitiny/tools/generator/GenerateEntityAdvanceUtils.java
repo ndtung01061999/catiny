@@ -1,4 +1,4 @@
-package com.regitiny.catiny.tools.generate;
+package com.regitiny.tools.generator;
 
 import com.regitiny.catiny.advance.service.LocalService;
 import com.regitiny.catiny.advance.service.impl.LocalServiceImpl;
@@ -30,13 +30,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Log4j2
+@Log4j2(topic = "warn")
 public class GenerateEntityAdvanceUtils
 {
   private static final String BASE_PACKAGE = "com.regitiny.catiny";
-  private static final String BASE_PATH_GENERATED_OUTPUT = "C:/Users/yuvytung/IdeaProjects/catiny";
-  private static final String CODE_JAVA_OUTPUT_PATH = BASE_PATH_GENERATED_OUTPUT + "/src/main/java/";
-
   private static final String ENTITY_NAME = "${entityName}";
 
   private static String entityName(String entityName)
@@ -49,17 +46,18 @@ public class GenerateEntityAdvanceUtils
     throw new IllegalStateException("GenerateEntityAdvanceUtils Class");
   }
 
-  public static Tuple2<List<JavaFile>, List<JavaFile>> Generate(String entityName)
+  public static Tuple2<List<JavaFile>, List<JavaFile>> Generate(String entityName, String projectPath)
   {
-    var file = new File(CODE_JAVA_OUTPUT_PATH);
+    final var javaPath = projectPath + "/src/main/java";
+    var file = new File(javaPath);
     if (!file.exists() || !file.isDirectory())
     {
       log.warn("rood folder not exist or isn't a folder ");
       log.info("create folder with path = {}", file.getPath());
-      if (file.mkdirs())
+      if (!file.mkdirs())
       {
         log.warn("can not create folder");
-        return null;
+        return Tuple.of(null, null);
       }
     }
     var listFileErrors = new ArrayList<JavaFile>();
@@ -78,14 +76,14 @@ public class GenerateEntityAdvanceUtils
     var result = javaFiles.stream()
       .filter(javaFile ->
       {
-        var fileGenerate = new File(CODE_JAVA_OUTPUT_PATH, javaFile.toJavaFileObject().toUri().toString());
+        var fileGenerate = new File(javaPath, javaFile.toJavaFileObject().toUri().toString());
         if (!fileGenerate.exists() && !fileGenerate.isDirectory())
           return true;
         log.info("file exist , {}", javaFile.toJavaFileObject().getName());
         listFileGenerated.add(javaFile);
         return false;
       })
-      .map(javaFile -> Try.of(() -> javaFile.writeToFile(new File(CODE_JAVA_OUTPUT_PATH)))
+      .map(javaFile -> Try.of(() -> javaFile.writeToFile(new File(javaPath)))
         .onSuccess(file1 -> listFileGenerated.add(javaFile))
         .onFailure(throwable -> listFileErrors.add(javaFile))
         .getOrElse(() -> null))

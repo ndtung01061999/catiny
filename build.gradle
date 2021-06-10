@@ -372,3 +372,11 @@ if (project.hasProperty("nodeInstall"))
 }
 compileJava.dependsOn processResources
 processResources.dependsOn bootBuildInfo
+
+// create by yuvytung
+task generateAdvaneService(type: JavaExec) {
+  group = "Generator"
+  description = "Run the main class with JavaExecTask"
+  classpath = sourceSets.main.runtimeClasspath
+  main = "com.regitiny.tools.generator.GeneratorMain"
+}
