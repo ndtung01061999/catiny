@@ -1,0 +1,46 @@
+{
+  "catinyApp": {
+    "messageContent": {
+      "home": {
+        "title": "Message Contents",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Thêm mới một Message Content",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Message Content",
+        "search": "Tìm Message Content",
+        "notFound": "No Message Contents found"
+      },
+      "created": "Một Message Content mới được tạo với định danh {{ param }}",
+      "updated": "Một Message Content cập nhật với định danh {{ param }}",
+      "deleted": "Một Message Content đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Message Content {{ id }}?"
+      },
+      "detail": {
+        "title": "Message Content"
+      },
+      "id": "ID",
+      "uuid": "Uuid",
+      "groupId": "Group Id",
+      "content": "Content",
+      "sender": "Sender",
+      "status": "Status",
+      "searchField": "Search Field",
+      "role": "Role",
+      "createdDate": "Created Date",
+      "modifiedDate": "Modified Date",
+      "createdBy": "Created By",
+      "modifiedBy": "Modified By",
+      "comment": "Comment",
+      "help": {
+        "uuid": "uuid",
+        "searchField": "searchField",
+        "role": "role",
+        "createdDate": "createdDate",
+        "modifiedDate": "modifiedDate",
+        "createdBy": "createdBy",
+        "modifiedBy": "modifiedBy",
+        "comment": "comment"
+      }
+    }
+  }
+}

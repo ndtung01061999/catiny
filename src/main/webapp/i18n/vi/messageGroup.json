@@ -1,0 +1,47 @@
+{
+  "catinyApp": {
+    "messageGroup": {
+      "home": {
+        "title": "Message Groups",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Thêm mới một Message Group",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Message Group",
+        "search": "Tìm Message Group",
+        "notFound": "No Message Groups found"
+      },
+      "created": "Một Message Group mới được tạo với định danh {{ param }}",
+      "updated": "Một Message Group cập nhật với định danh {{ param }}",
+      "deleted": "Một Message Group đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Message Group {{ id }}?"
+      },
+      "detail": {
+        "title": "Message Group"
+      },
+      "id": "ID",
+      "uuid": "Uuid",
+      "userId": "User Id",
+      "groupId": "Group Id",
+      "groupName": "Group Name",
+      "addBy": "Add By",
+      "lastContent": "Last Content",
+      "searchField": "Search Field",
+      "role": "Role",
+      "createdDate": "Created Date",
+      "modifiedDate": "Modified Date",
+      "createdBy": "Created By",
+      "modifiedBy": "Modified By",
+      "comment": "Comment",
+      "help": {
+        "uuid": "uuid",
+        "searchField": "searchField",
+        "role": "role",
+        "createdDate": "createdDate",
+        "modifiedDate": "modifiedDate",
+        "createdBy": "createdBy",
+        "modifiedBy": "modifiedBy",
+        "comment": "comment"
+      }
+    }
+  }
+}

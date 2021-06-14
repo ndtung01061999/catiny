@@ -1,0 +1,47 @@
+// sử dụng lệnh này để deploy (cần phải có ip và pass là it nhất)
+// gradle deploy -Pserver.ssh.ip=xxx.xxx.xxx.xxx -Pserver.ssh.username=root -Pserver.ssh.password=******* -Pserver.ssh.port=22
+
+apply plugin: "org.hidetake.ssh"
+
+remotes {
+  catinyServer {
+    port = 22
+    user = "root"
+    password = project.property('server.ssh.password')
+    host = project.property('server.ssh.ip')
+    if (project.hasProperty('server.ssh.port'))
+    {
+      port = project.property('server.ssh.port') as int
+    }
+    if (project.hasProperty("server.ssh.username"))
+    {
+      user = project.property('server.ssh.username')
+    }
+  }
+}
+
+task deploy {
+  println("deploying")
+  execute("dir")
+
+  ssh.run {
+    session(remotes.catinyServer) {
+      put from: new File(buildDir, "/libs/minh-shop-0.0.1-SNAPSHOT.jar"), into: "/root/minh-shop/minh-shop-0.0.1-SNAPSHOT.jar"
+      put from: new File(rootDir, "gradle/deploy.sh"), into: "/root/minh-shop/deploy.sh"
+      execute "chmod +x /root/minh-shop/deploy.sh"
+      execute "sudo /root/minh-shop/deploy.sh"
+
+
+    }
+  }
+}
+//
+//task deploy(dependsOn: war) {
+//  ssh.run {
+//    session(remotes.vbox) {
+//
+//      //put from: 'build/libs/*.war', into: '/root/home'
+//      execute './script.sh'
+//    }
+//  }
+//}
