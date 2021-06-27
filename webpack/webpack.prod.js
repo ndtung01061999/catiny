@@ -3,7 +3,7 @@ const webpackMerge = require('webpack-merge').merge;
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const sass = require('sass');
 
 const utils = require('./utils.js');
@@ -17,8 +17,8 @@ module.exports = webpackMerge(commonConfig({ env: ENV }), {
   entry: ['./src/main/webapp/app/index', './build/openapi/src/main/typescript/open-api'],
   output: {
     path: utils.root('build/resources/main/static/'),
-    filename: 'app/[name].[hash].bundle.js',
-    chunkFilename: 'app/[name].[hash].chunk.js',
+    filename: 'app/[name].[contenthash].bundle.js',
+    chunkFilename: 'app/[name].[contenthash].chunk.js',
   },
   module: {
     rules: [
@@ -78,14 +78,16 @@ module.exports = webpackMerge(commonConfig({ env: ENV }), {
           },
         },
       }),
-      new OptimizeCSSAssetsPlugin({}),
+      new CssMinimizerPlugin({
+        parallel: true,
+      }),
     ],
   },
   plugins: [
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
-      filename: 'content/[name].[hash].css',
-      chunkFilename: 'content/[name].[hash].css',
+      filename: 'content/[name].[contenthash].css',
+      chunkFilename: 'content/[name].[contenthash].css',
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true,

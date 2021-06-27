@@ -8,6 +8,8 @@ import LoadingBar from 'react-redux-loading-bar';
 
 import {Brand, Home, Other} from './header-components';
 import {AccountMenu, AdminMenu, EntitiesMenu, LocaleMenu} from '../menus';
+import { useAppDispatch } from 'app/config/store';
+import { setLocale } from 'app/shared/reducers/locale';
 
 export interface IHeaderProps
 {
@@ -17,16 +19,18 @@ export interface IHeaderProps
   isInProduction: boolean;
   isOpenAPIEnabled: boolean;
   currentLocale: string;
-  onLocaleChange: (langKey: string) => void;
 }
 
 const Header = (props: IHeaderProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const dispatch = useAppDispatch();
+
+
   const handleLocaleChange = event => {
     const langKey = event.target.value;
     Storage.session.set('locale', langKey);
-    props.onLocaleChange(langKey);
+    dispatch(setLocale(langKey));
   };
 
   const renderDevRibbon = () =>

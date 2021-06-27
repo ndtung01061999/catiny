@@ -51,6 +51,7 @@
     ],
     "lastLiquibaseTimestamp": 1623079045000,
     "withGeneratedFlag": true,
-    "incrementalChangelog": true
+    "incrementalChangelog": true,
+    "devServerPort": 9060
   }
 }

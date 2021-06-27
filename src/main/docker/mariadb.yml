@@ -2,7 +2,7 @@
 version: '3.8'
 services:
   catiny-mariadb:
-    image: mariadb:10.5.9
+    image: mariadb:10.6.1
     # volumes:
     #   - ~/volumes/jhipster/catiny/mysql/:/var/lib/mysql/
     environment:

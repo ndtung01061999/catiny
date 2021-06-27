@@ -23,7 +23,7 @@ services:
   #    ports:
   #      - 80:8080
   catiny-mariadb:
-    image: mariadb:10.5.9
+    image: mariadb:10.6.1
     # volumes:
     #   - ~/volumes/jhipster/catiny/mysql/:/var/lib/mysql/
     environment:
@@ -35,7 +35,7 @@ services:
       - 127.0.0.1:3306:3306
     command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
   catiny-redis:
-    image: redis:6.2.1
+    image: redis:6.2.4
     # If you want to expose these ports outside your dev PC,
     # remove the "127.0.0.1:" prefix
     ports:
@@ -59,7 +59,7 @@ services:
   #    environment:
   #      - "ELASTICSEARCH_HOSTS=http://catiny-elasticsearch:9200"
   kafka:
-    image: confluentinc/cp-kafka:5.5.3
+    image: confluentinc/cp-kafka:5.5.4
     # If you want to expose these ports outside your dev PC,
     # remove the "127.0.0.1:" prefix
     ports:
@@ -73,12 +73,12 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_ADVERTISED_HOST_NAME: kafka
   zookeeper:
-    image: confluentinc/cp-zookeeper:5.5.3
+    image: confluentinc/cp-zookeeper:5.5.4
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
   jhipster-registry:
-    image: jhipster/jhipster-registry:v6.7.1
+    image: jhipster/jhipster-registry:v6.8.0
     volumes:
       - ./central-server-config:/central-config
     # When run with the "dev" Spring profile, the JHipster Registry will
