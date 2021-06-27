@@ -62,6 +62,7 @@ public class MessageGroupServiceImpl implements MessageGroupService {
             .map(
                 existingMessageGroup -> {
                     messageGroupMapper.partialUpdate(existingMessageGroup, messageGroupDTO);
+
                     return existingMessageGroup;
                 }
             )

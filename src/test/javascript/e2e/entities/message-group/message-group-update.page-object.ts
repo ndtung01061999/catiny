@@ -144,45 +144,31 @@ export default class MessageGroupUpdatePage {
   async enterData() {
     await waitUntilDisplayed(this.saveButton);
     await this.setUuidInput('64c99148-3908-465d-8c4a-e510e3ade974');
-    expect(await this.getUuidInput()).to.match(/64c99148-3908-465d-8c4a-e510e3ade974/);
     await waitUntilDisplayed(this.saveButton);
     await this.setUserIdInput('5');
-    expect(await this.getUserIdInput()).to.eq('5');
     await waitUntilDisplayed(this.saveButton);
     await this.setGroupIdInput('groupId');
-    expect(await this.getGroupIdInput()).to.match(/groupId/);
     await waitUntilDisplayed(this.saveButton);
     await this.setGroupNameInput('groupName');
-    expect(await this.getGroupNameInput()).to.match(/groupName/);
     await waitUntilDisplayed(this.saveButton);
     await this.setAddByInput('addBy');
-    expect(await this.getAddByInput()).to.match(/addBy/);
     await waitUntilDisplayed(this.saveButton);
     await this.setLastContentInput('lastContent');
-    expect(await this.getLastContentInput()).to.match(/lastContent/);
     await waitUntilDisplayed(this.saveButton);
     await this.setSearchFieldInput('searchField');
-    expect(await this.getSearchFieldInput()).to.match(/searchField/);
     await waitUntilDisplayed(this.saveButton);
     await this.setRoleInput('role');
-    expect(await this.getRoleInput()).to.match(/role/);
     await waitUntilDisplayed(this.saveButton);
     await this.setCreatedDateInput('01/01/2001' + protractor.Key.TAB + '02:30AM');
-    expect(await this.getCreatedDateInput()).to.contain('2001-01-01T02:30');
     await waitUntilDisplayed(this.saveButton);
     await this.setModifiedDateInput('01/01/2001' + protractor.Key.TAB + '02:30AM');
-    expect(await this.getModifiedDateInput()).to.contain('2001-01-01T02:30');
     await waitUntilDisplayed(this.saveButton);
     await this.setCreatedByInput('createdBy');
-    expect(await this.getCreatedByInput()).to.match(/createdBy/);
     await waitUntilDisplayed(this.saveButton);
     await this.setModifiedByInput('modifiedBy');
-    expect(await this.getModifiedByInput()).to.match(/modifiedBy/);
     await waitUntilDisplayed(this.saveButton);
     await this.setCommentInput('comment');
-    expect(await this.getCommentInput()).to.match(/comment/);
     await this.save();
     await waitUntilHidden(this.saveButton);
-    expect(await isVisible(this.saveButton)).to.be.false;
   }
 }

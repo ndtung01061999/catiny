@@ -1233,14 +1233,7 @@ class MessageContentResourceIT {
         MessageContent partialUpdatedMessageContent = new MessageContent();
         partialUpdatedMessageContent.setId(messageContent.getId());
 
-        partialUpdatedMessageContent
-            .groupId(UPDATED_GROUP_ID)
-            .content(UPDATED_CONTENT)
-            .status(UPDATED_STATUS)
-            .role(UPDATED_ROLE)
-            .modifiedDate(UPDATED_MODIFIED_DATE)
-            .createdBy(UPDATED_CREATED_BY)
-            .modifiedBy(UPDATED_MODIFIED_BY);
+        partialUpdatedMessageContent.sender(UPDATED_SENDER).status(UPDATED_STATUS).role(UPDATED_ROLE).modifiedDate(UPDATED_MODIFIED_DATE);
 
         restMessageContentMockMvc
             .perform(
@@ -1255,16 +1248,16 @@ class MessageContentResourceIT {
         assertThat(messageContentList).hasSize(databaseSizeBeforeUpdate);
         MessageContent testMessageContent = messageContentList.get(messageContentList.size() - 1);
         assertThat(testMessageContent.getUuid()).isEqualTo(DEFAULT_UUID);
-        assertThat(testMessageContent.getGroupId()).isEqualTo(UPDATED_GROUP_ID);
-        assertThat(testMessageContent.getContent()).isEqualTo(UPDATED_CONTENT);
-        assertThat(testMessageContent.getSender()).isEqualTo(DEFAULT_SENDER);
+        assertThat(testMessageContent.getGroupId()).isEqualTo(DEFAULT_GROUP_ID);
+        assertThat(testMessageContent.getContent()).isEqualTo(DEFAULT_CONTENT);
+        assertThat(testMessageContent.getSender()).isEqualTo(UPDATED_SENDER);
         assertThat(testMessageContent.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testMessageContent.getSearchField()).isEqualTo(DEFAULT_SEARCH_FIELD);
         assertThat(testMessageContent.getRole()).isEqualTo(UPDATED_ROLE);
         assertThat(testMessageContent.getCreatedDate()).isEqualTo(DEFAULT_CREATED_DATE);
         assertThat(testMessageContent.getModifiedDate()).isEqualTo(UPDATED_MODIFIED_DATE);
-        assertThat(testMessageContent.getCreatedBy()).isEqualTo(UPDATED_CREATED_BY);
-        assertThat(testMessageContent.getModifiedBy()).isEqualTo(UPDATED_MODIFIED_BY);
+        assertThat(testMessageContent.getCreatedBy()).isEqualTo(DEFAULT_CREATED_BY);
+        assertThat(testMessageContent.getModifiedBy()).isEqualTo(DEFAULT_MODIFIED_BY);
         assertThat(testMessageContent.getComment()).isEqualTo(DEFAULT_COMMENT);
     }
 

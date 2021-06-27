@@ -135,42 +135,29 @@ export default class MessageContentUpdatePage {
   async enterData() {
     await waitUntilDisplayed(this.saveButton);
     await this.setUuidInput('64c99148-3908-465d-8c4a-e510e3ade974');
-    expect(await this.getUuidInput()).to.match(/64c99148-3908-465d-8c4a-e510e3ade974/);
     await waitUntilDisplayed(this.saveButton);
     await this.setGroupIdInput('groupId');
-    expect(await this.getGroupIdInput()).to.match(/groupId/);
     await waitUntilDisplayed(this.saveButton);
     await this.setContentInput('content');
-    expect(await this.getContentInput()).to.match(/content/);
     await waitUntilDisplayed(this.saveButton);
     await this.setSenderInput('sender');
-    expect(await this.getSenderInput()).to.match(/sender/);
     await waitUntilDisplayed(this.saveButton);
     await this.setStatusInput('status');
-    expect(await this.getStatusInput()).to.match(/status/);
     await waitUntilDisplayed(this.saveButton);
     await this.setSearchFieldInput('searchField');
-    expect(await this.getSearchFieldInput()).to.match(/searchField/);
     await waitUntilDisplayed(this.saveButton);
     await this.setRoleInput('role');
-    expect(await this.getRoleInput()).to.match(/role/);
     await waitUntilDisplayed(this.saveButton);
     await this.setCreatedDateInput('01/01/2001' + protractor.Key.TAB + '02:30AM');
-    expect(await this.getCreatedDateInput()).to.contain('2001-01-01T02:30');
     await waitUntilDisplayed(this.saveButton);
     await this.setModifiedDateInput('01/01/2001' + protractor.Key.TAB + '02:30AM');
-    expect(await this.getModifiedDateInput()).to.contain('2001-01-01T02:30');
     await waitUntilDisplayed(this.saveButton);
     await this.setCreatedByInput('createdBy');
-    expect(await this.getCreatedByInput()).to.match(/createdBy/);
     await waitUntilDisplayed(this.saveButton);
     await this.setModifiedByInput('modifiedBy');
-    expect(await this.getModifiedByInput()).to.match(/modifiedBy/);
     await waitUntilDisplayed(this.saveButton);
     await this.setCommentInput('comment');
-    expect(await this.getCommentInput()).to.match(/comment/);
     await this.save();
     await waitUntilHidden(this.saveButton);
-    expect(await isVisible(this.saveButton)).to.be.false;
   }
 }

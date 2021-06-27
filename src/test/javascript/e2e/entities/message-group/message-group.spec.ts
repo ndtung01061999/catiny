@@ -56,6 +56,7 @@ describe('MessageGroup e2e test', () => {
       : await getRecordsCount(messageGroupComponentsPage.table);
     messageGroupUpdatePage = await messageGroupComponentsPage.goToCreateMessageGroup();
     await messageGroupUpdatePage.enterData();
+    expect(await isVisible(messageGroupUpdatePage.saveButton)).to.be.false;
 
     expect(await messageGroupComponentsPage.createButton.isEnabled()).to.be.true;
     await waitUntilDisplayed(messageGroupComponentsPage.table);

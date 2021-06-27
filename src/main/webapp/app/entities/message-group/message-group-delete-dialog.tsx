@@ -1,35 +1,36 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { IRootState } from 'app/shared/reducers';
+import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { getEntity, deleteEntity } from './message-group.reducer';
 
-export interface IMessageGroupDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export const MessageGroupDeleteDialog = (props: RouteComponentProps<{ id: string }>) => {
+  const dispatch = useAppDispatch();
 
-export const MessageGroupDeleteDialog = (props: IMessageGroupDeleteDialogProps) => {
   useEffect(() => {
-    props.getEntity(props.match.params.id);
+    dispatch(getEntity(props.match.params.id));
   }, []);
+
+  const messageGroupEntity = useAppSelector(state => state.messageGroup.entity);
+  const updateSuccess = useAppSelector(state => state.messageGroup.updateSuccess);
 
   const handleClose = () => {
     props.history.push('/message-group');
   };
 
   useEffect(() => {
-    if (props.updateSuccess) {
+    if (updateSuccess) {
       handleClose();
     }
-  }, [props.updateSuccess]);
+  }, [updateSuccess]);
 
   const confirmDelete = () => {
-    props.deleteEntity(props.messageGroupEntity.id);
+    dispatch(deleteEntity(messageGroupEntity.id));
   };
 
-  const { messageGroupEntity } = props;
   return (
     <Modal isOpen toggle={handleClose}>
       <ModalHeader toggle={handleClose} data-cy="messageGroupDeleteDialogHeading">
@@ -56,14 +57,4 @@ export const MessageGroupDeleteDialog = (props: IMessageGroupDeleteDialogProps) 
   );
 };
 
-const mapStateToProps = ({ messageGroup }: IRootState) => ({
-  messageGroupEntity: messageGroup.entity,
-  updateSuccess: messageGroup.updateSuccess,
-});
-
-const mapDispatchToProps = { getEntity, deleteEntity };
-
-type StateProps = ReturnType<typeof mapStateToProps>;
-type DispatchProps = typeof mapDispatchToProps;
-
-export default connect(mapStateToProps, mapDispatchToProps)(MessageGroupDeleteDialog);
+export default MessageGroupDeleteDialog;

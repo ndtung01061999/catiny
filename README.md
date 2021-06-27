@@ -1,6 +1,6 @@
 # catiny
 
-This application was generated using JHipster 7.0.1, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v7.0.1](https://www.jhipster.tech/documentation-archive/v7.0.1).
+This application was generated using JHipster 7.1.0, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v7.1.0](https://www.jhipster.tech/documentation-archive/v7.1.0).
 
 ## Development
 
@@ -150,6 +150,14 @@ npm test
 
 UI end-to-end tests are powered by [Protractor][], which is built on top of WebDriverJS. They're located in [src/test/javascript/e2e](src/test/javascript/e2e)
 and can be run by starting Spring Boot in one terminal (`./gradlew bootRun`) and running the tests (`npm run e2e`) in a second one.
+UI end-to-end tests are powered by [Cypress][]. They're located in [src/test/javascript/cypress](src/test/javascript/cypress)
+and can be run by starting Spring Boot in one terminal (`./gradlew bootRun`) and running the tests (`npm run e2e`) in a second one.
+
+#### Lighthouse audits
+
+You can execute automated [lighthouse audits][https://developers.google.com/web/tools/lighthouse/] with [cypress audits][https://github.com/mfrachet/cypress-audit] by running `npm run e2e:cypress:audits`.
+You should only run the audits when your application is packaged with the production profile.
+The lighthouse report is created in `build/cypress/lhreport.html`
 
 ### Other tests
 
@@ -215,14 +223,14 @@ For more information refer to [Using Docker and Docker-Compose][], this page als
 To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`), this will let you generate configuration files for a number of Continuous Integration systems. Consult the [Setting up Continuous Integration][] page for more information.
 
 [jhipster homepage and latest documentation]: https://www.jhipster.tech
-[jhipster 7.0.1 archive]: https://www.jhipster.tech/documentation-archive/v7.0.1
-[using jhipster in development]: https://www.jhipster.tech/documentation-archive/v7.0.1/development/
-[service discovery and configuration with the jhipster-registry]: https://www.jhipster.tech/documentation-archive/v7.0.1/microservices-architecture/#jhipster-registry
-[using docker and docker-compose]: https://www.jhipster.tech/documentation-archive/v7.0.1/docker-compose
-[using jhipster in production]: https://www.jhipster.tech/documentation-archive/v7.0.1/production/
-[running tests page]: https://www.jhipster.tech/documentation-archive/v7.0.1/running-tests/
-[code quality page]: https://www.jhipster.tech/documentation-archive/v7.0.1/code-quality/
-[setting up continuous integration]: https://www.jhipster.tech/documentation-archive/v7.0.1/setting-up-ci/
+[jhipster 7.1.0 archive]: https://www.jhipster.tech/documentation-archive/v7.1.0
+[using jhipster in development]: https://www.jhipster.tech/documentation-archive/v7.1.0/development/
+[service discovery and configuration with the jhipster-registry]: https://www.jhipster.tech/documentation-archive/v7.1.0/microservices-architecture/#jhipster-registry
+[using docker and docker-compose]: https://www.jhipster.tech/documentation-archive/v7.1.0/docker-compose
+[using jhipster in production]: https://www.jhipster.tech/documentation-archive/v7.1.0/production/
+[running tests page]: https://www.jhipster.tech/documentation-archive/v7.1.0/running-tests/
+[code quality page]: https://www.jhipster.tech/documentation-archive/v7.1.0/code-quality/
+[setting up continuous integration]: https://www.jhipster.tech/documentation-archive/v7.1.0/setting-up-ci/
 [gatling]: https://gatling.io/
 [node.js]: https://nodejs.org/
 [webpack]: https://webpack.github.io/
@@ -230,8 +238,9 @@ To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`)
 [jest]: https://facebook.github.io/jest/
 [jasmine]: https://jasmine.github.io/2.0/introduction.html
 [protractor]: https://angular.github.io/protractor/
+[cypress]: https://www.cypress.io/
 [leaflet]: https://leafletjs.com/
 [definitelytyped]: https://definitelytyped.org/
 [openapi-generator]: https://openapi-generator.tech
 [swagger-editor]: https://editor.swagger.io
-[doing api-first development]: https://www.jhipster.tech/documentation-archive/v7.0.1/doing-api-first-development/
+[doing api-first development]: https://www.jhipster.tech/documentation-archive/v7.1.0/doing-api-first-development/

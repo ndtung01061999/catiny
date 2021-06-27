@@ -74,9 +74,9 @@ export const configurationPageHeadingSelector = '[data-cy="configurationPageHead
 // End Specific Selector Attributes for Cypress
 // ***********************************************
 
-export const classInvalid = 'av-invalid';
+export const classInvalid = 'is-invalid';
 
-export const classValid = 'av-valid';
+export const classValid = 'is-valid';
 
 Cypress.Commands.add('login', (username: string, password: string) => {
   cy.clickOnLoginItem();
@@ -93,5 +93,6 @@ declare global {
   }
 }
 
+import 'cypress-audit/commands';
 // Convert this to a module instead of script (allows import/export)
 export {};

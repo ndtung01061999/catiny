@@ -56,6 +56,7 @@ describe('MessageContent e2e test', () => {
       : await getRecordsCount(messageContentComponentsPage.table);
     messageContentUpdatePage = await messageContentComponentsPage.goToCreateMessageContent();
     await messageContentUpdatePage.enterData();
+    expect(await isVisible(messageContentUpdatePage.saveButton)).to.be.false;
 
     expect(await messageContentComponentsPage.createButton.isEnabled()).to.be.true;
     await waitUntilDisplayed(messageContentComponentsPage.table);

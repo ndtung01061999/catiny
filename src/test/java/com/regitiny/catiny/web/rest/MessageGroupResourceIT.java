@@ -1374,10 +1374,8 @@ class MessageGroupResourceIT {
             .userId(UPDATED_USER_ID)
             .addBy(UPDATED_ADD_BY)
             .searchField(UPDATED_SEARCH_FIELD)
-            .createdDate(UPDATED_CREATED_DATE)
-            .modifiedDate(UPDATED_MODIFIED_DATE)
-            .modifiedBy(UPDATED_MODIFIED_BY)
-            .comment(UPDATED_COMMENT);
+            .createdBy(UPDATED_CREATED_BY)
+            .modifiedBy(UPDATED_MODIFIED_BY);
 
         restMessageGroupMockMvc
             .perform(
@@ -1399,11 +1397,11 @@ class MessageGroupResourceIT {
         assertThat(testMessageGroup.getLastContent()).isEqualTo(DEFAULT_LAST_CONTENT);
         assertThat(testMessageGroup.getSearchField()).isEqualTo(UPDATED_SEARCH_FIELD);
         assertThat(testMessageGroup.getRole()).isEqualTo(DEFAULT_ROLE);
-        assertThat(testMessageGroup.getCreatedDate()).isEqualTo(UPDATED_CREATED_DATE);
-        assertThat(testMessageGroup.getModifiedDate()).isEqualTo(UPDATED_MODIFIED_DATE);
-        assertThat(testMessageGroup.getCreatedBy()).isEqualTo(DEFAULT_CREATED_BY);
+        assertThat(testMessageGroup.getCreatedDate()).isEqualTo(DEFAULT_CREATED_DATE);
+        assertThat(testMessageGroup.getModifiedDate()).isEqualTo(DEFAULT_MODIFIED_DATE);
+        assertThat(testMessageGroup.getCreatedBy()).isEqualTo(UPDATED_CREATED_BY);
         assertThat(testMessageGroup.getModifiedBy()).isEqualTo(UPDATED_MODIFIED_BY);
-        assertThat(testMessageGroup.getComment()).isEqualTo(UPDATED_COMMENT);
+        assertThat(testMessageGroup.getComment()).isEqualTo(DEFAULT_COMMENT);
     }
 
     @Test

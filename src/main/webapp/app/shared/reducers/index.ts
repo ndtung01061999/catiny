@@ -1,4 +1,3 @@
-import { combineReducers } from 'redux';
 import { loadingBarReducer as loadingBar } from 'react-redux-loading-bar';
 
 import locale, { LocaleState } from './locale';
@@ -13,33 +12,12 @@ import password, { PasswordState } from 'app/modules/account/password/password.r
 import settings, { SettingsState } from 'app/modules/account/settings/settings.reducer';
 import passwordReset, { PasswordResetState } from 'app/modules/account/password-reset/password-reset.reducer';
 // prettier-ignore
-import messageGroup, {
-  MessageGroupState
-} from 'app/entities/message-group/message-group.reducer';
+import messageGroup from 'app/entities/message-group/message-group.reducer';
 // prettier-ignore
-import messageContent, {
-  MessageContentState
-} from 'app/entities/message-content/message-content.reducer';
+import messageContent from 'app/entities/message-content/message-content.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
-export interface IRootState {
-  readonly authentication: AuthenticationState;
-  readonly locale: LocaleState;
-  readonly applicationProfile: ApplicationProfileState;
-  readonly administration: AdministrationState;
-  readonly userManagement: UserManagementState;
-  readonly register: RegisterState;
-  readonly activate: ActivateState;
-  readonly passwordReset: PasswordResetState;
-  readonly password: PasswordState;
-  readonly settings: SettingsState;
-  readonly messageGroup: MessageGroupState;
-  readonly messageContent: MessageContentState;
-  /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
-  readonly loadingBar: any;
-}
-
-const rootReducer = combineReducers<IRootState>({
+const rootReducer = {
   authentication,
   locale,
   applicationProfile,
@@ -54,6 +32,6 @@ const rootReducer = combineReducers<IRootState>({
   messageContent,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar,
-});
+};
 
 export default rootReducer;

@@ -1,7 +1,6 @@
 const webpack = require('webpack');
 const webpackMerge = require('webpack-merge').merge;
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
-const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin');
 const WebpackNotifierPlugin = require('webpack-notifier');
 const path = require('path');
@@ -45,6 +44,7 @@ module.exports = options =>
       stats: options.stats,
       hot: true,
       contentBase: './build/resources/main/static/',
+      port: 9060,
       proxy: [
         {
           context: ['/api', '/services', '/management', '/swagger-resources', '/v2/api-docs', '/v3/api-docs', '/h2-console', '/auth'],
@@ -71,7 +71,6 @@ module.exports = options =>
         : new SimpleProgressWebpackPlugin({
             format: options.stats === 'minimal' ? 'compact' : 'expanded',
           }),
-      new FriendlyErrorsWebpackPlugin(),
       new BrowserSyncPlugin(
         {
           https: options.tls,

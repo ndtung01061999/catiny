@@ -4,7 +4,7 @@
     "otherModules": [],
     "applicationType": "monolith",
     "baseName": "catiny",
-    "jhipsterVersion": "7.0.1",
+    "jhipsterVersion": "7.1.0",
     "skipClient": false,
     "skipServer": false,
     "skipUserManagement": false,
