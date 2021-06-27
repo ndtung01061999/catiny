@@ -71,8 +71,7 @@ class MessageContentGatlingTest extends Simulation {
             .post("/api/message-contents")
             .headers(headers_http_authenticated)
             .body(StringBody("""{
-                "id":null
-                , "uuid":null
+                "uuid":null
                 , "groupId":"SAMPLE_TEXT"
                 , "content":null
                 , "sender":"SAMPLE_TEXT"

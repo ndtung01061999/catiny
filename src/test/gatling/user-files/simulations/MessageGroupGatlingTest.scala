@@ -71,9 +71,8 @@ class MessageGroupGatlingTest extends Simulation {
             .post("/api/message-groups")
             .headers(headers_http_authenticated)
             .body(StringBody("""{
-                "id":null
-                , "uuid":null
-                , "userId":null
+                "uuid":null
+                , "userId":"0"
                 , "groupId":"SAMPLE_TEXT"
                 , "groupName":"SAMPLE_TEXT"
                 , "addBy":"SAMPLE_TEXT"

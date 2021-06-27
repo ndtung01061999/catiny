@@ -1,14 +1,12 @@
 import './home.scss';
 
 import React, {useEffect, useRef, useState} from 'react';
-import {connect} from 'react-redux';
 import {Card, CardBody, CardHeader, CardText, CardTitle, Col, Progress, Row, Tooltip} from 'reactstrap';
 import {faAngleRight, faEllipsisH} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { useAppSelector } from 'app/config/store';
+import {useAppSelector} from 'app/config/store';
 
-export type IHomeProp = StateProps;
 let prevScrollProp = window.pageYOffset;
 export const Home = () => {
   const account = useAppSelector(state => state.authentication.account);

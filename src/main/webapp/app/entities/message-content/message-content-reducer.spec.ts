@@ -1,38 +1,41 @@
 import axios from 'axios';
 
 import configureStore from 'redux-mock-store';
-import promiseMiddleware from 'redux-promise-middleware';
 import thunk from 'redux-thunk';
 import sinon from 'sinon';
-import { parseHeaderForLinks } from 'react-jhipster';
+import {parseHeaderForLinks} from 'react-jhipster';
 
 import reducer, {
-  ACTION_TYPES,
   createEntity,
   deleteEntity,
   getEntities,
-  getSearchEntities,
   getEntity,
-  updateEntity,
-  partialUpdate,
+  partialUpdateEntity,
   reset,
+  searchEntities,
+  updateEntity,
 } from './message-content.reducer';
-import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
-import { IMessageContent, defaultValue } from 'app/shared/model/message-content.model';
+import {EntityState} from 'app/shared/reducers/reducer.utils';
+import {defaultValue, IMessageContent} from 'app/shared/model/message-content.model';
 
-describe('Entities reducer tests', () => {
-  function isEmpty(element): boolean {
-    if (element instanceof Array) {
+describe('Entities reducer tests', () =>
+{
+  function isEmpty(element): boolean
+  {
+    if (element instanceof Array)
+    {
       return element.length === 0;
-    } else {
+    }
+    else
+    {
       return Object.keys(element).length === 0;
     }
   }
 
-  const initialState = {
+  const initialState: EntityState<IMessageContent> = {
     loading: false,
     errorMessage: null,
-    entities: [] as ReadonlyArray<IMessageContent>,
+    entities: [],
     entity: defaultValue,
     links: {
       next: 0,
@@ -53,47 +56,39 @@ describe('Entities reducer tests', () => {
     expect(isEmpty(state.entity));
   }
 
-  function testMultipleTypes(types, payload, testFunction) {
-    types.forEach(e => {
-      testFunction(reducer(undefined, { type: e, payload }));
+  function testMultipleTypes(types, payload, testFunction, error?)
+  {
+    types.forEach(e =>
+    {
+      testFunction(reducer(undefined, {type: e, payload, error}));
     });
   }
 
   describe('Common', () => {
     it('should return the initial state', () => {
-      testInitialState(reducer(undefined, {}));
+      testInitialState(reducer(undefined, {type: ''}));
     });
   });
 
   describe('Requests', () => {
-    it('should set state to loading', () => {
-      testMultipleTypes(
-        [
-          REQUEST(ACTION_TYPES.FETCH_MESSAGECONTENT_LIST),
-          REQUEST(ACTION_TYPES.SEARCH_MESSAGECONTENTS),
-          REQUEST(ACTION_TYPES.FETCH_MESSAGECONTENT),
-        ],
-        {},
-        state => {
-          expect(state).toMatchObject({
-            errorMessage: null,
-            updateSuccess: false,
-            loading: true,
-          });
-        }
-      );
+    it('should set state to loading', () =>
+    {
+      testMultipleTypes([getEntities.pending.type, searchEntities.pending.type, getEntity.pending.type], {}, state =>
+      {
+        expect(state).toMatchObject({
+          errorMessage: null,
+          updateSuccess: false,
+          loading: true,
+        });
+      });
     });
 
     it('should set state to updating', () => {
       testMultipleTypes(
-        [
-          REQUEST(ACTION_TYPES.CREATE_MESSAGECONTENT),
-          REQUEST(ACTION_TYPES.UPDATE_MESSAGECONTENT),
-          REQUEST(ACTION_TYPES.PARTIAL_UPDATE_MESSAGECONTENT),
-          REQUEST(ACTION_TYPES.DELETE_MESSAGECONTENT),
-        ],
+        [createEntity.pending.type, updateEntity.pending.type, partialUpdateEntity.pending.type, deleteEntity.pending.type],
         {},
-        state => {
+        state =>
+        {
           expect(state).toMatchObject({
             errorMessage: null,
             updateSuccess: false,
@@ -104,14 +99,7 @@ describe('Entities reducer tests', () => {
     });
 
     it('should reset the state', () => {
-      expect(
-        reducer(
-          { ...initialState, loading: true },
-          {
-            type: ACTION_TYPES.RESET,
-          }
-        )
-      ).toEqual({
+      expect(reducer({...initialState, loading: true}, reset())).toEqual({
         ...initialState,
       });
     });
@@ -121,21 +109,25 @@ describe('Entities reducer tests', () => {
     it('should set a message in errorMessage', () => {
       testMultipleTypes(
         [
-          FAILURE(ACTION_TYPES.FETCH_MESSAGECONTENT_LIST),
-          FAILURE(ACTION_TYPES.SEARCH_MESSAGECONTENTS),
-          FAILURE(ACTION_TYPES.FETCH_MESSAGECONTENT),
-          FAILURE(ACTION_TYPES.CREATE_MESSAGECONTENT),
-          FAILURE(ACTION_TYPES.UPDATE_MESSAGECONTENT),
-          FAILURE(ACTION_TYPES.PARTIAL_UPDATE_MESSAGECONTENT),
-          FAILURE(ACTION_TYPES.DELETE_MESSAGECONTENT),
+          getEntities.rejected.type,
+          searchEntities.rejected.type,
+          getEntity.rejected.type,
+          createEntity.rejected.type,
+          updateEntity.rejected.type,
+          partialUpdateEntity.rejected.type,
+          deleteEntity.rejected.type,
         ],
-        'error message',
-        state => {
+        'some message',
+        state =>
+        {
           expect(state).toMatchObject({
             errorMessage: 'error message',
             updateSuccess: false,
             updating: false,
           });
+        },
+        {
+          message: 'error message',
         }
       );
     });
@@ -147,7 +139,7 @@ describe('Entities reducer tests', () => {
       const links = parseHeaderForLinks(payload.headers.link);
       expect(
         reducer(undefined, {
-          type: SUCCESS(ACTION_TYPES.FETCH_MESSAGECONTENT_LIST),
+          type: getEntities.fulfilled.type,
           payload,
         })
       ).toEqual({
@@ -163,7 +155,7 @@ describe('Entities reducer tests', () => {
       const links = parseHeaderForLinks(payload.headers.link);
       expect(
         reducer(undefined, {
-          type: SUCCESS(ACTION_TYPES.SEARCH_MESSAGECONTENTS),
+          type: searchEntities.fulfilled.type,
           payload,
         })
       ).toEqual({
@@ -179,7 +171,7 @@ describe('Entities reducer tests', () => {
       const payload = { data: { 1: 'fake1' } };
       expect(
         reducer(undefined, {
-          type: SUCCESS(ACTION_TYPES.FETCH_MESSAGECONTENT),
+          type: getEntity.fulfilled.type,
           payload,
         })
       ).toEqual({
@@ -193,7 +185,7 @@ describe('Entities reducer tests', () => {
       const payload = { data: 'fake payload' };
       expect(
         reducer(undefined, {
-          type: SUCCESS(ACTION_TYPES.CREATE_MESSAGECONTENT),
+          type: createEntity.fulfilled.type,
           payload,
         })
       ).toEqual({
@@ -207,7 +199,7 @@ describe('Entities reducer tests', () => {
     it('should delete entity', () => {
       const payload = 'fake payload';
       const toTest = reducer(undefined, {
-        type: SUCCESS(ACTION_TYPES.DELETE_MESSAGECONTENT),
+        type: deleteEntity.fulfilled.type,
         payload,
       });
       expect(toTest).toMatchObject({
@@ -222,7 +214,7 @@ describe('Entities reducer tests', () => {
 
     const resolvedObject = { value: 'whatever' };
     beforeEach(() => {
-      const mockStore = configureStore([thunk, promiseMiddleware]);
+      const mockStore = configureStore([thunk]);
       store = mockStore({});
       axios.get = sinon.stub().returns(Promise.resolve(resolvedObject));
       axios.post = sinon.stub().returns(Promise.resolve(resolvedObject));
@@ -231,123 +223,122 @@ describe('Entities reducer tests', () => {
       axios.delete = sinon.stub().returns(Promise.resolve(resolvedObject));
     });
 
-    it('dispatches ACTION_TYPES.FETCH_MESSAGECONTENT_LIST actions', async () => {
+    it('dispatches FETCH_MESSAGECONTENT_LIST actions', async () =>
+    {
       const expectedActions = [
         {
-          type: REQUEST(ACTION_TYPES.FETCH_MESSAGECONTENT_LIST),
+          type: getEntities.pending.type,
         },
         {
-          type: SUCCESS(ACTION_TYPES.FETCH_MESSAGECONTENT_LIST),
+          type: getEntities.fulfilled.type,
           payload: resolvedObject,
         },
       ];
-      await store.dispatch(getEntities()).then(() => expect(store.getActions()).toEqual(expectedActions));
+      await store.dispatch(getEntities({}));
+      expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
+      expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
     });
-    it('dispatches ACTION_TYPES.SEARCH_MESSAGECONTENTS actions', async () => {
+    it('dispatches SEARCH_MESSAGECONTENTS actions', async () =>
+    {
       const expectedActions = [
         {
-          type: REQUEST(ACTION_TYPES.SEARCH_MESSAGECONTENTS),
+          type: searchEntities.pending.type,
         },
         {
-          type: SUCCESS(ACTION_TYPES.SEARCH_MESSAGECONTENTS),
+          type: searchEntities.fulfilled.type,
           payload: resolvedObject,
         },
       ];
-      await store.dispatch(getSearchEntities()).then(() => expect(store.getActions()).toEqual(expectedActions));
-    });
-
-    it('dispatches ACTION_TYPES.FETCH_MESSAGECONTENT actions', async () => {
-      const expectedActions = [
-        {
-          type: REQUEST(ACTION_TYPES.FETCH_MESSAGECONTENT),
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.FETCH_MESSAGECONTENT),
-          payload: resolvedObject,
-        },
-      ];
-      await store.dispatch(getEntity(42666)).then(() => expect(store.getActions()).toEqual(expectedActions));
+      await store.dispatch(searchEntities({}));
+      expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
+      expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
     });
 
-    it('dispatches ACTION_TYPES.CREATE_MESSAGECONTENT actions', async () => {
+    it('dispatches FETCH_MESSAGECONTENT actions', async () =>
+    {
       const expectedActions = [
         {
-          type: REQUEST(ACTION_TYPES.CREATE_MESSAGECONTENT),
+          type: getEntity.pending.type,
         },
         {
-          type: SUCCESS(ACTION_TYPES.CREATE_MESSAGECONTENT),
+          type: getEntity.fulfilled.type,
           payload: resolvedObject,
         },
       ];
-      await store.dispatch(createEntity({ id: 456 })).then(() => expect(store.getActions()).toEqual(expectedActions));
+      await store.dispatch(getEntity(42666));
+      expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
+      expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
     });
 
-    it('dispatches ACTION_TYPES.UPDATE_MESSAGECONTENT actions', async () => {
+    it('dispatches CREATE_MESSAGECONTENT actions', async () =>
+    {
       const expectedActions = [
         {
-          type: REQUEST(ACTION_TYPES.UPDATE_MESSAGECONTENT),
+          type: createEntity.pending.type,
         },
         {
-          type: SUCCESS(ACTION_TYPES.UPDATE_MESSAGECONTENT),
+          type: createEntity.fulfilled.type,
           payload: resolvedObject,
         },
       ];
-      await store.dispatch(updateEntity({ id: 456 })).then(() => expect(store.getActions()).toEqual(expectedActions));
+      await store.dispatch(createEntity({id: 456}));
+      expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
+      expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
     });
 
-    it('dispatches ACTION_TYPES.PARTIAL_UPDATE_MESSAGECONTENT actions', async () => {
+    it('dispatches UPDATE_MESSAGECONTENT actions', async () =>
+    {
       const expectedActions = [
         {
-          type: REQUEST(ACTION_TYPES.PARTIAL_UPDATE_MESSAGECONTENT),
+          type: updateEntity.pending.type,
         },
         {
-          type: SUCCESS(ACTION_TYPES.PARTIAL_UPDATE_MESSAGECONTENT),
+          type: updateEntity.fulfilled.type,
           payload: resolvedObject,
         },
       ];
-      await store.dispatch(partialUpdate({ id: 1 })).then(() => expect(store.getActions()).toEqual(expectedActions));
+      await store.dispatch(updateEntity({id: 456}));
+      expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
+      expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
     });
 
-    it('dispatches ACTION_TYPES.DELETE_MESSAGECONTENT actions', async () => {
+    it('dispatches PARTIAL_UPDATE_MESSAGECONTENT actions', async () =>
+    {
       const expectedActions = [
         {
-          type: REQUEST(ACTION_TYPES.DELETE_MESSAGECONTENT),
+          type: partialUpdateEntity.pending.type,
         },
         {
-          type: SUCCESS(ACTION_TYPES.DELETE_MESSAGECONTENT),
+          type: partialUpdateEntity.fulfilled.type,
           payload: resolvedObject,
         },
       ];
-      await store.dispatch(deleteEntity(42666)).then(() => expect(store.getActions()).toEqual(expectedActions));
+      await store.dispatch(partialUpdateEntity({id: 123}));
+      expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
+      expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
     });
 
-    it('dispatches ACTION_TYPES.RESET actions', async () => {
+    it('dispatches DELETE_MESSAGECONTENT actions', async () =>
+    {
       const expectedActions = [
         {
-          type: ACTION_TYPES.RESET,
+          type: deleteEntity.pending.type,
+        },
+        {
+          type: deleteEntity.fulfilled.type,
+          payload: resolvedObject,
         },
       ];
+      await store.dispatch(deleteEntity(42666));
+      expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
+      expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
+    });
+
+    it('dispatches RESET actions', async () =>
+    {
+      const expectedActions = [reset()];
       await store.dispatch(reset());
       expect(store.getActions()).toEqual(expectedActions);
-    });
-  });
-
-  describe('blobFields', () => {
-    it('should properly set a blob in state.', () => {
-      const payload = { name: 'fancyBlobName', data: 'fake data', contentType: 'fake dataType' };
-      expect(
-        reducer(undefined, {
-          type: ACTION_TYPES.SET_BLOB,
-          payload,
-        })
-      ).toEqual({
-        ...initialState,
-        entity: {
-          ...initialState.entity,
-          fancyBlobName: payload.data,
-          fancyBlobNameContentType: payload.contentType,
-        },
-      });
     });
   });
 });

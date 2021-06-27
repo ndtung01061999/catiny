@@ -1,10 +1,6 @@
 package com.regitiny.catiny.security;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Optional;
+import com.regitiny.catiny.GeneratedByJHipster;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,14 +10,23 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  * Test class for the {@link SecurityUtils} utility class.
  */
-class SecurityUtilsUnitTest {
+@GeneratedByJHipster
+class SecurityUtilsUnitTest
+{
 
   @BeforeEach
   @AfterEach
-  void cleanup() {
+  void cleanup()
+  {
     SecurityContextHolder.clearContext();
   }
 
@@ -35,7 +40,8 @@ class SecurityUtilsUnitTest {
   }
 
   @Test
-  void testgetCurrentUserJWT() {
+  void testGetCurrentUserJWT()
+  {
     SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
     securityContext.setAuthentication(new UsernamePasswordAuthenticationToken("admin", "token"));
     SecurityContextHolder.setContext(securityContext);

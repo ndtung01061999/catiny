@@ -1,21 +1,26 @@
 import {
-  usernameLoginSelector,
-  forgetYourPasswordSelector,
-  emailResetPasswordSelector,
-  submitInitResetPasswordSelector,
   classInvalid,
   classValid,
+  emailResetPasswordSelector,
+  forgetYourPasswordSelector,
+  submitInitResetPasswordSelector,
+  usernameLoginSelector,
 } from '../../support/commands';
 
-describe('forgot your password', () => {
-  before(() => {
-    cy.window().then(win => {
+describe('forgot your password', () =>
+{
+  const username = Cypress.env('E2E_USERNAME') ?? 'admin';
+
+  before(() =>
+  {
+    cy.window().then(win =>
+    {
       win.sessionStorage.clear();
     });
     cy.clearCookies();
     cy.visit('');
     cy.clickOnLoginItem();
-    cy.get(usernameLoginSelector).type('admin');
+    cy.get(usernameLoginSelector).type(username);
     cy.get(forgetYourPasswordSelector).click();
   });
 
@@ -23,8 +28,12 @@ describe('forgot your password', () => {
     cy.intercept('POST', '/api/account/reset-password/init').as('initResetPassword');
   });
 
-  it('requires email', () => {
-    cy.get(emailResetPasswordSelector).should('have.class', classInvalid).type('user@gmail.com').should('have.class', classValid);
+  it('requires email', () =>
+  {
+    cy.get(submitInitResetPasswordSelector).click({force: true});
+    cy.get(emailResetPasswordSelector).should('have.class', classInvalid).type('user@gmail.com');
+    cy.get(submitInitResetPasswordSelector).click({force: true});
+    cy.get(emailResetPasswordSelector).should('have.class', classValid);
     cy.get(emailResetPasswordSelector).clear();
   });
 
