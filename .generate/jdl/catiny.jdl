@@ -1,0 +1,1857 @@
+DEFAULT_MIN_LENGTH = 64
+DEFAULT_MAX_LENGTH = 2048
+
+
+entity HanhChinhVN
+{
+    /** name Example("Ninh Kiều")*/
+    name String required
+    /** slug Example("ninh-kieu")*/
+    slug String required
+    /** type Example("quan")*/
+    type String required
+    /** nameWithType Example("Quận Ninh Kiều") */
+    nameWithType String  required
+    /** code Example("916") */
+    code String required
+    /** parentCode Example("92") , equal to 0 is the city*/
+    parentCode String required
+    /** path Example("Ninh Kiều, Cần Thơ")*/
+    path String
+    /** pathWithType Example("Quận Ninh Kiều, Thành phố Cần Thơ")*/
+    pathWithType String
+}
+
+// phần cấu hình Server
+/**
+* @what?            -> The PostType entity.
+* @why?             ->
+* @use-to           -> Chứa thông tin của một cụm máy chủ database , app ...
+* @commonly-used-in ->
+*
+* @describe         ->
+*
+* @author           -> yuvytung.
+* @create-by        -> yuvytung.
+* @edit-commit      -> yuvytung.
+*/
+entity ServerConfig
+/**
+* @what?            -> The PostType entity.
+* @why?             ->
+* @use-to           -> Thông tin chi tiết của từng máy chủ
+* @commonly-used-in ->
+*
+* @describe         -> ví dụ có một cụm app docker swarm front end sẽ được chia đều các kết nối đến máy chủ này giảm tải lưu lượng mạng
+*
+* @author           -> yuvytung.
+* @create-by        -> yuvytung.
+* @edit-commit      -> yuvytung.
+*/
+entity ServerDetails
+/**
+* @what?            -> The PostType entity.
+* @why?             ->
+* @use-to           -> Loại server là gì . app , db , cache , search ...
+* @commonly-used-in ->
+*
+* @describe         ->
+*
+* @author           -> yuvytung.
+* @create-by        -> yuvytung.
+* @edit-commit      -> yuvytung.
+*/
+entity ServerType
+relationship OneToOne
+{
+	ServerConfig to ServerDetails
+}
+relationship ManyToMany
+{
+	ServerConfig to ServerType
+}
+
+/**
+* @what?            -> The MasterUser entity.
+* @why?             -> User (mặc định của jhipster) không cho thêm cột (nếu thêm thì sau khó update)
+* @use-to:          -> Lưu thông tin cơ bản của một người dùng
+* @commonly-used-in -> Thường sử dụng khi thao tác với tài khoản trong service trên server
+*
+* @describe      	-> Những dữ liệu của tài khoản và thương xuyên sử dụng (trong service) sẽ được lưu ở đây
+*
+* @author           -> yuvytung.
+* @create-by        -> yuvytung.
+* @edit-commit      -> yuvytung.
+*/
+entity MasterUser
+{
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
+     * @author           -> yuvytung.
+     */
+    uuid UUID required unique
+    /** avatarImage : ảnh đại diện của người dùng
+      * @describe   : field này ở dưới dạng Json giống mẫu sau
+      *   default <required> : url ảnh mặc định (ảnh đã qua xử lý giảm dung lượng kích cỡ được cắt theo một chuẩn nhất định...)
+      *   original <required>: url ảnh nguyên bản chưa qua xử lý
+      *   big                : url ảnh kích thước lớn
+      *   medium             : url ảnh kích thước trung bình
+      *   small              : url ảnh kích thước nhỏ
+      * @author           -> yuvytung.
+      */
+    avatarImage TextBlob
+    /** fullName : tên hiển thị . thực ra chỉ là firstName + lastName . nhưng sẽ rất bất tiện
+      * @author           -> yuvytung.
+      */
+    fullName String required
+
+
+
+    /** owner *        : chủ sở hữu bản ghi này
+     * @type           : Json
+     * @author           -> yuvytung.
+     */
+    owner TextBlob
+    /** role *         : những role được phép thực hiện <xem,sửa,xóa> ở dưới dạng Json
+     * @author           -> yuvytung.
+     */
+    role TextBlob
+    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdDate  Instant
+    /** modifiedDate * : thời gian sửa bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedDate  Instant
+    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdBy String
+    /** modifiedBy *   : người sửa lại bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedBy String
+    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json
+     * {
+     *   "comment":"đây là comment mặc định"
+     * }
+     * @author           -> yuvytung.
+     */
+    comment TextBlob
+}
+/**
+* @what?         	-> The MyProfile entity .
+* @why?          	->
+* @use-to:       	-> Lưu thông tin mở rộng của người dùng (trường học cơ quan làm việc ...)
+* @commonly-used-in -> Trang cá nhân (trang giới thiệu)
+*
+* @describe      	-> Đây là bảng NoSQL một số trường ở dưới dạng JSON ,NoSQL vì dữ liệu mỗi trường học , cơ quan ,nới sống ... đôi khikhông giống nhau
+*
+* @author           -> yuvytung.
+* @create-by        -> yuvytung.
+* @edit-commit      -> yuvytung.
+*/
+entity MyProfile
+{
+    /** work : nơi làm việc
+     * @data-type : Json
+     * @describe : những nơi, công ty đã từng làm việc , khoảng thời gian vị trí ...
+     * @example :
+     *  -companyName
+     *  -companyAddress
+     *  -companyContact
+     * @author           -> yuvytung.
+     */
+   	work TextBlob
+    /** education : học vấn
+     * @data-type : Json
+     * @describe : học vấn thế nào tốt nghiệp trường nào học tại đâu khoảng thời gian nào , bằng cấp chứng chỉ ra sao  ...
+     * @author           -> yuvytung.
+     */
+    education TextBlob
+    /** placesLived : những nơi đã từng sống
+     * @data-type : Json
+     * @describe : sống ở đâu khoảng thời gian nào có gì tại nơi sống ...
+     * @author           -> yuvytung.
+     */
+    placesLived TextBlob
+    /** contactInfo : những thông in liên hệ cơ bản
+     * @data-type : Json
+     * @describe : số điện thoại email , địa chỉ ...
+     * @author           -> yuvytung.
+     */
+    contactInfo TextBlob
+    /** webSocialLinks : các mạng xã hội sử dụng . trang web ...
+     * @data-type : Json
+     * @describe : thông tin về mạng xã hội sử dụng ...
+     * @author           -> yuvytung.
+     */
+    webSocialLinks TextBlob
+    /** basicInfo : thông tin cơ bản của người dùng
+     * @data-type : Json
+     * @describe : những thông tin tóm tắt để giới thiệu nổi bật
+     * @author           -> yuvytung.
+     */
+    basicInfo TextBlob
+    /** relationshipInfo : những mối liên hệ với ai đó
+     * @data-type : Json
+     * @describe : ví dụ như đã kết hôn với ai ...
+     * @author           -> yuvytung.
+     */
+    relationshipInfo TextBlob
+    /** family : những người trong gia đình
+     * @data-type : Json
+     * @describe : anh em bạn bè người thân trong gia đình
+     * @author           -> yuvytung.
+     */
+    family	TextBlob
+    /** detailAbout : chi tiết về bản thân mình
+     * @data-type : Json
+     * @describe : những thôn tin chi tết về bản thân như ngày tháng năm sinh nơi ở ...
+     * @author           -> yuvytung.
+     */
+    detailAbout TextBlob
+    /** lifeEvents : sự kiên lớn trong cuộc đời
+     * @data-type : Json
+     * @describe : những sự kiện như sinh , tốt nghiệp . lấy vợ chồng , có con ...
+     * @author           -> yuvytung.
+     */
+    lifeEvents TextBlob
+    /** hobbies : sở thích của bản thân
+     * @data-type : Json
+     * @describe : sở thích của ban thân là gì , phim , nhạc , sách , ...
+     * @author           -> yuvytung.
+     */
+    hobbies TextBlob
+    /** featured : điểm nổi bật của bản thân
+     * @data-type : Json
+     * @describe : cá tính thế nào , đã làm nhứng gì rất đặc sắc ....
+     * @author           -> yuvytung.
+     */
+    featured TextBlob
+}
+/**
+* @what?         	-> The MyStatus entity.
+* @why?          	->
+* @use-to:       	-> Lưu , quản lý trạng thái của tài khoản đang on hay off ...
+* @commonly-used-in -> Những nghiệp vũ nhắn tin,thông báo cần biết trạng thái của tài khoản ...
+*
+* @describe      	->
+*
+* @author           -> yuvytung.
+* @create-by        -> yuvytung.
+* @edit-commit      -> yuvytung.
+*/
+entity MyStatus
+{
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
+     * @author           -> yuvytung.
+     */
+    uuid UUID required unique
+
+
+
+    /** owner *        : chủ sở hữu bản ghi này
+     * @type           : Json
+     * @author           -> yuvytung.
+     */
+    owner TextBlob
+    /** role *         : những role được phép thực hiện <xem,sửa,xóa> ở dưới dạng Json
+     * @author           -> yuvytung.
+     */
+    role TextBlob
+    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdDate  Instant
+    /** modifiedDate * : thời gian sửa bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedDate  Instant
+    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdBy String
+    /** modifiedBy *   : người sửa lại bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedBy String
+    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json
+     * {
+     *   "comment":"đây là comment mặc định"
+     * }
+     * @author           -> yuvytung.
+     */
+    comment TextBlob
+}
+/**
+* @what?            -> The StatusDetails entity.
+* @why?             ->
+* @use-to           -> Những thiết bị đang truy cập thông tin chi tiết về chúng ...
+* @commonly-used-in -> Những nghiệp vụ cần biết chi tiết trang thái người dùng
+*
+* @describe         ->
+*
+* @author           -> yuvytung.
+* @create-by        -> yuvytung.
+* @edit-commit      -> yuvytung.
+*/
+entity StatusDetails
+{
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
+     * @author           -> yuvytung.
+     */
+    uuid UUID required unique
+
+
+    /** owner *        : chủ sở hữu bản ghi này
+     * @type           : Json
+     * @author           -> yuvytung.
+     */
+    owner TextBlob
+    /** role *         : những role được phép thực hiện <xem,sửa,xóa> ở dưới dạng Json
+     * @author           -> yuvytung.
+     */
+    role TextBlob
+    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdDate  Instant
+    /** modifiedDate * : thời gian sửa bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedDate  Instant
+    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdBy String
+    /** modifiedBy *   : người sửa lại bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedBy String
+    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json
+     * {
+     *   "comment":"đây là comment mặc định"
+     * }
+     * @author           -> yuvytung.
+     */
+    comment TextBlob
+}
+/**
+* @what?            -> The MyFriend entity.
+* @why?             ->
+* @use-to           -> Quản lý phần kết bạn, các mối liên hệ bạn bè ...
+* @commonly-used-in -> Bạn bè và các liên kết bạn bè ...
+*
+* @describe         ->
+*
+* @author           -> yuvytung.
+* @create-by        -> yuvytung.
+* @edit-commit      -> yuvytung.
+*/
+entity MyFriend
+{
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
+     * @author           -> yuvytung.
+     */
+    uuid UUID required unique
+
+
+    /** owner *        : chủ sở hữu bản ghi này
+     * @type           : Json
+     * @author           -> yuvytung.
+     */
+    owner TextBlob
+    /** role *         : những role được phép thực hiện <xem,sửa,xóa> ở dưới dạng Json
+     * @author           -> yuvytung.
+     */
+    role TextBlob
+    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdDate  Instant
+    /** modifiedDate * : thời gian sửa bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedDate  Instant
+    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdBy String
+    /** modifiedBy *   : người sửa lại bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedBy String
+    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json
+     * {
+     *   "comment":"đây là comment mặc định"
+     * }
+     * @author           -> yuvytung.
+     */
+    comment TextBlob
+}
+/**
+* @what?            -> The Jhipster entity
+* @why?             ->
+* @use-to           -> Quản lý các chủ đề mà người dùng đăng ký theo dõi
+* @commonly-used-in -> Chủ đề mà người dùng theo dõi
+*
+* @describe         ->
+*
+* @author           -> yuvytung.
+* @create-by        -> yuvytung.
+* @edit-commit      -> yuvytung.
+*/
+entity MyFollow
+{
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
+     * @author           -> yuvytung.
+     */
+    uuid UUID required unique
+
+
+    /** owner *        : chủ sở hữu bản ghi này
+     * @type           : Json
+     * @author           -> yuvytung.
+     */
+    owner TextBlob
+    /** role *         : những role được phép thực hiện <xem,sửa,xóa> ở dưới dạng Json
+     * @author           -> yuvytung.
+     */
+    role TextBlob
+    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdDate  Instant
+    /** modifiedDate * : thời gian sửa bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedDate  Instant
+    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdBy String
+    /** modifiedBy *   : người sửa lại bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedBy String
+    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json
+     * {
+     *   "comment":"đây là comment mặc định"
+     * }
+     * @author           -> yuvytung.
+     */
+    comment TextBlob
+}
+/**
+* @what?            -> The FileInfo entity.
+* @why?             ->
+* @use-to           -> Quản lý thông tin về file, vị trí file ...
+* @commonly-used-in -> Những file mà người dùng upload (ảnh video ...)
+*
+* @describe         ->
+*
+* @author           -> yuvytung.
+* @create-by        -> yuvytung.
+* @edit-commit      -> yuvytung.
+*/
+entity FileInfo
+{
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
+     * @author           -> yuvytung.
+     */
+    uuid UUID required unique
+
+
+    /** owner *        : chủ sở hữu bản ghi này
+     * @type           : Json
+     * @author           -> yuvytung.
+     */
+    owner TextBlob
+    /** role *         : những role được phép thực hiện <xem,sửa,xóa> ở dưới dạng Json
+     * @author           -> yuvytung.
+     */
+    role TextBlob
+    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdDate  Instant
+    /** modifiedDate * : thời gian sửa bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedDate  Instant
+    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdBy String
+    /** modifiedBy *   : người sửa lại bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedBy String
+    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json
+     * {
+     *   "comment":"đây là comment mặc định"
+     * }
+     * @author           -> yuvytung.
+     */
+    comment TextBlob
+}
+/**
+* @what?            -> The MyPage entity.
+* @why?             ->
+* @use-to           -> Lưu các Trang người dùng tạo ra
+* @commonly-used-in -> Cũng tương tự như bài đăng của một người dùng những sẽ chuyên biệt về  một chủ đề
+*
+* @describe         ->
+*
+* @author           -> yuvytung.
+* @create-by        -> yuvytung.
+* @edit-commit      -> yuvytung.
+*/
+entity MyPage
+{
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
+     * @author           -> yuvytung.
+     */
+    uuid UUID required unique
+
+
+    /** owner *        : chủ sở hữu bản ghi này
+     * @type           : Json
+     * @author           -> yuvytung.
+     */
+    owner TextBlob
+    /** role *         : những role được phép thực hiện <xem,sửa,xóa> ở dưới dạng Json
+     * @author           -> yuvytung.
+     */
+    role TextBlob
+    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdDate  Instant
+    /** modifiedDate * : thời gian sửa bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedDate  Instant
+    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdBy String
+    /** modifiedBy *   : người sửa lại bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedBy String
+    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json
+     * {
+     *   "comment":"đây là comment mặc định"
+     * }
+     * @author           -> yuvytung.
+     */
+    comment TextBlob
+}
+/**
+* @what?            -> The PageType entity.
+* @why?             -> đôi khi cần lọc các Post theo Type
+* @use-to           -> lưu thể loại của các trang
+* @commonly-used-in -> các trang có tên giống hoặc khác nhau sử dụng PageType để người dùng rễ chọn lọc theo chủ đề
+*
+* @describe         -> ví dụ (giáo dục , y tế , văn học, tin tức ...)
+*
+* @author           -> yuvytung.
+* @create-by        -> yuvytung.
+* @edit-commit      -> yuvytung.
+*/
+entity PageType
+{
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
+     * @author           -> yuvytung.
+     */
+    uuid UUID required unique
+
+
+    /** owner *        : chủ sở hữu bản ghi này
+     * @type           : Json
+     * @author           -> yuvytung.
+     */
+    owner TextBlob
+    /** role *         : những role được phép thực hiện <xem,sửa,xóa> ở dưới dạng Json
+     * @author           -> yuvytung.
+     */
+    role TextBlob
+    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdDate  Instant
+    /** modifiedDate * : thời gian sửa bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedDate  Instant
+    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdBy String
+    /** modifiedBy *   : người sửa lại bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedBy String
+    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json
+     * {
+     *   "comment":"đây là comment mặc định"
+     * }
+     * @author           -> yuvytung.
+     */
+    comment TextBlob
+}
+/**
+* @what?            -> The PageProfile entity
+* @why?             ->
+* @use-to           -> Lưu phần giới thiệu của các trang
+* @commonly-used-in -> hiển thị giới thiệu của các trang
+*
+* @describe         ->
+*
+* @author           -> yuvytung.
+* @create-by        -> yuvytung.
+* @edit-commit      -> yuvytung.
+*/
+entity PageProfile
+{
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
+     * @author           -> yuvytung.
+     */
+    uuid UUID required unique
+
+
+    /** owner *        : chủ sở hữu bản ghi này
+     * @type           : Json
+     * @author           -> yuvytung.
+     */
+    owner TextBlob
+    /** role *         : những role được phép thực hiện <xem,sửa,xóa> ở dưới dạng Json
+     * @author           -> yuvytung.
+     */
+    role TextBlob
+    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdDate  Instant
+    /** modifiedDate * : thời gian sửa bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedDate  Instant
+    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdBy String
+    /** modifiedBy *   : người sửa lại bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedBy String
+    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json
+     * {
+     *   "comment":"đây là comment mặc định"
+     * }
+     * @author           -> yuvytung.
+     */
+    comment TextBlob
+}
+/**
+* @what?            -> The MyGroup entity
+* @why?             -> mọi người cần tạo ra một nhóm riêng hoặc chung để có thể trao đổi
+* @use-to           -> quản lý nhóm
+* @commonly-used-in -> các nhóm
+*
+* @describe         ->
+*
+* @author           -> yuvytung.
+* @create-by        -> yuvytung.
+* @edit-commit      -> yuvytung.
+*/
+entity MyGroup
+{
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
+     * @author           -> yuvytung.
+     */
+    uuid UUID required unique
+
+
+    /** owner *        : chủ sở hữu bản ghi này
+     * @type           : Json
+     * @author           -> yuvytung.
+     */
+    owner TextBlob
+    /** role *         : những role được phép thực hiện <xem,sửa,xóa> ở dưới dạng Json
+     * @author           -> yuvytung.
+     */
+    role TextBlob
+    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdDate  Instant
+    /** modifiedDate * : thời gian sửa bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedDate  Instant
+    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdBy String
+    /** modifiedBy *   : người sửa lại bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedBy String
+    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json
+     * {
+     *   "comment":"đây là comment mặc định"
+     * }
+     * @author           -> yuvytung.
+     */
+    comment TextBlob
+}
+/**
+* @what?            -> The MyPost entity
+* @why?             ->
+* @use-to           -> lưu các bài viết của người dùng
+* @commonly-used-in -> đăng và xem các bài viết
+*
+* @describe         ->
+*
+* @author           -> yuvytung.
+* @create-by        -> yuvytung.
+* @edit-commit      -> yuvytung.
+*/
+entity MyPost
+{
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
+     * @author           -> yuvytung.
+     */
+    uuid UUID required unique
+
+
+    /** owner *        : chủ sở hữu bản ghi này
+     * @type           : Json
+     * @author           -> yuvytung.
+     */
+    owner TextBlob
+    /** role *         : những role được phép thực hiện <xem,sửa,xóa> ở dưới dạng Json
+     * @author           -> yuvytung.
+     */
+    role TextBlob
+    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdDate  Instant
+    /** modifiedDate * : thời gian sửa bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedDate  Instant
+    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdBy String
+    /** modifiedBy *   : người sửa lại bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedBy String
+    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json
+     * {
+     *   "comment":"đây là comment mặc định"
+     * }
+     * @author           -> yuvytung.
+     */
+    comment TextBlob
+}
+/**
+* @what?            -> The GroupType entity
+* @why?             ->
+* @use-to           -> Chứa những loại Group của MyGroup
+* @commonly-used-in ->
+*
+* @describe         ->
+*
+* @author           -> yuvytung.
+* @create-by        -> yuvytung.
+* @edit-commit      -> yuvytung.
+*/
+entity GroupType
+{
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
+     * @author           -> yuvytung.
+     */
+    uuid UUID required unique
+
+
+    /** owner *        : chủ sở hữu bản ghi này
+     * @type           : Json
+     * @author           -> yuvytung.
+     */
+    owner TextBlob
+    /** role *         : những role được phép thực hiện <xem,sửa,xóa> ở dưới dạng Json
+     * @author           -> yuvytung.
+     */
+    role TextBlob
+    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdDate  Instant
+    /** modifiedDate * : thời gian sửa bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedDate  Instant
+    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdBy String
+    /** modifiedBy *   : người sửa lại bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedBy String
+    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json
+     * {
+     *   "comment":"đây là comment mặc định"
+     * }
+     * @author           -> yuvytung.
+     */
+    comment TextBlob
+}
+/**
+* @what?            -> The PostType entity.
+* @why?             ->
+* @use-to           -> Chứa những loại bài đăng
+* @commonly-used-in ->
+*
+* @describe         ->
+*
+* @author           -> yuvytung.
+* @create-by        -> yuvytung.
+* @edit-commit      -> yuvytung.
+*/
+entity PostType
+{
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
+     * @author           -> yuvytung.
+     */
+    uuid UUID required unique
+
+
+    /** owner *        : chủ sở hữu bản ghi này
+     * @type           : Json
+     * @author           -> yuvytung.
+     */
+    owner TextBlob
+    /** role *         : những role được phép thực hiện <xem,sửa,xóa> ở dưới dạng Json
+     * @author           -> yuvytung.
+     */
+    role TextBlob
+    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdDate  Instant
+    /** modifiedDate * : thời gian sửa bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedDate  Instant
+    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdBy String
+    /** modifiedBy *   : người sửa lại bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedBy String
+    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json
+     * {
+     *   "comment":"đây là comment mặc định"
+     * }
+     * @author           -> yuvytung.
+     */
+    comment TextBlob
+}
+/**
+* @what?            -> The PostComment entity.
+* @why?             ->
+* @use-to           -> Lưu những bình luận của người dùng trong một bài đăng cụ thể
+* @commonly-used-in -> được biết dưới dạng bình luận của các bài đăng
+*
+* @describe         ->
+*
+* @author           -> yuvytung.
+* @create-by        -> yuvytung.
+* @edit-commit      -> yuvytung.
+*/
+entity PostComment
+{
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
+     * @author           -> yuvytung.
+     */
+    uuid UUID required unique
+
+
+    /** owner *        : chủ sở hữu bản ghi này
+     * @type           : Json
+     * @author           -> yuvytung.
+     */
+    owner TextBlob
+    /** role *         : những role được phép thực hiện <xem,sửa,xóa> ở dưới dạng Json
+     * @author           -> yuvytung.
+     */
+    role TextBlob
+    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdDate  Instant
+    /** modifiedDate * : thời gian sửa bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedDate  Instant
+    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdBy String
+    /** modifiedBy *   : người sửa lại bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedBy String
+    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json
+     * {
+     *   "comment":"đây là comment mặc định"
+     * }
+     * @author           -> yuvytung.
+     */
+    comment TextBlob
+}
+/**
+* @what?            -> The PostLike entity.
+* @why?             ->
+* @use-to           -> Lưu thông tin về những lượt like của bài đăng
+* @commonly-used-in ->
+*
+* @describe         ->
+*
+* @author           -> yuvytung.
+* @create-by        -> yuvytung.
+* @edit-commit      -> yuvytung.
+*/
+entity PostLike
+{
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
+     * @author           -> yuvytung.
+     */
+    uuid UUID required unique
+
+
+    /** owner *        : chủ sở hữu bản ghi này
+     * @type           : Json
+     * @author           -> yuvytung.
+     */
+    owner TextBlob
+    /** role *         : những role được phép thực hiện <xem,sửa,xóa> ở dưới dạng Json
+     * @author           -> yuvytung.
+     */
+    role TextBlob
+    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdDate  Instant
+    /** modifiedDate * : thời gian sửa bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedDate  Instant
+    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdBy String
+    /** modifiedBy *   : người sửa lại bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedBy String
+    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json
+     * {
+     *   "comment":"đây là comment mặc định"
+     * }
+     * @author           -> yuvytung.
+     */
+    comment TextBlob
+}
+/**
+* @what?            -> The GroupProfile entity.
+* @why?             ->
+* @use-to           -> Những thông tin trong phần giới thiệu của nhóm được lưu tại đây
+* @commonly-used-in -> Thường thấy trong phần giới thiệu của nhóm
+*
+* @describe         -> Đây là một bảng NoSQL dữ liệu một số field ở dưới dạng Json
+*
+* @author           -> yuvytung.
+* @create-by        -> yuvytung.
+* @edit-commit      -> yuvytung.
+*/
+entity GroupProfile
+{
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
+     * @author           -> yuvytung.
+     */
+    uuid UUID required unique
+
+
+    /** owner *        : chủ sở hữu bản ghi này
+     * @type           : Json
+     * @author           -> yuvytung.
+     */
+    owner TextBlob
+    /** role *         : những role được phép thực hiện <xem,sửa,xóa> ở dưới dạng Json
+     * @author           -> yuvytung.
+     */
+    role TextBlob
+    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdDate  Instant
+    /** modifiedDate * : thời gian sửa bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedDate  Instant
+    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdBy String
+    /** modifiedBy *   : người sửa lại bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedBy String
+    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json
+     * {
+     *   "comment":"đây là comment mặc định"
+     * }
+     * @author           -> yuvytung.
+     */
+    comment TextBlob
+}
+/**
+* @what?            -> The MyNewsFeed entity.
+* @why?             -> người dùng mà xem trực tiếp các MyPost thì một số bài đăng sẽ không phù hợp dễ gây chán khi xem
+* @use-to           -> Ở đây chứa thông tin của những MyPost hiển thị cho người dùng xem
+* @commonly-used-in -> Được sử dụng trong phần hiển thị các bài đăng trên news feed
+*
+* @describe         -> trong phần bản tin thay vì hiển thị trực tiếp các MyPost cho người dùng xem
+*  ta sẽ tính toán độ phù hợp và add vào bảng này sau đó cho người dùng xem
+*
+* @author           -> yuvytung.
+* @create-by        -> yuvytung.
+* @edit-commit      -> yuvytung.
+*/
+entity MyNewsFeed
+{
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
+     * @author           -> yuvytung.
+     */
+    uuid UUID required unique
+
+
+    /** owner *        : chủ sở hữu bản ghi này
+     * @type           : Json
+     * @author           -> yuvytung.
+     */
+    owner TextBlob
+    /** role *         : những role được phép thực hiện <xem,sửa,xóa> ở dưới dạng Json
+     * @author           -> yuvytung.
+     */
+    role TextBlob
+    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdDate  Instant
+    /** modifiedDate * : thời gian sửa bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedDate  Instant
+    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdBy String
+    /** modifiedBy *   : người sửa lại bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedBy String
+    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json
+     * {
+     *   "comment":"đây là comment mặc định"
+     * }
+     * @author           -> yuvytung.
+     */
+    comment TextBlob
+}
+/**
+* @what?            -> The PostType entity.
+* @why?             ->
+* @use-to           -> Chứa thông tin các nhóm mà hiện tại người dùng đang ở trong đó (phần nhắn tin)
+* @commonly-used-in -> Hiển thị các tin nhắn
+*
+* @describe         -> một nhóm tạo ra sẽ là một uuid . nếu nhắn tin cặp thì sẽ sắp xếp login sau đó hash md5 rồi chuyển thành định dạng uuid
+*
+* @author           -> yuvytung.
+* @create-by        -> yuvytung.
+* @edit-commit      -> yuvytung.
+*/
+entity MessageGroup
+{
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
+     * @author           -> yuvytung.
+     */
+    uuid UUID required unique
+
+
+    /** owner *        : chủ sở hữu bản ghi này
+     * @type           : Json
+     * @author           -> yuvytung.
+     */
+    owner TextBlob
+    /** role *         : những role được phép thực hiện <xem,sửa,xóa> ở dưới dạng Json
+     * @author           -> yuvytung.
+     */
+    role TextBlob
+    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdDate  Instant
+    /** modifiedDate * : thời gian sửa bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedDate  Instant
+    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdBy String
+    /** modifiedBy *   : người sửa lại bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedBy String
+    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json
+     * {
+     *   "comment":"đây là comment mặc định"
+     * }
+     * @author           -> yuvytung.
+     */
+    comment TextBlob
+}
+/**
+* @what?            -> The PostType entity.
+* @why?             ->
+* @use-to           -> Chứa Những tin nhắn trong các nhóm cụ thể
+* @commonly-used-in ->
+*
+* @describe         ->
+*
+* @author           -> yuvytung.
+* @create-by        -> yuvytung.
+* @edit-commit      -> yuvytung.
+*/
+entity MessageContent
+{
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
+     * @author           -> yuvytung.
+     */
+    uuid UUID required unique
+
+    content TextBlob
+    /** status : trạng thái của tin nhắn này, đã gửi chưa , ai đã nhận được , đã xem chưa đã thu hồi hay đã xóa...
+     * @type           : Json
+     * @author           -> yuvytung.
+     */
+    status TextBlob
+    /** searchField : lưu content tin nhắn lọc dấu ... để sau này search */
+    searchField TextBlob
+
+    /** owner *        : chủ sở hữu bản ghi này
+     * @type           : Json
+     * @author           -> yuvytung.
+     */
+    owner TextBlob
+    /** role *         : những role được phép thực hiện <xem,sửa,xóa> ở dưới dạng Json
+     * @author           -> yuvytung.
+     */
+    role TextBlob
+    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdDate  Instant
+    /** modifiedDate * : thời gian sửa bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedDate  Instant
+    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdBy String
+    /** modifiedBy *   : người sửa lại bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedBy String
+    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json
+     * {
+     *   "comment":"đây là comment mặc định"
+     * }
+     * @author           -> yuvytung.
+     */
+    comment TextBlob
+}
+/**
+* @what?            -> The PostType entity.
+* @why?             ->
+* @use-to           -> Xếp hạng của bản thân Trong toàn mạng , trong khu vực , trong nhóm người
+* @commonly-used-in -> thường thấy trong phần
+*
+* @describe         ->
+*
+* @author           -> yuvytung.
+* @create-by        -> yuvytung.
+* @edit-commit      -> yuvytung.
+*/
+entity MyRank
+{
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
+     * @author           -> yuvytung.
+     */
+    uuid UUID required unique
+
+
+    /** owner *        : chủ sở hữu bản ghi này
+     * @type           : Json
+     * @author           -> yuvytung.
+     */
+    owner TextBlob
+    /** role *         : những role được phép thực hiện <xem,sửa,xóa> ở dưới dạng Json
+     * @author           -> yuvytung.
+     */
+    role TextBlob
+    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdDate  Instant
+    /** modifiedDate * : thời gian sửa bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedDate  Instant
+    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdBy String
+    /** modifiedBy *   : người sửa lại bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedBy String
+    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json
+     * {
+     *   "comment":"đây là comment mặc định"
+     * }
+     * @author           -> yuvytung.
+     */
+    comment TextBlob
+}
+/**
+* @what?            -> The PostType entity.
+* @why?             ->
+* @use-to           -> Xếp hạng theo nhóm : toàn mạng ,khu vực , nhóm người (khoảng 30-100 người)
+* @commonly-used-in ->
+*
+* @describe         ->
+*
+* @author           -> yuvytung.
+* @create-by        -> yuvytung.
+* @edit-commit      -> yuvytung.
+*/
+entity RankGroup
+{
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
+     * @author           -> yuvytung.
+     */
+    uuid UUID required unique
+
+
+    /** owner *        : chủ sở hữu bản ghi này
+     * @type           : Json
+     * @author           -> yuvytung.
+     */
+    owner TextBlob
+    /** role *         : những role được phép thực hiện <xem,sửa,xóa> ở dưới dạng Json
+     * @author           -> yuvytung.
+     */
+    role TextBlob
+    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdDate  Instant
+    /** modifiedDate * : thời gian sửa bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedDate  Instant
+    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdBy String
+    /** modifiedBy *   : người sửa lại bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedBy String
+    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json
+     * {
+     *   "comment":"đây là comment mặc định"
+     * }
+     * @author           -> yuvytung.
+     */
+    comment TextBlob
+}
+/**
+* @what?            -> The MyNotity entity.
+* @why?             ->
+* @use-to           -> Chứa những thông báo đến người dùng
+* @commonly-used-in -> Thường xuất hiện trong chức năng thông báo của người dùng
+*
+* @describe         ->
+*
+* @author           -> yuvytung.
+* @create-by        -> yuvytung.
+* @edit-commit      -> yuvytung.
+*/
+entity MyNotify
+{
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
+     * @author           -> yuvytung.
+     */
+    uuid UUID required unique
+
+
+    /** owner *        : chủ sở hữu bản ghi này
+     * @type           : Json
+     * @author           -> yuvytung.
+     */
+    owner TextBlob
+    /** role *         : những role được phép thực hiện <xem,sửa,xóa> ở dưới dạng Json
+     * @author           -> yuvytung.
+     */
+    role TextBlob
+    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdDate  Instant
+    /** modifiedDate * : thời gian sửa bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedDate  Instant
+    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdBy String
+    /** modifiedBy *   : người sửa lại bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedBy String
+    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json
+     * {
+     *   "comment":"đây là comment mặc định"
+     * }
+     * @author           -> yuvytung.
+     */
+    comment TextBlob
+}
+/**
+* @what?            -> The NotifyType entity.
+* @why?             ->
+* @use-to           -> Chứa những loại thông báo Cho MyNotity
+* @commonly-used-in ->
+*
+* @describe         ->
+*
+* @author           -> yuvytung.
+* @create-by        -> yuvytung.
+* @edit-commit      -> yuvytung.
+*/
+entity NotifyType
+{
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
+     * @author           -> yuvytung.
+     */
+    uuid UUID required unique
+
+
+    /** owner *        : chủ sở hữu bản ghi này
+     * @type           : Json
+     * @author           -> yuvytung.
+     */
+    owner TextBlob
+    /** role *         : những role được phép thực hiện <xem,sửa,xóa> ở dưới dạng Json
+     * @author           -> yuvytung.
+     */
+    role TextBlob
+    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdDate  Instant
+    /** modifiedDate * : thời gian sửa bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedDate  Instant
+    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdBy String
+    /** modifiedBy *   : người sửa lại bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedBy String
+    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json
+     * {
+     *   "comment":"đây là comment mặc định"
+     * }
+     * @author           -> yuvytung.
+     */
+    comment TextBlob
+}
+/**
+* @what?            -> The MyAlbum entity
+* @why?             ->
+* @use-to           -> Lưu thông tin về một bộ album của người dùng
+* @commonly-used-in -> Người dùng nhóm một bộ ảnh vào một album
+*
+* @describe         ->
+*
+* @author           -> yuvytung.
+* @create-by        -> yuvytung.
+* @edit-commit      -> yuvytung.
+*/
+entity MyAlbum
+{
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
+     * @author           -> yuvytung.
+     */
+    uuid UUID required unique
+
+
+    /** owner *        : chủ sở hữu bản ghi này
+     * @type           : Json
+     * @author           -> yuvytung.
+     */
+    owner TextBlob
+    /** role *         : những role được phép thực hiện <xem,sửa,xóa> ở dưới dạng Json
+     * @author           -> yuvytung.
+     */
+    role TextBlob
+    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdDate  Instant
+    /** modifiedDate * : thời gian sửa bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedDate  Instant
+    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdBy String
+    /** modifiedBy *   : người sửa lại bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedBy String
+    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json
+     * {
+     *   "comment":"đây là comment mặc định"
+     * }
+     * @author           -> yuvytung.
+     */
+    comment TextBlob
+}
+/**
+* @what?            -> The MyVideo entity.
+* @why?             ->
+* @use-to           -> Lưu thông tin video mà người dùng upload lên
+* @commonly-used-in ->
+*
+* @describe         ->
+*
+* @author           -> yuvytung.
+* @create-by        -> yuvytung.
+* @edit-commit      -> yuvytung.
+*/
+entity MyVideo
+{
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
+     * @author           -> yuvytung.
+     */
+    uuid UUID required unique
+
+
+    /** owner *        : chủ sở hữu bản ghi này
+     * @type           : Json
+     * @author           -> yuvytung.
+     */
+    owner TextBlob
+    /** role *         : những role được phép thực hiện <xem,sửa,xóa> ở dưới dạng Json
+     * @author           -> yuvytung.
+     */
+    role TextBlob
+    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdDate  Instant
+    /** modifiedDate * : thời gian sửa bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedDate  Instant
+    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdBy String
+    /** modifiedBy *   : người sửa lại bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedBy String
+    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json
+     * {
+     *   "comment":"đây là comment mặc định"
+     * }
+     * @author           -> yuvytung.
+     */
+    comment TextBlob
+}
+/**
+* @what?            -> The MyImage entity.
+* @why?             ->
+* @use-to           -> Lưu thông tin Ảnh mà người dùng upload lên
+* @commonly-used-in ->
+*
+* @describe         ->
+*
+* @author           -> yuvytung.
+* @create-by        -> yuvytung.
+* @edit-commit      -> yuvytung.
+*/
+entity MyImage
+{
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
+     * @author           -> yuvytung.
+     */
+    uuid UUID required unique
+
+
+    /** owner *        : chủ sở hữu bản ghi này
+     * @type           : Json
+     * @author           -> yuvytung.
+     */
+    owner TextBlob
+    /** role *         : những role được phép thực hiện <xem,sửa,xóa> ở dưới dạng Json
+     * @author           -> yuvytung.
+     */
+    role TextBlob
+    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdDate  Instant
+    /** modifiedDate * : thời gian sửa bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedDate  Instant
+    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdBy String
+    /** modifiedBy *   : người sửa lại bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedBy String
+    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json
+     * {
+     *   "comment":"đây là comment mặc định"
+     * }
+     * @author           -> yuvytung.
+     */
+    comment TextBlob
+}
+/**
+* @what?            -> The MyAlbum entity.
+* @why?             ->
+* @use-to           -> Lưu thông tin video ... khi đã kết thúc stream
+* @commonly-used-in -> Sau khi kết thức stream thì video lưu lai cũng chỉ tương tự như một video thông thường
+*
+* @describe         ->
+*
+* @author           -> yuvytung.
+* @create-by        -> yuvytung.
+* @edit-commit      -> yuvytung.
+*/
+entity MyVideoStream
+{
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
+     * @author           -> yuvytung.
+     */
+    uuid UUID required unique
+
+
+    /** owner *        : chủ sở hữu bản ghi này
+     * @type           : Json
+     * @author           -> yuvytung.
+     */
+    owner TextBlob
+    /** role *         : những role được phép thực hiện <xem,sửa,xóa> ở dưới dạng Json
+     * @author           -> yuvytung.
+     */
+    role TextBlob
+    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdDate  Instant
+    /** modifiedDate * : thời gian sửa bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedDate  Instant
+    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdBy String
+    /** modifiedBy *   : người sửa lại bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedBy String
+    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json
+     * {
+     *   "comment":"đây là comment mặc định"
+     * }
+     * @author           -> yuvytung.
+     */
+    comment TextBlob
+}
+/**
+* @what?            -> The MyAlbum entity
+* @why?             ->
+* @use-to           -> Lưu từng phần video dưới dạng base64 khi đang stream video
+* @commonly-used-in -> thường sử dụng khi đang live stream
+*
+* @describe         -> stream xong và xử lý xong không cân thì xóa (đây chỉ là bảng tạm)
+*
+* @author           -> yuvytung.
+* @create-by        -> yuvytung.
+* @edit-commit      -> yuvytung.
+*/
+entity VideoLiveStreamBuffer
+{
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
+     * @author           -> yuvytung.
+     */
+    uuid UUID required unique
+
+
+    /** owner *        : chủ sở hữu bản ghi này
+     * @type           : Json
+     * @author           -> yuvytung.
+     */
+    owner TextBlob
+    /** role *         : những role được phép thực hiện <xem,sửa,xóa> ở dưới dạng Json
+     * @author           -> yuvytung.
+     */
+    role TextBlob
+    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdDate  Instant
+    /** modifiedDate * : thời gian sửa bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedDate  Instant
+    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdBy String
+    /** modifiedBy *   : người sửa lại bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedBy String
+    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json
+     * {
+     *   "comment":"đây là comment mặc định"
+     * }
+     * @author           -> yuvytung.
+     */
+    comment TextBlob
+}
+/**
+* @what?            -> The MyAlbum entity
+* @why?             ->
+* @use-to           -> Lưu những chủ đề mà người dùng quan tâm
+* @commonly-used-in -> chủ đề quan tâm để lọc ra cho người dùng xem
+*
+* @describe         ->
+*
+* @author           -> yuvytung.
+* @create-by        -> yuvytung.
+* @edit-commit      -> yuvytung.
+*/
+entity TopicInterest
+{
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
+     * @author           -> yuvytung.
+     */
+    uuid UUID required unique
+
+
+    /** owner *        : chủ sở hữu bản ghi này
+     * @type           : Json
+     * @author           -> yuvytung.
+     */
+    owner TextBlob
+    /** role *         : những role được phép thực hiện <xem,sửa,xóa> ở dưới dạng Json
+     * @author           -> yuvytung.
+     */
+    role TextBlob
+    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdDate  Instant
+    /** modifiedDate * : thời gian sửa bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedDate  Instant
+    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdBy String
+    /** modifiedBy *   : người sửa lại bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedBy String
+    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json
+     * {
+     *   "comment":"đây là comment mặc định"
+     * }
+     * @author           -> yuvytung.
+     */
+    comment TextBlob
+}
+/**
+* @what?            -> The MyTodoList entity
+* @why?             ->
+* @use-to           -> Lưu danh sách công việc gợi ý cho người dùng thực hiện
+* @commonly-used-in -> Hiển thị bảng Todo cho người dùng thực hiện
+*
+* @describe         ->
+*
+* @author           -> yuvytung.
+* @create-by        -> yuvytung.
+* @edit-commit      -> yuvytung.
+*/
+entity MyTodoList
+{
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
+     * @author           -> yuvytung.
+     */
+    uuid UUID required unique
+
+
+    /** owner *        : chủ sở hữu bản ghi này
+     * @type           : Json
+     * @author           -> yuvytung.
+     */
+    owner TextBlob
+    /** role *         : những role được phép thực hiện <xem,sửa,xóa> ở dưới dạng Json
+     * @author           -> yuvytung.
+     */
+    role TextBlob
+    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdDate  Instant
+    /** modifiedDate * : thời gian sửa bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedDate  Instant
+    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên)
+     * @author           -> yuvytung.
+     */
+    createdBy String
+    /** modifiedBy *   : người sửa lại bản ghi này
+     * @author           -> yuvytung.
+     */
+    modifiedBy String
+    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json
+     * {
+     *   "comment":"đây là comment mặc định"
+     * }
+     * @author           -> yuvytung.
+     */
+    comment TextBlob
+}
+//entity ChallengesMapDetails  //{}
+//entity MyChallengesMap //{}
+
+relationship OneToOne
+{
+    MasterUser to User with jpaDerivedIdentifier,
+    MasterUser to MyProfile,
+    MasterUser to MyStatus,
+    MyGroup to GroupProfile
+    MyPage to PageProfile
+    MasterUser to MyRank,
+    MyVideo to FileInfo,
+    MessageContent{sender} to MasterUser
+    MyVideoStream to MyVideo,
+    MyImage to FileInfo,
+//    MasterUser to MyChallengesMap
+}
+
+relationship ManyToOne
+{
+    MyFriend{friendDetails} to MasterUser{friendOf},
+    MyFollow{followDetails} to MasterUser{followOf},
+    MyNewsFeed to MyPost
+    MyRank to RankGroup
+}
+relationship OneToMany
+{
+    MyStatus to StatusDetails,
+//    MyChallengesMap to ChallengesMapDetails
+  	MasterUser to MyPage
+    MasterUser to FileInfo,
+    MasterUser to MyNotify
+    MasterUser{myFriend} to MyFriend{masterUser},
+    MasterUser{myFollow} to MyFollow{masterUser},
+    MyGroup to MyPost
+    MasterUser to MyPost
+    MyPage to MyPost
+    MessageGroup to MessageContent
+    MasterUser to MyNewsFeed
+    MasterUser to MyImage,
+    MasterUser to MyVideo,
+    MasterUser to MyAlbum,
+    MasterUser to MyVideoStream,
+    MasterUser to MyTodoList
+    MyPost to PostComment
+    MyPost to PostLike
+}
+
+relationship ManyToMany
+{
+    MasterUser to MyGroup
+    MasterUser to MessageGroup
+    MyPost to PostType
+    MyAlbum to MyImage,
+    MyNotify to NotifyType
+    MyGroup to GroupType
+    MyPage to PageType
+
+    TopicInterest to MyPost
+    TopicInterest to MyPage
+    TopicInterest to MyGroup
+    MasterUser to TopicInterest
+}
+
+/**
+  * The HanhChinhVN entity.
+  * @author a true jhipster
+  */
+
+
+
+
+
+dto * with mapstruct
+paginate * with  infinite-scroll
+search * with elasticsearch
+service * with serviceImpl
+filter *
