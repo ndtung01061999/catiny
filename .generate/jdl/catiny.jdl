@@ -24,7 +24,7 @@ entity HanhChinhVN
 
 // phần cấu hình Server
 /**
-* @what?            -> The PostType entity.
+* @what?            -> The ServerConfig entity.
 * @why?             ->
 * @use-to           -> Chứa thông tin của một cụm máy chủ database , app ...
 * @commonly-used-in ->
@@ -37,7 +37,7 @@ entity HanhChinhVN
 */
 entity ServerConfig
 /**
-* @what?            -> The PostType entity.
+* @what?            -> The ServerDetails entity.
 * @why?             ->
 * @use-to           -> Thông tin chi tiết của từng máy chủ
 * @commonly-used-in ->
@@ -50,7 +50,7 @@ entity ServerConfig
 */
 entity ServerDetails
 /**
-* @what?            -> The PostType entity.
+* @what?            -> The ServerType entity.
 * @why?             ->
 * @use-to           -> Loại server là gì . app , db , cache , search ...
 * @commonly-used-in ->
@@ -115,6 +115,10 @@ entity MasterUser
      * @author           -> yuvytung.
      */
     role TextBlob
+    /** classPK *      : classPrimaryKey
+     * @author           -> yuvytung.
+     */
+    classPK String
     /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
      * @author           -> yuvytung.
      */
@@ -140,7 +144,7 @@ entity MasterUser
     comment TextBlob
 }
 /**
-* @what?         	-> The MyProfile entity .
+* @what?         	-> The UserProfile entity .
 * @why?          	->
 * @use-to:       	-> Lưu thông tin mở rộng của người dùng (trường học cơ quan làm việc ...)
 * @commonly-used-in -> Trang cá nhân (trang giới thiệu)
@@ -151,7 +155,7 @@ entity MasterUser
 * @create-by        -> yuvytung.
 * @edit-commit      -> yuvytung.
 */
-entity MyProfile
+entity UserProfile
 {
     /** work : nơi làm việc
      * @data-type : Json
@@ -231,7 +235,7 @@ entity MyProfile
     featured TextBlob
 }
 /**
-* @what?         	-> The MyStatus entity.
+* @what?         	-> The AccountStatus entity.
 * @why?          	->
 * @use-to:       	-> Lưu , quản lý trạng thái của tài khoản đang on hay off ...
 * @commonly-used-in -> Những nghiệp vũ nhắn tin,thông báo cần biết trạng thái của tài khoản ...
@@ -242,7 +246,7 @@ entity MyProfile
 * @create-by        -> yuvytung.
 * @edit-commit      -> yuvytung.
 */
-entity MyStatus
+entity AccountStatus
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
      * @author           -> yuvytung.
@@ -260,6 +264,10 @@ entity MyStatus
      * @author           -> yuvytung.
      */
     role TextBlob
+    /** classPK *      : classPrimaryKey
+     * @author           -> yuvytung.
+     */
+    classPK String
     /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
      * @author           -> yuvytung.
      */
@@ -285,7 +293,7 @@ entity MyStatus
     comment TextBlob
 }
 /**
-* @what?            -> The StatusDetails entity.
+* @what?            -> The AccountStatusDetails entity.
 * @why?             ->
 * @use-to           -> Những thiết bị đang truy cập thông tin chi tiết về chúng ...
 * @commonly-used-in -> Những nghiệp vụ cần biết chi tiết trang thái người dùng
@@ -296,7 +304,7 @@ entity MyStatus
 * @create-by        -> yuvytung.
 * @edit-commit      -> yuvytung.
 */
-entity StatusDetails
+entity AccountStatusDetails
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
      * @author           -> yuvytung.
@@ -313,6 +321,10 @@ entity StatusDetails
      * @author           -> yuvytung.
      */
     role TextBlob
+    /** classPK *      : classPrimaryKey
+     * @author           -> yuvytung.
+     */
+    classPK String
     /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
      * @author           -> yuvytung.
      */
@@ -338,7 +350,7 @@ entity StatusDetails
     comment TextBlob
 }
 /**
-* @what?            -> The MyFriend entity.
+* @what?            -> The Friend entity.
 * @why?             ->
 * @use-to           -> Quản lý phần kết bạn, các mối liên hệ bạn bè ...
 * @commonly-used-in -> Bạn bè và các liên kết bạn bè ...
@@ -349,7 +361,7 @@ entity StatusDetails
 * @create-by        -> yuvytung.
 * @edit-commit      -> yuvytung.
 */
-entity MyFriend
+entity Friend
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
      * @author           -> yuvytung.
@@ -366,6 +378,10 @@ entity MyFriend
      * @author           -> yuvytung.
      */
     role TextBlob
+    /** classPK *      : classPrimaryKey
+     * @author           -> yuvytung.
+     */
+    classPK String
     /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
      * @author           -> yuvytung.
      */
@@ -391,7 +407,7 @@ entity MyFriend
     comment TextBlob
 }
 /**
-* @what?            -> The Jhipster entity
+* @what?            -> The Follow entity
 * @why?             ->
 * @use-to           -> Quản lý các chủ đề mà người dùng đăng ký theo dõi
 * @commonly-used-in -> Chủ đề mà người dùng theo dõi
@@ -402,7 +418,7 @@ entity MyFriend
 * @create-by        -> yuvytung.
 * @edit-commit      -> yuvytung.
 */
-entity MyFollow
+entity Follow
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
      * @author           -> yuvytung.
@@ -419,6 +435,10 @@ entity MyFollow
      * @author           -> yuvytung.
      */
     role TextBlob
+    /** classPK *      : classPrimaryKey
+     * @author           -> yuvytung.
+     */
+    classPK String
     /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
      * @author           -> yuvytung.
      */
@@ -472,6 +492,10 @@ entity FileInfo
      * @author           -> yuvytung.
      */
     role TextBlob
+    /** classPK *      : classPrimaryKey
+     * @author           -> yuvytung.
+     */
+    classPK String
     /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
      * @author           -> yuvytung.
      */
@@ -497,7 +521,7 @@ entity FileInfo
     comment TextBlob
 }
 /**
-* @what?            -> The MyPage entity.
+* @what?            -> The PagePost entity.
 * @why?             ->
 * @use-to           -> Lưu các Trang người dùng tạo ra
 * @commonly-used-in -> Cũng tương tự như bài đăng của một người dùng những sẽ chuyên biệt về  một chủ đề
@@ -508,7 +532,7 @@ entity FileInfo
 * @create-by        -> yuvytung.
 * @edit-commit      -> yuvytung.
 */
-entity MyPage
+entity PagePost
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
      * @author           -> yuvytung.
@@ -525,59 +549,10 @@ entity MyPage
      * @author           -> yuvytung.
      */
     role TextBlob
-    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
+    /** classPK *      : classPrimaryKey
      * @author           -> yuvytung.
      */
-    createdDate  Instant
-    /** modifiedDate * : thời gian sửa bản ghi này
-     * @author           -> yuvytung.
-     */
-    modifiedDate  Instant
-    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên)
-     * @author           -> yuvytung.
-     */
-    createdBy String
-    /** modifiedBy *   : người sửa lại bản ghi này
-     * @author           -> yuvytung.
-     */
-    modifiedBy String
-    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json
-     * {
-     *   "comment":"đây là comment mặc định"
-     * }
-     * @author           -> yuvytung.
-     */
-    comment TextBlob
-}
-/**
-* @what?            -> The PageType entity.
-* @why?             -> đôi khi cần lọc các Post theo Type
-* @use-to           -> lưu thể loại của các trang
-* @commonly-used-in -> các trang có tên giống hoặc khác nhau sử dụng PageType để người dùng rễ chọn lọc theo chủ đề
-*
-* @describe         -> ví dụ (giáo dục , y tế , văn học, tin tức ...)
-*
-* @author           -> yuvytung.
-* @create-by        -> yuvytung.
-* @edit-commit      -> yuvytung.
-*/
-entity PageType
-{
-    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
-     * @author           -> yuvytung.
-     */
-    uuid UUID required unique
-
-
-    /** owner *        : chủ sở hữu bản ghi này
-     * @type           : Json
-     * @author           -> yuvytung.
-     */
-    owner TextBlob
-    /** role *         : những role được phép thực hiện <xem,sửa,xóa> ở dưới dạng Json
-     * @author           -> yuvytung.
-     */
-    role TextBlob
+    classPK String
     /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
      * @author           -> yuvytung.
      */
@@ -631,6 +606,10 @@ entity PageProfile
      * @author           -> yuvytung.
      */
     role TextBlob
+    /** classPK *      : classPrimaryKey
+     * @author           -> yuvytung.
+     */
+    classPK String
     /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
      * @author           -> yuvytung.
      */
@@ -656,7 +635,7 @@ entity PageProfile
     comment TextBlob
 }
 /**
-* @what?            -> The MyGroup entity
+* @what?            -> The GroupPost entity
 * @why?             -> mọi người cần tạo ra một nhóm riêng hoặc chung để có thể trao đổi
 * @use-to           -> quản lý nhóm
 * @commonly-used-in -> các nhóm
@@ -667,7 +646,7 @@ entity PageProfile
 * @create-by        -> yuvytung.
 * @edit-commit      -> yuvytung.
 */
-entity MyGroup
+entity GroupPost
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
      * @author           -> yuvytung.
@@ -684,6 +663,10 @@ entity MyGroup
      * @author           -> yuvytung.
      */
     role TextBlob
+    /** classPK *      : classPrimaryKey
+     * @author           -> yuvytung.
+     */
+    classPK String
     /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
      * @author           -> yuvytung.
      */
@@ -709,7 +692,7 @@ entity MyGroup
     comment TextBlob
 }
 /**
-* @what?            -> The MyPost entity
+* @what?            -> The Post entity
 * @why?             ->
 * @use-to           -> lưu các bài viết của người dùng
 * @commonly-used-in -> đăng và xem các bài viết
@@ -720,7 +703,7 @@ entity MyGroup
 * @create-by        -> yuvytung.
 * @edit-commit      -> yuvytung.
 */
-entity MyPost
+entity Post
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
      * @author           -> yuvytung.
@@ -737,112 +720,10 @@ entity MyPost
      * @author           -> yuvytung.
      */
     role TextBlob
-    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
+    /** classPK *      : classPrimaryKey
      * @author           -> yuvytung.
      */
-    createdDate  Instant
-    /** modifiedDate * : thời gian sửa bản ghi này
-     * @author           -> yuvytung.
-     */
-    modifiedDate  Instant
-    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên)
-     * @author           -> yuvytung.
-     */
-    createdBy String
-    /** modifiedBy *   : người sửa lại bản ghi này
-     * @author           -> yuvytung.
-     */
-    modifiedBy String
-    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json
-     * {
-     *   "comment":"đây là comment mặc định"
-     * }
-     * @author           -> yuvytung.
-     */
-    comment TextBlob
-}
-/**
-* @what?            -> The GroupType entity
-* @why?             ->
-* @use-to           -> Chứa những loại Group của MyGroup
-* @commonly-used-in ->
-*
-* @describe         ->
-*
-* @author           -> yuvytung.
-* @create-by        -> yuvytung.
-* @edit-commit      -> yuvytung.
-*/
-entity GroupType
-{
-    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
-     * @author           -> yuvytung.
-     */
-    uuid UUID required unique
-
-
-    /** owner *        : chủ sở hữu bản ghi này
-     * @type           : Json
-     * @author           -> yuvytung.
-     */
-    owner TextBlob
-    /** role *         : những role được phép thực hiện <xem,sửa,xóa> ở dưới dạng Json
-     * @author           -> yuvytung.
-     */
-    role TextBlob
-    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
-     * @author           -> yuvytung.
-     */
-    createdDate  Instant
-    /** modifiedDate * : thời gian sửa bản ghi này
-     * @author           -> yuvytung.
-     */
-    modifiedDate  Instant
-    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên)
-     * @author           -> yuvytung.
-     */
-    createdBy String
-    /** modifiedBy *   : người sửa lại bản ghi này
-     * @author           -> yuvytung.
-     */
-    modifiedBy String
-    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json
-     * {
-     *   "comment":"đây là comment mặc định"
-     * }
-     * @author           -> yuvytung.
-     */
-    comment TextBlob
-}
-/**
-* @what?            -> The PostType entity.
-* @why?             ->
-* @use-to           -> Chứa những loại bài đăng
-* @commonly-used-in ->
-*
-* @describe         ->
-*
-* @author           -> yuvytung.
-* @create-by        -> yuvytung.
-* @edit-commit      -> yuvytung.
-*/
-entity PostType
-{
-    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
-     * @author           -> yuvytung.
-     */
-    uuid UUID required unique
-
-
-    /** owner *        : chủ sở hữu bản ghi này
-     * @type           : Json
-     * @author           -> yuvytung.
-     */
-    owner TextBlob
-    /** role *         : những role được phép thực hiện <xem,sửa,xóa> ở dưới dạng Json
-     * @author           -> yuvytung.
-     */
-    role TextBlob
+    classPK String
     /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
      * @author           -> yuvytung.
      */
@@ -896,6 +777,10 @@ entity PostComment
      * @author           -> yuvytung.
      */
     role TextBlob
+    /** classPK *      : classPrimaryKey
+     * @author           -> yuvytung.
+     */
+    classPK String
     /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
      * @author           -> yuvytung.
      */
@@ -949,6 +834,10 @@ entity PostLike
      * @author           -> yuvytung.
      */
     role TextBlob
+    /** classPK *      : classPrimaryKey
+     * @author           -> yuvytung.
+     */
+    classPK String
     /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
      * @author           -> yuvytung.
      */
@@ -1002,6 +891,10 @@ entity GroupProfile
      * @author           -> yuvytung.
      */
     role TextBlob
+    /** classPK *      : classPrimaryKey
+     * @author           -> yuvytung.
+     */
+    classPK String
     /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
      * @author           -> yuvytung.
      */
@@ -1027,19 +920,19 @@ entity GroupProfile
     comment TextBlob
 }
 /**
-* @what?            -> The MyNewsFeed entity.
-* @why?             -> người dùng mà xem trực tiếp các MyPost thì một số bài đăng sẽ không phù hợp dễ gây chán khi xem
-* @use-to           -> Ở đây chứa thông tin của những MyPost hiển thị cho người dùng xem
+* @what?            -> The NewsFeed entity.
+* @why?             -> người dùng mà xem trực tiếp các Post thì một số bài đăng sẽ không phù hợp dễ gây chán khi xem
+* @use-to           -> Ở đây chứa thông tin của những Post hiển thị cho người dùng xem
 * @commonly-used-in -> Được sử dụng trong phần hiển thị các bài đăng trên news feed
 *
-* @describe         -> trong phần bản tin thay vì hiển thị trực tiếp các MyPost cho người dùng xem
+* @describe         -> trong phần bản tin thay vì hiển thị trực tiếp các Post cho người dùng xem
 *  ta sẽ tính toán độ phù hợp và add vào bảng này sau đó cho người dùng xem
 *
 * @author           -> yuvytung.
 * @create-by        -> yuvytung.
 * @edit-commit      -> yuvytung.
 */
-entity MyNewsFeed
+entity NewsFeed
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
      * @author           -> yuvytung.
@@ -1056,6 +949,10 @@ entity MyNewsFeed
      * @author           -> yuvytung.
      */
     role TextBlob
+    /** classPK *      : classPrimaryKey
+     * @author           -> yuvytung.
+     */
+    classPK String
     /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
      * @author           -> yuvytung.
      */
@@ -1081,7 +978,7 @@ entity MyNewsFeed
     comment TextBlob
 }
 /**
-* @what?            -> The PostType entity.
+* @what?            -> The MessageGroup entity.
 * @why?             ->
 * @use-to           -> Chứa thông tin các nhóm mà hiện tại người dùng đang ở trong đó (phần nhắn tin)
 * @commonly-used-in -> Hiển thị các tin nhắn
@@ -1098,6 +995,10 @@ entity MessageGroup
      * @author           -> yuvytung.
      */
     uuid UUID required unique
+    /** groupName */
+    groupName String
+    /** addBy */
+    addBy String
 
 
     /** owner *        : chủ sở hữu bản ghi này
@@ -1109,6 +1010,10 @@ entity MessageGroup
      * @author           -> yuvytung.
      */
     role TextBlob
+    /** classPK *      : classPrimaryKey
+     * @author           -> yuvytung.
+     */
+    classPK String
     /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
      * @author           -> yuvytung.
      */
@@ -1134,7 +1039,7 @@ entity MessageGroup
     comment TextBlob
 }
 /**
-* @what?            -> The PostType entity.
+* @what?            -> The MessageContent entity.
 * @why?             ->
 * @use-to           -> Chứa Những tin nhắn trong các nhóm cụ thể
 * @commonly-used-in ->
@@ -1170,6 +1075,10 @@ entity MessageContent
      * @author           -> yuvytung.
      */
     role TextBlob
+    /** classPK *      : classPrimaryKey
+     * @author           -> yuvytung.
+     */
+    classPK String
     /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
      * @author           -> yuvytung.
      */
@@ -1195,7 +1104,7 @@ entity MessageContent
     comment TextBlob
 }
 /**
-* @what?            -> The PostType entity.
+* @what?            -> The RankUser entity.
 * @why?             ->
 * @use-to           -> Xếp hạng của bản thân Trong toàn mạng , trong khu vực , trong nhóm người
 * @commonly-used-in -> thường thấy trong phần
@@ -1206,7 +1115,7 @@ entity MessageContent
 * @create-by        -> yuvytung.
 * @edit-commit      -> yuvytung.
 */
-entity MyRank
+entity RankUser
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
      * @author           -> yuvytung.
@@ -1223,6 +1132,10 @@ entity MyRank
      * @author           -> yuvytung.
      */
     role TextBlob
+    /** classPK *      : classPrimaryKey
+     * @author           -> yuvytung.
+     */
+    classPK String
     /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
      * @author           -> yuvytung.
      */
@@ -1248,7 +1161,7 @@ entity MyRank
     comment TextBlob
 }
 /**
-* @what?            -> The PostType entity.
+* @what?            -> The RankGroup entity.
 * @why?             ->
 * @use-to           -> Xếp hạng theo nhóm : toàn mạng ,khu vực , nhóm người (khoảng 30-100 người)
 * @commonly-used-in ->
@@ -1276,6 +1189,10 @@ entity RankGroup
      * @author           -> yuvytung.
      */
     role TextBlob
+    /** classPK *      : classPrimaryKey
+     * @author           -> yuvytung.
+     */
+    classPK String
     /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
      * @author           -> yuvytung.
      */
@@ -1312,7 +1229,7 @@ entity RankGroup
 * @create-by        -> yuvytung.
 * @edit-commit      -> yuvytung.
 */
-entity MyNotify
+entity Notify
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
      * @author           -> yuvytung.
@@ -1329,6 +1246,10 @@ entity MyNotify
      * @author           -> yuvytung.
      */
     role TextBlob
+    /** classPK *      : classPrimaryKey
+     * @author           -> yuvytung.
+     */
+    classPK String
     /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
      * @author           -> yuvytung.
      */
@@ -1382,6 +1303,10 @@ entity NotifyType
      * @author           -> yuvytung.
      */
     role TextBlob
+    /** classPK *      : classPrimaryKey
+     * @author           -> yuvytung.
+     */
+    classPK String
     /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
      * @author           -> yuvytung.
      */
@@ -1407,7 +1332,7 @@ entity NotifyType
     comment TextBlob
 }
 /**
-* @what?            -> The MyAlbum entity
+* @what?            -> The Album entity
 * @why?             ->
 * @use-to           -> Lưu thông tin về một bộ album của người dùng
 * @commonly-used-in -> Người dùng nhóm một bộ ảnh vào một album
@@ -1418,7 +1343,7 @@ entity NotifyType
 * @create-by        -> yuvytung.
 * @edit-commit      -> yuvytung.
 */
-entity MyAlbum
+entity Album
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
      * @author           -> yuvytung.
@@ -1435,6 +1360,10 @@ entity MyAlbum
      * @author           -> yuvytung.
      */
     role TextBlob
+    /** classPK *      : classPrimaryKey
+     * @author           -> yuvytung.
+     */
+    classPK String
     /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
      * @author           -> yuvytung.
      */
@@ -1460,7 +1389,7 @@ entity MyAlbum
     comment TextBlob
 }
 /**
-* @what?            -> The MyVideo entity.
+* @what?            -> The Video entity.
 * @why?             ->
 * @use-to           -> Lưu thông tin video mà người dùng upload lên
 * @commonly-used-in ->
@@ -1471,7 +1400,7 @@ entity MyAlbum
 * @create-by        -> yuvytung.
 * @edit-commit      -> yuvytung.
 */
-entity MyVideo
+entity Video
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
      * @author           -> yuvytung.
@@ -1488,6 +1417,10 @@ entity MyVideo
      * @author           -> yuvytung.
      */
     role TextBlob
+    /** classPK *      : classPrimaryKey
+     * @author           -> yuvytung.
+     */
+    classPK String
     /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
      * @author           -> yuvytung.
      */
@@ -1513,7 +1446,7 @@ entity MyVideo
     comment TextBlob
 }
 /**
-* @what?            -> The MyImage entity.
+* @what?            -> The Image entity.
 * @why?             ->
 * @use-to           -> Lưu thông tin Ảnh mà người dùng upload lên
 * @commonly-used-in ->
@@ -1524,7 +1457,7 @@ entity MyVideo
 * @create-by        -> yuvytung.
 * @edit-commit      -> yuvytung.
 */
-entity MyImage
+entity Image
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
      * @author           -> yuvytung.
@@ -1541,6 +1474,10 @@ entity MyImage
      * @author           -> yuvytung.
      */
     role TextBlob
+    /** classPK *      : classPrimaryKey
+     * @author           -> yuvytung.
+     */
+    classPK String
     /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
      * @author           -> yuvytung.
      */
@@ -1566,7 +1503,7 @@ entity MyImage
     comment TextBlob
 }
 /**
-* @what?            -> The MyAlbum entity.
+* @what?            -> The Album entity.
 * @why?             ->
 * @use-to           -> Lưu thông tin video ... khi đã kết thúc stream
 * @commonly-used-in -> Sau khi kết thức stream thì video lưu lai cũng chỉ tương tự như một video thông thường
@@ -1577,7 +1514,7 @@ entity MyImage
 * @create-by        -> yuvytung.
 * @edit-commit      -> yuvytung.
 */
-entity MyVideoStream
+entity VideoStream
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
      * @author           -> yuvytung.
@@ -1594,6 +1531,10 @@ entity MyVideoStream
      * @author           -> yuvytung.
      */
     role TextBlob
+    /** classPK *      : classPrimaryKey
+     * @author           -> yuvytung.
+     */
+    classPK String
     /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
      * @author           -> yuvytung.
      */
@@ -1619,7 +1560,7 @@ entity MyVideoStream
     comment TextBlob
 }
 /**
-* @what?            -> The MyAlbum entity
+* @what?            -> The Album entity
 * @why?             ->
 * @use-to           -> Lưu từng phần video dưới dạng base64 khi đang stream video
 * @commonly-used-in -> thường sử dụng khi đang live stream
@@ -1647,6 +1588,10 @@ entity VideoLiveStreamBuffer
      * @author           -> yuvytung.
      */
     role TextBlob
+    /** classPK *      : classPrimaryKey
+     * @author           -> yuvytung.
+     */
+    classPK String
     /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
      * @author           -> yuvytung.
      */
@@ -1672,7 +1617,7 @@ entity VideoLiveStreamBuffer
     comment TextBlob
 }
 /**
-* @what?            -> The MyAlbum entity
+* @what?            -> The Album entity
 * @why?             ->
 * @use-to           -> Lưu những chủ đề mà người dùng quan tâm
 * @commonly-used-in -> chủ đề quan tâm để lọc ra cho người dùng xem
@@ -1700,6 +1645,10 @@ entity TopicInterest
      * @author           -> yuvytung.
      */
     role TextBlob
+    /** classPK *      : classPrimaryKey
+     * @author           -> yuvytung.
+     */
+    classPK String
     /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
      * @author           -> yuvytung.
      */
@@ -1725,7 +1674,7 @@ entity TopicInterest
     comment TextBlob
 }
 /**
-* @what?            -> The MyTodoList entity
+* @what?            -> The TodoList entity.
 * @why?             ->
 * @use-to           -> Lưu danh sách công việc gợi ý cho người dùng thực hiện
 * @commonly-used-in -> Hiển thị bảng Todo cho người dùng thực hiện
@@ -1736,7 +1685,7 @@ entity TopicInterest
 * @create-by        -> yuvytung.
 * @edit-commit      -> yuvytung.
 */
-entity MyTodoList
+entity TodoList
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
      * @author           -> yuvytung.
@@ -1753,6 +1702,10 @@ entity MyTodoList
      * @author           -> yuvytung.
      */
     role TextBlob
+    /** classPK *      : classPrimaryKey
+     * @author           -> yuvytung.
+     */
+    classPK String
     /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)
      * @author           -> yuvytung.
      */
@@ -1783,61 +1736,61 @@ entity MyTodoList
 relationship OneToOne
 {
     MasterUser to User with jpaDerivedIdentifier,
-    MasterUser to MyProfile,
-    MasterUser to MyStatus,
-    MyGroup to GroupProfile
-    MyPage to PageProfile
-    MasterUser to MyRank,
-    MyVideo to FileInfo,
-    MessageContent{sender} to MasterUser
-    MyVideoStream to MyVideo,
-    MyImage to FileInfo,
+    MasterUser{myProfile} to UserProfile,
+    MasterUser{myAccountStatus} to AccountStatus,
+    GroupPost to GroupProfile
+    PagePost to PageProfile
+    MasterUser{myRank} to RankUser,
+    Video to FileInfo,
+    VideoStream to Video,
+    Image to FileInfo
 //    MasterUser to MyChallengesMap
 }
 
 relationship ManyToOne
 {
-    MyFriend{friendDetails} to MasterUser{friendOf},
-    MyFollow{followDetails} to MasterUser{followOf},
-    MyNewsFeed to MyPost
-    MyRank to RankGroup
+    Friend{friendDetails} to MasterUser{friendOf},
+    Follow{followDetails} to MasterUser{followOf},
+    NewsFeed to Post,
+    RankUser to RankGroup,
+    MessageContent{sender} to MasterUser
+    PostLike{userLike} to MasterUser{myLike}
+    PostComment{userComment} to MasterUser{myComment}
 }
 relationship OneToMany
 {
-    MyStatus to StatusDetails,
+    AccountStatus to AccountStatusDetails,
 //    MyChallengesMap to ChallengesMapDetails
-  	MasterUser to MyPage
-    MasterUser to FileInfo,
-    MasterUser to MyNotify
-    MasterUser{myFriend} to MyFriend{masterUser},
-    MasterUser{myFollow} to MyFollow{masterUser},
-    MyGroup to MyPost
-    MasterUser to MyPost
-    MyPage to MyPost
+  	MasterUser{myPage} to PagePost
+    MasterUser{myFile} to FileInfo,
+    MasterUser{myNotify} to Notify
+    MasterUser{myFriend} to Friend{masterUser},
+    MasterUser{myFollow} to Follow{masterUser},
+    GroupPost{myPostInGroup} to Post
+    MasterUser{myPost} to Post{poster}
+    PagePost{myPostInPage} to Post
     MessageGroup to MessageContent
-    MasterUser to MyNewsFeed
-    MasterUser to MyImage,
-    MasterUser to MyVideo,
-    MasterUser to MyAlbum,
-    MasterUser to MyVideoStream,
-    MasterUser to MyTodoList
-    MyPost to PostComment
-    MyPost to PostLike
+    MasterUser{myNewsFeed} to NewsFeed
+    MasterUser{myImage} to Image,
+    MasterUser{myVideo} to Video,
+    MasterUser{myAlbum} to Album,
+    MasterUser{myVideoStream} to VideoStream,
+    MasterUser{myTodoList} to TodoList
+    Post to PostComment
+    Post to PostLike
+    Post{postShareChildren} to Post{postShareParent}
+    PostComment{commentReply} to PostComment{commentParent}
 }
 
 relationship ManyToMany
 {
-    MasterUser to MyGroup
+    MasterUser{myGroupPost} to GroupPost{userInGroup}
     MasterUser to MessageGroup
-    MyPost to PostType
-    MyAlbum to MyImage,
-    MyNotify to NotifyType
-    MyGroup to GroupType
-    MyPage to PageType
-
-    TopicInterest to MyPost
-    TopicInterest to MyPage
-    TopicInterest to MyGroup
+    Album to Image,
+    Notify to NotifyType
+    TopicInterest to Post
+    TopicInterest to PagePost
+    TopicInterest to GroupPost
     MasterUser to TopicInterest
 }
 
