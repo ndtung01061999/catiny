@@ -18,12 +18,19 @@
     "baseUrl": "./",
     "paths": {
       "app/*": ["src/main/webapp/app/*"],
+      "app-js/*": ["src/main/webapp/app-js/*"],
       "open-api/*": ["build/openapi/src/main/typescript/open-api/*"]
     },
     "importHelpers": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true
   },
-  "include": ["src/main/webapp/app", "src/test/javascript/spec", "build/openapi/src/main/typescript/open-api"],
+  "include":
+  [
+    "src/main/webapp/app",
+    "src/main/webapp/app-js",
+    "src/test/javascript/spec",
+    "build/openapi/src/main/typescript/open-api"
+  ],
   "exclude": ["node_modules"]
 }

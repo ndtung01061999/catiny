@@ -64,9 +64,13 @@ module.exports = options =>
       module: {
         rules: [
           {
-            test: /\.tsx?$/,
+            test: [/\.tsx?$/, /\.js?$/],
             use: getTsLoaderRule(options.env),
-            include: [utils.root('./src/main/webapp/app'), utils.root('./build/openapi/src/main/typescript/open-api')],
+            include: [
+              utils.root('./src/main/webapp/app'),
+              utils.root('./src/main/webapp/app-js'),
+              utils.root('./build/openapi/src/main/typescript/open-api')
+            ],
             exclude: [utils.root('node_modules')],
           },
           {
