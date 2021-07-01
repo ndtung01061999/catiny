@@ -3,6 +3,10 @@
 // Import Bootstrap source files from node_modules
 @import 'node_modules/bootstrap/scss/bootstrap';
 @import '~bootswatch/dist/cerulean/bootswatch';
+//Sociala
+@import "~slick-carousel/slick/slick.css";
+@import "~slick-carousel/slick/slick-theme.css";
+@import '~video-react/dist/video-react.css';
 body {
   margin: 0;
   background: #e8ded9;

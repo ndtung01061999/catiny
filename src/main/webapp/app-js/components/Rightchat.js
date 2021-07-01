@@ -63,8 +63,8 @@ class Rightchat extends Component {
         if(window.innerWidth < 500) {
           this.setState({ width: 450, height: 102 });
         } else {
-          let update_width  = window.innerWidth-100;
-          let update_height = Math.round(update_width/4.4);
+          const update_width  = window.innerWidth-100;
+          const update_height = Math.round(update_width/4.4);
           this.setState({ width: update_width, height: update_height });
         }
       }
