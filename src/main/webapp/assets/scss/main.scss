@@ -25,14 +25,9 @@
 
 
 @import "./abstract/abstract";
-@import "./../vendor/bootstrap/scss/bootstrap.scss";
-//@import "~bootstrap/scss/bootstrap.scss";//sociala sử dụng phiên bản 4.4.1 , hiện tại bản 4.6.0 có một số lỗi lệch class(ps -> pl)
-//@import "./../vendor/owl-carousel/css/owl.carousel.min.css";
-//@import "./../vendor/owl-carousel/css/owl.theme.default.css";
+@import "~bootstrap/scss/bootstrap";
 @import "~owl.carousel/dist/assets/owl.carousel.min.css";
 @import "~owl.carousel/dist/assets/owl.theme.default.min.css";
-
-
 @import "./base/base";
 @import "./components/components";
 

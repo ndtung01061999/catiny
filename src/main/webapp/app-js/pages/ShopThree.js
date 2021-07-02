@@ -1,9 +1,9 @@
 import React, {Fragment} from "react";
 import Header from '../components/Header';
-import Leftnav from '../components/Leftnav';
-import Rightchat from '../components/Rightchat';
-import Appfooter from '../components/Appfooter';
-import Popupchat from '../components/Popupchat';
+import LeftNav from '../components/LeftNav';
+import RightChat from '../components/RightChat';
+import AppFooter from '../components/AppFooter';
+import PopupChat from '../components/PopupChat';
 
 const productList = [
     {
@@ -72,8 +72,8 @@ const productList = [
 const ShoThree = () => (
   <Fragment>
     <Header/>
-    <Leftnav/>
-    <Rightchat/>
+    <LeftNav/>
+    <RightChat/>
 
     <div className="main-content bg-white right-chat-active">
 
@@ -132,8 +132,8 @@ const ShoThree = () => (
 
       </div>
     </div>
-    <Popupchat/>
-    <Appfooter/>
+    <PopupChat/>
+    <AppFooter/>
   </Fragment>
 );
 

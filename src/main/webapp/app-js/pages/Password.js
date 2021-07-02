@@ -2,8 +2,8 @@ import React, {Fragment} from "react";
 import {Link} from 'react-router-dom';
 
 import Header from '../components/Header';
-import Leftnav from '../components/Leftnav';
-import Rightchat from '../components/Rightchat';
+import LeftNav from '../components/LeftNav';
+import RightChat from '../components/RightChat';
 
 
 const Password = () => (
@@ -12,8 +12,8 @@ const Password = () => (
     <div className="main-wrapper">
 
       <Header/>
-      <Leftnav/>
-      <Rightchat/>
+      <LeftNav/>
+      <RightChat/>
 
 
       <div className="main-content bg-lightblue theme-dark-bg right-chat-active">

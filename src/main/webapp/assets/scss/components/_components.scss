@@ -1,11 +1,12 @@
 @import "./navigation";
+@import "./nav-tab";
 @import "./content";
 
 @import "./header";
 @import "./footer";
 
-@import "./_email-box";
-@import "./_accordion";
+@import "./email-box";
+@import "./accordion";
 @import "./owl-carousel";
 @import "./modal";
 @import "./settings";

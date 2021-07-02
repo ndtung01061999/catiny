@@ -1,10 +1,10 @@
 import React, {Fragment} from "react";
 import Header from '../components/Header';
-import Leftnav from '../components/Leftnav';
-import Rightchat from '../components/Rightchat';
-import Pagetitle from '../components/Pagetitle';
-import Appfooter from '../components/Appfooter';
-import Popupchat from '../components/Popupchat';
+import LeftNav from '../components/LeftNav';
+import RightChat from '../components/RightChat';
+import PageTitle from '../components/PageTitle';
+import AppFooter from '../components/AppFooter';
+import PopupChat from '../components/PopupChat';
 
 import GoogleMapReact from 'google-map-react';
 
@@ -54,15 +54,15 @@ function Job(props)
   return (
     <Fragment>
       <Header/>
-      <Leftnav/>
-      <Rightchat/>
+      <LeftNav/>
+      <RightChat/>
 
       <div className="main-content right-chat-active">
         <div className="middle-sidebar-bottom">
           <div className="middle-sidebar-left pe-0" style={{maxWidth: "100%"}}>
             <div className="row">
               <div className="col-xl-6 chat-left scroll-bar">
-                <Pagetitle title="Jobs"/>
+                <PageTitle title="Jobs"/>
 
                 {jobList.map((value, index) => (
 
@@ -112,8 +112,8 @@ function Job(props)
         </div>
       </div>
 
-      <Popupchat/>
-      <Appfooter/>
+      <PopupChat/>
+      <AppFooter/>
     </Fragment>
   );
 }

@@ -2,10 +2,10 @@ import React, {Fragment} from "react";
 import {Link} from 'react-router-dom';
 
 import Header from '../components/Header';
-import Leftnav from '../components/Leftnav';
-import Rightchat from '../components/Rightchat';
-import Appfooter from '../components/Appfooter';
-import Popupchat from '../components/Popupchat';
+import LeftNav from '../components/LeftNav';
+import RightChat from '../components/RightChat';
+import AppFooter from '../components/AppFooter';
+import PopupChat from '../components/PopupChat';
 
 const emailList = [
     {
@@ -156,8 +156,8 @@ const emailList = [
 const Email = () => (
   <Fragment>
     <Header/>
-    <Leftnav/>
-    <Rightchat/>
+    <LeftNav/>
+    <RightChat/>
 
     <div className="main-content right-chat-active">
       <div className="middle-sidebar-bottom">
@@ -203,8 +203,8 @@ const Email = () => (
       </div>
     </div>
 
-    <Popupchat/>
-    <Appfooter/>
+    <PopupChat/>
+    <AppFooter/>
 
   </Fragment>
 );

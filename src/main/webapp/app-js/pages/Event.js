@@ -1,9 +1,9 @@
 import React, {Fragment} from "react";
 import Header from '../components/Header';
-import Leftnav from '../components/Leftnav';
-import Rightchat from '../components/Rightchat';
-import Appfooter from '../components/Appfooter';
-import Popupchat from '../components/Popupchat';
+import LeftNav from '../components/LeftNav';
+import RightChat from '../components/RightChat';
+import AppFooter from '../components/AppFooter';
+import PopupChat from '../components/PopupChat';
 
 import GoogleMapReact from 'google-map-react';
 
@@ -58,8 +58,8 @@ const eventList = [
 const Event = props => (
   <Fragment>
     <Header/>
-    <Leftnav/>
-    <Rightchat/>
+    <LeftNav/>
+    <RightChat/>
 
     <div className="main-content right-chat-active">
       <div className="middle-sidebar-bottom">
@@ -119,8 +119,8 @@ const Event = props => (
       </div>
     </div>
 
-    <Popupchat/>
-    <Appfooter/>
+    <PopupChat/>
+    <AppFooter/>
 
   </Fragment>
 );

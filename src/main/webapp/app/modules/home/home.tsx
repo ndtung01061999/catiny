@@ -6,6 +6,7 @@ import {faAngleRight, faEllipsisH} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 import {useAppSelector} from 'app/config/store';
+import Demo from "app-js/demo/Demo";
 
 let prevScrollProp = window.pageYOffset;
 export const Home = () => {
@@ -123,72 +124,7 @@ export const Home = () => {
 
   return (
     <div>
-      <Row className="home">
-        <Col className="home-left col-12 col-sm-7 col-lg-8  pr-0 overflow-hidden">
-          <Card>
-            <CardHeader className="p-1 d-inline-flex">
-              <img className="card-image-user " src="https://www.publicdomainpictures.net/pictures/320000/velka/background-image.png" />
-              <div className="ml-2 w-100 ">
-                <CardTitle className="mb-0 mt-1 text-nowrap ">
-                  <h6 id="TooltipExample">
-                    <span>Con nhếch</span>
-                    <FontAwesomeIcon icon={faAngleRight} />
-                    <span>chạy loăng quằng kiểu gì con lơn béo lú</span>
-                  </h6>
-                  <Tooltip placement="top-start" isOpen={tooltipOpen} target="TooltipExample" toggle={toggle}>
-                    <p className="text-primary">Hello world!</p>
-                  </Tooltip>
-                </CardTitle>
-
-                <CardText>dsa</CardText>
-              </div>
-              <div className="justify-content-end">
-                <FontAwesomeIcon icon={faEllipsisH} />
-              </div>
-            </CardHeader>
-            <CardText className="p-2 text-nowrap">
-              <h5 className="mb-0 text-dark">ấy chà chà con nhếch đi chơi về trễ quá</h5>
-            </CardText>
-            <img className="card-img-top px-1" src="https://www.publicdomainpictures.net/pictures/320000/velka/background-image.png"></img>
-            <CardBody className="p-2">
-              <CardText>
-                <div>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aliquid doloribus eius eveniet fugiat id itaque odio
-                  possimus ratione velit? Aliquid autem culpa dolor, eius officiis repellat saepe vitae voluptate?
-                </div>
-              </CardText>
-            </CardBody>
-          </Card>
-        </Col>
-        <Col className="col home-right col pl-3 pl-sm-2 pt-sm-2 pr-3">
-          <div ref={homeRightRef} style={{ height: '150px', transition: 'height 2s', display: 'block' }}>
-            <p className="text-primary">Your-Rank: 19/30</p>
-            <p>Team-Rank: 1261/3215</p>
-            <Progress multi>
-              <Progress bar value="5">
-                Meh
-              </Progress>
-              <Progress bar color="success" value="30">
-                Wow!
-              </Progress>
-              <Progress bar color="info" value="25">
-                Cool
-              </Progress>
-              <Progress bar color="warning" value="20">
-                20%
-              </Progress>
-              <Progress bar color="danger" value="100">
-                !!
-              </Progress>
-            </Progress>
-          </div>
-          <div style={{ backgroundColor: '#e8ded9', position: 'relative' }}>
-            <h6 className="text-warning">bãy là gì?</h6>
-            <li>là thứ mà tôi răng ra để dụ ông và ...</li>
-            <li>ông sập tôi được lợi</li>
-          </div>
-        </Col>
-      </Row>
+      <Demo/>
     </div>
   );
 };

@@ -1,10 +1,10 @@
 import React, {Fragment} from "react";
 import Header from '../components/Header';
-import Leftnav from '../components/Leftnav';
-import Rightchat from '../components/Rightchat';
-import Pagetitle from '../components/Pagetitle';
-import Appfooter from '../components/Appfooter';
-import Popupchat from '../components/Popupchat';
+import LeftNav from '../components/LeftNav';
+import RightChat from '../components/RightChat';
+import PageTitle from '../components/PageTitle';
+import AppFooter from '../components/AppFooter';
+import PopupChat from '../components/PopupChat';
 
 const storyList = [
     {
@@ -85,8 +85,8 @@ const storyList = [
 const Storie = () => (
   <Fragment>
     <Header/>
-    <Leftnav/>
-    <Rightchat/>
+    <LeftNav/>
+    <RightChat/>
 
     <div className="main-content right-chat-active">
       <div className="middle-sidebar-bottom">
@@ -94,7 +94,7 @@ const Storie = () => (
           <div className="row">
             <div className="col-xl-12">
 
-              <Pagetitle title="Stories"/>
+              <PageTitle title="Stories"/>
 
               <div className="row ps-2 pe-1">
                 {storyList.map((value, index) => (
@@ -124,8 +124,8 @@ const Storie = () => (
       </div>
     </div>
 
-    <Popupchat/>
-    <Appfooter/>
+    <PopupChat/>
+    <AppFooter/>
   </Fragment>
 );
 

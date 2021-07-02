@@ -2,10 +2,10 @@ import React, { Component , Fragment } from "react";
 import Chart from "react-apexcharts";
 
 import Header from '../components/Header';
-import Leftnav from '../components/Leftnav';
-import Rightchat from '../components/Rightchat';
-import Appfooter from '../components/Appfooter';
-import Popupchat from '../components/Popupchat';
+import LeftNav from '../components/LeftNav';
+import RightChat from '../components/RightChat';
+import AppFooter from '../components/AppFooter';
+import PopupChat from '../components/PopupChat';
 
 class Analytics extends Component {
     constructor(props) {
@@ -59,8 +59,8 @@ class Analytics extends Component {
         return (
             <Fragment> 
                 <Header />
-                <Leftnav />
-                <Rightchat />
+                <LeftNav />
+                <RightChat />
 
                 <div className="main-content bg-white right-chat-active">
                     <div className="middle-sidebar-bottom">
@@ -128,8 +128,8 @@ class Analytics extends Component {
                     </div>
                 </div>
 
-                <Popupchat />
-                <Appfooter /> 
+                <PopupChat />
+                <AppFooter />
             </Fragment>
         );
     }

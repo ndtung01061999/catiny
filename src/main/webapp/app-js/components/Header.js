@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link, NavLink} from 'react-router-dom';
 
-import Darkbutton from '../components/Darkbutton';
+import Darkbutton from './DarkMode';
 
 class Header extends Component
 {

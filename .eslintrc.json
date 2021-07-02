@@ -26,7 +26,8 @@
   "globals": {
     "document": true,
     "process": true,
-    "module": true
+    "module": true,
+    "window": true
   },
   "rules": {
     "@typescript-eslint/member-ordering": [

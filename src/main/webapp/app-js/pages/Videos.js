@@ -1,10 +1,10 @@
 import React, {Fragment} from "react";
 import Header from '../components/Header';
-import Leftnav from '../components/Leftnav';
-import Rightchat from '../components/Rightchat';
+import LeftNav from '../components/LeftNav';
+import RightChat from '../components/RightChat';
 import Load from '../components/Load';
-import Appfooter from '../components/Appfooter';
-import Popupchat from '../components/Popupchat';
+import AppFooter from '../components/AppFooter';
+import PopupChat from '../components/PopupChat';
 
 import {Player} from 'video-react';
 
@@ -38,8 +38,8 @@ const videoList = [
 const Videos = () => (
   <Fragment>
     <Header/>
-    <Leftnav/>
-    <Rightchat/>
+    <LeftNav/>
+    <RightChat/>
 
 
     <div className="main-content right-chat-active">
@@ -87,8 +87,8 @@ const Videos = () => (
       </div>
     </div>
 
-    <Popupchat/>
-    <Appfooter/>
+    <PopupChat/>
+    <AppFooter/>
   </Fragment>
 );
 
