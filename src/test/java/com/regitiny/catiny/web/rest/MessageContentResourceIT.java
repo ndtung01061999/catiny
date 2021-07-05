@@ -1,32 +1,15 @@
 package com.regitiny.catiny.web.rest;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 import com.regitiny.catiny.GeneratedByJHipster;
 import com.regitiny.catiny.IntegrationTest;
 import com.regitiny.catiny.domain.MessageContent;
 import com.regitiny.catiny.repository.MessageContentRepository;
 import com.regitiny.catiny.repository.search.MessageContentSearchRepository;
-import com.regitiny.catiny.service.criteria.MessageContentCriteria;
 import com.regitiny.catiny.service.dto.MessageContentDTO;
 import com.regitiny.catiny.service.mapper.MessageContentMapper;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
-import java.util.concurrent.atomic.AtomicLong;
-import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -36,7 +19,22 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Base64Utils;
+
+import javax.persistence.EntityManager;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicLong;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
+import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Integration tests for the {@link MessageContentResource} REST controller.
@@ -88,8 +86,8 @@ class MessageContentResourceIT {
   private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
   private static final String ENTITY_SEARCH_API_URL = "/api/_search/message-contents";
 
-  private static Random random = new Random();
-  private static AtomicLong count = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
+  private static final Random random = new Random();
+  private static final AtomicLong count = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
 
   @Autowired
   private MessageContentRepository messageContentRepository;
@@ -171,7 +169,9 @@ class MessageContentResourceIT {
     // Create the MessageContent
     MessageContentDTO messageContentDTO = messageContentMapper.toDto(messageContent);
     restMessageContentMockMvc
-      .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(messageContentDTO)))
+      .perform(
+        post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(messageContentDTO))
+      )
       .andExpect(status().isCreated());
 
     // Validate the MessageContent in the database
@@ -206,7 +206,9 @@ class MessageContentResourceIT {
 
     // An entity with an existing ID cannot be created, so this API call must fail
     restMessageContentMockMvc
-      .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(messageContentDTO)))
+      .perform(
+        post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(messageContentDTO))
+      )
       .andExpect(status().isBadRequest());
 
     // Validate the MessageContent in the database
@@ -228,7 +230,9 @@ class MessageContentResourceIT {
     MessageContentDTO messageContentDTO = messageContentMapper.toDto(messageContent);
 
     restMessageContentMockMvc
-      .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(messageContentDTO)))
+      .perform(
+        post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(messageContentDTO))
+      )
       .andExpect(status().isBadRequest());
 
     List<MessageContent> messageContentList = messageContentRepository.findAll();
@@ -246,7 +250,9 @@ class MessageContentResourceIT {
     MessageContentDTO messageContentDTO = messageContentMapper.toDto(messageContent);
 
     restMessageContentMockMvc
-      .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(messageContentDTO)))
+      .perform(
+        post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(messageContentDTO))
+      )
       .andExpect(status().isBadRequest());
 
     List<MessageContent> messageContentList = messageContentRepository.findAll();
@@ -267,10 +273,10 @@ class MessageContentResourceIT {
       .andExpect(jsonPath("$.[*].id").value(hasItem(messageContent.getId().intValue())))
       .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
       .andExpect(jsonPath("$.[*].groupId").value(hasItem(DEFAULT_GROUP_ID)))
-      .andExpect(jsonPath("$.[*].content").value(hasItem(DEFAULT_CONTENT.toString())))
+      .andExpect(jsonPath("$.[*].content").value(hasItem(DEFAULT_CONTENT)))
       .andExpect(jsonPath("$.[*].sender").value(hasItem(DEFAULT_SENDER)))
       .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)))
-      .andExpect(jsonPath("$.[*].searchField").value(hasItem(DEFAULT_SEARCH_FIELD.toString())))
+      .andExpect(jsonPath("$.[*].searchField").value(hasItem(DEFAULT_SEARCH_FIELD)))
       .andExpect(jsonPath("$.[*].role").value(hasItem(DEFAULT_ROLE)))
       .andExpect(jsonPath("$.[*].createdDate").value(hasItem(DEFAULT_CREATED_DATE.toString())))
       .andExpect(jsonPath("$.[*].modifiedDate").value(hasItem(DEFAULT_MODIFIED_DATE.toString())))
@@ -293,10 +299,10 @@ class MessageContentResourceIT {
       .andExpect(jsonPath("$.id").value(messageContent.getId().intValue()))
       .andExpect(jsonPath("$.uuid").value(DEFAULT_UUID.toString()))
       .andExpect(jsonPath("$.groupId").value(DEFAULT_GROUP_ID))
-      .andExpect(jsonPath("$.content").value(DEFAULT_CONTENT.toString()))
+      .andExpect(jsonPath("$.content").value(DEFAULT_CONTENT))
       .andExpect(jsonPath("$.sender").value(DEFAULT_SENDER))
       .andExpect(jsonPath("$.status").value(DEFAULT_STATUS))
-      .andExpect(jsonPath("$.searchField").value(DEFAULT_SEARCH_FIELD.toString()))
+      .andExpect(jsonPath("$.searchField").value(DEFAULT_SEARCH_FIELD))
       .andExpect(jsonPath("$.role").value(DEFAULT_ROLE))
       .andExpect(jsonPath("$.createdDate").value(DEFAULT_CREATED_DATE.toString()))
       .andExpect(jsonPath("$.modifiedDate").value(DEFAULT_MODIFIED_DATE.toString()))
@@ -1036,10 +1042,10 @@ class MessageContentResourceIT {
       .andExpect(jsonPath("$.[*].id").value(hasItem(messageContent.getId().intValue())))
       .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
       .andExpect(jsonPath("$.[*].groupId").value(hasItem(DEFAULT_GROUP_ID)))
-      .andExpect(jsonPath("$.[*].content").value(hasItem(DEFAULT_CONTENT.toString())))
+      .andExpect(jsonPath("$.[*].content").value(hasItem(DEFAULT_CONTENT)))
       .andExpect(jsonPath("$.[*].sender").value(hasItem(DEFAULT_SENDER)))
       .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)))
-      .andExpect(jsonPath("$.[*].searchField").value(hasItem(DEFAULT_SEARCH_FIELD.toString())))
+      .andExpect(jsonPath("$.[*].searchField").value(hasItem(DEFAULT_SEARCH_FIELD)))
       .andExpect(jsonPath("$.[*].role").value(hasItem(DEFAULT_ROLE)))
       .andExpect(jsonPath("$.[*].createdDate").value(hasItem(DEFAULT_CREATED_DATE.toString())))
       .andExpect(jsonPath("$.[*].modifiedDate").value(hasItem(DEFAULT_MODIFIED_DATE.toString())))
@@ -1200,7 +1206,9 @@ class MessageContentResourceIT {
 
     // If url ID doesn't match entity ID, it will throw BadRequestAlertException
     restMessageContentMockMvc
-      .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(messageContentDTO)))
+      .perform(
+        put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(messageContentDTO))
+      )
       .andExpect(status().isMethodNotAllowed());
 
     // Validate the MessageContent in the database
@@ -1223,14 +1231,7 @@ class MessageContentResourceIT {
     MessageContent partialUpdatedMessageContent = new MessageContent();
     partialUpdatedMessageContent.setId(messageContent.getId());
 
-    partialUpdatedMessageContent
-      .groupId(UPDATED_GROUP_ID)
-      .content(UPDATED_CONTENT)
-      .status(UPDATED_STATUS)
-      .role(UPDATED_ROLE)
-      .modifiedDate(UPDATED_MODIFIED_DATE)
-      .createdBy(UPDATED_CREATED_BY)
-      .modifiedBy(UPDATED_MODIFIED_BY);
+    partialUpdatedMessageContent.sender(UPDATED_SENDER).status(UPDATED_STATUS).role(UPDATED_ROLE).modifiedDate(UPDATED_MODIFIED_DATE);
 
     restMessageContentMockMvc
       .perform(
@@ -1245,16 +1246,16 @@ class MessageContentResourceIT {
     assertThat(messageContentList).hasSize(databaseSizeBeforeUpdate);
     MessageContent testMessageContent = messageContentList.get(messageContentList.size() - 1);
     assertThat(testMessageContent.getUuid()).isEqualTo(DEFAULT_UUID);
-    assertThat(testMessageContent.getGroupId()).isEqualTo(UPDATED_GROUP_ID);
-    assertThat(testMessageContent.getContent()).isEqualTo(UPDATED_CONTENT);
-    assertThat(testMessageContent.getSender()).isEqualTo(DEFAULT_SENDER);
+    assertThat(testMessageContent.getGroupId()).isEqualTo(DEFAULT_GROUP_ID);
+    assertThat(testMessageContent.getContent()).isEqualTo(DEFAULT_CONTENT);
+    assertThat(testMessageContent.getSender()).isEqualTo(UPDATED_SENDER);
     assertThat(testMessageContent.getStatus()).isEqualTo(UPDATED_STATUS);
     assertThat(testMessageContent.getSearchField()).isEqualTo(DEFAULT_SEARCH_FIELD);
     assertThat(testMessageContent.getRole()).isEqualTo(UPDATED_ROLE);
     assertThat(testMessageContent.getCreatedDate()).isEqualTo(DEFAULT_CREATED_DATE);
     assertThat(testMessageContent.getModifiedDate()).isEqualTo(UPDATED_MODIFIED_DATE);
-    assertThat(testMessageContent.getCreatedBy()).isEqualTo(UPDATED_CREATED_BY);
-    assertThat(testMessageContent.getModifiedBy()).isEqualTo(UPDATED_MODIFIED_BY);
+    assertThat(testMessageContent.getCreatedBy()).isEqualTo(DEFAULT_CREATED_BY);
+    assertThat(testMessageContent.getModifiedBy()).isEqualTo(DEFAULT_MODIFIED_BY);
     assertThat(testMessageContent.getComment()).isEqualTo(DEFAULT_COMMENT);
   }
 
@@ -1374,7 +1375,9 @@ class MessageContentResourceIT {
     // If url ID doesn't match entity ID, it will throw BadRequestAlertException
     restMessageContentMockMvc
       .perform(
-        patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(messageContentDTO))
+        patch(ENTITY_API_URL)
+          .contentType("application/merge-patch+json")
+          .content(TestUtil.convertObjectToJsonBytes(messageContentDTO))
       )
       .andExpect(status().isMethodNotAllowed());
 
@@ -1424,10 +1427,10 @@ class MessageContentResourceIT {
       .andExpect(jsonPath("$.[*].id").value(hasItem(messageContent.getId().intValue())))
       .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
       .andExpect(jsonPath("$.[*].groupId").value(hasItem(DEFAULT_GROUP_ID)))
-      .andExpect(jsonPath("$.[*].content").value(hasItem(DEFAULT_CONTENT.toString())))
+      .andExpect(jsonPath("$.[*].content").value(hasItem(DEFAULT_CONTENT)))
       .andExpect(jsonPath("$.[*].sender").value(hasItem(DEFAULT_SENDER)))
       .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)))
-      .andExpect(jsonPath("$.[*].searchField").value(hasItem(DEFAULT_SEARCH_FIELD.toString())))
+      .andExpect(jsonPath("$.[*].searchField").value(hasItem(DEFAULT_SEARCH_FIELD)))
       .andExpect(jsonPath("$.[*].role").value(hasItem(DEFAULT_ROLE)))
       .andExpect(jsonPath("$.[*].createdDate").value(hasItem(DEFAULT_CREATED_DATE.toString())))
       .andExpect(jsonPath("$.[*].modifiedDate").value(hasItem(DEFAULT_MODIFIED_DATE.toString())))

@@ -1,165 +1,196 @@
+import {entityItemSelector} from '../../support/commands';
 import {
-  entityTableSelector,
-  entityDetailsButtonSelector,
-  entityDetailsBackButtonSelector,
-  entityCreateButtonSelector,
-  entityCreateSaveButtonSelector,
-  entityEditButtonSelector,
-  entityDeleteButtonSelector,
   entityConfirmDeleteButtonSelector,
+  entityCreateButtonSelector,
+  entityCreateCancelButtonSelector,
+  entityCreateSaveButtonSelector,
+  entityDeleteButtonSelector,
+  entityDetailsBackButtonSelector,
+  entityDetailsButtonSelector,
+  entityEditButtonSelector,
+  entityTableSelector,
 } from '../../support/entity';
 
-describe('MessageContent e2e test', () => {
-  let startingEntitiesCount = 0;
+describe('MessageContent e2e test', () =>
+{
+  const messageContentPageUrl = '/message-content';
+  const messageContentPageUrlPattern = new RegExp('/message-content(\\?.*)?$');
+  const username = Cypress.env('E2E_USERNAME') ?? 'admin';
+  const password = Cypress.env('E2E_PASSWORD') ?? 'admin';
 
-  before(() => {
-    cy.window().then(win => {
+  before(() =>
+  {
+    cy.window().then(win =>
+    {
       win.sessionStorage.clear();
     });
-
-    cy.clearCookies();
-    cy.intercept('GET', '/api/message-contents*').as('entitiesRequest');
     cy.visit('');
-    cy.login('admin', 'admin');
-    cy.clickOnEntityMenuItem('message-content');
-    cy.wait('@entitiesRequest').then(({ request, response }) => (startingEntitiesCount = response.body.length));
-    cy.visit('/');
+    cy.login(username, password);
+    cy.get(entityItemSelector).should('exist');
   });
 
-  it('should load MessageContents', () => {
-    cy.intercept('GET', '/api/message-contents*').as('entitiesRequest');
+  beforeEach(() =>
+  {
+    cy.intercept('GET', '/api/message-contents+(?*|)').as('entitiesRequest');
+    cy.intercept('POST', '/api/message-contents').as('postEntityRequest');
+    cy.intercept('DELETE', '/api/message-contents/*').as('deleteEntityRequest');
+  });
+
+  it('should load MessageContents', () =>
+  {
     cy.visit('/');
     cy.clickOnEntityMenuItem('message-content');
-    cy.wait('@entitiesRequest');
+    cy.wait('@entitiesRequest').then(({response}) =>
+    {
+      if (response.body.length === 0)
+      {
+        cy.get(entityTableSelector).should('not.exist');
+      }
+      else
+      {
+        cy.get(entityTableSelector).should('exist');
+      }
+    });
     cy.getEntityHeading('MessageContent').should('exist');
-    if (startingEntitiesCount === 0) {
-      cy.get(entityTableSelector).should('not.exist');
-    } else {
-      cy.get(entityTableSelector).should('have.lengthOf', startingEntitiesCount);
-    }
-    cy.visit('/');
+    cy.url().should('match', messageContentPageUrlPattern);
   });
 
-  it('should load details MessageContent page', () => {
-    cy.intercept('GET', '/api/message-contents*').as('entitiesRequest');
-    cy.visit('/');
-    cy.clickOnEntityMenuItem('message-content');
-    cy.wait('@entitiesRequest');
-    if (startingEntitiesCount > 0) {
-      cy.get(entityDetailsButtonSelector).first().click({ force: true });
-      cy.getEntityDetailsHeading('messageContent');
-      cy.get(entityDetailsBackButtonSelector).should('exist');
-    }
-    cy.visit('/');
+  it('should load details MessageContent page', function ()
+  {
+    cy.visit(messageContentPageUrl);
+    cy.wait('@entitiesRequest').then(({response}) =>
+    {
+      if (response.body.length === 0)
+      {
+        this.skip();
+      }
+    });
+    cy.get(entityDetailsButtonSelector).first().click({force: true});
+    cy.getEntityDetailsHeading('messageContent');
+    cy.get(entityDetailsBackButtonSelector).click({force: true});
+    cy.wait('@entitiesRequest').then(({response}) =>
+    {
+      expect(response.statusCode).to.equal(200);
+    });
+    cy.url().should('match', messageContentPageUrlPattern);
   });
 
-  it('should load create MessageContent page', () => {
-    cy.intercept('GET', '/api/message-contents*').as('entitiesRequest');
-    cy.visit('/');
-    cy.clickOnEntityMenuItem('message-content');
+  it('should load create MessageContent page', () =>
+  {
+    cy.visit(messageContentPageUrl);
     cy.wait('@entitiesRequest');
-    cy.get(entityCreateButtonSelector).click({ force: true });
+    cy.get(entityCreateButtonSelector).click({force: true});
     cy.getEntityCreateUpdateHeading('MessageContent');
     cy.get(entityCreateSaveButtonSelector).should('exist');
-    cy.visit('/');
+    cy.get(entityCreateCancelButtonSelector).click({force: true});
+    cy.wait('@entitiesRequest').then(({response}) =>
+    {
+      expect(response.statusCode).to.equal(200);
+    });
+    cy.url().should('match', messageContentPageUrlPattern);
   });
 
-  it('should load edit MessageContent page', () => {
-    cy.intercept('GET', '/api/message-contents*').as('entitiesRequest');
-    cy.visit('/');
-    cy.clickOnEntityMenuItem('message-content');
-    cy.wait('@entitiesRequest');
-    if (startingEntitiesCount > 0) {
-      cy.get(entityEditButtonSelector).first().click({ force: true });
-      cy.getEntityCreateUpdateHeading('MessageContent');
-      cy.get(entityCreateSaveButtonSelector).should('exist');
-    }
-    cy.visit('/');
+  it('should load edit MessageContent page', function ()
+  {
+    cy.visit(messageContentPageUrl);
+    cy.wait('@entitiesRequest').then(({response}) =>
+    {
+      if (response.body.length === 0)
+      {
+        this.skip();
+      }
+    });
+    cy.get(entityEditButtonSelector).first().click({force: true});
+    cy.getEntityCreateUpdateHeading('MessageContent');
+    cy.get(entityCreateSaveButtonSelector).should('exist');
+    cy.get(entityCreateCancelButtonSelector).click({force: true});
+    cy.wait('@entitiesRequest').then(({response}) =>
+    {
+      expect(response.statusCode).to.equal(200);
+    });
+    cy.url().should('match', messageContentPageUrlPattern);
   });
 
-  it('should create an instance of MessageContent', () => {
-    cy.intercept('GET', '/api/message-contents*').as('entitiesRequest');
-    cy.visit('/');
-    cy.clickOnEntityMenuItem('message-content');
-    cy.wait('@entitiesRequest').then(({ request, response }) => (startingEntitiesCount = response.body.length));
-    cy.get(entityCreateButtonSelector).click({ force: true });
+  it('should create an instance of MessageContent', () =>
+  {
+    cy.visit(messageContentPageUrl);
+    cy.get(entityCreateButtonSelector).click({force: true});
     cy.getEntityCreateUpdateHeading('MessageContent');
 
     cy.get(`[data-cy="uuid"]`)
-      .type('f132eef7-c61d-45f0-8847-79fac47bdbb4')
+      .type('c0346bfb-f3dd-4e92-a115-b7ff77d5c5d8')
       .invoke('val')
-      .should('match', new RegExp('f132eef7-c61d-45f0-8847-79fac47bdbb4'));
+      .should('match', new RegExp('c0346bfb-f3dd-4e92-a115-b7ff77d5c5d8'));
 
-    cy.get(`[data-cy="groupId"]`).type('Haven seize', { force: true }).invoke('val').should('match', new RegExp('Haven seize'));
+    cy.get(`[data-cy="groupId"]`).type('Shoes').should('have.value', 'Shoes');
 
     cy.get(`[data-cy="content"]`)
-      .type('../fake-data/blob/hipster.txt', { force: true })
+      .type('../fake-data/blob/hipster.txt')
       .invoke('val')
       .should('match', new RegExp('../fake-data/blob/hipster.txt'));
 
-    cy.get(`[data-cy="sender"]`)
-      .type('Interactions New calculate', { force: true })
-      .invoke('val')
-      .should('match', new RegExp('Interactions New calculate'));
+    cy.get(`[data-cy="sender"]`).type('withdrawal').should('have.value', 'withdrawal');
 
-    cy.get(`[data-cy="status"]`).type('Principal', { force: true }).invoke('val').should('match', new RegExp('Principal'));
+    cy.get(`[data-cy="status"]`).type('Unbranded Pound').should('have.value', 'Unbranded Pound');
 
     cy.get(`[data-cy="searchField"]`)
-      .type('../fake-data/blob/hipster.txt', { force: true })
+      .type('../fake-data/blob/hipster.txt')
       .invoke('val')
       .should('match', new RegExp('../fake-data/blob/hipster.txt'));
 
-    cy.get(`[data-cy="role"]`).type('calculate', { force: true }).invoke('val').should('match', new RegExp('calculate'));
+    cy.get(`[data-cy="role"]`).type('Unbranded Open-source').should('have.value', 'Unbranded Open-source');
 
-    cy.get(`[data-cy="createdDate"]`).type('2021-05-22T20:31').invoke('val').should('equal', '2021-05-22T20:31');
+    cy.get(`[data-cy="createdDate"]`).type('2021-05-22T20:20').should('have.value', '2021-05-22T20:20');
 
-    cy.get(`[data-cy="modifiedDate"]`).type('2021-05-22T09:46').invoke('val').should('equal', '2021-05-22T09:46');
+    cy.get(`[data-cy="modifiedDate"]`).type('2021-05-22T17:51').should('have.value', '2021-05-22T17:51');
 
-    cy.get(`[data-cy="createdBy"]`)
-      .type('invoice capacitor', { force: true })
-      .invoke('val')
-      .should('match', new RegExp('invoice capacitor'));
+    cy.get(`[data-cy="createdBy"]`).type('lime').should('have.value', 'lime');
 
-    cy.get(`[data-cy="modifiedBy"]`)
-      .type('Tactics web-enabled Mississippi', { force: true })
-      .invoke('val')
-      .should('match', new RegExp('Tactics web-enabled Mississippi'));
+    cy.get(`[data-cy="modifiedBy"]`).type('deposit Soft hack').should('have.value', 'deposit Soft hack');
 
-    cy.get(`[data-cy="comment"]`).type('quantifying', { force: true }).invoke('val').should('match', new RegExp('quantifying'));
+    cy.get(`[data-cy="comment"]`).type('index').should('have.value', 'index');
 
-    cy.get(entityCreateSaveButtonSelector).click({ force: true });
-    cy.scrollTo('top', { ensureScrollable: false });
+    cy.get(entityCreateSaveButtonSelector).click({force: true});
+    cy.scrollTo('top', {ensureScrollable: false});
     cy.get(entityCreateSaveButtonSelector).should('not.exist');
-    cy.intercept('GET', '/api/message-contents*').as('entitiesRequestAfterCreate');
-    cy.visit('/');
-    cy.clickOnEntityMenuItem('message-content');
-    cy.wait('@entitiesRequestAfterCreate');
-    cy.get(entityTableSelector).should('have.lengthOf', startingEntitiesCount + 1);
-    cy.visit('/');
+    cy.wait('@postEntityRequest').then(({response}) =>
+    {
+      expect(response.statusCode).to.equal(201);
+    });
+    cy.wait('@entitiesRequest').then(({response}) =>
+    {
+      expect(response.statusCode).to.equal(200);
+    });
+    cy.url().should('match', messageContentPageUrlPattern);
   });
 
-  it('should delete last instance of MessageContent', () => {
-    cy.intercept('GET', '/api/message-contents*').as('entitiesRequest');
+  it('should delete last instance of MessageContent', function ()
+  {
     cy.intercept('GET', '/api/message-contents/*').as('dialogDeleteRequest');
-    cy.intercept('DELETE', '/api/message-contents/*').as('deleteEntityRequest');
-    cy.visit('/');
-    cy.clickOnEntityMenuItem('message-content');
-    cy.wait('@entitiesRequest').then(({ request, response }) => {
-      startingEntitiesCount = response.body.length;
-      if (startingEntitiesCount > 0) {
-        cy.get(entityTableSelector).should('have.lengthOf', startingEntitiesCount);
-        cy.get(entityDeleteButtonSelector).last().click({ force: true });
+    cy.visit(messageContentPageUrl);
+    cy.wait('@entitiesRequest').then(({response}) =>
+    {
+      if (response.body.length > 0)
+      {
+        cy.get(entityTableSelector).should('have.lengthOf', response.body.length);
+        cy.get(entityDeleteButtonSelector).last().click({force: true});
         cy.wait('@dialogDeleteRequest');
         cy.getEntityDeleteDialogHeading('messageContent').should('exist');
-        cy.get(entityConfirmDeleteButtonSelector).click({ force: true });
-        cy.wait('@deleteEntityRequest');
-        cy.intercept('GET', '/api/message-contents*').as('entitiesRequestAfterDelete');
-        cy.visit('/');
-        cy.clickOnEntityMenuItem('message-content');
-        cy.wait('@entitiesRequestAfterDelete');
-        cy.get(entityTableSelector).should('have.lengthOf', startingEntitiesCount - 1);
+        cy.get(entityConfirmDeleteButtonSelector).click({force: true});
+        cy.wait('@deleteEntityRequest').then(({response}) =>
+        {
+          expect(response.statusCode).to.equal(204);
+        });
+        cy.wait('@entitiesRequest').then(({response}) =>
+        {
+          expect(response.statusCode).to.equal(200);
+        });
+        cy.url().should('match', messageContentPageUrlPattern);
       }
-      cy.visit('/');
+      else
+      {
+        this.skip();
+      }
     });
   });
 });

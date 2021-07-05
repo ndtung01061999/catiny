@@ -1,15 +1,10 @@
 package com.regitiny.catiny.config;
 
-import static java.net.URLDecoder.decode;
-
-import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Paths;
-import javax.servlet.*;
+import com.regitiny.catiny.GeneratedByJHipster;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.web.server.*;
+import org.springframework.boot.web.server.WebServerFactory;
+import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
@@ -24,11 +19,22 @@ import tech.jhipster.config.JHipsterConstants;
 import tech.jhipster.config.JHipsterProperties;
 import tech.jhipster.config.h2.H2ConfigurationHelper;
 
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
+
+import static java.net.URLDecoder.decode;
+
 /**
  * Configuration of web application with Servlet 3.0 APIs.
  */
 @Configuration
-public class WebConfigurer implements ServletContextInitializer, WebServerFactoryCustomizer<WebServerFactory> {
+@GeneratedByJHipster
+public class WebConfigurer implements ServletContextInitializer, WebServerFactoryCustomizer<WebServerFactory>
+{
 
   private final Logger log = LoggerFactory.getLogger(WebConfigurer.class);
 
@@ -36,18 +42,22 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
 
   private final JHipsterProperties jHipsterProperties;
 
-  public WebConfigurer(Environment env, JHipsterProperties jHipsterProperties) {
+  public WebConfigurer(Environment env, JHipsterProperties jHipsterProperties)
+  {
     this.env = env;
     this.jHipsterProperties = jHipsterProperties;
   }
 
   @Override
-  public void onStartup(ServletContext servletContext) throws ServletException {
-    if (env.getActiveProfiles().length != 0) {
+  public void onStartup(ServletContext servletContext) throws ServletException
+  {
+    if (env.getActiveProfiles().length != 0)
+    {
       log.info("Web application configuration, using profiles: {}", (Object[]) env.getActiveProfiles());
     }
 
-    if (env.acceptsProfiles(Profiles.of(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT))) {
+    if (env.acceptsProfiles(Profiles.of(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT)))
+    {
       initH2Console(servletContext);
     }
     log.info("Web application fully configured");
@@ -57,18 +67,22 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
    * Customize the Servlet engine: Mime types, the document root, the cache.
    */
   @Override
-  public void customize(WebServerFactory server) {
+  public void customize(WebServerFactory server)
+  {
     // When running in an IDE or with ./gradlew bootRun, set location of the static web assets.
     setLocationForStaticAssets(server);
   }
 
-  private void setLocationForStaticAssets(WebServerFactory server) {
-    if (server instanceof ConfigurableServletWebServerFactory) {
+  private void setLocationForStaticAssets(WebServerFactory server)
+  {
+    if (server instanceof ConfigurableServletWebServerFactory)
+    {
       ConfigurableServletWebServerFactory servletWebServer = (ConfigurableServletWebServerFactory) server;
       File root;
       String prefixPath = resolvePathPrefix();
       root = new File(prefixPath + "build/resources/main/static/");
-      if (root.exists() && root.isDirectory()) {
+      if (root.exists() && root.isDirectory())
+      {
         servletWebServer.setDocumentRoot(root);
       }
     }
@@ -77,28 +91,35 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
   /**
    * Resolve path prefix to static resources.
    */
-  private String resolvePathPrefix() {
+  private String resolvePathPrefix()
+  {
     String fullExecutablePath;
-    try {
+    try
+    {
       fullExecutablePath = decode(this.getClass().getResource("").getPath(), StandardCharsets.UTF_8.name());
-    } catch (UnsupportedEncodingException e) {
+    }
+    catch (UnsupportedEncodingException e)
+    {
       /* try without decoding if this ever happens */
       fullExecutablePath = this.getClass().getResource("").getPath();
     }
     String rootPath = Paths.get(".").toUri().normalize().getPath();
     String extractedPath = fullExecutablePath.replace(rootPath, "");
     int extractionEndIndex = extractedPath.indexOf("build/");
-    if (extractionEndIndex <= 0) {
+    if (extractionEndIndex <= 0)
+    {
       return "";
     }
     return extractedPath.substring(0, extractionEndIndex);
   }
 
   @Bean
-  public CorsFilter corsFilter() {
+  public CorsFilter corsFilter()
+  {
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     CorsConfiguration config = jHipsterProperties.getCors();
-    if (!CollectionUtils.isEmpty(config.getAllowedOrigins())) {
+    if (!CollectionUtils.isEmpty(config.getAllowedOrigins()) || !CollectionUtils.isEmpty(config.getAllowedOriginPatterns()))
+    {
       log.debug("Registering CORS filter");
       source.registerCorsConfiguration("/api/**", config);
       source.registerCorsConfiguration("/management/**", config);
@@ -113,7 +134,8 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
   /**
    * Initializes H2 console.
    */
-  private void initH2Console(ServletContext servletContext) {
+  private void initH2Console(ServletContext servletContext)
+  {
     log.debug("Initialize H2 console");
     H2ConfigurationHelper.initH2Console(servletContext);
   }

@@ -1,68 +1,77 @@
 import React, {useEffect, useState} from 'react';
-import {connect} from 'react-redux';
 import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Label, Row, UncontrolledTooltip} from 'reactstrap';
-import {AvField, AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
-import {setFileData, Translate, translate} from 'react-jhipster';
+import {Button, Col, Row, UncontrolledTooltip} from 'reactstrap';
+import {isNumber, Translate, translate, ValidatedField, ValidatedForm} from 'react-jhipster';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {IRootState} from 'app/shared/reducers';
 
-import {createEntity, getEntity, reset, setBlob, updateEntity} from './message-group.reducer';
+import {createEntity, getEntity, updateEntity} from './message-group.reducer';
 import {convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime} from 'app/shared/util/date-utils';
+import {useAppDispatch, useAppSelector} from 'app/config/store';
 
-export interface IMessageGroupUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }>
+export const MessageGroupUpdate = (props: RouteComponentProps<{ id: string }>) =>
 {
-}
+  const dispatch = useAppDispatch();
 
-export const MessageGroupUpdate = (props: IMessageGroupUpdateProps) =>
-{
   const [isNew] = useState(!props.match.params || !props.match.params.id);
 
-  const {messageGroupEntity, loading, updating} = props;
+  const messageGroupEntity = useAppSelector(state => state.messageGroup.entity);
+  const loading = useAppSelector(state => state.messageGroup.loading);
+  const updating = useAppSelector(state => state.messageGroup.updating);
+  const updateSuccess = useAppSelector(state => state.messageGroup.updateSuccess);
 
-  const {lastContent, searchField} = messageGroupEntity;
 
-  const handleClose = () => {
+  const handleClose = () =>
+  {
     props.history.push('/message-group');
   };
 
-  useEffect(() => {
-    if (!isNew) {
-      props.getEntity(props.match.params.id);
+  useEffect(() =>
+  {
+    if (!isNew)
+    {
+      dispatch(getEntity(props.match.params.id));
     }
   }, []);
 
-  const onBlobChange = (isAnImage, name) => event => {
-    setFileData(event, (contentType, data) => props.setBlob(name, data, contentType), isAnImage);
-  };
-
-  const clearBlob = name => () => {
-    props.setBlob(name, undefined, undefined);
-  };
-
-  useEffect(() => {
-    if (props.updateSuccess) {
+  useEffect(() =>
+  {
+    if (updateSuccess)
+    {
       handleClose();
     }
-  }, [props.updateSuccess]);
+  }, [updateSuccess]);
 
-  const saveEntity = (event, errors, values) => {
+  const saveEntity = values =>
+  {
     values.createdDate = convertDateTimeToServer(values.createdDate);
     values.modifiedDate = convertDateTimeToServer(values.modifiedDate);
 
-    if (errors.length === 0) {
-      const entity = {
-        ...messageGroupEntity,
-        ...values,
-      };
+    const entity = {
+      ...messageGroupEntity,
+      ...values,
+    };
 
-      if (isNew) {
-        props.createEntity(entity);
-      } else {
-        props.updateEntity(entity);
-      }
+    if (isNew)
+    {
+      dispatch(createEntity(entity));
+    }
+    else
+    {
+      dispatch(updateEntity(entity));
     }
   };
+
+  const defaultValues = () =>
+    isNew
+      ? {
+        createdDate: displayDefaultDateTime(),
+        modifiedDate: displayDefaultDateTime(),
+      }
+      : {
+        ...messageGroupEntity,
+        createdDate: convertDateTimeFromServer(messageGroupEntity.createdDate),
+        modifiedDate: convertDateTimeFromServer(messageGroupEntity.modifiedDate),
+      };
 
   return (
     <div>
@@ -78,161 +87,146 @@ export const MessageGroupUpdate = (props: IMessageGroupUpdateProps) =>
           {loading ? (
             <p>Loading...</p>
           ) : (
-            <AvForm model={isNew ? {} : messageGroupEntity} onSubmit={saveEntity}>
+            <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
               {!isNew ? (
-                <AvGroup>
-                  <Label for="message-group-id">
-                    <Translate contentKey="global.field.id">ID</Translate>
-                  </Label>
-                  <AvInput id="message-group-id" type="text" className="form-control" name="id" required readOnly />
-                </AvGroup>
+                <ValidatedField
+                  name="id"
+                  required
+                  readOnly
+                  id="message-group-id"
+                  label={translate('global.field.id')}
+                  validate={{required: true}}
+                />
               ) : null}
-              <AvGroup>
-                <Label id="uuidLabel" for="message-group-uuid">
-                  <Translate contentKey="catinyApp.messageGroup.uuid">Uuid</Translate>
-                </Label>
-                <AvField
-                  id="message-group-uuid"
-                  data-cy="uuid"
-                  type="text"
-                  name="uuid"
-                  validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') },
-                  }}
-                />
-                <UncontrolledTooltip target="uuidLabel">
-                  <Translate contentKey="catinyApp.messageGroup.help.uuid" />
-                </UncontrolledTooltip>
-              </AvGroup>
-              <AvGroup>
-                <Label id="userIdLabel" for="message-group-userId">
-                  <Translate contentKey="catinyApp.messageGroup.userId">User Id</Translate>
-                </Label>
-                <AvField
-                  id="message-group-userId"
-                  data-cy="userId"
-                  type="string"
-                  className="form-control"
-                  name="userId"
-                  validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') },
-                    number: { value: true, errorMessage: translate('entity.validation.number') },
-                  }}
-                />
-              </AvGroup>
-              <AvGroup>
-                <Label id="groupIdLabel" for="message-group-groupId">
-                  <Translate contentKey="catinyApp.messageGroup.groupId">Group Id</Translate>
-                </Label>
-                <AvField
-                  id="message-group-groupId"
-                  data-cy="groupId"
-                  type="text"
-                  name="groupId"
-                  validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') },
-                  }}
-                />
-              </AvGroup>
-              <AvGroup>
-                <Label id="groupNameLabel" for="message-group-groupName">
-                  <Translate contentKey="catinyApp.messageGroup.groupName">Group Name</Translate>
-                </Label>
-                <AvField id="message-group-groupName" data-cy="groupName" type="text" name="groupName" />
-              </AvGroup>
-              <AvGroup>
-                <Label id="addByLabel" for="message-group-addBy">
-                  <Translate contentKey="catinyApp.messageGroup.addBy">Add By</Translate>
-                </Label>
-                <AvField id="message-group-addBy" data-cy="addBy" type="text" name="addBy" />
-              </AvGroup>
-              <AvGroup>
-                <Label id="lastContentLabel" for="message-group-lastContent">
-                  <Translate contentKey="catinyApp.messageGroup.lastContent">Last Content</Translate>
-                </Label>
-                <AvInput id="message-group-lastContent" data-cy="lastContent" type="textarea" name="lastContent" />
-              </AvGroup>
-              <AvGroup>
-                <Label id="searchFieldLabel" for="message-group-searchField">
-                  <Translate contentKey="catinyApp.messageGroup.searchField">Search Field</Translate>
-                </Label>
-                <AvInput id="message-group-searchField" data-cy="searchField" type="textarea" name="searchField" />
-                <UncontrolledTooltip target="searchFieldLabel">
-                  <Translate contentKey="catinyApp.messageGroup.help.searchField" />
-                </UncontrolledTooltip>
-              </AvGroup>
-              <AvGroup>
-                <Label id="roleLabel" for="message-group-role">
-                  <Translate contentKey="catinyApp.messageGroup.role">Role</Translate>
-                </Label>
-                <AvField id="message-group-role" data-cy="role" type="text" name="role"/>
-                <UncontrolledTooltip target="roleLabel">
-                  <Translate contentKey="catinyApp.messageGroup.help.role"/>
-                </UncontrolledTooltip>
-              </AvGroup>
-              <AvGroup>
-                <Label id="createdDateLabel" for="message-group-createdDate">
-                  <Translate contentKey="catinyApp.messageGroup.createdDate">Created Date</Translate>
-                </Label>
-                <AvInput
-                  id="message-group-createdDate"
-                  data-cy="createdDate"
-                  type="datetime-local"
-                  className="form-control"
-                  name="createdDate"
-                  placeholder={'YYYY-MM-DD HH:mm'}
-                  value={isNew ? displayDefaultDateTime() : convertDateTimeFromServer(props.messageGroupEntity.createdDate)}
-                />
-                <UncontrolledTooltip target="createdDateLabel">
-                  <Translate contentKey="catinyApp.messageGroup.help.createdDate" />
-                </UncontrolledTooltip>
-              </AvGroup>
-              <AvGroup>
-                <Label id="modifiedDateLabel" for="message-group-modifiedDate">
-                  <Translate contentKey="catinyApp.messageGroup.modifiedDate">Modified Date</Translate>
-                </Label>
-                <AvInput
-                  id="message-group-modifiedDate"
-                  data-cy="modifiedDate"
-                  type="datetime-local"
-                  className="form-control"
-                  name="modifiedDate"
-                  placeholder={'YYYY-MM-DD HH:mm'}
-                  value={isNew ? displayDefaultDateTime() : convertDateTimeFromServer(props.messageGroupEntity.modifiedDate)}
-                />
-                <UncontrolledTooltip target="modifiedDateLabel">
-                  <Translate contentKey="catinyApp.messageGroup.help.modifiedDate" />
-                </UncontrolledTooltip>
-              </AvGroup>
-              <AvGroup>
-                <Label id="createdByLabel" for="message-group-createdBy">
-                  <Translate contentKey="catinyApp.messageGroup.createdBy">Created By</Translate>
-                </Label>
-                <AvField id="message-group-createdBy" data-cy="createdBy" type="text" name="createdBy" />
-                <UncontrolledTooltip target="createdByLabel">
-                  <Translate contentKey="catinyApp.messageGroup.help.createdBy" />
-                </UncontrolledTooltip>
-              </AvGroup>
-              <AvGroup>
-                <Label id="modifiedByLabel" for="message-group-modifiedBy">
-                  <Translate contentKey="catinyApp.messageGroup.modifiedBy">Modified By</Translate>
-                </Label>
-                <AvField id="message-group-modifiedBy" data-cy="modifiedBy" type="text" name="modifiedBy" />
-                <UncontrolledTooltip target="modifiedByLabel">
-                  <Translate contentKey="catinyApp.messageGroup.help.modifiedBy" />
-                </UncontrolledTooltip>
-              </AvGroup>
-              <AvGroup>
-                <Label id="commentLabel" for="message-group-comment">
-                  <Translate contentKey="catinyApp.messageGroup.comment">Comment</Translate>
-                </Label>
-                <AvField id="message-group-comment" data-cy="comment" type="text" name="comment"/>
-                <UncontrolledTooltip target="commentLabel">
-                  <Translate contentKey="catinyApp.messageGroup.help.comment"/>
-                </UncontrolledTooltip>
-              </AvGroup>
-              <Button tag={Link} id="cancel-save" to="/message-group" replace color="info">
-                <FontAwesomeIcon icon="arrow-left" />
+              <ValidatedField
+                label={translate('catinyApp.messageGroup.uuid')}
+                id="message-group-uuid"
+                name="uuid"
+                data-cy="uuid"
+                type="text"
+                validate={{
+                  required: {value: true, message: translate('entity.validation.required')},
+                }}
+              />
+              <UncontrolledTooltip target="uuidLabel">
+                <Translate contentKey="catinyApp.messageGroup.help.uuid"/>
+              </UncontrolledTooltip>
+              <ValidatedField
+                label={translate('catinyApp.messageGroup.userId')}
+                id="message-group-userId"
+                name="userId"
+                data-cy="userId"
+                type="text"
+                validate={{
+                  required: {value: true, message: translate('entity.validation.required')},
+                  validate: v => isNumber(v) || translate('entity.validation.number'),
+                }}
+              />
+              <ValidatedField
+                label={translate('catinyApp.messageGroup.groupId')}
+                id="message-group-groupId"
+                name="groupId"
+                data-cy="groupId"
+                type="text"
+                validate={{
+                  required: {value: true, message: translate('entity.validation.required')},
+                }}
+              />
+              <ValidatedField
+                label={translate('catinyApp.messageGroup.groupName')}
+                id="message-group-groupName"
+                name="groupName"
+                data-cy="groupName"
+                type="text"
+              />
+              <ValidatedField
+                label={translate('catinyApp.messageGroup.addBy')}
+                id="message-group-addBy"
+                name="addBy"
+                data-cy="addBy"
+                type="text"
+              />
+              <ValidatedField
+                label={translate('catinyApp.messageGroup.lastContent')}
+                id="message-group-lastContent"
+                name="lastContent"
+                data-cy="lastContent"
+                type="textarea"
+              />
+              <ValidatedField
+                label={translate('catinyApp.messageGroup.searchField')}
+                id="message-group-searchField"
+                name="searchField"
+                data-cy="searchField"
+                type="textarea"
+              />
+              <UncontrolledTooltip target="searchFieldLabel">
+                <Translate contentKey="catinyApp.messageGroup.help.searchField"/>
+              </UncontrolledTooltip>
+              <ValidatedField
+                label={translate('catinyApp.messageGroup.role')}
+                id="message-group-role"
+                name="role"
+                data-cy="role"
+                type="text"
+              />
+              <UncontrolledTooltip target="roleLabel">
+                <Translate contentKey="catinyApp.messageGroup.help.role"/>
+              </UncontrolledTooltip>
+              <ValidatedField
+                label={translate('catinyApp.messageGroup.createdDate')}
+                id="message-group-createdDate"
+                name="createdDate"
+                data-cy="createdDate"
+                type="datetime-local"
+                placeholder="YYYY-MM-DD HH:mm"
+              />
+              <UncontrolledTooltip target="createdDateLabel">
+                <Translate contentKey="catinyApp.messageGroup.help.createdDate"/>
+              </UncontrolledTooltip>
+              <ValidatedField
+                label={translate('catinyApp.messageGroup.modifiedDate')}
+                id="message-group-modifiedDate"
+                name="modifiedDate"
+                data-cy="modifiedDate"
+                type="datetime-local"
+                placeholder="YYYY-MM-DD HH:mm"
+              />
+              <UncontrolledTooltip target="modifiedDateLabel">
+                <Translate contentKey="catinyApp.messageGroup.help.modifiedDate"/>
+              </UncontrolledTooltip>
+              <ValidatedField
+                label={translate('catinyApp.messageGroup.createdBy')}
+                id="message-group-createdBy"
+                name="createdBy"
+                data-cy="createdBy"
+                type="text"
+              />
+              <UncontrolledTooltip target="createdByLabel">
+                <Translate contentKey="catinyApp.messageGroup.help.createdBy"/>
+              </UncontrolledTooltip>
+              <ValidatedField
+                label={translate('catinyApp.messageGroup.modifiedBy')}
+                id="message-group-modifiedBy"
+                name="modifiedBy"
+                data-cy="modifiedBy"
+                type="text"
+              />
+              <UncontrolledTooltip target="modifiedByLabel">
+                <Translate contentKey="catinyApp.messageGroup.help.modifiedBy"/>
+              </UncontrolledTooltip>
+              <ValidatedField
+                label={translate('catinyApp.messageGroup.comment')}
+                id="message-group-comment"
+                name="comment"
+                data-cy="comment"
+                type="text"
+              />
+              <UncontrolledTooltip target="commentLabel">
+                <Translate contentKey="catinyApp.messageGroup.help.comment"/>
+              </UncontrolledTooltip>
+              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/message-group" replace color="info">
+                <FontAwesomeIcon icon="arrow-left"/>
                 &nbsp;
                 <span className="d-none d-md-inline">
                   <Translate contentKey="entity.action.back">Back</Translate>
@@ -240,11 +234,11 @@ export const MessageGroupUpdate = (props: IMessageGroupUpdateProps) =>
               </Button>
               &nbsp;
               <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit" disabled={updating}>
-                <FontAwesomeIcon icon="save" />
+                <FontAwesomeIcon icon="save"/>
                 &nbsp;
                 <Translate contentKey="entity.action.save">Save</Translate>
               </Button>
-            </AvForm>
+            </ValidatedForm>
           )}
         </Col>
       </Row>
@@ -252,22 +246,4 @@ export const MessageGroupUpdate = (props: IMessageGroupUpdateProps) =>
   );
 };
 
-const mapStateToProps = (storeState: IRootState) => ({
-  messageGroupEntity: storeState.messageGroup.entity,
-  loading: storeState.messageGroup.loading,
-  updating: storeState.messageGroup.updating,
-  updateSuccess: storeState.messageGroup.updateSuccess,
-});
-
-const mapDispatchToProps = {
-  getEntity,
-  updateEntity,
-  setBlob,
-  createEntity,
-  reset,
-};
-
-type StateProps = ReturnType<typeof mapStateToProps>;
-type DispatchProps = typeof mapDispatchToProps;
-
-export default connect(mapStateToProps, mapDispatchToProps)(MessageGroupUpdate);
+export default MessageGroupUpdate;

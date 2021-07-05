@@ -9,7 +9,7 @@ openApiGenerate {
   inputSpec = "$rootDir/src/main/resources/swagger/api.yml".toString()
   outputDir = "$buildDir/openapi".toString()
   apiPackage = "com.regitiny.catiny.web.api"
-  modelPackage = "com.regitiny.catiny.web.api.model"
+  modelPackage = "com.regitiny.catiny.service.api.dto"
   apiFilesConstrainedTo = [""]
   modelFilesConstrainedTo = [""]
   supportingFilesConstrainedTo = ["ApiUtil.java"]
@@ -79,4 +79,4 @@ task buildOpenApiBackend(type: org.openapitools.generator.gradle.plugin.tasks.Ge
   importMappings = [Problem: "org.zalando.problem.Problem"]
 }
 
-compileJava.dependsOn("buildOpenApiBackend")  //to openapi no generate while compile
+//compileJava.dependsOn("buildOpenApiBackend")  //to openapi no generate while compile

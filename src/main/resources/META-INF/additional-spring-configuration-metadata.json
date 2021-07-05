@@ -1,0 +1,48 @@
+{
+  "properties": [
+    {
+      "name": "catiny.value.number-of-cities",
+      "type": "java.lang.String",
+      "description": "Description for catiny.value.number-of-cities."
+    },
+    {
+      "name": "catiny.server.main.host",
+      "type": "java.lang.String",
+      "description": "đây là thông tin server chính để kết nốt đến ví dụ : localhost , dev.catiny.com ,... ."
+    },
+    {
+      "name": "catiny.server.main.prefix-port",
+      "type": "java.lang.String",
+      "description": "port number chạy từ 1-65k nên số này nằm trong khỏng 1-5. ví dụ: mariadb 3306 là cổng chính(prod) thì 13306 là phiên bản dành cho dev , 23306 là phiên bản cho test 3 , 4, 5 tính sau   ."
+    },
+    {
+      "name": "catiny.server.main.connect-default",
+      "type": "java.lang.String",
+      "description": "ví dụ giá trị ở đây sẽ là: 'localhost:1' sau đó ghép với port sẽ thành : 'localhost:13306' ."
+    },
+    {
+      "name": "catiny.server.ffmpeg.host",
+      "type": "java.lang.String",
+      "description": "địa chỉ để kết nối đến ffmpeg vú dụ : dev.catiny.com."
+    },
+    {
+      "name": "catiny.server.ffmpeg.data.video.folder-original",
+      "type": "java.lang.String",
+      "description": "thư mục chứa ảnh gốc."
+    },
+    {
+      "name": "catiny.server.ffmpeg.data.video.folder-processed",
+      "type": "java.lang.String",
+      "description": "thư mục chứa ảnh đã xử lý."
+    },
+    {
+      "name": "catiny.server.ffmpeg.data.image.folder-original",
+      "type": "java.lang.String",
+      "description": "thư mục chứa video gốc."
+    },
+    {
+      "name": "catiny.server.ffmpeg.data.image.folder-processed",
+      "type": "java.lang.String",
+      "description": "thư mục chứa video đã qua xử lý."
+    }
+  ] }

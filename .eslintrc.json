@@ -23,6 +23,12 @@
       "version": "detect"
     }
   },
+  "globals": {
+    "document": true,
+    "process": true,
+    "module": true,
+    "window": true
+  },
   "rules": {
     "@typescript-eslint/member-ordering": [
       "error",
@@ -74,6 +80,8 @@
     "complexity": ["error", 40],
     "no-invalid-this": "off",
     "react/prop-types": "off",
-    "react/display-name": "off"
+    "react/display-name": "off",
+    "react/no-unescaped-entities": "warn",
+    "no-undef": "error"
   }
 }

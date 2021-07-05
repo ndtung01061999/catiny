@@ -11,12 +11,6 @@ const utils = require('./utils.js');
 const getTsLoaderRule = env => {
   const rules = [
     {
-      loader: 'cache-loader',
-      options: {
-        cacheDirectory: path.resolve('build/cache-loader'),
-      },
-    },
-    {
       loader: 'thread-loader',
       options: {
         // There should be 1 cpu for the fork-ts-checker-webpack-plugin.
@@ -43,9 +37,22 @@ const getTsLoaderRule = env => {
 
 module.exports = options =>
   merge(
-    // jhipster-needle-add-webpack-config - JHipster will add custom config
     {
-      cache: options.env !== 'production',
+      cache: {
+        // 1. Set cache type to filesystem
+        type: 'filesystem',
+        cacheDirectory: path.resolve(__dirname, '../build/webpack'),
+        buildDependencies: {
+          // 2. Add your config as buildDependency to get cache invalidation on config change
+          config: [
+            __filename,
+            path.resolve(__dirname, `webpack.${options.env == 'development' ? 'dev' : 'prod'}.js`),
+            path.resolve(__dirname, 'utils.js'),
+            path.resolve(__dirname, '../postcss.config.js'),
+            path.resolve(__dirname, '../tsconfig.json'),
+          ],
+        },
+      },
       resolve: {
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
         modules: ['node_modules'],
@@ -57,9 +64,13 @@ module.exports = options =>
       module: {
         rules: [
           {
-            test: /\.tsx?$/,
+            test: [/\.tsx?$/, /\.js?$/],
             use: getTsLoaderRule(options.env),
-            include: [utils.root('./src/main/webapp/app'), utils.root('./build/openapi/src/main/typescript/open-api')],
+            include: [
+              utils.root('./src/main/webapp/app'),
+              utils.root('./src/main/webapp/app-js'),
+              utils.root('./build/openapi/src/main/typescript/open-api')
+            ],
             exclude: [utils.root('node_modules')],
           },
           {
@@ -122,6 +133,7 @@ module.exports = options =>
             { from: './node_modules/axios/dist/axios.min.js', to: 'swagger-ui/' },
             { from: './src/main/webapp/swagger-ui/', to: 'swagger-ui/' },
             { from: './src/main/webapp/content/', to: 'content/' },
+            { from: './src/main/webapp/assets/', to: 'assets/' },
             { from: './src/main/webapp/favicon.ico', to: 'favicon.ico' },
             { from: './src/main/webapp/manifest.webapp', to: 'manifest.webapp' },
             // jhipster-needle-add-assets-to-webpack - JHipster will add/remove third-party resources in this array
@@ -145,4 +157,5 @@ module.exports = options =>
         }),
       ],
     }
+    // jhipster-needle-add-webpack-config - JHipster will add custom config
   );

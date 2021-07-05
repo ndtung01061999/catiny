@@ -1,7 +1,6 @@
 const webpack = require('webpack');
 const webpackMerge = require('webpack-merge').merge;
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
-const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin');
 const WebpackNotifierPlugin = require('webpack-notifier');
 const path = require('path');
@@ -45,6 +44,7 @@ module.exports = options =>
       stats: options.stats,
       hot: true,
       contentBase: './build/resources/main/static/',
+      port: 9060,
       proxy: [
         {
           context: [
@@ -58,13 +58,15 @@ module.exports = options =>
             '/h2-console',
             '/auth',
           ],
-          target: `http${options.tls ? 's' : ''}://localhost:8080`,
+          // target: `http${options.tls ? 's' : ''}://localhost:8080`, //local
+          target: `http${options.tls ? 's' : ''}://dev.catiny.com:10080`, //server dev
           secure: false,
           changeOrigin: options.tls,
         },
         {
           context: ['/websocket'],
-          target: 'ws://127.0.0.1:8080',
+          // target: 'ws://127.0.0.1:8080', //local
+          target: 'ws://dev.catiny.com:10080', //server dev
           ws: true,
         },
       ],
@@ -81,7 +83,6 @@ module.exports = options =>
         : new SimpleProgressWebpackPlugin({
             format: options.stats === 'minimal' ? 'compact' : 'expanded',
           }),
-      new FriendlyErrorsWebpackPlugin(),
       new BrowserSyncPlugin(
         {
           https: options.tls,

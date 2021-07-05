@@ -1,10 +1,10 @@
 import {
-  currentPasswordSelector,
-  newPasswordSelector,
-  confirmPasswordSelector,
-  submitPasswordSelector,
   classInvalid,
   classValid,
+  confirmPasswordSelector,
+  currentPasswordSelector,
+  newPasswordSelector,
+  submitPasswordSelector,
 } from '../../support/commands';
 
 describe('/account/password', () => {
@@ -22,19 +22,29 @@ describe('/account/password', () => {
     cy.intercept('POST', '/api/account/change-password').as('passwordSave');
   });
 
-  it('requires current password', () => {
-    cy.get(currentPasswordSelector).should('have.class', classInvalid).type('wrong-current-password').should('have.class', classValid);
+  it('requires current password', () =>
+  {
+    cy.get(submitPasswordSelector).click({force: true});
+    cy.get(currentPasswordSelector).should('have.class', classInvalid).type('wrong-current-password');
+    cy.get(submitPasswordSelector).click({force: true});
+    cy.get(currentPasswordSelector).should('have.class', classValid);
     cy.get(currentPasswordSelector).clear();
   });
 
-  it('requires new password', () => {
-    cy.get(newPasswordSelector).should('have.class', classInvalid).type('jhipster').should('have.class', classValid);
+  it('requires new password', () =>
+  {
+    cy.get(newPasswordSelector).should('have.class', classInvalid).type('jhipster');
+    cy.get(submitPasswordSelector).click({force: true});
+    cy.get(newPasswordSelector).should('have.class', classValid);
     cy.get(newPasswordSelector).clear();
   });
 
-  it('requires confirm new password', () => {
+  it('requires confirm new password', () =>
+  {
     cy.get(newPasswordSelector).type('jhipster');
-    cy.get(confirmPasswordSelector).should('have.class', classInvalid).type('jhipster').should('have.class', classValid);
+    cy.get(confirmPasswordSelector).should('have.class', classInvalid).type('jhipster');
+    cy.get(submitPasswordSelector).click({force: true});
+    cy.get(confirmPasswordSelector).should('have.class', classValid);
     cy.get(newPasswordSelector).clear();
     cy.get(confirmPasswordSelector).clear();
   });

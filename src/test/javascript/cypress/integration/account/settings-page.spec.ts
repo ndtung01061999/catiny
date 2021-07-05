@@ -1,8 +1,14 @@
-import { firstNameSettingsSelector, lastNameSettingsSelector, submitSettingsSelector, emailSettingsSelector } from '../../support/commands';
+import {emailSettingsSelector, firstNameSettingsSelector, lastNameSettingsSelector, submitSettingsSelector} from '../../support/commands';
 
-describe('/account/settings', () => {
-  before(() => {
-    cy.window().then(win => {
+describe('/account/settings', () =>
+{
+  const username = Cypress.env('E2E_USERNAME') ?? 'admin';
+  const password = Cypress.env('E2E_PASSWORD') ?? 'admin';
+
+  before(() =>
+  {
+    cy.window().then(win =>
+    {
       win.sessionStorage.clear();
     });
     cy.clearCookies();
@@ -41,7 +47,7 @@ describe('/account/settings', () => {
     // add an email for admin account
     cy.clickOnLogoutItem();
     cy.visit('');
-    cy.login('admin', 'admin');
+    cy.login(username, password);
     cy.clickOnSettingsItem();
     cy.get(emailSettingsSelector).clear().type('admin@localhost.fr');
     cy.get(submitSettingsSelector).click({ force: true });

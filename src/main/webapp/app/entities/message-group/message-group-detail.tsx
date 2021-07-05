@@ -1,22 +1,23 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, UncontrolledTooltip, Row, Col } from 'reactstrap';
-import { Translate, byteSize, TextFormat } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useEffect} from 'react';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, Row, UncontrolledTooltip} from 'reactstrap';
+import {TextFormat, Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { IRootState } from 'app/shared/reducers';
-import { getEntity } from './message-group.reducer';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import {getEntity} from './message-group.reducer';
+import {APP_DATE_FORMAT} from 'app/config/constants';
+import {useAppDispatch, useAppSelector} from 'app/config/store';
 
-export interface IMessageGroupDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export const MessageGroupDetail = (props: RouteComponentProps<{ id: string }>) =>
+{
+  const dispatch = useAppDispatch();
 
-export const MessageGroupDetail = (props: IMessageGroupDetailProps) => {
-  useEffect(() => {
-    props.getEntity(props.match.params.id);
+  useEffect(() =>
+  {
+    dispatch(getEntity(props.match.params.id));
   }, []);
 
-  const { messageGroupEntity } = props;
+  const messageGroupEntity = useAppSelector(state => state.messageGroup.entity);
   return (
     <Row>
       <Col md="8">
@@ -159,13 +160,4 @@ export const MessageGroupDetail = (props: IMessageGroupDetailProps) => {
   );
 };
 
-const mapStateToProps = ({ messageGroup }: IRootState) => ({
-  messageGroupEntity: messageGroup.entity,
-});
-
-const mapDispatchToProps = { getEntity };
-
-type StateProps = ReturnType<typeof mapStateToProps>;
-type DispatchProps = typeof mapDispatchToProps;
-
-export default connect(mapStateToProps, mapDispatchToProps)(MessageGroupDetail);
+export default MessageGroupDetail;

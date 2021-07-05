@@ -1,18 +1,10 @@
-import { browser, element, by } from 'protractor';
+import {browser} from 'protractor';
 
 import NavBarPage from './../../page-objects/navbar-page';
 import SignInPage from './../../page-objects/signin-page';
 import MessageContentComponentsPage from './message-content.page-object';
 import MessageContentUpdatePage from './message-content-update.page-object';
-import {
-  waitUntilDisplayed,
-  waitUntilAnyDisplayed,
-  click,
-  getRecordsCount,
-  waitUntilHidden,
-  waitUntilCount,
-  isVisible,
-} from '../../util/utils';
+import {getRecordsCount, isVisible, waitUntilCount, waitUntilDisplayed,} from '../../util/utils';
 
 const expect = chai.expect;
 
@@ -56,6 +48,7 @@ describe('MessageContent e2e test', () => {
       : await getRecordsCount(messageContentComponentsPage.table);
     messageContentUpdatePage = await messageContentComponentsPage.goToCreateMessageContent();
     await messageContentUpdatePage.enterData();
+    expect(await isVisible(messageContentUpdatePage.saveButton)).to.be.false;
 
     expect(await messageContentComponentsPage.createButton.isEnabled()).to.be.true;
     await waitUntilDisplayed(messageContentComponentsPage.table);

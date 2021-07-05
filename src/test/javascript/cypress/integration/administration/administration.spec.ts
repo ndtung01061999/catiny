@@ -1,21 +1,27 @@
 import {
-  userManagementPageHeadingSelector,
-  metricsPageHeadingSelector,
+  configurationPageHeadingSelector,
   healthPageHeadingSelector,
   logsPageHeadingSelector,
-  configurationPageHeadingSelector,
-  swaggerPageSelector,
+  metricsPageHeadingSelector,
   swaggerFrameSelector,
+  swaggerPageSelector,
+  userManagementPageHeadingSelector,
 } from '../../support/commands';
 
-describe('/admin', () => {
-  before(() => {
-    cy.window().then(win => {
+describe('/admin', () =>
+{
+  const username = Cypress.env('E2E_USERNAME') ?? 'admin';
+  const password = Cypress.env('E2E_PASSWORD') ?? 'admin';
+
+  before(() =>
+  {
+    cy.window().then(win =>
+    {
       win.sessionStorage.clear();
     });
     cy.clearCookies();
     cy.visit('');
-    cy.login('admin', 'admin');
+    cy.login(username, password);
   });
 
   describe('/user-management', () => {
@@ -60,9 +66,10 @@ describe('/admin', () => {
           cy.clickOnAdminMenuItem('docs');
           cy.get(swaggerFrameSelector)
             .should('be.visible')
-            .then(() => {
+            .then(() =>
+            {
               // Wait iframe to load
-              cy.wait(500);
+              cy.wait(500); // eslint-disable-line cypress/no-unnecessary-waiting
               cy.get(swaggerFrameSelector).its('0.contentDocument.body').find(swaggerPageSelector).should('be.visible');
             });
         }

@@ -1,87 +1,110 @@
-import React, { useState, useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, InputGroup, Col, Row, Table } from 'reactstrap';
-import { AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
-import { byteSize, Translate, translate, ICrudSearchAction, TextFormat, getSortState, IPaginationBaseState } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, Form, FormGroup, Input, InputGroup, Row, Table} from 'reactstrap';
+import {getSortState, TextFormat, Translate, translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { IRootState } from 'app/shared/reducers';
-import { getSearchEntities, getEntities, reset } from './message-group.reducer';
-import { IMessageGroup } from 'app/shared/model/message-group.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
-import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
-import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
+import {getEntities, reset, searchEntities} from './message-group.reducer';
+import {APP_DATE_FORMAT} from 'app/config/constants';
+import {ASC, DESC, ITEMS_PER_PAGE} from 'app/shared/util/pagination.constants';
+import {overridePaginationStateWithQueryParams} from 'app/shared/util/entity-utils';
+import {useAppDispatch, useAppSelector} from 'app/config/store';
 
-export interface IMessageGroupProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
+export const MessageGroup = (props: RouteComponentProps<{ url: string }>) =>
+{
+  const dispatch = useAppDispatch();
 
-export const MessageGroup = (props: IMessageGroupProps) => {
   const [search, setSearch] = useState('');
   const [paginationState, setPaginationState] = useState(
     overridePaginationStateWithQueryParams(getSortState(props.location, ITEMS_PER_PAGE, 'id'), props.location.search)
   );
   const [sorting, setSorting] = useState(false);
 
-  const getAllEntities = () => {
-    if (search) {
-      props.getSearchEntities(
-        search,
-        paginationState.activePage - 1,
-        paginationState.itemsPerPage,
-        `${paginationState.sort},${paginationState.order}`
+  const messageGroupList = useAppSelector(state => state.messageGroup.entities);
+  const loading = useAppSelector(state => state.messageGroup.loading);
+  const totalItems = useAppSelector(state => state.messageGroup.totalItems);
+  const links = useAppSelector(state => state.messageGroup.links);
+  const entity = useAppSelector(state => state.messageGroup.entity);
+  const updateSuccess = useAppSelector(state => state.messageGroup.updateSuccess);
+
+  const getAllEntities = () =>
+  {
+    if (search)
+    {
+      dispatch(
+        searchEntities({
+          query: search,
+          page: paginationState.activePage - 1,
+          size: paginationState.itemsPerPage,
+          sort: `${paginationState.sort},${paginationState.order}`,
+        })
       );
-    } else {
-      props.getEntities(paginationState.activePage - 1, paginationState.itemsPerPage, `${paginationState.sort},${paginationState.order}`);
+    } else
+    {
+      dispatch(
+        getEntities({
+          page: paginationState.activePage - 1,
+          size: paginationState.itemsPerPage,
+          sort: `${paginationState.sort},${paginationState.order}`,
+        })
+      );
     }
   };
 
   const resetAll = () => {
-    props.reset();
+    dispatch(reset());
     setPaginationState({
       ...paginationState,
       activePage: 1,
     });
-    props.getEntities();
+    dispatch(getEntities({}));
   };
 
   useEffect(() => {
     resetAll();
   }, []);
 
-  const startSearching = () => {
-    if (search) {
-      props.reset();
+  const startSearching = e =>
+  {
+    if (search)
+    {
+      dispatch(reset());
       setPaginationState({
         ...paginationState,
         activePage: 1,
       });
-      props.getSearchEntities(
-        search,
-        paginationState.activePage - 1,
-        paginationState.itemsPerPage,
-        `${paginationState.sort},${paginationState.order}`
+      dispatch(
+        searchEntities({
+          query: search,
+          page: paginationState.activePage - 1,
+          size: paginationState.itemsPerPage,
+          sort: `${paginationState.sort},${paginationState.order}`,
+        })
       );
     }
+    e.preventDefault();
   };
 
   const clear = () => {
-    props.reset();
+    dispatch(reset());
     setSearch('');
     setPaginationState({
       ...paginationState,
       activePage: 1,
     });
-    props.getEntities();
+    dispatch(getEntities({}));
   };
 
   const handleSearch = event => setSearch(event.target.value);
 
-  useEffect(() => {
-    if (props.updateSuccess) {
+  useEffect(() =>
+  {
+    if (updateSuccess)
+    {
       resetAll();
     }
-  }, [props.updateSuccess]);
+  }, [updateSuccess]);
 
   useEffect(() => {
     getAllEntities();
@@ -104,28 +127,30 @@ export const MessageGroup = (props: IMessageGroupProps) => {
   }, [sorting, search]);
 
   const sort = p => () => {
-    props.reset();
+    dispatch(reset());
     setPaginationState({
       ...paginationState,
       activePage: 1,
-      order: paginationState.order === 'asc' ? 'desc' : 'asc',
+      order: paginationState.order === ASC ? DESC : ASC,
       sort: p,
     });
     setSorting(true);
   };
 
-  const handleSyncList = () => {
+  const handleSyncList = () =>
+  {
     resetAll();
   };
 
-  const { messageGroupList, match, loading } = props;
+  const {match} = props;
+
   return (
     <div>
       <h2 id="message-group-heading" data-cy="MessageGroupHeading">
         <Translate contentKey="catinyApp.messageGroup.home.title">Message Groups</Translate>
         <div className="d-flex justify-content-end">
           <Button className="mr-2" color="info" onClick={handleSyncList} disabled={loading}>
-            <FontAwesomeIcon icon="sync" spin={loading} />{' '}
+            <FontAwesomeIcon icon="sync" spin={loading}/>{' '}
             <Translate contentKey="catinyApp.messageGroup.home.refreshListLabel">Refresh List</Translate>
           </Button>
           <Link to={`${match.url}/new`} className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
@@ -137,32 +162,32 @@ export const MessageGroup = (props: IMessageGroupProps) => {
       </h2>
       <Row>
         <Col sm="12">
-          <AvForm onSubmit={startSearching}>
-            <AvGroup>
+          <Form onSubmit={startSearching}>
+            <FormGroup>
               <InputGroup>
-                <AvInput
+                <Input
                   type="text"
                   name="search"
-                  value={search}
+                  defaultValue={search}
                   onChange={handleSearch}
                   placeholder={translate('catinyApp.messageGroup.home.search')}
                 />
                 <Button className="input-group-addon">
-                  <FontAwesomeIcon icon="search" />
+                  <FontAwesomeIcon icon="search"/>
                 </Button>
                 <Button type="reset" className="input-group-addon" onClick={clear}>
-                  <FontAwesomeIcon icon="trash" />
+                  <FontAwesomeIcon icon="trash"/>
                 </Button>
               </InputGroup>
-            </AvGroup>
-          </AvForm>
+            </FormGroup>
+          </Form>
         </Col>
       </Row>
       <div className="table-responsive">
         <InfiniteScroll
           pageStart={paginationState.activePage}
           loadMore={handleLoadMore}
-          hasMore={paginationState.activePage - 1 < props.links.next}
+          hasMore={paginationState.activePage - 1 < links.next}
           loader={<div className="loader">Loading ...</div>}
           threshold={0}
           initialLoad={false}
@@ -290,22 +315,4 @@ export const MessageGroup = (props: IMessageGroupProps) => {
   );
 };
 
-const mapStateToProps = ({ messageGroup }: IRootState) => ({
-  messageGroupList: messageGroup.entities,
-  loading: messageGroup.loading,
-  totalItems: messageGroup.totalItems,
-  links: messageGroup.links,
-  entity: messageGroup.entity,
-  updateSuccess: messageGroup.updateSuccess,
-});
-
-const mapDispatchToProps = {
-  getSearchEntities,
-  getEntities,
-  reset,
-};
-
-type StateProps = ReturnType<typeof mapStateToProps>;
-type DispatchProps = typeof mapDispatchToProps;
-
-export default connect(mapStateToProps, mapDispatchToProps)(MessageGroup);
+export default MessageGroup;

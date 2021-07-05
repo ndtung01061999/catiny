@@ -3,6 +3,18 @@
 // Import Bootstrap source files from node_modules
 @import 'node_modules/bootstrap/scss/bootstrap';
 @import '~bootswatch/dist/cerulean/bootswatch';
+//Sociala
+@import "~slick-carousel/slick/slick.css";
+@import "~slick-carousel/slick/slick-theme.css";
+@import '~video-react/dist/video-react.css';
+
+//@import "../assets/css/aos.min.css";
+//@import "../assets/css/emoji.css";
+//@import "../assets/css/feather.css";
+//@import "../assets/css/video-player.css";
+//@import "../assets/css/bootstrap-datetimepicker.css";
+//@import "../assets/css/lightbox.css";
+//@import "../assets/css/style-rtl.css";
 body {
   margin: 0;
   background: #e8ded9;
