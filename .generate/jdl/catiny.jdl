@@ -109,7 +109,8 @@ entity MasterUser
     fullName String required
     /** nickname : biệt danh của người dùng */
     nickname String
-
+    /** quickInfo      : @type Json -> thông tin nhanh về người dùng này dùng trong giới thiệu sơ khi chỉ chuột vào người dùng */
+    quickInfo TextBlob
 
 
     /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
@@ -396,7 +397,10 @@ entity PagePost
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
-
+    /** name           : tên của page này*/
+    name String required
+    /** quickInfo      : @type Json ->thông tin nổi bật giới thiệu sơ qua về page */
+    quickInfo TextBlob
 
     /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
     owner TextBlob
@@ -462,6 +466,9 @@ entity GroupPost
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
+    /** name           : tên của group này */
+    name String required
+    quickInfo TextBlob : @type Json -> thông tin giới thiệu sơ qua của group này
 
 
     /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
@@ -495,6 +502,8 @@ entity Post
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
+    title String
+    content TextBlob
 
 
     /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
@@ -1077,8 +1086,8 @@ relationship OneToOne
 
 relationship ManyToOne
 {
-    Friend{friendDetails} to MasterUser{friendOf},
-    Follow{followDetails} to MasterUser{followOf},
+    Friend{friendDetails} to MasterUser,
+    Follow{followDetails} to MasterUser,
     NewsFeed to Post,
     RankUser to RankGroup,
     MessageContent{sender} to MasterUser
