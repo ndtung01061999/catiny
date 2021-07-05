@@ -27,7 +27,10 @@
     "document": true,
     "process": true,
     "module": true,
-    "window": true
+    "window": true,
+    "console": true,
+    "JSX": true,
+    "localStorage": true
   },
   "rules": {
     "@typescript-eslint/member-ordering": [
