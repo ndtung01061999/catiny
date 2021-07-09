@@ -2,35 +2,60 @@ DEFAULT_MIN_LENGTH = 64
 DEFAULT_MAX_LENGTH = 2048
 enum StatusName
 {
-	ONLINE (Online)
-	OFFLINE (Offline)
-	BUSY (Busy)
-	TEMPORARILY_ABSENT ("Temporarily absent")
+	ONLINE
+	OFFLINE
+	BUSY
+	TEMPORARILY_ABSENT
 }
 
 enum DeviceType
 {
-	MOBILE (Mobile)
-  TABLE (Table)
-  DESKTOP (Desktop)
-  LAPTOP (Laptop)
-  OTHER_DEVICE ("Other device")
+	MOBILE
+  TABLE
+  DESKTOP
+  LAPTOP
+  OTHER_DEVICE
 }
 
 enum NotifyType
 {
-  SYSTEM (System)
-  MANAGER (Manager)
-  ADMIN (Admin)
-  USER (User)
-  ANONYMOUS (Anonymous)
+  SYSTEM
+  MANAGER
+  ADMIN
+  USER
+  ANONYMOUS
+}
+
+enum PostInType
+{
+  GROUP
+  USER
+  PAGE
 }
 
 enum PostType
 {
-  GROUP (Group)
-  USER (User)
-  PAGE (Page)
+  SIMPLE
+  ADVANCE
+  FROALA
+}
+
+enum FriendType
+{
+  FRIEND
+  BEST_FRIEND
+  FAMILY
+}
+enum ProcessStatus
+{
+  NOT_PROCESSED
+  PROCESSING
+  PROCESSED
+  NEED_PROCESS
+  NEED_PROCESS_NOW
+  NEED_HANDLE
+  NEED_HANDLE_NOW
+  DONE
 }
 
 entity HanhChinhVN
@@ -119,25 +144,6 @@ entity MasterUser
     /** quickInfo      : @type Json -> thông tin nhanh về người dùng này dùng trong giới thiệu sơ khi chỉ chuột vào người dùng */
     quickInfo TextBlob
 
-
-    /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
-    owner TextBlob
-    /** role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa> */
-    role TextBlob
-    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
-    modifiedClass String
-    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
-    createdDate  Instant
-    /** modifiedDate * : thời gian sửa bản ghi này */
-    modifiedDate  Instant
-    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên) */
-    createdBy String
-    /** modifiedBy *   : người sửa lại bản ghi này */
-    modifiedBy String
-    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json ví dụ >> "comment":"đây là comment mặc định" */
-    comment TextBlob
-    /** historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
-    historyUpdate TextBlob
 }
 /**
 * @what?         	  -> The UserProfile entity .
@@ -151,15 +157,6 @@ entity UserProfile
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
-    /** avatarImage : ảnh đại diện của người dùng
-      * @describe   : field này ở dưới dạng Json giống mẫu sau
-      *   default <required> : url ảnh mặc định (ảnh đã qua xử lý giảm dung lượng kích cỡ được cắt theo một chuẩn nhất định...)
-      *   original <required>: url ảnh nguyên bản chưa qua xử lý
-      *   big                : url ảnh kích thước lớn
-      *   medium             : url ảnh kích thước trung bình
-      *   small              : url ảnh kích thước nhỏ
-      * @author           -> yuvytung.
-      */
 
     /** work : nơi làm việc
      * @data-type : Json
@@ -215,26 +212,6 @@ entity UserProfile
      * @data-type : Json
      * @describe : cá tính thế nào , đã làm nhứng gì rất đặc sắc .... */
     featured TextBlob
-
-
-    /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
-    owner TextBlob
-    /** role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa> */
-    role TextBlob
-    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
-    modifiedClass String
-    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
-    createdDate  Instant
-    /** modifiedDate * : thời gian sửa bản ghi này */
-    modifiedDate  Instant
-    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên) */
-    createdBy String
-    /** modifiedBy *   : người sửa lại bản ghi này */
-    modifiedBy String
-    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json ví dụ >> "comment":"đây là comment mặc định" */
-    comment TextBlob
-    /** historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
-    historyUpdate TextBlob
 }
 /**
 * @what?         	-> The AccountStatus entity.
@@ -254,27 +231,6 @@ entity AccountStatus
     lastVisited Instant
     /** statusComment  : người dùng comment lại trạng thái để hiển thị ra nếu muốn */
     statusComment String
-
-
-
-    /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
-    owner TextBlob
-    /** role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa> */
-    role TextBlob
-    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
-    modifiedClass String
-    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
-    createdDate  Instant
-    /** modifiedDate * : thời gian sửa bản ghi này */
-    modifiedDate  Instant
-    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên) */
-    createdBy String
-    /** modifiedBy *   : người sửa lại bản ghi này */
-    modifiedBy String
-    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json ví dụ >> "comment":"đây là comment mặc định" */
-    comment TextBlob
-    /** historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
-    historyUpdate TextBlob
 }
 /**
 * @what?            -> The DeviceStatus entity.
@@ -298,25 +254,6 @@ entity DeviceStatus
     lastVisited Instant
     /** statusComment  : người dùng comment lại trạng thái nếu muốn */
     statusComment String
-
-    /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
-    owner TextBlob
-    /** role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa> */
-    role TextBlob
-    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
-    modifiedClass String
-    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
-    createdDate  Instant
-    /** modifiedDate * : thời gian sửa bản ghi này */
-    modifiedDate  Instant
-    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên) */
-    createdBy String
-    /** modifiedBy *   : người sửa lại bản ghi này */
-    modifiedBy String
-    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json ví dụ >> "comment":"đây là comment mặc định" */
-    comment TextBlob
-    /** historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
-    historyUpdate TextBlob
 }
 /**
 * @what?            -> The Friend entity.
@@ -330,31 +267,12 @@ entity Friend
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
-
-
-    /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
-    owner TextBlob
-    /** role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa> */
-    role TextBlob
-    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
-    modifiedClass String
-    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
-    createdDate  Instant
-    /** modifiedDate * : thời gian sửa bản ghi này */
-    modifiedDate  Instant
-    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên) */
-    createdBy String
-    /** modifiedBy *   : người sửa lại bản ghi này */
-    modifiedBy String
-    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json ví dụ >> "comment":"đây là comment mặc định" */
-    comment TextBlob
-    /** historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
-    historyUpdate TextBlob
+    friendType FriendType
 }
 /**
 * @what?            -> The FollowUser entity.
 * @why?             ->
-* @use-to           -> Quản lý các chủ đề mà người dùng đăng ký theo dõi
+* @use-to           -> Quản lý những người mà người dùng đăng ký theo dõi
 * @commonly-used-in -> Chủ đề mà người dùng theo dõi
 *
 * @describe         ->
@@ -364,25 +282,6 @@ entity FollowUser
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
 
-
-    /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
-    owner TextBlob
-    /** role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa> */
-    role TextBlob
-    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
-    modifiedClass String
-    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
-    createdDate  Instant
-    /** modifiedDate * : thời gian sửa bản ghi này */
-    modifiedDate  Instant
-    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên) */
-    createdBy String
-    /** modifiedBy *   : người sửa lại bản ghi này */
-    modifiedBy String
-    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json ví dụ >> "comment":"đây là comment mặc định" */
-    comment TextBlob
-    /** historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
-    historyUpdate TextBlob
 }
 /**
 * @what?            -> The FollowGroup entity.
@@ -397,25 +296,6 @@ entity FollowGroup
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
 
-
-    /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
-    owner TextBlob
-    /** role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa> */
-    role TextBlob
-    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
-    modifiedClass String
-    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
-    createdDate  Instant
-    /** modifiedDate * : thời gian sửa bản ghi này */
-    modifiedDate  Instant
-    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên) */
-    createdBy String
-    /** modifiedBy *   : người sửa lại bản ghi này */
-    modifiedBy String
-    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json ví dụ >> "comment":"đây là comment mặc định" */
-    comment TextBlob
-    /** historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
-    historyUpdate TextBlob
 }
 /**
 * @what?            -> The FollowPage entity.
@@ -430,25 +310,6 @@ entity FollowPage
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
 
-
-    /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
-    owner TextBlob
-    /** role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa> */
-    role TextBlob
-    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
-    modifiedClass String
-    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
-    createdDate  Instant
-    /** modifiedDate * : thời gian sửa bản ghi này */
-    modifiedDate  Instant
-    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên) */
-    createdBy String
-    /** modifiedBy *   : người sửa lại bản ghi này */
-    modifiedBy String
-    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json ví dụ >> "comment":"đây là comment mặc định" */
-    comment TextBlob
-    /** historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
-    historyUpdate TextBlob
 }
 /**
 * @what?            -> The FileInfo entity.
@@ -470,25 +331,6 @@ entity FileInfo
     pathOriginal String maxlength(512)
     /** pathProcessed  : @type Json -> đường dẫn file đã qua xử lý --> có nhiều file thie kicks cỡ dung lượng cất lượng ...*/
     pathProcessed TextBlob
-
-    /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
-    owner TextBlob
-    /** role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa> */
-    role TextBlob
-    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
-    modifiedClass String
-    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
-    createdDate  Instant
-    /** modifiedDate * : thời gian sửa bản ghi này */
-    modifiedDate  Instant
-    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên) */
-    createdBy String
-    /** modifiedBy *   : người sửa lại bản ghi này */
-    modifiedBy String
-    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json ví dụ >> "comment":"đây là comment mặc định" */
-    comment TextBlob
-    /** historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
-    historyUpdate TextBlob
 }
 /**
 * @what?            -> The PagePost entity.
@@ -506,25 +348,6 @@ entity PagePost
     name String required
     /** quickInfo      : @type Json ->thông tin nổi bật giới thiệu sơ qua về page */
     quickInfo TextBlob
-
-    /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
-    owner TextBlob
-    /** role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa> */
-    role TextBlob
-    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
-    modifiedClass String
-    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
-    createdDate  Instant
-    /** modifiedDate * : thời gian sửa bản ghi này */
-    modifiedDate  Instant
-    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên) */
-    createdBy String
-    /** modifiedBy *   : người sửa lại bản ghi này */
-    modifiedBy String
-    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json ví dụ >> "comment":"đây là comment mặc định" */
-    comment TextBlob
-    /** historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
-    historyUpdate TextBlob
 }
 /**
 * @what?            -> The PageProfile entity
@@ -539,25 +362,6 @@ entity PageProfile
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
 
-
-    /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
-    owner TextBlob
-    /** role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa> */
-    role TextBlob
-    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
-    modifiedClass String
-    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
-    createdDate  Instant
-    /** modifiedDate * : thời gian sửa bản ghi này */
-    modifiedDate  Instant
-    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên) */
-    createdBy String
-    /** modifiedBy *   : người sửa lại bản ghi này */
-    modifiedBy String
-    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json ví dụ >> "comment":"đây là comment mặc định" */
-    comment TextBlob
-    /** historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
-    historyUpdate TextBlob
 }
 /**
 * @what?            -> The GroupPost entity
@@ -576,25 +380,6 @@ entity GroupPost
     /** quickInfo      : @type Json -> thông tin giới thiệu sơ qua của group này */
     quickInfo TextBlob
 
-
-    /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
-    owner TextBlob
-    /** role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa> */
-    role TextBlob
-    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
-    modifiedClass String
-    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
-    createdDate  Instant
-    /** modifiedDate * : thời gian sửa bản ghi này */
-    modifiedDate  Instant
-    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên) */
-    createdBy String
-    /** modifiedBy *   : người sửa lại bản ghi này */
-    modifiedBy String
-    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json ví dụ >> "comment":"đây là comment mặc định" */
-    comment TextBlob
-    /** historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
-    historyUpdate TextBlob
 }
 /**
 * @what?            -> The Post entity
@@ -608,29 +393,14 @@ entity Post
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
-    title String
-    content TextBlob
+    /** postInType     : bài đăng này đăng ở đâu : người dùng , nhóm hay trang */
+    postInType PostInType
+    /** postType       : bài đăng này đơn giản , phức tạp hay dùng froala */
     postType PostType
+    /** content        : @type Json -> nội dùng bài đăng dữ liệu tùy theo postType */
+    content TextBlob
+    searchField TextBlob
 
-
-    /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
-    owner TextBlob
-    /** role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa> */
-    role TextBlob
-    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
-    modifiedClass String
-    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
-    createdDate  Instant
-    /** modifiedDate * : thời gian sửa bản ghi này */
-    modifiedDate  Instant
-    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên) */
-    createdBy String
-    /** modifiedBy *   : người sửa lại bản ghi này */
-    modifiedBy String
-    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json ví dụ >> "comment":"đây là comment mặc định" */
-    comment TextBlob
-    /** historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
-    historyUpdate TextBlob
 }
 /**
 * @what?            -> The PostComment entity.
@@ -645,25 +415,6 @@ entity PostComment
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
 
-
-    /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
-    owner TextBlob
-    /** role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa> */
-    role TextBlob
-    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
-    modifiedClass String
-    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
-    createdDate  Instant
-    /** modifiedDate * : thời gian sửa bản ghi này */
-    modifiedDate  Instant
-    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên) */
-    createdBy String
-    /** modifiedBy *   : người sửa lại bản ghi này */
-    modifiedBy String
-    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json ví dụ >> "comment":"đây là comment mặc định" */
-    comment TextBlob
-    /** historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
-    historyUpdate TextBlob
 }
 /**
 * @what?            -> The PostLike entity.
@@ -678,25 +429,6 @@ entity PostLike
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
 
-
-    /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
-    owner TextBlob
-    /** role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa> */
-    role TextBlob
-    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
-    modifiedClass String
-    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
-    createdDate  Instant
-    /** modifiedDate * : thời gian sửa bản ghi này */
-    modifiedDate  Instant
-    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên) */
-    createdBy String
-    /** modifiedBy *   : người sửa lại bản ghi này */
-    modifiedBy String
-    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json ví dụ >> "comment":"đây là comment mặc định" */
-    comment TextBlob
-    /** historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
-    historyUpdate TextBlob
 }
 /**
 * @what?            -> The GroupProfile entity.
@@ -711,25 +443,6 @@ entity GroupProfile
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
 
-
-    /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
-    owner TextBlob
-    /** role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa> */
-    role TextBlob
-    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
-    modifiedClass String
-    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
-    createdDate  Instant
-    /** modifiedDate * : thời gian sửa bản ghi này */
-    modifiedDate  Instant
-    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên) */
-    createdBy String
-    /** modifiedBy *   : người sửa lại bản ghi này */
-    modifiedBy String
-    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json ví dụ >> "comment":"đây là comment mặc định" */
-    comment TextBlob
-    /** historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
-    historyUpdate TextBlob
 }
 /**
 * @what?            -> The NewsFeed entity.
@@ -744,26 +457,8 @@ entity NewsFeed
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
+    score Double
 
-
-    /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
-    owner TextBlob
-    /** role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa> */
-    role TextBlob
-    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
-    modifiedClass String
-    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
-    createdDate  Instant
-    /** modifiedDate * : thời gian sửa bản ghi này */
-    modifiedDate  Instant
-    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên) */
-    createdBy String
-    /** modifiedBy *   : người sửa lại bản ghi này */
-    modifiedBy String
-    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json ví dụ >> "comment":"đây là comment mặc định" */
-    comment TextBlob
-    /** historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
-    historyUpdate TextBlob
 }
 /**
 * @what?            -> The MessageGroup entity.
@@ -779,29 +474,9 @@ entity MessageGroup
     uuid UUID required unique
     /** groupName */
     groupName String
-    groupId UUID required unique
     /** addBy */
     addBy String
 
-
-    /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
-    owner TextBlob
-    /** role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa> */
-    role TextBlob
-    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
-    modifiedClass String
-    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
-    createdDate  Instant
-    /** modifiedDate * : thời gian sửa bản ghi này */
-    modifiedDate  Instant
-    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên) */
-    createdBy String
-    /** modifiedBy *   : người sửa lại bản ghi này */
-    modifiedBy String
-    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json ví dụ >> "comment":"đây là comment mặc định" */
-    comment TextBlob
-    /** historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
-    historyUpdate TextBlob
 }
 /**
 * @what?            -> The MessageContent entity.
@@ -822,25 +497,6 @@ entity MessageContent
     status TextBlob
     /** searchField : lưu content tin nhắn lọc dấu ... để sau này search */
     searchField TextBlob
-
-    /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
-    owner TextBlob
-    /** role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa> */
-    role TextBlob
-    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
-    modifiedClass String
-    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
-    createdDate  Instant
-    /** modifiedDate * : thời gian sửa bản ghi này */
-    modifiedDate  Instant
-    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên) */
-    createdBy String
-    /** modifiedBy *   : người sửa lại bản ghi này */
-    modifiedBy String
-    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json ví dụ >> "comment":"đây là comment mặc định" */
-    comment TextBlob
-    /** historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
-    historyUpdate TextBlob
 }
 /**
 * @what?            -> The RankUser entity.
@@ -854,26 +510,8 @@ entity RankUser
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
+    ratingPoints Float
 
-
-    /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
-    owner TextBlob
-    /** role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa> */
-    role TextBlob
-    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
-    modifiedClass String
-    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
-    createdDate  Instant
-    /** modifiedDate * : thời gian sửa bản ghi này */
-    modifiedDate  Instant
-    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên) */
-    createdBy String
-    /** modifiedBy *   : người sửa lại bản ghi này */
-    modifiedBy String
-    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json ví dụ >> "comment":"đây là comment mặc định" */
-    comment TextBlob
-    /** historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
-    historyUpdate TextBlob
 }
 /**
 * @what?            -> The RankGroup entity.
@@ -888,25 +526,6 @@ entity RankGroup
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
 
-
-    /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
-    owner TextBlob
-    /** role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa> */
-    role TextBlob
-    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
-    modifiedClass String
-    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
-    createdDate  Instant
-    /** modifiedDate * : thời gian sửa bản ghi này */
-    modifiedDate  Instant
-    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên) */
-    createdBy String
-    /** modifiedBy *   : người sửa lại bản ghi này */
-    modifiedBy String
-    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json ví dụ >> "comment":"đây là comment mặc định" */
-    comment TextBlob
-    /** historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
-    historyUpdate TextBlob
 }
 /**
 * @what?            -> The Notification entity.
@@ -922,26 +541,9 @@ entity Notification
     uuid UUID required unique
     /** notifyType     : loại thông báo */
     notifyType NotifyType
+    title String
+    content TextBlob
 
-
-    /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
-    owner TextBlob
-    /** role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa> */
-    role TextBlob
-    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
-    modifiedClass String
-    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
-    createdDate  Instant
-    /** modifiedDate * : thời gian sửa bản ghi này */
-    modifiedDate  Instant
-    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên) */
-    createdBy String
-    /** modifiedBy *   : người sửa lại bản ghi này */
-    modifiedBy String
-    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json ví dụ >> "comment":"đây là comment mặc định" */
-    comment TextBlob
-    /** historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
-    historyUpdate TextBlob
 }
 /**
 * @what?            -> The Album entity
@@ -955,26 +557,8 @@ entity Album
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
+    name String required
 
-
-    /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
-    owner TextBlob
-    /** role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa> */
-    role TextBlob
-    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
-    modifiedClass String
-    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
-    createdDate  Instant
-    /** modifiedDate * : thời gian sửa bản ghi này */
-    modifiedDate  Instant
-    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên) */
-    createdBy String
-    /** modifiedBy *   : người sửa lại bản ghi này */
-    modifiedBy String
-    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json ví dụ >> "comment":"đây là comment mặc định" */
-    comment TextBlob
-    /** historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
-    historyUpdate TextBlob
 }
 /**
 * @what?            -> The Video entity.
@@ -989,25 +573,6 @@ entity Video
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
 
-
-    /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
-    owner TextBlob
-    /** role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa> */
-    role TextBlob
-    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
-    modifiedClass String
-    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
-    createdDate  Instant
-    /** modifiedDate * : thời gian sửa bản ghi này */
-    modifiedDate  Instant
-    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên) */
-    createdBy String
-    /** modifiedBy *   : người sửa lại bản ghi này */
-    modifiedBy String
-    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json ví dụ >> "comment":"đây là comment mặc định" */
-    comment TextBlob
-    /** historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
-    historyUpdate TextBlob
 }
 /**
 * @what?            -> The Image entity.
@@ -1022,25 +587,6 @@ entity Image
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
 
-
-    /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
-    owner TextBlob
-    /** role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa> */
-    role TextBlob
-    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
-    modifiedClass String
-    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
-    createdDate  Instant
-    /** modifiedDate * : thời gian sửa bản ghi này */
-    modifiedDate  Instant
-    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên) */
-    createdBy String
-    /** modifiedBy *   : người sửa lại bản ghi này */
-    modifiedBy String
-    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json ví dụ >> "comment":"đây là comment mặc định" */
-    comment TextBlob
-    /** historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
-    historyUpdate TextBlob
 }
 /**
 * @what?            -> The Album entity.
@@ -1055,25 +601,6 @@ entity VideoStream
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
 
-
-    /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
-    owner TextBlob
-    /** role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa> */
-    role TextBlob
-    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
-    modifiedClass String
-    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
-    createdDate  Instant
-    /** modifiedDate * : thời gian sửa bản ghi này */
-    modifiedDate  Instant
-    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên) */
-    createdBy String
-    /** modifiedBy *   : người sửa lại bản ghi này */
-    modifiedBy String
-    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json ví dụ >> "comment":"đây là comment mặc định" */
-    comment TextBlob
-    /** historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
-    historyUpdate TextBlob
 }
 /**
 * @what?            -> The Album entity
@@ -1088,25 +615,6 @@ entity VideoLiveStreamBuffer
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
 
-
-    /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
-    owner TextBlob
-    /** role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa> */
-    role TextBlob
-    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
-    modifiedClass String
-    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
-    createdDate  Instant
-    /** modifiedDate * : thời gian sửa bản ghi này */
-    modifiedDate  Instant
-    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên) */
-    createdBy String
-    /** modifiedBy *   : người sửa lại bản ghi này */
-    modifiedBy String
-    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json ví dụ >> "comment":"đây là comment mặc định" */
-    comment TextBlob
-    /** historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
-    historyUpdate TextBlob
 }
 /**
 * @what?            -> The Album entity
@@ -1121,25 +629,6 @@ entity TopicInterest
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
 
-
-    /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
-    owner TextBlob
-    /** role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa> */
-    role TextBlob
-    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
-    modifiedClass String
-    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
-    createdDate  Instant
-    /** modifiedDate * : thời gian sửa bản ghi này */
-    modifiedDate  Instant
-    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên) */
-    createdBy String
-    /** modifiedBy *   : người sửa lại bản ghi này */
-    modifiedBy String
-    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json ví dụ >> "comment":"đây là comment mặc định" */
-    comment TextBlob
-    /** historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
-    historyUpdate TextBlob
 }
 /**
 * @what?            -> The TodoList entity.
@@ -1153,26 +642,9 @@ entity TodoList
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
+    title String
+    content TextBlob
 
-
-    /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
-    owner TextBlob
-    /** role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa> */
-    role TextBlob
-    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
-    modifiedClass String
-    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
-    createdDate  Instant
-    /** modifiedDate * : thời gian sửa bản ghi này */
-    modifiedDate  Instant
-    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên) */
-    createdBy String
-    /** modifiedBy *   : người sửa lại bản ghi này */
-    modifiedBy String
-    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json ví dụ >> "comment":"đây là comment mặc định" */
-    comment TextBlob
-    /** historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
-    historyUpdate TextBlob
 }
 
 //entity Event //{}
@@ -1241,6 +713,69 @@ relationship ManyToMany
     TopicInterest to PagePost
     TopicInterest to GroupPost
     MasterUser to TopicInterest
+}
+/** BaseInfo */
+relationship OneToOne
+{
+MasterUser{baseInfo} to BaseInfo
+UserProfile to BaseInfo
+AccountStatus to BaseInfo
+DeviceStatus to BaseInfo
+Friend to BaseInfo
+FollowUser to BaseInfo
+FollowGroup to BaseInfo
+FollowPage to BaseInfo
+FileInfo to BaseInfo
+PagePost to BaseInfo
+PageProfile to BaseInfo
+GroupPost to BaseInfo
+Post to BaseInfo
+PostComment to BaseInfo
+PostLike to BaseInfo
+GroupProfile to BaseInfo
+NewsFeed to BaseInfo
+MessageGroup to BaseInfo
+MessageContent to BaseInfo
+RankUser to BaseInfo
+RankGroup to BaseInfo
+Notification to BaseInfo
+Album to BaseInfo
+Video to BaseInfo
+Image to BaseInfo
+VideoStream to BaseInfo
+VideoLiveStreamBuffer to BaseInfo
+TopicInterest to BaseInfo
+TodoList to BaseInfo
+Event to BaseInfo
+Badge to BaseInfo
+Story to BaseInfo
+ChallengesMapDetails to BaseInfo
+MyChallengesMap to BaseInfo
+}
+entity BaseInfo
+{
+    /** processStatus *: @defaultValue( DONE ) -> tình trạng xử lý sử dụng trong phê duyệt */
+    processStatus ProcessStatus
+    /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
+    owner TextBlob
+    /** role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa> */
+    role TextBlob
+    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
+    modifiedClass String
+    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
+    createdDate  Instant
+    /** modifiedDate * : thời gian sửa bản ghi này */
+    modifiedDate  Instant
+    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên) */
+    createdBy String
+    /** modifiedBy *   : người sửa lại bản ghi này */
+    modifiedBy String
+    /** notes *        : @type Json -> chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json" */
+    notes TextBlob
+    /** historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
+    historyUpdate TextBlob
+    /** deleted *      : @defaultValue( false ) -> đánh dấu là đã xóa */
+    deleted Boolean
 }
 
 
