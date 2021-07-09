@@ -55,7 +55,15 @@ enum ProcessStatus
   NEED_PROCESS_NOW
   NEED_HANDLE
   NEED_HANDLE_NOW
+  ERROR
   DONE
+}
+enum EventType
+{
+  DAY
+  MONTH
+  YEAR
+  ONLY_ONE
 }
 
 entity HanhChinhVN
@@ -323,14 +331,16 @@ entity FileInfo
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
-    /** typeFile       : loại file */
-    typeFile String
     /** nameFile       : tên của file nếu có */
     nameFile String
-    /** pathOriginal   : đường dẫn file nguyên gốc */
-    pathOriginal String maxlength(512)
-    /** pathProcessed  : @type Json -> đường dẫn file đã qua xử lý --> có nhiều file thie kicks cỡ dung lượng cất lượng ...*/
-    pathProcessed TextBlob
+    /** typeFile       : loại file */
+    typeFile String
+    /** path           : đường dẫn file nguyên gốc */
+    path String maxlength(1024)
+    /** isOriginal     : @defaultValue(true) -> có phải là phiên bản nguyên gốc không */
+    originalVersion Boolean
+    /** dataSize       : kích thước file theo byte */
+    dataSize Long
 }
 /**
 * @what?            -> The PagePost entity.
@@ -414,6 +424,7 @@ entity PostComment
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
+    content TextBlob
 
 }
 /**
@@ -572,7 +583,7 @@ entity Video
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
-
+    name String
 }
 /**
 * @what?            -> The Image entity.
@@ -586,7 +597,7 @@ entity Image
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
-
+    name String
 }
 /**
 * @what?            -> The Album entity.
@@ -614,6 +625,7 @@ entity VideoLiveStreamBuffer
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
+    bufferData AnyBlob
 
 }
 /**
@@ -628,6 +640,8 @@ entity TopicInterest
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
+    title String
+    content TextBlob
 
 }
 /**
@@ -647,7 +661,18 @@ entity TodoList
 
 }
 
-//entity Event //{}
+entity Event
+{
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
+    uuid UUID required unique
+    title String
+    content TextBlob
+    type EventType
+    description TextBlob
+    startTime Instant
+    endTime Instant
+    tagLine String
+}
 //entity Badge //{}
 //entity Story //{}
 //entity ChallengesMapDetails  //{}
@@ -661,8 +686,6 @@ relationship OneToOne
     GroupPost{profile} to GroupProfile{group}
     PagePost{profile} to PageProfile{page}
     MasterUser{myRank} to RankUser,
-    Image{fileInfo} to FileInfo
-    Video{fileInfo} to FileInfo,
     VideoStream{video} to Video{videoStream},
 
 //    MasterUser to MyChallengesMap
@@ -697,6 +720,8 @@ relationship OneToMany
     MessageGroup to MessageContent
     MasterUser{myNewsFeed} to NewsFeed
     MasterUser{myTodoList} to TodoList
+    Image{fileInfo} to FileInfo
+    Video{fileInfo} to FileInfo,
     Post to PostComment
     Post to PostLike
     Post{postShareChildren} to Post{postShareParent}
@@ -747,10 +772,10 @@ VideoLiveStreamBuffer to BaseInfo
 TopicInterest to BaseInfo
 TodoList to BaseInfo
 Event to BaseInfo
-Badge to BaseInfo
-Story to BaseInfo
-ChallengesMapDetails to BaseInfo
-MyChallengesMap to BaseInfo
+//Badge to BaseInfo
+//Story to BaseInfo
+//ChallengesMapDetails to BaseInfo
+//MyChallengesMap to BaseInfo
 }
 entity BaseInfo
 {
