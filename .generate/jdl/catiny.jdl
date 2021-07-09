@@ -26,6 +26,13 @@ enum NotifyType
   ANONYMOUS (Anonymous)
 }
 
+enum PostType
+{
+  GROUP (Group)
+  USER (User)
+  PAGE (Page)
+}
+
 entity HanhChinhVN
 {
     /** name Example("Ninh Kiều")*/
@@ -142,6 +149,18 @@ entity MasterUser
 */
 entity UserProfile
 {
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
+    uuid UUID required unique
+    /** avatarImage : ảnh đại diện của người dùng
+      * @describe   : field này ở dưới dạng Json giống mẫu sau
+      *   default <required> : url ảnh mặc định (ảnh đã qua xử lý giảm dung lượng kích cỡ được cắt theo một chuẩn nhất định...)
+      *   original <required>: url ảnh nguyên bản chưa qua xử lý
+      *   big                : url ảnh kích thước lớn
+      *   medium             : url ảnh kích thước trung bình
+      *   small              : url ảnh kích thước nhỏ
+      * @author           -> yuvytung.
+      */
+
     /** work : nơi làm việc
      * @data-type : Json
      * @describe : những nơi, công ty đã từng làm việc , khoảng thời gian vị trí ...
@@ -196,6 +215,26 @@ entity UserProfile
      * @data-type : Json
      * @describe : cá tính thế nào , đã làm nhứng gì rất đặc sắc .... */
     featured TextBlob
+
+
+    /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
+    owner TextBlob
+    /** role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa> */
+    role TextBlob
+    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
+    modifiedClass String
+    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
+    createdDate  Instant
+    /** modifiedDate * : thời gian sửa bản ghi này */
+    modifiedDate  Instant
+    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên) */
+    createdBy String
+    /** modifiedBy *   : người sửa lại bản ghi này */
+    modifiedBy String
+    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json ví dụ >> "comment":"đây là comment mặc định" */
+    comment TextBlob
+    /** historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
+    historyUpdate TextBlob
 }
 /**
 * @what?         	-> The AccountStatus entity.
@@ -313,14 +352,80 @@ entity Friend
     historyUpdate TextBlob
 }
 /**
-* @what?            -> The Follow entity
+* @what?            -> The FollowUser entity.
 * @why?             ->
 * @use-to           -> Quản lý các chủ đề mà người dùng đăng ký theo dõi
 * @commonly-used-in -> Chủ đề mà người dùng theo dõi
 *
 * @describe         ->
 */
-entity Follow
+entity FollowUser
+{
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
+    uuid UUID required unique
+
+
+    /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
+    owner TextBlob
+    /** role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa> */
+    role TextBlob
+    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
+    modifiedClass String
+    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
+    createdDate  Instant
+    /** modifiedDate * : thời gian sửa bản ghi này */
+    modifiedDate  Instant
+    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên) */
+    createdBy String
+    /** modifiedBy *   : người sửa lại bản ghi này */
+    modifiedBy String
+    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json ví dụ >> "comment":"đây là comment mặc định" */
+    comment TextBlob
+    /** historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
+    historyUpdate TextBlob
+}
+/**
+* @what?            -> The FollowGroup entity.
+* @why?             ->
+* @use-to           -> Quản lý các nhóm mà người dùng đăng ký theo dõi
+* @commonly-used-in -> Chủ đề mà người dùng theo dõi
+*
+* @describe         ->
+*/
+entity FollowGroup
+{
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
+    uuid UUID required unique
+
+
+    /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
+    owner TextBlob
+    /** role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa> */
+    role TextBlob
+    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
+    modifiedClass String
+    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
+    createdDate  Instant
+    /** modifiedDate * : thời gian sửa bản ghi này */
+    modifiedDate  Instant
+    /** createdBy *    : người tạo ra bản gi này (lần đầu tiên) */
+    createdBy String
+    /** modifiedBy *   : người sửa lại bản ghi này */
+    modifiedBy String
+    /** comment *      : chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json ví dụ >> "comment":"đây là comment mặc định" */
+    comment TextBlob
+    /** historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
+    historyUpdate TextBlob
+}
+/**
+* @what?            -> The FollowPage entity.
+* @why?             ->
+* @use-to           -> Quản lý các trang mà người dùng đăng ký theo dõi
+* @commonly-used-in -> Chủ đề mà người dùng theo dõi
+*
+* @describe         ->
+*/
+entity FollowPage
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
@@ -468,7 +573,8 @@ entity GroupPost
     uuid UUID required unique
     /** name           : tên của group này */
     name String required
-    quickInfo TextBlob : @type Json -> thông tin giới thiệu sơ qua của group này
+    /** quickInfo      : @type Json -> thông tin giới thiệu sơ qua của group này */
+    quickInfo TextBlob
 
 
     /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
@@ -504,6 +610,7 @@ entity Post
     uuid UUID required unique
     title String
     content TextBlob
+    postType PostType
 
 
     /** owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List*/
@@ -802,14 +909,14 @@ entity RankGroup
     historyUpdate TextBlob
 }
 /**
-* @what?            -> The MyNotity entity.
+* @what?            -> The Notification entity.
 * @why?             ->
 * @use-to           -> Chứa những thông báo đến người dùng
 * @commonly-used-in -> Thường xuất hiện trong chức năng thông báo của người dùng
 *
 * @describe         ->
 */
-entity Notify
+entity Notification
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
@@ -1067,6 +1174,10 @@ entity TodoList
     /** historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
     historyUpdate TextBlob
 }
+
+//entity Event //{}
+//entity Badge //{}
+//entity Story //{}
 //entity ChallengesMapDetails  //{}
 //entity MyChallengesMap //{}
 
@@ -1075,19 +1186,22 @@ relationship OneToOne
     MasterUser to User with jpaDerivedIdentifier,
     MasterUser{myProfile} to UserProfile,
     MasterUser{myAccountStatus} to AccountStatus,
-    GroupPost to GroupProfile
-    PagePost to PageProfile
+    GroupPost{profile} to GroupProfile{group}
+    PagePost{profile} to PageProfile{page}
     MasterUser{myRank} to RankUser,
-    Video to FileInfo,
-    VideoStream to Video,
-    Image to FileInfo
+    Image{fileInfo} to FileInfo
+    Video{fileInfo} to FileInfo,
+    VideoStream{video} to Video{videoStream},
+
 //    MasterUser to MyChallengesMap
 }
 
 relationship ManyToOne
 {
     Friend{friendDetails} to MasterUser,
-    Follow{followDetails} to MasterUser,
+    FollowUser{followUser} to MasterUser,
+    FollowGroup{followGroup} to GroupPost,
+    FollowPage{followPage} to PagePost,
     NewsFeed to Post,
     RankUser to RankGroup,
     MessageContent{sender} to MasterUser
@@ -1100,23 +1214,22 @@ relationship OneToMany
 //    MyChallengesMap to ChallengesMapDetails
   	MasterUser{myPage} to PagePost
     MasterUser{myFile} to FileInfo,
-    MasterUser{myNotify} to Notify
+    MasterUser{myNotification} to Notification
     MasterUser{myFriend} to Friend{masterUser},
-    MasterUser{myFollow} to Follow{masterUser},
+    MasterUser{myFollowUser} to FollowUser{masterUser},
+    MasterUser{myFollowGroup} to FollowGroup{masterUser},
+    MasterUser{myFollowPage} to FollowPage{masterUser},
     GroupPost{myPostInGroup} to Post
     MasterUser{myPost} to Post{poster}
     PagePost{myPostInPage} to Post
     MessageGroup to MessageContent
     MasterUser{myNewsFeed} to NewsFeed
-    MasterUser{myImage} to Image,
-    MasterUser{myVideo} to Video,
-    MasterUser{myAlbum} to Album,
-    MasterUser{myVideoStream} to VideoStream,
     MasterUser{myTodoList} to TodoList
     Post to PostComment
     Post to PostLike
     Post{postShareChildren} to Post{postShareParent}
     PostComment{commentReply} to PostComment{commentParent}
+    VideoStream to VideoLiveStreamBuffer
 }
 
 relationship ManyToMany
