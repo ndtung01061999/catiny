@@ -119,7 +119,7 @@ describe('MessageContent e2e test', () => {
 
     cy.setFieldSelectToLastOfEntity('baseInfo');
 
-    cy.setFieldSelectToLastOfEntity('messageSender');
+    cy.setFieldSelectToLastOfEntity('sender');
 
     cy.setFieldSelectToLastOfEntity('messageGroup');
 

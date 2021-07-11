@@ -12,7 +12,7 @@ import org.mapstruct.*;
 @GeneratedByJHipster
 public interface MessageContentMapper extends EntityMapper<MessageContentDTO, MessageContent> {
   @Mapping(target = "baseInfo", source = "baseInfo", qualifiedByName = "id")
-  @Mapping(target = "messageSender", source = "messageSender", qualifiedByName = "id")
+  @Mapping(target = "sender", source = "sender", qualifiedByName = "id")
   @Mapping(target = "messageGroup", source = "messageGroup", qualifiedByName = "id")
   MessageContentDTO toDto(MessageContent s);
 }

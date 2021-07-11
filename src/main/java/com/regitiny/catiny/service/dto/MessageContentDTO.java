@@ -51,7 +51,7 @@ public class MessageContentDTO implements Serializable {
 
   private BaseInfoDTO baseInfo;
 
-  private MasterUserDTO messageSender;
+  private MasterUserDTO sender;
 
   private MessageGroupDTO messageGroup;
 
@@ -103,12 +103,12 @@ public class MessageContentDTO implements Serializable {
     this.baseInfo = baseInfo;
   }
 
-  public MasterUserDTO getMessageSender() {
-    return messageSender;
+  public MasterUserDTO getSender() {
+    return sender;
   }
 
-  public void setMessageSender(MasterUserDTO messageSender) {
-    this.messageSender = messageSender;
+  public void setSender(MasterUserDTO sender) {
+    this.sender = sender;
   }
 
   public MessageGroupDTO getMessageGroup() {
@@ -150,7 +150,7 @@ public class MessageContentDTO implements Serializable {
             ", status='" + getStatus() + "'" +
             ", searchField='" + getSearchField() + "'" +
             ", baseInfo=" + getBaseInfo() +
-            ", messageSender=" + getMessageSender() +
+            ", sender=" + getSender() +
             ", messageGroup=" + getMessageGroup() +
             "}";
     }

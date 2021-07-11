@@ -9,7 +9,7 @@ export interface IMessageContent {
   status?: string | null;
   searchField?: string | null;
   baseInfo?: IBaseInfo | null;
-  messageSender?: IMasterUser | null;
+  sender?: IMasterUser | null;
   messageGroup?: IMessageGroup | null;
 }
 

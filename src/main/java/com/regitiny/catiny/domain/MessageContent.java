@@ -119,7 +119,7 @@ public class MessageContent implements Serializable {
     },
     allowSetters = true
   )
-  private MasterUser messageSender;
+  private MasterUser sender;
 
   @ManyToOne
   @JsonIgnoreProperties(value = { "baseInfo", "messageContents", "masterUsers" }, allowSetters = true)
@@ -204,17 +204,17 @@ public class MessageContent implements Serializable {
     this.baseInfo = baseInfo;
   }
 
-  public MasterUser getMessageSender() {
-    return this.messageSender;
+  public MasterUser getSender() {
+    return this.sender;
   }
 
-  public MessageContent messageSender(MasterUser masterUser) {
-    this.setMessageSender(masterUser);
+  public MessageContent sender(MasterUser masterUser) {
+    this.setSender(masterUser);
     return this;
   }
 
-  public void setMessageSender(MasterUser masterUser) {
-    this.messageSender = masterUser;
+  public void setSender(MasterUser masterUser) {
+    this.sender = masterUser;
   }
 
   public MessageGroup getMessageGroup() {

@@ -105,13 +105,10 @@ public class MessageContentQueryService extends QueryService<MessageContent> {
             buildSpecification(criteria.getBaseInfoId(), root -> root.join(MessageContent_.baseInfo, JoinType.LEFT).get(BaseInfo_.id))
           );
       }
-      if (criteria.getMessageSenderId() != null) {
+      if (criteria.getSenderId() != null) {
         specification =
           specification.and(
-            buildSpecification(
-              criteria.getMessageSenderId(),
-              root -> root.join(MessageContent_.messageSender, JoinType.LEFT).get(MasterUser_.id)
-            )
+            buildSpecification(criteria.getSenderId(), root -> root.join(MessageContent_.sender, JoinType.LEFT).get(MasterUser_.id))
           );
       }
       if (criteria.getMessageGroupId() != null) {

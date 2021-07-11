@@ -180,7 +180,7 @@ public class BaseInfo implements Serializable {
   @OneToOne(mappedBy = "baseInfo")
   private MessageGroup messageGroup;
 
-  @JsonIgnoreProperties(value = { "baseInfo", "messageSender", "messageGroup" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "baseInfo", "sender", "messageGroup" }, allowSetters = true)
   @OneToOne(mappedBy = "baseInfo")
   private MessageContent messageContent;
 

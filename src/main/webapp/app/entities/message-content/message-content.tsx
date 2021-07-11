@@ -207,8 +207,7 @@ export const MessageContent = (props: RouteComponentProps<{ url: string }>) => {
                     <Translate contentKey="catinyApp.messageContent.baseInfo">Base Info</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
                   <th>
-                    <Translate contentKey="catinyApp.messageContent.messageSender">Message Sender</Translate>{' '}
-                    <FontAwesomeIcon icon="sort" />
+                    <Translate contentKey="catinyApp.messageContent.sender">Sender</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
                   <th>
                     <Translate contentKey="catinyApp.messageContent.messageGroup">Message Group</Translate> <FontAwesomeIcon icon="sort" />
@@ -236,11 +235,7 @@ export const MessageContent = (props: RouteComponentProps<{ url: string }>) => {
                       )}
                     </td>
                     <td>
-                      {messageContent.messageSender ? (
-                        <Link to={`master-user/${messageContent.messageSender.id}`}>{messageContent.messageSender.id}</Link>
-                      ) : (
-                        ''
-                      )}
+                      {messageContent.sender ? <Link to={`master-user/${messageContent.sender.id}`}>{messageContent.sender.id}</Link> : ''}
                     </td>
                     <td>
                       {messageContent.messageGroup ? (

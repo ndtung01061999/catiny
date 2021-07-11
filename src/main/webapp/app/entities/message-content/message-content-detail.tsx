@@ -67,9 +67,9 @@ export const MessageContentDetail = (props: RouteComponentProps<{ id: string }>)
           </dt>
           <dd>{messageContentEntity.baseInfo ? messageContentEntity.baseInfo.id : ''}</dd>
           <dt>
-            <Translate contentKey="catinyApp.messageContent.messageSender">Message Sender</Translate>
+            <Translate contentKey="catinyApp.messageContent.sender">Sender</Translate>
           </dt>
-          <dd>{messageContentEntity.messageSender ? messageContentEntity.messageSender.id : ''}</dd>
+          <dd>{messageContentEntity.sender ? messageContentEntity.sender.id : ''}</dd>
           <dt>
             <Translate contentKey="catinyApp.messageContent.messageGroup">Message Group</Translate>
           </dt>

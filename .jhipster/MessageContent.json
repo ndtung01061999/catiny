@@ -37,7 +37,7 @@
       "relationshipType": "many-to-one",
       "otherEntityName": "masterUser",
       "otherEntityRelationshipName": "messageContent",
-      "relationshipName": "messageSender"
+      "relationshipName": "sender"
     },
     {
       "relationshipType": "many-to-one",

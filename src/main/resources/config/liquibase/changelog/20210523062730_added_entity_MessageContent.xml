@@ -29,7 +29,7 @@
             <column name="base_info_id" type="bigint">
                 <constraints nullable="true" unique="true" uniqueConstraintName="ux_message_content__base_info_id" />
             </column>
-            <column name="message_sender_id" type="bigint">
+            <column name="sender_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <column name="message_group_id" type="bigint">

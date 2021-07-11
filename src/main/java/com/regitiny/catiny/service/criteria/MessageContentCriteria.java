@@ -33,7 +33,7 @@ public class MessageContentCriteria implements Serializable, Criteria {
 
   private LongFilter baseInfoId;
 
-  private LongFilter messageSenderId;
+  private LongFilter senderId;
 
   private LongFilter messageGroupId;
 
@@ -43,7 +43,7 @@ public class MessageContentCriteria implements Serializable, Criteria {
     this.id = other.id == null ? null : other.id.copy();
     this.uuid = other.uuid == null ? null : other.uuid.copy();
     this.baseInfoId = other.baseInfoId == null ? null : other.baseInfoId.copy();
-    this.messageSenderId = other.messageSenderId == null ? null : other.messageSenderId.copy();
+    this.senderId = other.senderId == null ? null : other.senderId.copy();
     this.messageGroupId = other.messageGroupId == null ? null : other.messageGroupId.copy();
   }
 
@@ -97,19 +97,19 @@ public class MessageContentCriteria implements Serializable, Criteria {
     this.baseInfoId = baseInfoId;
   }
 
-  public LongFilter getMessageSenderId() {
-    return messageSenderId;
+  public LongFilter getSenderId() {
+    return senderId;
   }
 
-  public LongFilter messageSenderId() {
-    if (messageSenderId == null) {
-      messageSenderId = new LongFilter();
+  public LongFilter senderId() {
+    if (senderId == null) {
+      senderId = new LongFilter();
     }
-    return messageSenderId;
+    return senderId;
   }
 
-  public void setMessageSenderId(LongFilter messageSenderId) {
-    this.messageSenderId = messageSenderId;
+  public void setSenderId(LongFilter senderId) {
+    this.senderId = senderId;
   }
 
   public LongFilter getMessageGroupId() {
@@ -140,14 +140,14 @@ public class MessageContentCriteria implements Serializable, Criteria {
       Objects.equals(id, that.id) &&
       Objects.equals(uuid, that.uuid) &&
       Objects.equals(baseInfoId, that.baseInfoId) &&
-      Objects.equals(messageSenderId, that.messageSenderId) &&
+      Objects.equals(senderId, that.senderId) &&
       Objects.equals(messageGroupId, that.messageGroupId)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, uuid, baseInfoId, messageSenderId, messageGroupId);
+    return Objects.hash(id, uuid, baseInfoId, senderId, messageGroupId);
   }
 
   // prettier-ignore
@@ -157,7 +157,7 @@ public class MessageContentCriteria implements Serializable, Criteria {
             (id != null ? "id=" + id + ", " : "") +
             (uuid != null ? "uuid=" + uuid + ", " : "") +
             (baseInfoId != null ? "baseInfoId=" + baseInfoId + ", " : "") +
-            (messageSenderId != null ? "messageSenderId=" + messageSenderId + ", " : "") +
+            (senderId != null ? "senderId=" + senderId + ", " : "") +
             (messageGroupId != null ? "messageGroupId=" + messageGroupId + ", " : "") +
             "}";
     }

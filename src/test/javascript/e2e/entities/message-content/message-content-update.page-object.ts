@@ -12,7 +12,7 @@ export default class MessageContentUpdatePage {
   statusInput: ElementFinder = element(by.css('textarea#message-content-status'));
   searchFieldInput: ElementFinder = element(by.css('textarea#message-content-searchField'));
   baseInfoSelect: ElementFinder = element(by.css('select#message-content-baseInfo'));
-  messageSenderSelect: ElementFinder = element(by.css('select#message-content-messageSender'));
+  senderSelect: ElementFinder = element(by.css('select#message-content-sender'));
   messageGroupSelect: ElementFinder = element(by.css('select#message-content-messageGroup'));
 
   getPageTitle() {
@@ -67,20 +67,20 @@ export default class MessageContentUpdatePage {
     return this.baseInfoSelect.element(by.css('option:checked')).getText();
   }
 
-  async messageSenderSelectLastOption() {
-    await this.messageSenderSelect.all(by.tagName('option')).last().click();
+  async senderSelectLastOption() {
+    await this.senderSelect.all(by.tagName('option')).last().click();
   }
 
-  async messageSenderSelectOption(option) {
-    await this.messageSenderSelect.sendKeys(option);
+  async senderSelectOption(option) {
+    await this.senderSelect.sendKeys(option);
   }
 
-  getMessageSenderSelect() {
-    return this.messageSenderSelect;
+  getSenderSelect() {
+    return this.senderSelect;
   }
 
-  async getMessageSenderSelectedOption() {
-    return this.messageSenderSelect.element(by.css('option:checked')).getText();
+  async getSenderSelectedOption() {
+    return this.senderSelect.element(by.css('option:checked')).getText();
   }
 
   async messageGroupSelectLastOption() {
@@ -121,7 +121,7 @@ export default class MessageContentUpdatePage {
     await waitUntilDisplayed(this.saveButton);
     await this.setSearchFieldInput('searchField');
     await this.baseInfoSelectLastOption();
-    await this.messageSenderSelectLastOption();
+    await this.senderSelectLastOption();
     await this.messageGroupSelectLastOption();
     await this.save();
     await waitUntilHidden(this.saveButton);

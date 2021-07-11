@@ -54,7 +54,7 @@ export const MessageContentUpdate = (props: RouteComponentProps<{ id: string }>)
       ...messageContentEntity,
       ...values,
       baseInfo: baseInfos.find(it => it.id.toString() === values.baseInfoId.toString()),
-      messageSender: masterUsers.find(it => it.id.toString() === values.messageSenderId.toString()),
+      sender: masterUsers.find(it => it.id.toString() === values.senderId.toString()),
       messageGroup: messageGroups.find(it => it.id.toString() === values.messageGroupId.toString()),
     };
 
@@ -71,7 +71,7 @@ export const MessageContentUpdate = (props: RouteComponentProps<{ id: string }>)
       : {
           ...messageContentEntity,
           baseInfoId: messageContentEntity?.baseInfo?.id,
-          messageSenderId: messageContentEntity?.messageSender?.id,
+          senderId: messageContentEntity?.sender?.id,
           messageGroupId: messageContentEntity?.messageGroup?.id,
         };
 
@@ -157,10 +157,10 @@ export const MessageContentUpdate = (props: RouteComponentProps<{ id: string }>)
                   : null}
               </ValidatedField>
               <ValidatedField
-                id="message-content-messageSender"
-                name="messageSenderId"
-                data-cy="messageSender"
-                label={translate('catinyApp.messageContent.messageSender')}
+                id="message-content-sender"
+                name="senderId"
+                data-cy="sender"
+                label={translate('catinyApp.messageContent.sender')}
                 type="select"
               >
                 <option value="" key="0" />

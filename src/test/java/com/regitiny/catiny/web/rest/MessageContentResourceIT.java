@@ -315,21 +315,21 @@ class MessageContentResourceIT {
 
   @Test
   @Transactional
-  void getAllMessageContentsByMessageSenderIsEqualToSomething() throws Exception {
+  void getAllMessageContentsBySenderIsEqualToSomething() throws Exception {
     // Initialize the database
     messageContentRepository.saveAndFlush(messageContent);
-    MasterUser messageSender = MasterUserResourceIT.createEntity(em);
-    em.persist(messageSender);
+    MasterUser sender = MasterUserResourceIT.createEntity(em);
+    em.persist(sender);
     em.flush();
-    messageContent.setMessageSender(messageSender);
+    messageContent.setSender(sender);
     messageContentRepository.saveAndFlush(messageContent);
-    Long messageSenderId = messageSender.getId();
+    Long senderId = sender.getId();
 
-    // Get all the messageContentList where messageSender equals to messageSenderId
-    defaultMessageContentShouldBeFound("messageSenderId.equals=" + messageSenderId);
+    // Get all the messageContentList where sender equals to senderId
+    defaultMessageContentShouldBeFound("senderId.equals=" + senderId);
 
-    // Get all the messageContentList where messageSender equals to (messageSenderId + 1)
-    defaultMessageContentShouldNotBeFound("messageSenderId.equals=" + (messageSenderId + 1));
+    // Get all the messageContentList where sender equals to (senderId + 1)
+    defaultMessageContentShouldNotBeFound("senderId.equals=" + (senderId + 1));
   }
 
   @Test

@@ -90,7 +90,7 @@ public class MessageGroup implements Serializable {
 
   @OneToMany(mappedBy = "messageGroup")
   @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-  @JsonIgnoreProperties(value = { "baseInfo", "messageSender", "messageGroup" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "baseInfo", "sender", "messageGroup" }, allowSetters = true)
   private Set<MessageContent> messageContents = new HashSet<>();
 
   @ManyToMany(mappedBy = "messageGroups")

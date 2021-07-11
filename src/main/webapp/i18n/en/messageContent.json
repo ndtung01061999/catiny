@@ -24,7 +24,7 @@
       "status": "Status",
       "searchField": "Search Field",
       "baseInfo": "Base Info",
-      "messageSender": "Message Sender",
+      "sender": "Sender",
       "messageGroup": "Message Group",
       "help": {
         "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
