@@ -20,26 +20,16 @@
       },
       "id": "ID",
       "uuid": "Uuid",
-      "groupId": "Group Id",
       "content": "Content",
-      "sender": "Sender",
       "status": "Status",
       "searchField": "Search Field",
-      "role": "Role",
-      "createdDate": "Created Date",
-      "modifiedDate": "Modified Date",
-      "createdBy": "Created By",
-      "modifiedBy": "Modified By",
-      "comment": "Comment",
+      "baseInfo": "Base Info",
+      "messageSender": "Message Sender",
+      "messageGroup": "Message Group",
       "help": {
-        "uuid": "uuid",
-        "searchField": "searchField",
-        "role": "role",
-        "createdDate": "createdDate",
-        "modifiedDate": "modifiedDate",
-        "createdBy": "createdBy",
-        "modifiedBy": "modifiedBy",
-        "comment": "comment"
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
+        "status": "status : trạng thái của tin nhắn này, đã gửi chưa , ai đã nhận được , đã xem chưa đã thu hồi hay đã xóa...\n@type           : Json",
+        "searchField": "searchField : lưu content tin nhắn lọc dấu ... để sau này search"
       }
     }
   }

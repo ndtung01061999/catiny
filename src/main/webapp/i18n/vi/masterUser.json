@@ -1,0 +1,55 @@
+{
+  "catinyApp": {
+    "masterUser": {
+      "home": {
+        "title": "Master Users",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Thêm mới một Master User",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Master User",
+        "search": "Tìm Master User",
+        "notFound": "No Master Users found"
+      },
+      "created": "Một Master User mới được tạo với định danh {{ param }}",
+      "updated": "Một Master User cập nhật với định danh {{ param }}",
+      "deleted": "Một Master User đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Master User {{ id }}?"
+      },
+      "detail": {
+        "title": "Master User"
+      },
+      "id": "ID",
+      "uuid": "Uuid",
+      "fullName": "Full Name",
+      "nickname": "Nickname",
+      "quickInfo": "Quick Info",
+      "user": "User",
+      "myProfile": "My Profile",
+      "myAccountStatus": "My Account Status",
+      "myRank": "My Rank",
+      "avatar": "Avatar",
+      "baseInfo": "Base Info",
+      "myPage": "My Page",
+      "myFile": "My File",
+      "myNotification": "My Notification",
+      "myFriend": "My Friend",
+      "myFollowUser": "My Follow User",
+      "myFollowGroup": "My Follow Group",
+      "myFollowPage": "My Follow Page",
+      "myNewsFeed": "My News Feed",
+      "myTodoList": "My Todo List",
+      "myPost": "My Post",
+      "myGroupPost": "My Group Post",
+      "messageGroup": "Message Group",
+      "topicInterest": "Topic Interest",
+      "myLike": "My Like",
+      "myComment": "My Comment",
+      "help": {
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
+        "fullName": "fullName : tên hiển thị . thực ra chỉ là firstName + lastName . nhưng sẽ rất bất tiện",
+        "nickname": "nickname : biệt danh của người dùng",
+        "quickInfo": "quickInfo      : @type Json -&gt; thông tin nhanh về người dùng này dùng trong giới thiệu sơ khi chỉ chuột vào người dùng"
+      }
+    }
+  }
+}

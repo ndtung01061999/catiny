@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity UserProfile.
+    -->
+    <changeSet id="20210710143907-1" author="jhipster">
+        <createTable tableName="user_profile" remarks="@what?         	  -&gt; The UserProfile entity .\n@why?          	  -&gt;\n@use-to:       	  -&gt; Lưu thông tin mở rộng của người dùng (trường học cơ quan làm việc ...)\n@commonly-used-in -&gt; Trang cá nhân (trang giới thiệu)\n\n@describe      	  -&gt; Đây là bảng NoSQL một số trường ở dưới dạng JSON ,NoSQL vì dữ liệu mỗi trường học , cơ quan ,nới sống ... đôi khikhông giống nhau">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="uuid" type="${uuidType}" remarks="uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_user_profile__uuid" />
+            </column>
+            <column name="work" type="${clobType}" remarks="work : nơi làm việc\n@data-type : Json\n@describe : những nơi, công ty đã từng làm việc , khoảng thời gian vị trí ...\n@example :\n-companyName\n-companyAddress\n-companyContact\n@author           -&gt; yuvytung.">
+                <constraints nullable="true" />
+            </column>
+            <column name="education" type="${clobType}" remarks="education : học vấn\n@data-type : Json\n@describe : học vấn thế nào tốt nghiệp trường nào học tại đâu khoảng thời gian nào , bằng cấp chứng chỉ ra sao  ...">
+                <constraints nullable="true" />
+            </column>
+            <column name="places_lived" type="${clobType}" remarks="placesLived : những nơi đã từng sống\n@data-type : Json\n@describe : sống ở đâu khoảng thời gian nào có gì tại nơi sống ...">
+                <constraints nullable="true" />
+            </column>
+            <column name="contact_info" type="${clobType}" remarks="contactInfo : những thông in liên hệ cơ bản\n@data-type : Json\n@describe : số điện thoại email , địa chỉ ...">
+                <constraints nullable="true" />
+            </column>
+            <column name="web_social_links" type="${clobType}" remarks="webSocialLinks : các mạng xã hội sử dụng . trang web ...\n@data-type : Json\n@describe : thông tin về mạng xã hội sử dụng ...">
+                <constraints nullable="true" />
+            </column>
+            <column name="basic_info" type="${clobType}" remarks="basicInfo : thông tin cơ bản của người dùng\n@data-type : Json\n@describe : những thông tin tóm tắt để giới thiệu nổi bật">
+                <constraints nullable="true" />
+            </column>
+            <column name="relationship_info" type="${clobType}" remarks="relationshipInfo : những mối liên hệ với ai đó\n@data-type : Json\n@describe : ví dụ như đã kết hôn với ai ...">
+                <constraints nullable="true" />
+            </column>
+            <column name="family" type="${clobType}" remarks="family : những người trong gia đình\n@data-type : Json\n@describe : anh em bạn bè người thân trong gia đình">
+                <constraints nullable="true" />
+            </column>
+            <column name="detail_about" type="${clobType}" remarks="detailAbout : chi tiết về bản thân mình\n@data-type : Json\n@describe : những thôn tin chi tết về bản thân như ngày tháng năm sinh nơi ở ...">
+                <constraints nullable="true" />
+            </column>
+            <column name="life_events" type="${clobType}" remarks="lifeEvents : sự kiên lớn trong cuộc đời\n@data-type : Json\n@describe : những sự kiện như sinh , tốt nghiệp . lấy vợ chồng , có con ...">
+                <constraints nullable="true" />
+            </column>
+            <column name="hobbies" type="${clobType}" remarks="hobbies : sở thích của bản thân\n@data-type : Json\n@describe : sở thích của ban thân là gì , phim , nhạc , sách , ...">
+                <constraints nullable="true" />
+            </column>
+            <column name="featured" type="${clobType}" remarks="featured : điểm nổi bật của bản thân\n@data-type : Json\n@describe : cá tính thế nào , đã làm nhứng gì rất đặc sắc ....">
+                <constraints nullable="true" />
+            </column>
+            <column name="base_info_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_user_profile__base_info_id" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+
+    <!--
+        Load sample data generated with Faker.js
+        - This data can be easily edited using a CSV editor (or even MS Excel) and
+          is located in the 'src/main/resources/config/liquibase/fake-data' directory
+        - By default this data is applied when running with the JHipster 'dev' profile.
+          This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
+          Spring Boot configuration key.
+    -->
+    <changeSet id="20210710143907-1-data" author="jhipster" context="faker">
+        <loadData
+                  file="config/liquibase/fake-data/user_profile.csv"
+                  separator=";"
+                  tableName="user_profile">
+            <column name="id" type="numeric"/>
+            <column name="uuid" type="string"/>
+            <column name="work" type="clob"/>
+            <column name="education" type="clob"/>
+            <column name="places_lived" type="clob"/>
+            <column name="contact_info" type="clob"/>
+            <column name="web_social_links" type="clob"/>
+            <column name="basic_info" type="clob"/>
+            <column name="relationship_info" type="clob"/>
+            <column name="family" type="clob"/>
+            <column name="detail_about" type="clob"/>
+            <column name="life_events" type="clob"/>
+            <column name="hobbies" type="clob"/>
+            <column name="featured" type="clob"/>
+            <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
+        </loadData>
+    </changeSet>
+</databaseChangeLog>

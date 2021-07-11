@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <!--
+        Added the constraints for entity TopicInterest.
+    -->
+    <changeSet id="20210710143931-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="base_info_id"
+                                 baseTableName="topic_interest"
+                                 constraintName="fk_topic_interest__base_info_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="base_info"/>
+
+        <addForeignKeyConstraint baseColumnNames="topic_interest_id"
+                                 baseTableName="rel_topic_interest__post"
+                                 constraintName="fk_rel_topic_interest__post__topic_interest_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="topic_interest"/>
+
+        <addForeignKeyConstraint baseColumnNames="post_id"
+                                 baseTableName="rel_topic_interest__post"
+                                 constraintName="fk_rel_topic_interest__post__post_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="post"/>
+
+        <addForeignKeyConstraint baseColumnNames="topic_interest_id"
+                                 baseTableName="rel_topic_interest__page_post"
+                                 constraintName="fk_rel_topic_interest__page_post__topic_interest_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="topic_interest"/>
+
+        <addForeignKeyConstraint baseColumnNames="page_post_id"
+                                 baseTableName="rel_topic_interest__page_post"
+                                 constraintName="fk_rel_topic_interest__page_post__page_post_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="page_post"/>
+
+        <addForeignKeyConstraint baseColumnNames="topic_interest_id"
+                                 baseTableName="rel_topic_interest__group_post"
+                                 constraintName="fk_rel_topic_interest__group_post__topic_interest_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="topic_interest"/>
+
+        <addForeignKeyConstraint baseColumnNames="group_post_id"
+                                 baseTableName="rel_topic_interest__group_post"
+                                 constraintName="fk_rel_topic_interest__group_post__group_post_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="group_post"/>
+    </changeSet>
+</databaseChangeLog>

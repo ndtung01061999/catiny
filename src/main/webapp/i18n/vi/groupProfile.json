@@ -1,0 +1,30 @@
+{
+  "catinyApp": {
+    "groupProfile": {
+      "home": {
+        "title": "Group Profiles",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Thêm mới một Group Profile",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Group Profile",
+        "search": "Tìm Group Profile",
+        "notFound": "No Group Profiles found"
+      },
+      "created": "Một Group Profile mới được tạo với định danh {{ param }}",
+      "updated": "Một Group Profile cập nhật với định danh {{ param }}",
+      "deleted": "Một Group Profile đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Group Profile {{ id }}?"
+      },
+      "detail": {
+        "title": "Group Profile"
+      },
+      "id": "ID",
+      "uuid": "Uuid",
+      "baseInfo": "Base Info",
+      "group": "Group",
+      "help": {
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)"
+      }
+    }
+  }
+}

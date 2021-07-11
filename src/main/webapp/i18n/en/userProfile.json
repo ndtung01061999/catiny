@@ -1,0 +1,53 @@
+{
+  "catinyApp": {
+    "userProfile": {
+      "home": {
+        "title": "User Profiles",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new User Profile",
+        "createOrEditLabel": "Create or edit a User Profile",
+        "search": "Search for User Profile",
+        "notFound": "No User Profiles found"
+      },
+      "created": "A new User Profile is created with identifier {{ param }}",
+      "updated": "A User Profile is updated with identifier {{ param }}",
+      "deleted": "A User Profile is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete User Profile {{ id }}?"
+      },
+      "detail": {
+        "title": "User Profile"
+      },
+      "id": "ID",
+      "uuid": "Uuid",
+      "work": "Work",
+      "education": "Education",
+      "placesLived": "Places Lived",
+      "contactInfo": "Contact Info",
+      "webSocialLinks": "Web Social Links",
+      "basicInfo": "Basic Info",
+      "relationshipInfo": "Relationship Info",
+      "family": "Family",
+      "detailAbout": "Detail About",
+      "lifeEvents": "Life Events",
+      "hobbies": "Hobbies",
+      "featured": "Featured",
+      "baseInfo": "Base Info",
+      "help": {
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
+        "work": "work : nơi làm việc\n@data-type : Json\n@describe : những nơi, công ty đã từng làm việc , khoảng thời gian vị trí ...\n@example :\n-companyName\n-companyAddress\n-companyContact\n@author           -&gt; yuvytung.",
+        "education": "education : học vấn\n@data-type : Json\n@describe : học vấn thế nào tốt nghiệp trường nào học tại đâu khoảng thời gian nào , bằng cấp chứng chỉ ra sao  ...",
+        "placesLived": "placesLived : những nơi đã từng sống\n@data-type : Json\n@describe : sống ở đâu khoảng thời gian nào có gì tại nơi sống ...",
+        "contactInfo": "contactInfo : những thông in liên hệ cơ bản\n@data-type : Json\n@describe : số điện thoại email , địa chỉ ...",
+        "webSocialLinks": "webSocialLinks : các mạng xã hội sử dụng . trang web ...\n@data-type : Json\n@describe : thông tin về mạng xã hội sử dụng ...",
+        "basicInfo": "basicInfo : thông tin cơ bản của người dùng\n@data-type : Json\n@describe : những thông tin tóm tắt để giới thiệu nổi bật",
+        "relationshipInfo": "relationshipInfo : những mối liên hệ với ai đó\n@data-type : Json\n@describe : ví dụ như đã kết hôn với ai ...",
+        "family": "family : những người trong gia đình\n@data-type : Json\n@describe : anh em bạn bè người thân trong gia đình",
+        "detailAbout": "detailAbout : chi tiết về bản thân mình\n@data-type : Json\n@describe : những thôn tin chi tết về bản thân như ngày tháng năm sinh nơi ở ...",
+        "lifeEvents": "lifeEvents : sự kiên lớn trong cuộc đời\n@data-type : Json\n@describe : những sự kiện như sinh , tốt nghiệp . lấy vợ chồng , có con ...",
+        "hobbies": "hobbies : sở thích của bản thân\n@data-type : Json\n@describe : sở thích của ban thân là gì , phim , nhạc , sách , ...",
+        "featured": "featured : điểm nổi bật của bản thân\n@data-type : Json\n@describe : cá tính thế nào , đã làm nhứng gì rất đặc sắc ...."
+      }
+    }
+  }
+}

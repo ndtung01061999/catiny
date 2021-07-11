@@ -1,0 +1,32 @@
+{
+  "catinyApp": {
+    "newsFeed": {
+      "home": {
+        "title": "News Feeds",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new News Feed",
+        "createOrEditLabel": "Create or edit a News Feed",
+        "search": "Search for News Feed",
+        "notFound": "No News Feeds found"
+      },
+      "created": "A new News Feed is created with identifier {{ param }}",
+      "updated": "A News Feed is updated with identifier {{ param }}",
+      "deleted": "A News Feed is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete News Feed {{ id }}?"
+      },
+      "detail": {
+        "title": "News Feed"
+      },
+      "id": "ID",
+      "uuid": "Uuid",
+      "score": "Score",
+      "baseInfo": "Base Info",
+      "post": "Post",
+      "masterUser": "Master User",
+      "help": {
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)"
+      }
+    }
+  }
+}

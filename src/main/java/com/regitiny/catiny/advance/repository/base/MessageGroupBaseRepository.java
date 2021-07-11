@@ -17,11 +17,20 @@ import java.util.Optional;
  */
 public interface MessageGroupBaseRepository extends MessageGroupRepository
 {
-  Optional<List<MessageGroup>> findAllByGroupId(String groupId);
+  default Optional<List<MessageGroup>> findAllByGroupId(String groupId)
+  {
+    return null;
+  }
 
 
-  Page<MessageGroup> findAllByUserId(Long userId, Pageable pageable);
+  default Page<MessageGroup> findAllByUserId(Long userId, Pageable pageable)
+  {
+    return null;
+  }
 
 
-  Optional<MessageGroup> findByGroupIdAndUserId(String groupId, Long userId);
+  default Optional<MessageGroup> findByGroupIdAndUserId(String groupId, Long userId)
+  {
+    return null;
+  }
 }

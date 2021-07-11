@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity MasterUser.
+    -->
+    <changeSet id="20210710143906-1" author="jhipster">
+        <createTable tableName="master_user" remarks="@what?            -&gt; The MasterUser entity.\n@why?             -&gt; User (mặc định của jhipster) không cho thêm cột (nếu thêm thì sau khó update)\n@use-to:          -&gt; Lưu thông tin cơ bản của một người dùng\n@commonly-used-in -&gt; Thường sử dụng khi thao tác với tài khoản trong service trên server\n\n@describe      	  -&gt; Những dữ liệu của tài khoản và thương xuyên sử dụng (trong service) sẽ được lưu ở đây">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="uuid" type="${uuidType}" remarks="uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_master_user__uuid" />
+            </column>
+            <column name="full_name" type="varchar(255)" remarks="fullName : tên hiển thị . thực ra chỉ là firstName + lastName . nhưng sẽ rất bất tiện">
+                <constraints nullable="false" />
+            </column>
+            <column name="nickname" type="varchar(255)" remarks="nickname : biệt danh của người dùng">
+                <constraints nullable="true" />
+            </column>
+            <column name="quick_info" type="${clobType}" remarks="quickInfo      : @type Json -&gt; thông tin nhanh về người dùng này dùng trong giới thiệu sơ khi chỉ chuột vào người dùng">
+                <constraints nullable="true" />
+            </column>
+            <column name="my_profile_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_master_user__my_profile_id" />
+            </column>
+            <column name="my_account_status_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_master_user__my_account_status_id" />
+            </column>
+            <column name="my_rank_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_master_user__my_rank_id" />
+            </column>
+            <column name="avatar_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_master_user__avatar_id" />
+            </column>
+            <column name="base_info_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_master_user__base_info_id" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20210710143906-1-relations" author="jhipster">
+
+        <createTable tableName="rel_master_user__my_group_post">
+            <column name="my_group_post_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="master_user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="master_user_id, my_group_post_id" tableName="rel_master_user__my_group_post"/>
+
+        <createTable tableName="rel_master_user__message_group">
+            <column name="message_group_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="master_user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="master_user_id, message_group_id" tableName="rel_master_user__message_group"/>
+
+        <createTable tableName="rel_master_user__topic_interest">
+            <column name="topic_interest_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="master_user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="master_user_id, topic_interest_id" tableName="rel_master_user__topic_interest"/>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+
+    <!--
+        Load sample data generated with Faker.js
+        - This data can be easily edited using a CSV editor (or even MS Excel) and
+          is located in the 'src/main/resources/config/liquibase/fake-data' directory
+        - By default this data is applied when running with the JHipster 'dev' profile.
+          This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
+          Spring Boot configuration key.
+    -->
+    <changeSet id="20210710143906-1-data" author="jhipster" context="faker">
+        <loadData
+                  file="config/liquibase/fake-data/master_user.csv"
+                  separator=";"
+                  tableName="master_user">
+            <column name="id" type="numeric"/>
+            <column name="uuid" type="string"/>
+            <column name="full_name" type="string"/>
+            <column name="nickname" type="string"/>
+            <column name="quick_info" type="clob"/>
+            <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
+        </loadData>
+    </changeSet>
+</databaseChangeLog>

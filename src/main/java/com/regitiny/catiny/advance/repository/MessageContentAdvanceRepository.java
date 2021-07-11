@@ -2,7 +2,12 @@ package com.regitiny.catiny.advance.repository;
 
 
 import com.regitiny.catiny.advance.repository.base.MessageContentBaseRepository;
+import com.regitiny.catiny.domain.MessageContent;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+
+import java.time.Instant;
 
 /**
  * Spring Data SQL repository for the MessageContent entity.
@@ -15,4 +20,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MessageContentAdvanceRepository extends MessageContentBaseRepository
 {
+    @Override
+    default Page<MessageContent> findAllByGroupIdAndCreatedDateGreaterThanEqualOrderByCreatedDateDesc(String groupId, Instant createdDate, Pageable pageable) {
+        return null;
+    }
 }

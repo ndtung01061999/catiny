@@ -674,8 +674,8 @@ relationship OneToOne
 
 relationship ManyToOne
 {
-    FollowGroup{followGroup} to GroupPost,
-    FollowPage{followPage} to PagePost,
+    FollowGroup{followGroupDetails} to GroupPost,
+    FollowPage{followPageDetails} to PagePost,
     NewsFeed to Post,
     RankUser to RankGroup,
 }
@@ -729,7 +729,7 @@ relationship OneToMany
 relationship ManyToOne
 {
     Friend{friendDetails} to MasterUser,
-    FollowUser{followUser} to MasterUser,
+    FollowUser{followUserDetails} to MasterUser,
     MessageContent{sender} to MasterUser,
     PostLike{userLike} to MasterUser{myLike},
     PostComment{userComment} to MasterUser{myComment},

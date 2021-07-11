@@ -72,17 +72,9 @@ class MessageContentGatlingTest extends Simulation {
             .headers(headers_http_authenticated)
             .body(StringBody("""{
                 "uuid":null
-                , "groupId":"SAMPLE_TEXT"
                 , "content":null
-                , "sender":"SAMPLE_TEXT"
-                , "status":"SAMPLE_TEXT"
+                , "status":null
                 , "searchField":null
-                , "role":"SAMPLE_TEXT"
-                , "createdDate":"2020-01-01T00:00:00.000Z"
-                , "modifiedDate":"2020-01-01T00:00:00.000Z"
-                , "createdBy":"SAMPLE_TEXT"
-                , "modifiedBy":"SAMPLE_TEXT"
-                , "comment":"SAMPLE_TEXT"
                 }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_messageContent_url"))).exitHereIfFailed

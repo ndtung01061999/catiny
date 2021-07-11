@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <!--
+        Added the constraints for entity MasterUser.
+    -->
+    <changeSet id="20210710143906-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="id"
+                                 baseTableName="master_user"
+                                 constraintName="fk_master_user__user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="my_profile_id"
+                                 baseTableName="master_user"
+                                 constraintName="fk_master_user__my_profile_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user_profile"/>
+
+        <addForeignKeyConstraint baseColumnNames="my_account_status_id"
+                                 baseTableName="master_user"
+                                 constraintName="fk_master_user__my_account_status_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="account_status"/>
+
+        <addForeignKeyConstraint baseColumnNames="my_rank_id"
+                                 baseTableName="master_user"
+                                 constraintName="fk_master_user__my_rank_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="rank_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="avatar_id"
+                                 baseTableName="master_user"
+                                 constraintName="fk_master_user__avatar_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="image"/>
+
+        <addForeignKeyConstraint baseColumnNames="base_info_id"
+                                 baseTableName="master_user"
+                                 constraintName="fk_master_user__base_info_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="base_info"/>
+
+        <addForeignKeyConstraint baseColumnNames="master_user_id"
+                                 baseTableName="rel_master_user__my_group_post"
+                                 constraintName="fk_rel_master_user__my_group_post__master_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="master_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="my_group_post_id"
+                                 baseTableName="rel_master_user__my_group_post"
+                                 constraintName="fk_rel_master_user__my_group_post__my_group_post_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="group_post"/>
+
+        <addForeignKeyConstraint baseColumnNames="master_user_id"
+                                 baseTableName="rel_master_user__message_group"
+                                 constraintName="fk_rel_master_user__message_group__master_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="master_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="message_group_id"
+                                 baseTableName="rel_master_user__message_group"
+                                 constraintName="fk_rel_master_user__message_group__message_group_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="message_group"/>
+
+        <addForeignKeyConstraint baseColumnNames="master_user_id"
+                                 baseTableName="rel_master_user__topic_interest"
+                                 constraintName="fk_rel_master_user__topic_interest__master_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="master_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="topic_interest_id"
+                                 baseTableName="rel_master_user__topic_interest"
+                                 constraintName="fk_rel_master_user__topic_interest__topic_interest_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="topic_interest"/>
+    </changeSet>
+</databaseChangeLog>

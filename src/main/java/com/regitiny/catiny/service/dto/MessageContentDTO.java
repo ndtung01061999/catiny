@@ -3,82 +3,57 @@ package com.regitiny.catiny.service.dto;
 import com.regitiny.catiny.GeneratedByJHipster;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
-import javax.persistence.Lob;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
+import javax.persistence.Lob;
+import javax.validation.constraints.*;
 
 /**
  * A DTO for the {@link com.regitiny.catiny.domain.MessageContent} entity.
  */
-@ApiModel(description = "The PostDetails entity.\n@author A true hipster")
+@ApiModel(
+  description = "@what?            -> The MessageContent entity.\n@why?             ->\n@use-to           -> Chứa Những tin nhắn trong các nhóm cụ thể\n@commonly-used-in ->\n\n@describe         ->"
+)
 @GeneratedByJHipster
 public class MessageContentDTO implements Serializable {
 
   private Long id;
 
   /**
-   * uuid
+   * uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
    */
   @NotNull
-  @ApiModelProperty(value = "uuid", required = true)
+  @ApiModelProperty(
+    value = "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
+    required = true
+  )
   private UUID uuid;
-
-  @NotNull
-  private String groupId;
 
   @Lob
   private String content;
 
-  private String sender;
-
+  /**
+   * status : trạng thái của tin nhắn này, đã gửi chưa , ai đã nhận được , đã xem chưa đã thu hồi hay đã xóa...\n@type           : Json
+   */
+  @ApiModelProperty(
+    value = "status : trạng thái của tin nhắn này, đã gửi chưa , ai đã nhận được , đã xem chưa đã thu hồi hay đã xóa...\n@type           : Json"
+  )
+  @Lob
   private String status;
 
   /**
-   * searchField
+   * searchField : lưu content tin nhắn lọc dấu ... để sau này search
    */
-  @ApiModelProperty(value = "searchField")
+  @ApiModelProperty(value = "searchField : lưu content tin nhắn lọc dấu ... để sau này search")
   @Lob
   private String searchField;
 
-  /**
-   * role
-   */
-  @ApiModelProperty(value = "role")
-  private String role;
+  private BaseInfoDTO baseInfo;
 
-  /**
-   * createdDate
-   */
-  @ApiModelProperty(value = "createdDate")
-  private Instant createdDate;
+  private MasterUserDTO messageSender;
 
-  /**
-   * modifiedDate
-   */
-  @ApiModelProperty(value = "modifiedDate")
-  private Instant modifiedDate;
-
-  /**
-   * createdBy
-   */
-  @ApiModelProperty(value = "createdBy")
-  private String createdBy;
-
-  /**
-   * modifiedBy
-   */
-  @ApiModelProperty(value = "modifiedBy")
-  private String modifiedBy;
-
-  /**
-   * comment
-   */
-  @ApiModelProperty(value = "comment")
-  private String comment;
+  private MessageGroupDTO messageGroup;
 
   public Long getId() {
     return id;
@@ -96,28 +71,12 @@ public class MessageContentDTO implements Serializable {
     this.uuid = uuid;
   }
 
-  public String getGroupId() {
-    return groupId;
-  }
-
-  public void setGroupId(String groupId) {
-    this.groupId = groupId;
-  }
-
   public String getContent() {
     return content;
   }
 
   public void setContent(String content) {
     this.content = content;
-  }
-
-  public String getSender() {
-    return sender;
-  }
-
-  public void setSender(String sender) {
-    this.sender = sender;
   }
 
   public String getStatus() {
@@ -136,52 +95,28 @@ public class MessageContentDTO implements Serializable {
     this.searchField = searchField;
   }
 
-  public String getRole() {
-    return role;
+  public BaseInfoDTO getBaseInfo() {
+    return baseInfo;
   }
 
-  public void setRole(String role) {
-    this.role = role;
+  public void setBaseInfo(BaseInfoDTO baseInfo) {
+    this.baseInfo = baseInfo;
   }
 
-  public Instant getCreatedDate() {
-    return createdDate;
+  public MasterUserDTO getMessageSender() {
+    return messageSender;
   }
 
-  public void setCreatedDate(Instant createdDate) {
-    this.createdDate = createdDate;
+  public void setMessageSender(MasterUserDTO messageSender) {
+    this.messageSender = messageSender;
   }
 
-  public Instant getModifiedDate() {
-    return modifiedDate;
+  public MessageGroupDTO getMessageGroup() {
+    return messageGroup;
   }
 
-  public void setModifiedDate(Instant modifiedDate) {
-    this.modifiedDate = modifiedDate;
-  }
-
-  public String getCreatedBy() {
-    return createdBy;
-  }
-
-  public void setCreatedBy(String createdBy) {
-    this.createdBy = createdBy;
-  }
-
-  public String getModifiedBy() {
-    return modifiedBy;
-  }
-
-  public void setModifiedBy(String modifiedBy) {
-    this.modifiedBy = modifiedBy;
-  }
-
-  public String getComment() {
-    return comment;
-  }
-
-  public void setComment(String comment) {
-    this.comment = comment;
+  public void setMessageGroup(MessageGroupDTO messageGroup) {
+    this.messageGroup = messageGroup;
   }
 
   @Override
@@ -211,17 +146,12 @@ public class MessageContentDTO implements Serializable {
         return "MessageContentDTO{" +
             "id=" + getId() +
             ", uuid='" + getUuid() + "'" +
-            ", groupId='" + getGroupId() + "'" +
             ", content='" + getContent() + "'" +
-            ", sender='" + getSender() + "'" +
             ", status='" + getStatus() + "'" +
             ", searchField='" + getSearchField() + "'" +
-            ", role='" + getRole() + "'" +
-            ", createdDate='" + getCreatedDate() + "'" +
-            ", modifiedDate='" + getModifiedDate() + "'" +
-            ", createdBy='" + getCreatedBy() + "'" +
-            ", modifiedBy='" + getModifiedBy() + "'" +
-            ", comment='" + getComment() + "'" +
+            ", baseInfo=" + getBaseInfo() +
+            ", messageSender=" + getMessageSender() +
+            ", messageGroup=" + getMessageGroup() +
             "}";
     }
 }

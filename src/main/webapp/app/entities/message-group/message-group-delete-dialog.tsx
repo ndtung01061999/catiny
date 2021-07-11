@@ -1,33 +1,28 @@
-import React, {useEffect} from 'react';
-import {RouteComponentProps} from 'react-router-dom';
-import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
-import {Translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import React, { useEffect } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
+import { Translate } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import {useAppDispatch, useAppSelector} from 'app/config/store';
-import {deleteEntity, getEntity} from './message-group.reducer';
+import { useAppDispatch, useAppSelector } from 'app/config/store';
+import { getEntity, deleteEntity } from './message-group.reducer';
 
-export const MessageGroupDeleteDialog = (props: RouteComponentProps<{ id: string }>) =>
-{
+export const MessageGroupDeleteDialog = (props: RouteComponentProps<{ id: string }>) => {
   const dispatch = useAppDispatch();
 
-  useEffect(() =>
-  {
+  useEffect(() => {
     dispatch(getEntity(props.match.params.id));
   }, []);
 
   const messageGroupEntity = useAppSelector(state => state.messageGroup.entity);
   const updateSuccess = useAppSelector(state => state.messageGroup.updateSuccess);
 
-  const handleClose = () =>
-  {
+  const handleClose = () => {
     props.history.push('/message-group');
   };
 
-  useEffect(() =>
-  {
-    if (updateSuccess)
-    {
+  useEffect(() => {
+    if (updateSuccess) {
       handleClose();
     }
   }, [updateSuccess]);

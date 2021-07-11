@@ -1,0 +1,42 @@
+{
+  "catinyApp": {
+    "hanhChinhVN": {
+      "home": {
+        "title": "Hanh Chinh VNS",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Thêm mới một Hanh Chinh VN",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Hanh Chinh VN",
+        "search": "Tìm Hanh Chinh VN",
+        "notFound": "No Hanh Chinh VNS found"
+      },
+      "created": "Một Hanh Chinh VN mới được tạo với định danh {{ param }}",
+      "updated": "Một Hanh Chinh VN cập nhật với định danh {{ param }}",
+      "deleted": "Một Hanh Chinh VN đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Hanh Chinh VN {{ id }}?"
+      },
+      "detail": {
+        "title": "Hanh Chinh VN"
+      },
+      "id": "ID",
+      "name": "Name",
+      "slug": "Slug",
+      "type": "Type",
+      "nameWithType": "Name With Type",
+      "code": "Code",
+      "parentCode": "Parent Code",
+      "path": "Path",
+      "pathWithType": "Path With Type",
+      "help": {
+        "name": "name Example(&#34;Ninh Kiều&#34;)",
+        "slug": "slug Example(&#34;ninh-kieu&#34;)",
+        "type": "type Example(&#34;quan&#34;)",
+        "nameWithType": "nameWithType Example(&#34;Quận Ninh Kiều&#34;)",
+        "code": "code Example(&#34;916&#34;)",
+        "parentCode": "parentCode Example(&#34;92&#34;) , equal to 0 is the city",
+        "path": "path Example(&#34;Ninh Kiều, Cần Thơ&#34;)",
+        "pathWithType": "pathWithType Example(&#34;Quận Ninh Kiều, Thành phố Cần Thơ&#34;)"
+      }
+    }
+  }
+}

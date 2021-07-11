@@ -1,18 +1,18 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Form, FormGroup, Input, InputGroup, Row, Table} from 'reactstrap';
-import {getSortState, TextFormat, Translate, translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Input, InputGroup, FormGroup, Form, Col, Row, Table } from 'reactstrap';
+import { byteSize, Translate, translate, getSortState } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import {getEntities, reset, searchEntities} from './message-content.reducer';
-import {APP_DATE_FORMAT} from 'app/config/constants';
-import {ASC, DESC, ITEMS_PER_PAGE} from 'app/shared/util/pagination.constants';
-import {overridePaginationStateWithQueryParams} from 'app/shared/util/entity-utils';
-import {useAppDispatch, useAppSelector} from 'app/config/store';
+import { searchEntities, getEntities, reset } from './message-content.reducer';
+import { IMessageContent } from 'app/shared/model/message-content.model';
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/shared/util/pagination.constants';
+import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
+import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-export const MessageContent = (props: RouteComponentProps<{ url: string }>) =>
-{
+export const MessageContent = (props: RouteComponentProps<{ url: string }>) => {
   const dispatch = useAppDispatch();
 
   const [search, setSearch] = useState('');
@@ -28,10 +28,8 @@ export const MessageContent = (props: RouteComponentProps<{ url: string }>) =>
   const entity = useAppSelector(state => state.messageContent.entity);
   const updateSuccess = useAppSelector(state => state.messageContent.updateSuccess);
 
-  const getAllEntities = () =>
-  {
-    if (search)
-    {
+  const getAllEntities = () => {
+    if (search) {
       dispatch(
         searchEntities({
           query: search,
@@ -40,8 +38,7 @@ export const MessageContent = (props: RouteComponentProps<{ url: string }>) =>
           sort: `${paginationState.sort},${paginationState.order}`,
         })
       );
-    } else
-    {
+    } else {
       dispatch(
         getEntities({
           page: paginationState.activePage - 1,
@@ -65,10 +62,8 @@ export const MessageContent = (props: RouteComponentProps<{ url: string }>) =>
     resetAll();
   }, []);
 
-  const startSearching = e =>
-  {
-    if (search)
-    {
+  const startSearching = e => {
+    if (search) {
       dispatch(reset());
       setPaginationState({
         ...paginationState,
@@ -98,10 +93,8 @@ export const MessageContent = (props: RouteComponentProps<{ url: string }>) =>
 
   const handleSearch = event => setSearch(event.target.value);
 
-  useEffect(() =>
-  {
-    if (updateSuccess)
-    {
+  useEffect(() => {
+    if (updateSuccess) {
       resetAll();
     }
   }, [updateSuccess]);
@@ -137,12 +130,11 @@ export const MessageContent = (props: RouteComponentProps<{ url: string }>) =>
     setSorting(true);
   };
 
-  const handleSyncList = () =>
-  {
+  const handleSyncList = () => {
     resetAll();
   };
 
-  const {match} = props;
+  const { match } = props;
 
   return (
     <div>
@@ -150,7 +142,7 @@ export const MessageContent = (props: RouteComponentProps<{ url: string }>) =>
         <Translate contentKey="catinyApp.messageContent.home.title">Message Contents</Translate>
         <div className="d-flex justify-content-end">
           <Button className="mr-2" color="info" onClick={handleSyncList} disabled={loading}>
-            <FontAwesomeIcon icon="sync" spin={loading}/>{' '}
+            <FontAwesomeIcon icon="sync" spin={loading} />{' '}
             <Translate contentKey="catinyApp.messageContent.home.refreshListLabel">Refresh List</Translate>
           </Button>
           <Link to={`${match.url}/new`} className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
@@ -173,10 +165,10 @@ export const MessageContent = (props: RouteComponentProps<{ url: string }>) =>
                   placeholder={translate('catinyApp.messageContent.home.search')}
                 />
                 <Button className="input-group-addon">
-                  <FontAwesomeIcon icon="search"/>
+                  <FontAwesomeIcon icon="search" />
                 </Button>
                 <Button type="reset" className="input-group-addon" onClick={clear}>
-                  <FontAwesomeIcon icon="trash"/>
+                  <FontAwesomeIcon icon="trash" />
                 </Button>
               </InputGroup>
             </FormGroup>
@@ -202,14 +194,8 @@ export const MessageContent = (props: RouteComponentProps<{ url: string }>) =>
                   <th className="hand" onClick={sort('uuid')}>
                     <Translate contentKey="catinyApp.messageContent.uuid">Uuid</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
-                  <th className="hand" onClick={sort('groupId')}>
-                    <Translate contentKey="catinyApp.messageContent.groupId">Group Id</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
                   <th className="hand" onClick={sort('content')}>
                     <Translate contentKey="catinyApp.messageContent.content">Content</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={sort('sender')}>
-                    <Translate contentKey="catinyApp.messageContent.sender">Sender</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={sort('status')}>
                     <Translate contentKey="catinyApp.messageContent.status">Status</Translate> <FontAwesomeIcon icon="sort" />
@@ -217,23 +203,15 @@ export const MessageContent = (props: RouteComponentProps<{ url: string }>) =>
                   <th className="hand" onClick={sort('searchField')}>
                     <Translate contentKey="catinyApp.messageContent.searchField">Search Field</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
-                  <th className="hand" onClick={sort('role')}>
-                    <Translate contentKey="catinyApp.messageContent.role">Role</Translate> <FontAwesomeIcon icon="sort" />
+                  <th>
+                    <Translate contentKey="catinyApp.messageContent.baseInfo">Base Info</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
-                  <th className="hand" onClick={sort('createdDate')}>
-                    <Translate contentKey="catinyApp.messageContent.createdDate">Created Date</Translate> <FontAwesomeIcon icon="sort" />
+                  <th>
+                    <Translate contentKey="catinyApp.messageContent.messageSender">Message Sender</Translate>{' '}
+                    <FontAwesomeIcon icon="sort" />
                   </th>
-                  <th className="hand" onClick={sort('modifiedDate')}>
-                    <Translate contentKey="catinyApp.messageContent.modifiedDate">Modified Date</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={sort('createdBy')}>
-                    <Translate contentKey="catinyApp.messageContent.createdBy">Created By</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={sort('modifiedBy')}>
-                    <Translate contentKey="catinyApp.messageContent.modifiedBy">Modified By</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={sort('comment')}>
-                    <Translate contentKey="catinyApp.messageContent.comment">Comment</Translate> <FontAwesomeIcon icon="sort" />
+                  <th>
+                    <Translate contentKey="catinyApp.messageContent.messageGroup">Message Group</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
                   <th />
                 </tr>
@@ -247,25 +225,30 @@ export const MessageContent = (props: RouteComponentProps<{ url: string }>) =>
                       </Button>
                     </td>
                     <td>{messageContent.uuid}</td>
-                    <td>{messageContent.groupId}</td>
                     <td>{messageContent.content}</td>
-                    <td>{messageContent.sender}</td>
                     <td>{messageContent.status}</td>
                     <td>{messageContent.searchField}</td>
-                    <td>{messageContent.role}</td>
                     <td>
-                      {messageContent.createdDate ? (
-                        <TextFormat type="date" value={messageContent.createdDate} format={APP_DATE_FORMAT} />
-                      ) : null}
+                      {messageContent.baseInfo ? (
+                        <Link to={`base-info/${messageContent.baseInfo.id}`}>{messageContent.baseInfo.id}</Link>
+                      ) : (
+                        ''
+                      )}
                     </td>
                     <td>
-                      {messageContent.modifiedDate ? (
-                        <TextFormat type="date" value={messageContent.modifiedDate} format={APP_DATE_FORMAT} />
-                      ) : null}
+                      {messageContent.messageSender ? (
+                        <Link to={`master-user/${messageContent.messageSender.id}`}>{messageContent.messageSender.id}</Link>
+                      ) : (
+                        ''
+                      )}
                     </td>
-                    <td>{messageContent.createdBy}</td>
-                    <td>{messageContent.modifiedBy}</td>
-                    <td>{messageContent.comment}</td>
+                    <td>
+                      {messageContent.messageGroup ? (
+                        <Link to={`message-group/${messageContent.messageGroup.id}`}>{messageContent.messageGroup.id}</Link>
+                      ) : (
+                        ''
+                      )}
+                    </td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${messageContent.id}`} color="info" size="sm" data-cy="entityDetailsButton">

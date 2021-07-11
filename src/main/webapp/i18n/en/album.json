@@ -1,0 +1,31 @@
+{
+  "catinyApp": {
+    "album": {
+      "home": {
+        "title": "Albums",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Album",
+        "createOrEditLabel": "Create or edit a Album",
+        "search": "Search for Album",
+        "notFound": "No Albums found"
+      },
+      "created": "A new Album is created with identifier {{ param }}",
+      "updated": "A Album is updated with identifier {{ param }}",
+      "deleted": "A Album is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Album {{ id }}?"
+      },
+      "detail": {
+        "title": "Album"
+      },
+      "id": "ID",
+      "uuid": "Uuid",
+      "name": "Name",
+      "baseInfo": "Base Info",
+      "image": "Image",
+      "help": {
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)"
+      }
+    }
+  }
+}

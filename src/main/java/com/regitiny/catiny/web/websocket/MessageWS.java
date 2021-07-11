@@ -46,11 +46,11 @@ public class MessageWS implements ApplicationListener<SessionDisconnectEvent>
 
   private void sendMessagesToUserInGroup(MessageContentDTO messageContentDTO)
   {
-    messageGroupAdvanceService.getAllUserIdInGroupByGroupId(messageContentDTO.getGroupId()).stream()
-      .map(messageGroupDTO -> UserUtils.getUserById(messageGroupDTO.getUserId()))
-      .map(User::getLogin)
-      .map(login -> "/topic/message/user/${user}/group/new-message".replace("${user}", login))
-      .forEach(topic -> messagingTemplate.convertAndSend(topic, messageContentDTO));
+//    messageGroupAdvanceService.getAllUserIdInGroupByGroupId(messageContentDTO.getGroupId()).stream()
+//      .map(messageGroupDTO -> UserUtils.getUserById(messageGroupDTO.getUserId()))
+//      .map(User::getLogin)
+//      .map(login -> "/topic/message/user/${user}/group/new-message".replace("${user}", login))
+//      .forEach(topic -> messagingTemplate.convertAndSend(topic, messageContentDTO));
   }
 
 //  @SubscribeMapping("/topic/video-call/group2/*")

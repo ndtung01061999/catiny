@@ -1,0 +1,9 @@
+export enum StatusName {
+  ONLINE = 'ONLINE',
+
+  OFFLINE = 'OFFLINE',
+
+  BUSY = 'BUSY',
+
+  TEMPORARILY_ABSENT = 'TEMPORARILY_ABSENT',
+}

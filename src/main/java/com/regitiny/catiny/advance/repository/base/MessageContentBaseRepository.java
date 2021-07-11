@@ -16,5 +16,8 @@ import java.time.Instant;
  */
 public interface MessageContentBaseRepository extends MessageContentRepository
 {
-  Page<MessageContent> findAllByGroupIdAndCreatedDateGreaterThanEqualOrderByCreatedDateDesc(String groupId, Instant createdDate, Pageable pageable);
+  default Page<MessageContent> findAllByGroupIdAndCreatedDateGreaterThanEqualOrderByCreatedDateDesc(String groupId, Instant createdDate, Pageable pageable)
+  {
+    return null;
+  }
 }

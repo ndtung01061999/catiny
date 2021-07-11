@@ -1,19 +1,17 @@
-import React, {useEffect} from 'react';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Row, UncontrolledTooltip} from 'reactstrap';
-import {TextFormat, Translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import React, { useEffect } from 'react';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, UncontrolledTooltip, Row, Col } from 'reactstrap';
+import { Translate, byteSize } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import {getEntity} from './message-content.reducer';
-import {APP_DATE_FORMAT} from 'app/config/constants';
-import {useAppDispatch, useAppSelector} from 'app/config/store';
+import { getEntity } from './message-content.reducer';
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-export const MessageContentDetail = (props: RouteComponentProps<{ id: string }>) =>
-{
+export const MessageContentDetail = (props: RouteComponentProps<{ id: string }>) => {
   const dispatch = useAppDispatch();
 
-  useEffect(() =>
-  {
+  useEffect(() => {
     dispatch(getEntity(props.match.params.id));
   }, []);
 
@@ -41,27 +39,18 @@ export const MessageContentDetail = (props: RouteComponentProps<{ id: string }>)
           </dt>
           <dd>{messageContentEntity.uuid}</dd>
           <dt>
-            <span id="groupId">
-              <Translate contentKey="catinyApp.messageContent.groupId">Group Id</Translate>
-            </span>
-          </dt>
-          <dd>{messageContentEntity.groupId}</dd>
-          <dt>
             <span id="content">
               <Translate contentKey="catinyApp.messageContent.content">Content</Translate>
             </span>
           </dt>
           <dd>{messageContentEntity.content}</dd>
           <dt>
-            <span id="sender">
-              <Translate contentKey="catinyApp.messageContent.sender">Sender</Translate>
-            </span>
-          </dt>
-          <dd>{messageContentEntity.sender}</dd>
-          <dt>
             <span id="status">
               <Translate contentKey="catinyApp.messageContent.status">Status</Translate>
             </span>
+            <UncontrolledTooltip target="status">
+              <Translate contentKey="catinyApp.messageContent.help.status" />
+            </UncontrolledTooltip>
           </dt>
           <dd>{messageContentEntity.status}</dd>
           <dt>
@@ -74,67 +63,17 @@ export const MessageContentDetail = (props: RouteComponentProps<{ id: string }>)
           </dt>
           <dd>{messageContentEntity.searchField}</dd>
           <dt>
-            <span id="role">
-              <Translate contentKey="catinyApp.messageContent.role">Role</Translate>
-            </span>
-            <UncontrolledTooltip target="role">
-              <Translate contentKey="catinyApp.messageContent.help.role" />
-            </UncontrolledTooltip>
+            <Translate contentKey="catinyApp.messageContent.baseInfo">Base Info</Translate>
           </dt>
-          <dd>{messageContentEntity.role}</dd>
+          <dd>{messageContentEntity.baseInfo ? messageContentEntity.baseInfo.id : ''}</dd>
           <dt>
-            <span id="createdDate">
-              <Translate contentKey="catinyApp.messageContent.createdDate">Created Date</Translate>
-            </span>
-            <UncontrolledTooltip target="createdDate">
-              <Translate contentKey="catinyApp.messageContent.help.createdDate" />
-            </UncontrolledTooltip>
+            <Translate contentKey="catinyApp.messageContent.messageSender">Message Sender</Translate>
           </dt>
-          <dd>
-            {messageContentEntity.createdDate ? (
-              <TextFormat value={messageContentEntity.createdDate} type="date" format={APP_DATE_FORMAT} />
-            ) : null}
-          </dd>
+          <dd>{messageContentEntity.messageSender ? messageContentEntity.messageSender.id : ''}</dd>
           <dt>
-            <span id="modifiedDate">
-              <Translate contentKey="catinyApp.messageContent.modifiedDate">Modified Date</Translate>
-            </span>
-            <UncontrolledTooltip target="modifiedDate">
-              <Translate contentKey="catinyApp.messageContent.help.modifiedDate" />
-            </UncontrolledTooltip>
+            <Translate contentKey="catinyApp.messageContent.messageGroup">Message Group</Translate>
           </dt>
-          <dd>
-            {messageContentEntity.modifiedDate ? (
-              <TextFormat value={messageContentEntity.modifiedDate} type="date" format={APP_DATE_FORMAT} />
-            ) : null}
-          </dd>
-          <dt>
-            <span id="createdBy">
-              <Translate contentKey="catinyApp.messageContent.createdBy">Created By</Translate>
-            </span>
-            <UncontrolledTooltip target="createdBy">
-              <Translate contentKey="catinyApp.messageContent.help.createdBy" />
-            </UncontrolledTooltip>
-          </dt>
-          <dd>{messageContentEntity.createdBy}</dd>
-          <dt>
-            <span id="modifiedBy">
-              <Translate contentKey="catinyApp.messageContent.modifiedBy">Modified By</Translate>
-            </span>
-            <UncontrolledTooltip target="modifiedBy">
-              <Translate contentKey="catinyApp.messageContent.help.modifiedBy" />
-            </UncontrolledTooltip>
-          </dt>
-          <dd>{messageContentEntity.modifiedBy}</dd>
-          <dt>
-            <span id="comment">
-              <Translate contentKey="catinyApp.messageContent.comment">Comment</Translate>
-            </span>
-            <UncontrolledTooltip target="comment">
-              <Translate contentKey="catinyApp.messageContent.help.comment" />
-            </UncontrolledTooltip>
-          </dt>
-          <dd>{messageContentEntity.comment}</dd>
+          <dd>{messageContentEntity.messageGroup ? messageContentEntity.messageGroup.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/message-content" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

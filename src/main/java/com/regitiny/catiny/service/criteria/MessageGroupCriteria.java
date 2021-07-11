@@ -8,7 +8,6 @@ import tech.jhipster.service.filter.BooleanFilter;
 import tech.jhipster.service.filter.DoubleFilter;
 import tech.jhipster.service.filter.Filter;
 import tech.jhipster.service.filter.FloatFilter;
-import tech.jhipster.service.filter.InstantFilter;
 import tech.jhipster.service.filter.IntegerFilter;
 import tech.jhipster.service.filter.LongFilter;
 import tech.jhipster.service.filter.StringFilter;
@@ -32,41 +31,26 @@ public class MessageGroupCriteria implements Serializable, Criteria {
 
   private UUIDFilter uuid;
 
-  private LongFilter userId;
-
-  private StringFilter groupId;
-
   private StringFilter groupName;
 
   private StringFilter addBy;
 
-  private StringFilter role;
+  private LongFilter baseInfoId;
 
-  private InstantFilter createdDate;
+  private LongFilter messageContentId;
 
-  private InstantFilter modifiedDate;
-
-  private StringFilter createdBy;
-
-  private StringFilter modifiedBy;
-
-  private StringFilter comment;
+  private LongFilter masterUserId;
 
   public MessageGroupCriteria() {}
 
   public MessageGroupCriteria(MessageGroupCriteria other) {
     this.id = other.id == null ? null : other.id.copy();
     this.uuid = other.uuid == null ? null : other.uuid.copy();
-    this.userId = other.userId == null ? null : other.userId.copy();
-    this.groupId = other.groupId == null ? null : other.groupId.copy();
     this.groupName = other.groupName == null ? null : other.groupName.copy();
     this.addBy = other.addBy == null ? null : other.addBy.copy();
-    this.role = other.role == null ? null : other.role.copy();
-    this.createdDate = other.createdDate == null ? null : other.createdDate.copy();
-    this.modifiedDate = other.modifiedDate == null ? null : other.modifiedDate.copy();
-    this.createdBy = other.createdBy == null ? null : other.createdBy.copy();
-    this.modifiedBy = other.modifiedBy == null ? null : other.modifiedBy.copy();
-    this.comment = other.comment == null ? null : other.comment.copy();
+    this.baseInfoId = other.baseInfoId == null ? null : other.baseInfoId.copy();
+    this.messageContentId = other.messageContentId == null ? null : other.messageContentId.copy();
+    this.masterUserId = other.masterUserId == null ? null : other.masterUserId.copy();
   }
 
   @Override
@@ -104,36 +88,6 @@ public class MessageGroupCriteria implements Serializable, Criteria {
     this.uuid = uuid;
   }
 
-  public LongFilter getUserId() {
-    return userId;
-  }
-
-  public LongFilter userId() {
-    if (userId == null) {
-      userId = new LongFilter();
-    }
-    return userId;
-  }
-
-  public void setUserId(LongFilter userId) {
-    this.userId = userId;
-  }
-
-  public StringFilter getGroupId() {
-    return groupId;
-  }
-
-  public StringFilter groupId() {
-    if (groupId == null) {
-      groupId = new StringFilter();
-    }
-    return groupId;
-  }
-
-  public void setGroupId(StringFilter groupId) {
-    this.groupId = groupId;
-  }
-
   public StringFilter getGroupName() {
     return groupName;
   }
@@ -164,94 +118,49 @@ public class MessageGroupCriteria implements Serializable, Criteria {
     this.addBy = addBy;
   }
 
-  public StringFilter getRole() {
-    return role;
+  public LongFilter getBaseInfoId() {
+    return baseInfoId;
   }
 
-  public StringFilter role() {
-    if (role == null) {
-      role = new StringFilter();
+  public LongFilter baseInfoId() {
+    if (baseInfoId == null) {
+      baseInfoId = new LongFilter();
     }
-    return role;
+    return baseInfoId;
   }
 
-  public void setRole(StringFilter role) {
-    this.role = role;
+  public void setBaseInfoId(LongFilter baseInfoId) {
+    this.baseInfoId = baseInfoId;
   }
 
-  public InstantFilter getCreatedDate() {
-    return createdDate;
+  public LongFilter getMessageContentId() {
+    return messageContentId;
   }
 
-  public InstantFilter createdDate() {
-    if (createdDate == null) {
-      createdDate = new InstantFilter();
+  public LongFilter messageContentId() {
+    if (messageContentId == null) {
+      messageContentId = new LongFilter();
     }
-    return createdDate;
+    return messageContentId;
   }
 
-  public void setCreatedDate(InstantFilter createdDate) {
-    this.createdDate = createdDate;
+  public void setMessageContentId(LongFilter messageContentId) {
+    this.messageContentId = messageContentId;
   }
 
-  public InstantFilter getModifiedDate() {
-    return modifiedDate;
+  public LongFilter getMasterUserId() {
+    return masterUserId;
   }
 
-  public InstantFilter modifiedDate() {
-    if (modifiedDate == null) {
-      modifiedDate = new InstantFilter();
+  public LongFilter masterUserId() {
+    if (masterUserId == null) {
+      masterUserId = new LongFilter();
     }
-    return modifiedDate;
+    return masterUserId;
   }
 
-  public void setModifiedDate(InstantFilter modifiedDate) {
-    this.modifiedDate = modifiedDate;
-  }
-
-  public StringFilter getCreatedBy() {
-    return createdBy;
-  }
-
-  public StringFilter createdBy() {
-    if (createdBy == null) {
-      createdBy = new StringFilter();
-    }
-    return createdBy;
-  }
-
-  public void setCreatedBy(StringFilter createdBy) {
-    this.createdBy = createdBy;
-  }
-
-  public StringFilter getModifiedBy() {
-    return modifiedBy;
-  }
-
-  public StringFilter modifiedBy() {
-    if (modifiedBy == null) {
-      modifiedBy = new StringFilter();
-    }
-    return modifiedBy;
-  }
-
-  public void setModifiedBy(StringFilter modifiedBy) {
-    this.modifiedBy = modifiedBy;
-  }
-
-  public StringFilter getComment() {
-    return comment;
-  }
-
-  public StringFilter comment() {
-    if (comment == null) {
-      comment = new StringFilter();
-    }
-    return comment;
-  }
-
-  public void setComment(StringFilter comment) {
-    this.comment = comment;
+  public void setMasterUserId(LongFilter masterUserId) {
+    this.masterUserId = masterUserId;
   }
 
   @Override
@@ -266,22 +175,17 @@ public class MessageGroupCriteria implements Serializable, Criteria {
     return (
       Objects.equals(id, that.id) &&
       Objects.equals(uuid, that.uuid) &&
-      Objects.equals(userId, that.userId) &&
-      Objects.equals(groupId, that.groupId) &&
       Objects.equals(groupName, that.groupName) &&
       Objects.equals(addBy, that.addBy) &&
-      Objects.equals(role, that.role) &&
-      Objects.equals(createdDate, that.createdDate) &&
-      Objects.equals(modifiedDate, that.modifiedDate) &&
-      Objects.equals(createdBy, that.createdBy) &&
-      Objects.equals(modifiedBy, that.modifiedBy) &&
-      Objects.equals(comment, that.comment)
+      Objects.equals(baseInfoId, that.baseInfoId) &&
+      Objects.equals(messageContentId, that.messageContentId) &&
+      Objects.equals(masterUserId, that.masterUserId)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, uuid, userId, groupId, groupName, addBy, role, createdDate, modifiedDate, createdBy, modifiedBy, comment);
+    return Objects.hash(id, uuid, groupName, addBy, baseInfoId, messageContentId, masterUserId);
   }
 
   // prettier-ignore
@@ -290,16 +194,11 @@ public class MessageGroupCriteria implements Serializable, Criteria {
         return "MessageGroupCriteria{" +
             (id != null ? "id=" + id + ", " : "") +
             (uuid != null ? "uuid=" + uuid + ", " : "") +
-            (userId != null ? "userId=" + userId + ", " : "") +
-            (groupId != null ? "groupId=" + groupId + ", " : "") +
             (groupName != null ? "groupName=" + groupName + ", " : "") +
             (addBy != null ? "addBy=" + addBy + ", " : "") +
-            (role != null ? "role=" + role + ", " : "") +
-            (createdDate != null ? "createdDate=" + createdDate + ", " : "") +
-            (modifiedDate != null ? "modifiedDate=" + modifiedDate + ", " : "") +
-            (createdBy != null ? "createdBy=" + createdBy + ", " : "") +
-            (modifiedBy != null ? "modifiedBy=" + modifiedBy + ", " : "") +
-            (comment != null ? "comment=" + comment + ", " : "") +
+            (baseInfoId != null ? "baseInfoId=" + baseInfoId + ", " : "") +
+            (messageContentId != null ? "messageContentId=" + messageContentId + ", " : "") +
+            (masterUserId != null ? "masterUserId=" + masterUserId + ", " : "") +
             "}";
     }
 }

@@ -1,76 +1,79 @@
-import React, {useEffect, useState} from 'react';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Row, UncontrolledTooltip} from 'reactstrap';
-import {Translate, translate, ValidatedField, ValidatedForm} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import React, { useState, useEffect } from 'react';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col, FormText, UncontrolledTooltip } from 'reactstrap';
+import { isNumber, Translate, translate, ValidatedField, ValidatedForm } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import {createEntity, getEntity, updateEntity} from './message-content.reducer';
-import {convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime} from 'app/shared/util/date-utils';
-import {useAppDispatch, useAppSelector} from 'app/config/store';
+import { IBaseInfo } from 'app/shared/model/base-info.model';
+import { getEntities as getBaseInfos } from 'app/entities/base-info/base-info.reducer';
+import { IMasterUser } from 'app/shared/model/master-user.model';
+import { getEntities as getMasterUsers } from 'app/entities/master-user/master-user.reducer';
+import { IMessageGroup } from 'app/shared/model/message-group.model';
+import { getEntities as getMessageGroups } from 'app/entities/message-group/message-group.reducer';
+import { getEntity, updateEntity, createEntity, reset } from './message-content.reducer';
+import { IMessageContent } from 'app/shared/model/message-content.model';
+import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
+import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-export const MessageContentUpdate = (props: RouteComponentProps<{ id: string }>) =>
-{
+export const MessageContentUpdate = (props: RouteComponentProps<{ id: string }>) => {
   const dispatch = useAppDispatch();
 
   const [isNew] = useState(!props.match.params || !props.match.params.id);
 
+  const baseInfos = useAppSelector(state => state.baseInfo.entities);
+  const masterUsers = useAppSelector(state => state.masterUser.entities);
+  const messageGroups = useAppSelector(state => state.messageGroup.entities);
   const messageContentEntity = useAppSelector(state => state.messageContent.entity);
   const loading = useAppSelector(state => state.messageContent.loading);
   const updating = useAppSelector(state => state.messageContent.updating);
   const updateSuccess = useAppSelector(state => state.messageContent.updateSuccess);
 
-  const handleClose = () =>
-  {
+  const handleClose = () => {
     props.history.push('/message-content');
   };
 
-  useEffect(() =>
-  {
-    if (!isNew)
-    {
+  useEffect(() => {
+    if (!isNew) {
       dispatch(getEntity(props.match.params.id));
     }
+
+    dispatch(getBaseInfos({}));
+    dispatch(getMasterUsers({}));
+    dispatch(getMessageGroups({}));
   }, []);
 
-  useEffect(() =>
-  {
-    if (updateSuccess)
-    {
+  useEffect(() => {
+    if (updateSuccess) {
       handleClose();
     }
   }, [updateSuccess]);
 
-  const saveEntity = values =>
-  {
-    values.createdDate = convertDateTimeToServer(values.createdDate);
-    values.modifiedDate = convertDateTimeToServer(values.modifiedDate);
-
+  const saveEntity = values => {
     const entity = {
       ...messageContentEntity,
       ...values,
+      baseInfo: baseInfos.find(it => it.id.toString() === values.baseInfoId.toString()),
+      messageSender: masterUsers.find(it => it.id.toString() === values.messageSenderId.toString()),
+      messageGroup: messageGroups.find(it => it.id.toString() === values.messageGroupId.toString()),
     };
 
-    if (isNew)
-    {
+    if (isNew) {
       dispatch(createEntity(entity));
-    }
-    else
-    {
+    } else {
       dispatch(updateEntity(entity));
     }
   };
 
   const defaultValues = () =>
     isNew
-      ? {
-        createdDate: displayDefaultDateTime(),
-        modifiedDate: displayDefaultDateTime(),
-      }
+      ? {}
       : {
-        ...messageContentEntity,
-        createdDate: convertDateTimeFromServer(messageContentEntity.createdDate),
-        modifiedDate: convertDateTimeFromServer(messageContentEntity.modifiedDate),
-      };
+          ...messageContentEntity,
+          baseInfoId: messageContentEntity?.baseInfo?.id,
+          messageSenderId: messageContentEntity?.messageSender?.id,
+          messageGroupId: messageContentEntity?.messageGroup?.id,
+        };
 
   return (
     <div>
@@ -94,7 +97,7 @@ export const MessageContentUpdate = (props: RouteComponentProps<{ id: string }>)
                   readOnly
                   id="message-content-id"
                   label={translate('global.field.id')}
-                  validate={{required: true}}
+                  validate={{ required: true }}
                 />
               ) : null}
               <ValidatedField
@@ -104,22 +107,12 @@ export const MessageContentUpdate = (props: RouteComponentProps<{ id: string }>)
                 data-cy="uuid"
                 type="text"
                 validate={{
-                  required: {value: true, message: translate('entity.validation.required')},
+                  required: { value: true, message: translate('entity.validation.required') },
                 }}
               />
               <UncontrolledTooltip target="uuidLabel">
-                <Translate contentKey="catinyApp.messageContent.help.uuid"/>
+                <Translate contentKey="catinyApp.messageContent.help.uuid" />
               </UncontrolledTooltip>
-              <ValidatedField
-                label={translate('catinyApp.messageContent.groupId')}
-                id="message-content-groupId"
-                name="groupId"
-                data-cy="groupId"
-                type="text"
-                validate={{
-                  required: {value: true, message: translate('entity.validation.required')},
-                }}
-              />
               <ValidatedField
                 label={translate('catinyApp.messageContent.content')}
                 id="message-content-content"
@@ -128,19 +121,15 @@ export const MessageContentUpdate = (props: RouteComponentProps<{ id: string }>)
                 type="textarea"
               />
               <ValidatedField
-                label={translate('catinyApp.messageContent.sender')}
-                id="message-content-sender"
-                name="sender"
-                data-cy="sender"
-                type="text"
-              />
-              <ValidatedField
                 label={translate('catinyApp.messageContent.status')}
                 id="message-content-status"
                 name="status"
                 data-cy="status"
-                type="text"
+                type="textarea"
               />
+              <UncontrolledTooltip target="statusLabel">
+                <Translate contentKey="catinyApp.messageContent.help.status" />
+              </UncontrolledTooltip>
               <ValidatedField
                 label={translate('catinyApp.messageContent.searchField')}
                 id="message-content-searchField"
@@ -149,72 +138,58 @@ export const MessageContentUpdate = (props: RouteComponentProps<{ id: string }>)
                 type="textarea"
               />
               <UncontrolledTooltip target="searchFieldLabel">
-                <Translate contentKey="catinyApp.messageContent.help.searchField"/>
+                <Translate contentKey="catinyApp.messageContent.help.searchField" />
               </UncontrolledTooltip>
               <ValidatedField
-                label={translate('catinyApp.messageContent.role')}
-                id="message-content-role"
-                name="role"
-                data-cy="role"
-                type="text"
-              />
-              <UncontrolledTooltip target="roleLabel">
-                <Translate contentKey="catinyApp.messageContent.help.role"/>
-              </UncontrolledTooltip>
+                id="message-content-baseInfo"
+                name="baseInfoId"
+                data-cy="baseInfo"
+                label={translate('catinyApp.messageContent.baseInfo')}
+                type="select"
+              >
+                <option value="" key="0" />
+                {baseInfos
+                  ? baseInfos.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
               <ValidatedField
-                label={translate('catinyApp.messageContent.createdDate')}
-                id="message-content-createdDate"
-                name="createdDate"
-                data-cy="createdDate"
-                type="datetime-local"
-                placeholder="YYYY-MM-DD HH:mm"
-              />
-              <UncontrolledTooltip target="createdDateLabel">
-                <Translate contentKey="catinyApp.messageContent.help.createdDate"/>
-              </UncontrolledTooltip>
+                id="message-content-messageSender"
+                name="messageSenderId"
+                data-cy="messageSender"
+                label={translate('catinyApp.messageContent.messageSender')}
+                type="select"
+              >
+                <option value="" key="0" />
+                {masterUsers
+                  ? masterUsers.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
               <ValidatedField
-                label={translate('catinyApp.messageContent.modifiedDate')}
-                id="message-content-modifiedDate"
-                name="modifiedDate"
-                data-cy="modifiedDate"
-                type="datetime-local"
-                placeholder="YYYY-MM-DD HH:mm"
-              />
-              <UncontrolledTooltip target="modifiedDateLabel">
-                <Translate contentKey="catinyApp.messageContent.help.modifiedDate"/>
-              </UncontrolledTooltip>
-              <ValidatedField
-                label={translate('catinyApp.messageContent.createdBy')}
-                id="message-content-createdBy"
-                name="createdBy"
-                data-cy="createdBy"
-                type="text"
-              />
-              <UncontrolledTooltip target="createdByLabel">
-                <Translate contentKey="catinyApp.messageContent.help.createdBy"/>
-              </UncontrolledTooltip>
-              <ValidatedField
-                label={translate('catinyApp.messageContent.modifiedBy')}
-                id="message-content-modifiedBy"
-                name="modifiedBy"
-                data-cy="modifiedBy"
-                type="text"
-              />
-              <UncontrolledTooltip target="modifiedByLabel">
-                <Translate contentKey="catinyApp.messageContent.help.modifiedBy"/>
-              </UncontrolledTooltip>
-              <ValidatedField
-                label={translate('catinyApp.messageContent.comment')}
-                id="message-content-comment"
-                name="comment"
-                data-cy="comment"
-                type="text"
-              />
-              <UncontrolledTooltip target="commentLabel">
-                <Translate contentKey="catinyApp.messageContent.help.comment"/>
-              </UncontrolledTooltip>
+                id="message-content-messageGroup"
+                name="messageGroupId"
+                data-cy="messageGroup"
+                label={translate('catinyApp.messageContent.messageGroup')}
+                type="select"
+              >
+                <option value="" key="0" />
+                {messageGroups
+                  ? messageGroups.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/message-content" replace color="info">
-                <FontAwesomeIcon icon="arrow-left"/>
+                <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
                 <span className="d-none d-md-inline">
                   <Translate contentKey="entity.action.back">Back</Translate>
@@ -222,7 +197,7 @@ export const MessageContentUpdate = (props: RouteComponentProps<{ id: string }>)
               </Button>
               &nbsp;
               <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit" disabled={updating}>
-                <FontAwesomeIcon icon="save"/>
+                <FontAwesomeIcon icon="save" />
                 &nbsp;
                 <Translate contentKey="entity.action.save">Save</Translate>
               </Button>

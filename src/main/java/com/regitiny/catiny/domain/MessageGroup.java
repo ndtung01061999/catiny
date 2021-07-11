@@ -1,18 +1,20 @@
 package com.regitiny.catiny.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.regitiny.catiny.GeneratedByJHipster;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
+import javax.persistence.*;
+import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.io.Serializable;
-import java.time.Instant;
-import java.util.UUID;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 /**
- * The PostDetails entity.\n@author A true hipster
+ * @what?            -> The MessageGroup entity.\n@why?             ->\n@use-to           -> Chứa thông tin các nhóm mà hiện tại người dùng đang ở trong đó (phần nhắn tin)\n@commonly-used-in -> Hiển thị các tin nhắn\n\n@describe         -> một nhóm tạo ra sẽ là một uuid . nếu nhắn tin cặp thì sẽ sắp xếp login sau đó hash md5 rồi chuyển thành định dạng uuid
  */
 @Entity
 @Table(name = "message_group")
@@ -29,73 +31,97 @@ public class MessageGroup implements Serializable {
   private Long id;
 
   /**
-   * uuid
+   * uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
    */
   @NotNull
   @Type(type = "uuid-char")
   @Column(name = "uuid", length = 36, nullable = false, unique = true)
   private UUID uuid;
 
-  @NotNull
-  @Column(name = "user_id", nullable = false)
-  private Long userId;
-
-  @NotNull
-  @Column(name = "group_id", nullable = false)
-  private String groupId;
-
+  /**
+   * groupName
+   */
   @Column(name = "group_name")
   private String groupName;
 
+  /**
+   * addBy
+   */
   @Column(name = "add_by")
   private String addBy;
 
-  @Lob
-  @Column(name = "last_content")
-  private String lastContent;
+  @JsonIgnoreProperties(
+    value = {
+      "userProfile",
+      "accountStatus",
+      "deviceStatus",
+      "friend",
+      "followUser",
+      "followGroup",
+      "followPage",
+      "fileInfo",
+      "pagePost",
+      "pageProfile",
+      "groupPost",
+      "post",
+      "postComment",
+      "postLike",
+      "groupProfile",
+      "newsFeed",
+      "messageGroup",
+      "messageContent",
+      "rankUser",
+      "rankGroup",
+      "notification",
+      "album",
+      "video",
+      "image",
+      "videoStream",
+      "videoLiveStreamBuffer",
+      "topicInterest",
+      "todoList",
+      "event",
+    },
+    allowSetters = true
+  )
+  @OneToOne
+  @JoinColumn(unique = true)
+  private BaseInfo baseInfo;
 
-  /**
-   * searchField
-   */
-  @Lob
-  @Column(name = "search_field")
-  private String searchField;
+  @OneToMany(mappedBy = "messageGroup")
+  @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+  @JsonIgnoreProperties(value = { "baseInfo", "messageSender", "messageGroup" }, allowSetters = true)
+  private Set<MessageContent> messageContents = new HashSet<>();
 
-  /**
-   * role
-   */
-  @Column(name = "role")
-  private String role;
-
-  /**
-   * createdDate
-   */
-  @Column(name = "created_date")
-  private Instant createdDate;
-
-  /**
-   * modifiedDate
-   */
-  @Column(name = "modified_date")
-  private Instant modifiedDate;
-
-  /**
-   * createdBy
-   */
-  @Column(name = "created_by")
-  private String createdBy;
-
-  /**
-   * modifiedBy
-   */
-  @Column(name = "modified_by")
-  private String modifiedBy;
-
-  /**
-   * comment
-   */
-  @Column(name = "comment")
-  private String comment;
+  @ManyToMany(mappedBy = "messageGroups")
+  @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+  @JsonIgnoreProperties(
+    value = {
+      "user",
+      "myProfile",
+      "myAccountStatus",
+      "myRank",
+      "avatar",
+      "baseInfo",
+      "myPages",
+      "myFiles",
+      "myNotifications",
+      "myFriends",
+      "myFollowUsers",
+      "myFollowGroups",
+      "myFollowPages",
+      "myNewsFeeds",
+      "myTodoLists",
+      "myPosts",
+      "myGroupPosts",
+      "messageGroups",
+      "topicInterests",
+      "myLikes",
+      "myComments",
+    },
+    allowSetters = true
+  )
+  private Set<MasterUser> masterUsers = new HashSet<>();
 
   // jhipster-needle-entity-add-field - JHipster will add fields here
   public Long getId() {
@@ -124,32 +150,6 @@ public class MessageGroup implements Serializable {
     this.uuid = uuid;
   }
 
-  public Long getUserId() {
-    return this.userId;
-  }
-
-  public MessageGroup userId(Long userId) {
-    this.userId = userId;
-    return this;
-  }
-
-  public void setUserId(Long userId) {
-    this.userId = userId;
-  }
-
-  public String getGroupId() {
-    return this.groupId;
-  }
-
-  public MessageGroup groupId(String groupId) {
-    this.groupId = groupId;
-    return this;
-  }
-
-  public void setGroupId(String groupId) {
-    this.groupId = groupId;
-  }
-
   public String getGroupName() {
     return this.groupName;
   }
@@ -176,108 +176,79 @@ public class MessageGroup implements Serializable {
     this.addBy = addBy;
   }
 
-  public String getLastContent() {
-    return this.lastContent;
+  public BaseInfo getBaseInfo() {
+    return this.baseInfo;
   }
 
-  public MessageGroup lastContent(String lastContent) {
-    this.lastContent = lastContent;
+  public MessageGroup baseInfo(BaseInfo baseInfo) {
+    this.setBaseInfo(baseInfo);
     return this;
   }
 
-  public void setLastContent(String lastContent) {
-    this.lastContent = lastContent;
+  public void setBaseInfo(BaseInfo baseInfo) {
+    this.baseInfo = baseInfo;
   }
 
-  public String getSearchField() {
-    return this.searchField;
+  public Set<MessageContent> getMessageContents() {
+    return this.messageContents;
   }
 
-  public MessageGroup searchField(String searchField) {
-    this.searchField = searchField;
+  public MessageGroup messageContents(Set<MessageContent> messageContents) {
+    this.setMessageContents(messageContents);
     return this;
   }
 
-  public void setSearchField(String searchField) {
-    this.searchField = searchField;
-  }
-
-  public String getRole() {
-    return this.role;
-  }
-
-  public MessageGroup role(String role) {
-    this.role = role;
+  public MessageGroup addMessageContent(MessageContent messageContent) {
+    this.messageContents.add(messageContent);
+    messageContent.setMessageGroup(this);
     return this;
   }
 
-  public void setRole(String role) {
-    this.role = role;
-  }
-
-  public Instant getCreatedDate() {
-    return this.createdDate;
-  }
-
-  public MessageGroup createdDate(Instant createdDate) {
-    this.createdDate = createdDate;
+  public MessageGroup removeMessageContent(MessageContent messageContent) {
+    this.messageContents.remove(messageContent);
+    messageContent.setMessageGroup(null);
     return this;
   }
 
-  public void setCreatedDate(Instant createdDate) {
-    this.createdDate = createdDate;
+  public void setMessageContents(Set<MessageContent> messageContents) {
+    if (this.messageContents != null) {
+      this.messageContents.forEach(i -> i.setMessageGroup(null));
+    }
+    if (messageContents != null) {
+      messageContents.forEach(i -> i.setMessageGroup(this));
+    }
+    this.messageContents = messageContents;
   }
 
-  public Instant getModifiedDate() {
-    return this.modifiedDate;
+  public Set<MasterUser> getMasterUsers() {
+    return this.masterUsers;
   }
 
-  public MessageGroup modifiedDate(Instant modifiedDate) {
-    this.modifiedDate = modifiedDate;
+  public MessageGroup masterUsers(Set<MasterUser> masterUsers) {
+    this.setMasterUsers(masterUsers);
     return this;
   }
 
-  public void setModifiedDate(Instant modifiedDate) {
-    this.modifiedDate = modifiedDate;
-  }
-
-  public String getCreatedBy() {
-    return this.createdBy;
-  }
-
-  public MessageGroup createdBy(String createdBy) {
-    this.createdBy = createdBy;
+  public MessageGroup addMasterUser(MasterUser masterUser) {
+    this.masterUsers.add(masterUser);
+    masterUser.getMessageGroups().add(this);
     return this;
   }
 
-  public void setCreatedBy(String createdBy) {
-    this.createdBy = createdBy;
-  }
-
-  public String getModifiedBy() {
-    return this.modifiedBy;
-  }
-
-  public MessageGroup modifiedBy(String modifiedBy) {
-    this.modifiedBy = modifiedBy;
+  public MessageGroup removeMasterUser(MasterUser masterUser) {
+    this.masterUsers.remove(masterUser);
+    masterUser.getMessageGroups().remove(this);
     return this;
   }
 
-  public void setModifiedBy(String modifiedBy) {
-    this.modifiedBy = modifiedBy;
-  }
-
-  public String getComment() {
-    return this.comment;
-  }
-
-  public MessageGroup comment(String comment) {
-    this.comment = comment;
-    return this;
-  }
-
-  public void setComment(String comment) {
-    this.comment = comment;
+  public void setMasterUsers(Set<MasterUser> masterUsers) {
+    if (this.masterUsers != null) {
+      this.masterUsers.forEach(i -> i.removeMessageGroup(this));
+    }
+    if (masterUsers != null) {
+      masterUsers.forEach(i -> i.addMessageGroup(this));
+    }
+    this.masterUsers = masterUsers;
   }
 
   // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
@@ -305,18 +276,8 @@ public class MessageGroup implements Serializable {
         return "MessageGroup{" +
             "id=" + getId() +
             ", uuid='" + getUuid() + "'" +
-            ", userId=" + getUserId() +
-            ", groupId='" + getGroupId() + "'" +
             ", groupName='" + getGroupName() + "'" +
             ", addBy='" + getAddBy() + "'" +
-            ", lastContent='" + getLastContent() + "'" +
-            ", searchField='" + getSearchField() + "'" +
-            ", role='" + getRole() + "'" +
-            ", createdDate='" + getCreatedDate() + "'" +
-            ", modifiedDate='" + getModifiedDate() + "'" +
-            ", createdBy='" + getCreatedBy() + "'" +
-            ", modifiedBy='" + getModifiedBy() + "'" +
-            ", comment='" + getComment() + "'" +
             "}";
     }
 }

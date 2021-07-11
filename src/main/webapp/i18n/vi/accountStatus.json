@@ -1,0 +1,36 @@
+{
+  "catinyApp": {
+    "accountStatus": {
+      "home": {
+        "title": "Account Statuses",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Thêm mới một Account Status",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Account Status",
+        "search": "Tìm Account Status",
+        "notFound": "No Account Statuses found"
+      },
+      "created": "Một Account Status mới được tạo với định danh {{ param }}",
+      "updated": "Một Account Status cập nhật với định danh {{ param }}",
+      "deleted": "Một Account Status đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Account Status {{ id }}?"
+      },
+      "detail": {
+        "title": "Account Status"
+      },
+      "id": "ID",
+      "uuid": "Uuid",
+      "accountStatus": "Account Status",
+      "lastVisited": "Last Visited",
+      "statusComment": "Status Comment",
+      "baseInfo": "Base Info",
+      "deviceStatus": "Device Status",
+      "help": {
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
+        "accountStatus": "accountStatus  : thạng thái hiện tại của người dùng",
+        "lastVisited": "lastVisited    : thời gian truy cập cuối cùng gần nhất",
+        "statusComment": "statusComment  : người dùng comment lại trạng thái để hiển thị ra nếu muốn"
+      }
+    }
+  }
+}

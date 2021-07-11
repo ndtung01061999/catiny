@@ -1,0 +1,44 @@
+{
+  "name": "FollowGroup",
+  "fields": [
+    {
+      "fieldName": "uuid",
+      "fieldType": "UUID",
+      "javadoc": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
+      "fieldValidateRules": ["required", "unique"]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "baseInfo",
+      "otherEntityRelationshipName": "followGroup",
+      "relationshipName": "baseInfo",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "groupPost",
+      "otherEntityRelationshipName": "followGroup",
+      "relationshipName": "followGroupDetails"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "masterUser",
+      "otherEntityRelationshipName": "myFollowGroup",
+      "relationshipName": "masterUser"
+    }
+  ],
+  "javadoc": "@what?            -> The FollowGroup entity.\\n@why?             ->\\n@use-to           -> Quản lý các nhóm mà người dùng đăng ký theo dõi\\n@commonly-used-in -> Chủ đề mà người dùng theo dõi\\n\\n@describe         ->",
+  "entityTableName": "follow_group",
+  "dto": "mapstruct",
+  "pagination": "infinite-scroll",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "searchEngine": "elasticsearch",
+  "changelogDate": "20210710143912"
+}

@@ -1,11 +1,11 @@
-id;uuid;group_id;content;sender;status;search_field;role;created_date;modified_date;created_by;modified_by;comment
-1;4f8791d7-8b83-4231-959c-0cfdff634b4e;Marketing Integration back;../fake-data/blob/hipster.txt;Bedfordshire Metal;withdrawal;../fake-data/blob/hipster.txt;Legacy;2021-05-22T07:51:36;2021-05-22T21:00:45;violet withdrawal;New invoice;Specialist Turnpike Run
-2;a1960047-3adc-4d62-9cfb-8348a2141b01;deposit Outdoors;../fake-data/blob/hipster.txt;Bike disintermediate Progressive;Sports Computer robust;../fake-data/blob/hipster.txt;Avon;2021-05-22T10:06:19;2021-05-22T08:41:26;XML Fresh User;SCSI Borders;distributed yellow monitor
-3;fac81b3c-5688-4107-a1a5-4ceb2b841486;Visionary Unbranded;../fake-data/blob/hipster.txt;invoice Burg;Quetzal;../fake-data/blob/hipster.txt;context-sensitive;2021-05-22T22:01:48;2021-05-22T17:14:49;SQL;Licensed;transitional
-4;11a02cb5-1121-4074-8dd8-e4ea85b94673;neural-net parse productize;../fake-data/blob/hipster.txt;Motorway Executive;Manager;../fake-data/blob/hipster.txt;Profound sticky Steel;2021-05-22T16:54:30;2021-05-23T02:59:21;Profound Chips Research;Colorado;embrace Soft
-5;abaed00b-e07b-46e6-811a-2ce71b63e732;Steel heuristic SMTP;../fake-data/blob/hipster.txt;parse Buckinghamshire multi-byte;optical;../fake-data/blob/hipster.txt;Cotton Cheese;2021-05-22T19:02:47;2021-05-23T00:00:48;Loan;Soap;Consultant
-6;0a9f8a78-7334-415a-8b4b-ac4fcabb9e5f;Configurable;../fake-data/blob/hipster.txt;North;Streamlined teal;../fake-data/blob/hipster.txt;Mission invoice;2021-05-22T23:35:06;2021-05-22T20:56:22;Dirham;connecting;Campuchia Account
-7;943a125e-44a3-42a1-86ad-a8bea38674a9;FTP Shoes optimal;../fake-data/blob/hipster.txt;Incredible;deposit deposit;../fake-data/blob/hipster.txt;Buckinghamshire Associate Soap;2021-05-22T11:29:15;2021-05-23T02:34:33;Jewelery Metal;Loan sensor;cyan GB Cambridgeshire
-8;45f9ce64-a69a-49f2-b21c-33c9a72299bd;Dobra revolutionize;../fake-data/blob/hipster.txt;Dam emulation;Street;../fake-data/blob/hipster.txt;magenta Buckinghamshire;2021-05-22T10:51:49;2021-05-23T05:06:16;Alabama Cross-group;orchestrate Cambridgeshire compressing;Representative
-9;1eed1087-7236-4cff-b32e-601c07cd6c64;Israel Credit;../fake-data/blob/hipster.txt;reintermediate;bandwidth;../fake-data/blob/hipster.txt;Licensed;2021-05-22T17:31:34;2021-05-22T16:55:08;Rial mission-critical maximized;enterprise syndicate;Corporate Argentina
-10;911ef4a9-1fcc-4d61-b82b-928b4b80fedd;Bénin;../fake-data/blob/hipster.txt;Refined;Cotton;../fake-data/blob/hipster.txt;bypassing;2021-05-22T22:18:06;2021-05-22T22:03:22;Junction;Rustic frictionless applications;Avon haptic Specialist
+id;uuid;content;status;search_field
+1;4f8791d7-8b83-4231-959c-0cfdff634b4e;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+2;bf20e37b-0498-4431-bb1a-460eccf6a376;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+3;a609991a-f4df-45e7-a27b-1a19600473ad;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+4;cd621cfb-8348-4a21-81b0-18a3e0e9f239;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+5;6633a5c0-d321-4f51-a370-5defe7015d07;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+6;46a8de67-9bd5-49a3-90bb-3fac81b3c568;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+7;810761a5-4ceb-42b8-8148-694f11ea6ae1;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+8;7034a444-43f5-482d-8611-d544e011a02c;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+9;b5112107-4cdd-48e4-aa85-b94673a4a2cf;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+10;76f66785-f185-4f34-93ae-53820c92c3a8;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt

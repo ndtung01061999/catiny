@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <!--
+        Added the constraints for entity Post.
+    -->
+    <changeSet id="20210710143918-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="base_info_id"
+                                 baseTableName="post"
+                                 constraintName="fk_post__base_info_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="base_info"/>
+
+        <addForeignKeyConstraint baseColumnNames="group_post_id"
+                                 baseTableName="post"
+                                 constraintName="fk_post__group_post_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="group_post"/>
+
+        <addForeignKeyConstraint baseColumnNames="page_post_id"
+                                 baseTableName="post"
+                                 constraintName="fk_post__page_post_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="page_post"/>
+
+        <addForeignKeyConstraint baseColumnNames="post_share_parent_id"
+                                 baseTableName="post"
+                                 constraintName="fk_post__post_share_parent_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="post"/>
+
+        <addForeignKeyConstraint baseColumnNames="poster_id"
+                                 baseTableName="post"
+                                 constraintName="fk_post__poster_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="master_user"/>
+    </changeSet>
+</databaseChangeLog>

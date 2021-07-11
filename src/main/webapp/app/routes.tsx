@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route, Switch, useLocation} from 'react-router-dom';
+import {Switch, useLocation} from 'react-router-dom';
 import Loadable from 'react-loadable';
 
 import Login from 'app/modules/login/login';
@@ -82,47 +82,47 @@ const Routes = () => {
         <PrivateRoute path="/account" component={Account} hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.USER]}/>
         <ErrorBoundaryRoute path="/" exact component={Home}/>
         <PrivateRoute path="/chat" component={Chat} hasAnyAuthorities={[AUTHORITIES.USER]}/>
-        {/*<PrivateRoute path="/" component={Entities} hasAnyAuthorities={[AUTHORITIES.ADMIN]}/>/!* tiện ích jhipster chỉ để admin dùng *!/*/}
 
-        <Route exact path={`/demo`} component={Demo}/>
-        <Route exact path={`/home`} component={HomeSociala}/>
-        <Route exact path={`/defaultbadge`} component={Badge}/>
-        <Route exact path={`/defaultgroup`} component={Group}/>
-        <Route exact path={`/defaultstorie`} component={Storie}/>
-        <Route exact path={`/defaultemailbox`} component={Email}/>
-        <Route exact path={`/defaultemailopen`} component={EmailOpen}/>
-        <Route exact path={`/defaultsettings`} component={Settings}/>
-        <Route exact path={`/defaultvideo`} component={Videos}/>
-        <Route exact path={`/defaultanalytics`} component={Analytics}/>
-        <Route exact path={`/accountinformation`} component={Account}/>
-        <Route exact path={`/defaultmember`} component={Member}/>
-        <Route exact path={`/contactinformation`} component={ContactInfo}/>
-        <Route exact path={`/socialaccount`} component={SocialAccount}/>
-        <Route exact path={`/password`} component={Password}/>
-        <Route exact path={`/payment`} component={Payment}/>
-        <Route exact path={`/defaultnotification`} component={Notification}/>
-        <Route exact path={`/helpbox`} component={HelpBox}/>
-        <Route exact path={`/login2`} component={Login}/>
-        <Route exact path={`/register`} component={Register}/>
-        <Route exact path={`/forgot`} component={Forgot}/>
-        <Route exact path={`/notfound`} component={Notfound}/>
-        <Route exact path={`/shop1`} component={ShopOne}/>
-        <Route exact path={`/shop2`} component={ShopTwo}/>
-        <Route exact path={`/shop3`} component={ShopThree}/>
-        <Route exact path={`/singleproduct`} component={SingleProduct}/>
-        <Route exact path={`/cart`} component={Cart}/>
-        <Route exact path={`/checkout`} component={Checkout}/>
-        <Route exact path={`/defaultmessage`} component={Chat}/>
-        <Route exact path={`/defaultlive`} component={Live}/>
-        <Route exact path={`/defaultjob`} component={Job}/>
-        <Route exact path={`/defaultevent`} component={Event}/>
-        <Route exact path={`/defaulthotel`} component={Hotel}/>
-        <Route exact path={`/grouppage`} component={GroupPage}/>
-        <Route exact path={`/userpage`} component={UserPage}/>
-        <Route exact path={`/groupauthorpage`} component={AuthorPage}/>
-        <Route exact path={`/comingsoon`} component={ComingSoon}/>
-        <Route exact path={`/defaulthoteldetails`} component={HotelSingle}/>
+        <ErrorBoundaryRoute exact path={`/demo`} component={Demo}/>
+        <ErrorBoundaryRoute exact path={`/home`} component={HomeSociala}/>
+        <ErrorBoundaryRoute exact path={`/defaultbadge`} component={Badge}/>
+        <ErrorBoundaryRoute exact path={`/defaultgroup`} component={Group}/>
+        <ErrorBoundaryRoute exact path={`/defaultstorie`} component={Storie}/>
+        <ErrorBoundaryRoute exact path={`/defaultemailbox`} component={Email}/>
+        <ErrorBoundaryRoute exact path={`/defaultemailopen`} component={EmailOpen}/>
+        <ErrorBoundaryRoute exact path={`/defaultsettings`} component={Settings}/>
+        <ErrorBoundaryRoute exact path={`/defaultvideo`} component={Videos}/>
+        <ErrorBoundaryRoute exact path={`/defaultanalytics`} component={Analytics}/>
+        <ErrorBoundaryRoute exact path={`/accountinformation`} component={Account}/>
+        <ErrorBoundaryRoute exact path={`/defaultmember`} component={Member}/>
+        <ErrorBoundaryRoute exact path={`/contactinformation`} component={ContactInfo}/>
+        <ErrorBoundaryRoute exact path={`/socialaccount`} component={SocialAccount}/>
+        <ErrorBoundaryRoute exact path={`/password`} component={Password}/>
+        <ErrorBoundaryRoute exact path={`/payment`} component={Payment}/>
+        <ErrorBoundaryRoute exact path={`/defaultnotification`} component={Notification}/>
+        <ErrorBoundaryRoute exact path={`/helpbox`} component={HelpBox}/>
+        <ErrorBoundaryRoute exact path={`/login2`} component={Login}/>
+        <ErrorBoundaryRoute exact path={`/register`} component={Register}/>
+        <ErrorBoundaryRoute exact path={`/forgot`} component={Forgot}/>
+        <ErrorBoundaryRoute exact path={`/notfound`} component={Notfound}/>
+        <ErrorBoundaryRoute exact path={`/shop1`} component={ShopOne}/>
+        <ErrorBoundaryRoute exact path={`/shop2`} component={ShopTwo}/>
+        <ErrorBoundaryRoute exact path={`/shop3`} component={ShopThree}/>
+        <ErrorBoundaryRoute exact path={`/singleproduct`} component={SingleProduct}/>
+        <ErrorBoundaryRoute exact path={`/cart`} component={Cart}/>
+        <ErrorBoundaryRoute exact path={`/checkout`} component={Checkout}/>
+        <ErrorBoundaryRoute exact path={`/defaultmessage`} component={Chat}/>
+        <ErrorBoundaryRoute exact path={`/defaultlive`} component={Live}/>
+        <ErrorBoundaryRoute exact path={`/defaultjob`} component={Job}/>
+        <ErrorBoundaryRoute exact path={`/defaultevent`} component={Event}/>
+        <ErrorBoundaryRoute exact path={`/defaulthotel`} component={Hotel}/>
+        <ErrorBoundaryRoute exact path={`/grouppage`} component={GroupPage}/>
+        <ErrorBoundaryRoute exact path={`/userpage`} component={UserPage}/>
+        <ErrorBoundaryRoute exact path={`/groupauthorpage`} component={AuthorPage}/>
+        <ErrorBoundaryRoute exact path={`/comingsoon`} component={ComingSoon}/>
+        <ErrorBoundaryRoute exact path={`/defaulthoteldetails`} component={HotelSingle}/>
 
+        <PrivateRoute path="/" component={Entities} hasAnyAuthorities={[AUTHORITIES.ADMIN]}/>{/* tiện ích jhipster chỉ để admin dùng */}
         <ErrorBoundaryRoute component={PageNotFound}/>
       </Switch>
     </div>
