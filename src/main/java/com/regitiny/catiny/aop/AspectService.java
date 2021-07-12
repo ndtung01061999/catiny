@@ -30,10 +30,21 @@ public class AspectService
   }
 
   /**
+   * Pointcut that matches all repository search packages.
+   */
+  @Pointcut(
+    "within(com.regitiny.catiny.repository.search..*)"
+  )
+  public void repositorySearchPackagePointcut()
+  {
+    // Method is empty as this is just a Pointcut, the implementations are in the advices.
+  }
+
+  /**
    * Pointcut that matches all repositories, services and Web REST endpoints.
    */
   @Pointcut(
-    " execution(* org.springframework.data.repository.CrudRepository.save(..))))"
+    " execution(* com.regitiny.catiny.repository.search.*.save(..))))"
   )
   public void crudRepositorySavePointcut()
   {
@@ -47,7 +58,7 @@ public class AspectService
    * @return result.
    * @throws Throwable throws {@link IllegalArgumentException}.
    */
-  @Around("crudRepositorySavePointcut() && repositorySearchPackagePointcut()")
+  @Around("crudRepositorySavePointcut() ")
   public Object around(ProceedingJoinPoint joinPoint) throws Throwable
   {
     Logger log = logger(joinPoint);
@@ -73,17 +84,6 @@ public class AspectService
       log.error("Illegal argument: {} in {}()", Arrays.toString(joinPoint.getArgs()), joinPoint.getSignature().getName());
       throw e;
     }
-  }
-
-  /**
-   * Pointcut that matches all repository search packages.
-   */
-  @Pointcut(
-    "within(com.regitiny.catiny.repository.search..*)"
-  )
-  public void repositorySearchPackagePointcut()
-  {
-    // Method is empty as this is just a Pointcut, the implementations are in the advices.
   }
 
   /**
