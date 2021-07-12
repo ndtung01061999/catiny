@@ -1,15 +1,14 @@
 package com.regitiny.catiny.advance.controller.model;
 
+import com.regitiny.catiny.service.dto.BaseInfoDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Lob;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.UUID;
 
 @Data
@@ -23,44 +22,17 @@ public class MessageGroupModel implements Serializable
   @NotNull
   @ApiModelProperty(
     required = true,
-    value = "uuid"
+    value = "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)"
   )
   private UUID uuid;
 
-  @NotNull
-  private Long userId;
-
-  @NotNull
-  private String groupId;
-
+  @ApiModelProperty("groupName")
   private String groupName;
 
+  @ApiModelProperty("addBy")
   private String addBy;
 
-  @Lob
-  private String lastContent;
-
-  @ApiModelProperty("searchField")
-  @Lob
-  private String searchField;
-
-  @ApiModelProperty("role")
-  private String role;
-
-  @ApiModelProperty("createdDate")
-  private Instant createdDate;
-
-  @ApiModelProperty("modifiedDate")
-  private Instant modifiedDate;
-
-  @ApiModelProperty("createdBy")
-  private String createdBy;
-
-  @ApiModelProperty("modifiedBy")
-  private String modifiedBy;
-
-  @ApiModelProperty("comment")
-  private String comment;
+  private BaseInfoDTO baseInfo;
 
   @Data
   @Builder
@@ -73,44 +45,17 @@ public class MessageGroupModel implements Serializable
     @NotNull
     @ApiModelProperty(
       required = true,
-      value = "uuid"
+      value = "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)"
     )
     private UUID uuid;
 
-    @NotNull
-    private Long userId;
-
-    @NotNull
-    private String groupId;
-
+    @ApiModelProperty("groupName")
     private String groupName;
 
+    @ApiModelProperty("addBy")
     private String addBy;
 
-    @Lob
-    private String lastContent;
-
-    @ApiModelProperty("searchField")
-    @Lob
-    private String searchField;
-
-    @ApiModelProperty("role")
-    private String role;
-
-    @ApiModelProperty("createdDate")
-    private Instant createdDate;
-
-    @ApiModelProperty("modifiedDate")
-    private Instant modifiedDate;
-
-    @ApiModelProperty("createdBy")
-    private String createdBy;
-
-    @ApiModelProperty("modifiedBy")
-    private String modifiedBy;
-
-    @ApiModelProperty("comment")
-    private String comment;
+    private BaseInfoDTO baseInfo;
   }
 
   @Data
@@ -124,43 +69,16 @@ public class MessageGroupModel implements Serializable
     @NotNull
     @ApiModelProperty(
       required = true,
-      value = "uuid"
+      value = "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)"
     )
     private UUID uuid;
 
-    @NotNull
-    private Long userId;
-
-    @NotNull
-    private String groupId;
-
+    @ApiModelProperty("groupName")
     private String groupName;
 
+    @ApiModelProperty("addBy")
     private String addBy;
 
-    @Lob
-    private String lastContent;
-
-    @ApiModelProperty("searchField")
-    @Lob
-    private String searchField;
-
-    @ApiModelProperty("role")
-    private String role;
-
-    @ApiModelProperty("createdDate")
-    private Instant createdDate;
-
-    @ApiModelProperty("modifiedDate")
-    private Instant modifiedDate;
-
-    @ApiModelProperty("createdBy")
-    private String createdBy;
-
-    @ApiModelProperty("modifiedBy")
-    private String modifiedBy;
-
-    @ApiModelProperty("comment")
-    private String comment;
+    private BaseInfoDTO baseInfo;
   }
 }

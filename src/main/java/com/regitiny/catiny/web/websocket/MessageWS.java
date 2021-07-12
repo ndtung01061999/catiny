@@ -2,12 +2,8 @@ package com.regitiny.catiny.web.websocket;
 
 import com.regitiny.catiny.advance.service.MessageContentAdvanceService;
 import com.regitiny.catiny.advance.service.MessageGroupAdvanceService;
-import com.regitiny.catiny.domain.User;
 import com.regitiny.catiny.service.dto.MessageContentDTO;
-import com.regitiny.catiny.tools.utils.StringPool;
-import com.regitiny.catiny.tools.utils.UserUtils;
 import lombok.extern.log4j.Log4j2;
-import org.json.JSONObject;
 import org.springframework.context.ApplicationListener;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -37,11 +33,11 @@ public class MessageWS implements ApplicationListener<SessionDisconnectEvent>
   @MessageMapping("/topic/message/send")
   public void receiveMessages(@Payload String body, StompHeaderAccessor stompHeaderAccessor, Principal principal)
   {
-    var bodyJson = new JSONObject(body);
-    var messageContent = bodyJson.has("content") ? bodyJson.getString("content") : StringPool.BLANK;
-    var groupId = bodyJson.has("groupId") ? bodyJson.getString("groupId") : StringPool.BLANK;
-    var result = messageContentAdvanceService.saveMessage(messageContent, groupId);
-    sendMessagesToUserInGroup(result);
+//    var bodyJson = new JSONObject(body);
+//    var messageContent = bodyJson.has("content") ? bodyJson.getString("content") : StringPool.BLANK;
+//    var groupId = bodyJson.has("groupId") ? bodyJson.getString("groupId") : StringPool.BLANK;
+//    var result = messageContentAdvanceService.saveMessage(messageContent, groupId);
+//    sendMessagesToUserInGroup(result);
   }
 
   private void sendMessagesToUserInGroup(MessageContentDTO messageContentDTO)
