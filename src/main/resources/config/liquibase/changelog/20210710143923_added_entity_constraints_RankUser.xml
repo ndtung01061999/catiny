@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <!--
+        Added the constraints for entity RankUser.
+    -->
+    <changeSet id="20210710143923-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="base_info_id"
+                                 baseTableName="rank_user"
+                                 constraintName="fk_rank_user__base_info_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="base_info"/>
+
+        <addForeignKeyConstraint baseColumnNames="rank_group_id"
+                                 baseTableName="rank_user"
+                                 constraintName="fk_rank_user__rank_group_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="rank_group"/>
+    </changeSet>
+</databaseChangeLog>

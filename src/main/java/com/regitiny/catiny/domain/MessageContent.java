@@ -1,18 +1,18 @@
 package com.regitiny.catiny.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.regitiny.catiny.GeneratedByJHipster;
+import java.io.Serializable;
+import java.util.UUID;
+import javax.persistence.*;
+import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.io.Serializable;
-import java.time.Instant;
-import java.util.UUID;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 /**
- * The PostDetails entity.\n@author A true hipster
+ * @what?            -> The MessageContent entity.\n@why?             ->\n@use-to           -> Chứa Những tin nhắn trong các nhóm cụ thể\n@commonly-used-in ->\n\n@describe         ->
  */
 @Entity
 @Table(name = "message_content")
@@ -29,69 +29,101 @@ public class MessageContent implements Serializable {
   private Long id;
 
   /**
-   * uuid
+   * uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
    */
   @NotNull
   @Type(type = "uuid-char")
   @Column(name = "uuid", length = 36, nullable = false, unique = true)
   private UUID uuid;
 
-  @NotNull
-  @Column(name = "group_id", nullable = false)
-  private String groupId;
-
   @Lob
   @Column(name = "content")
   private String content;
 
-  @Column(name = "sender")
-  private String sender;
-
+  /**
+   * status : trạng thái của tin nhắn này, đã gửi chưa , ai đã nhận được , đã xem chưa đã thu hồi hay đã xóa...\n@type           : Json
+   */
+  @Lob
   @Column(name = "status")
   private String status;
 
   /**
-   * searchField
+   * searchField : lưu content tin nhắn lọc dấu ... để sau này search
    */
   @Lob
   @Column(name = "search_field")
   private String searchField;
 
-  /**
-   * role
-   */
-  @Column(name = "role")
-  private String role;
+  @JsonIgnoreProperties(
+    value = {
+      "userProfile",
+      "accountStatus",
+      "deviceStatus",
+      "friend",
+      "followUser",
+      "followGroup",
+      "followPage",
+      "fileInfo",
+      "pagePost",
+      "pageProfile",
+      "groupPost",
+      "post",
+      "postComment",
+      "postLike",
+      "groupProfile",
+      "newsFeed",
+      "messageGroup",
+      "messageContent",
+      "rankUser",
+      "rankGroup",
+      "notification",
+      "album",
+      "video",
+      "image",
+      "videoStream",
+      "videoLiveStreamBuffer",
+      "topicInterest",
+      "todoList",
+      "event",
+    },
+    allowSetters = true
+  )
+  @OneToOne
+  @JoinColumn(unique = true)
+  private BaseInfo baseInfo;
 
-  /**
-   * createdDate
-   */
-  @Column(name = "created_date")
-  private Instant createdDate;
+  @ManyToOne
+  @JsonIgnoreProperties(
+    value = {
+      "user",
+      "myProfile",
+      "myAccountStatus",
+      "myRank",
+      "avatar",
+      "baseInfo",
+      "myPages",
+      "myFiles",
+      "myNotifications",
+      "myFriends",
+      "myFollowUsers",
+      "myFollowGroups",
+      "myFollowPages",
+      "myNewsFeeds",
+      "myTodoLists",
+      "myPosts",
+      "myGroupPosts",
+      "messageGroups",
+      "topicInterests",
+      "myLikes",
+      "myComments",
+    },
+    allowSetters = true
+  )
+  private MasterUser sender;
 
-  /**
-   * modifiedDate
-   */
-  @Column(name = "modified_date")
-  private Instant modifiedDate;
-
-  /**
-   * createdBy
-   */
-  @Column(name = "created_by")
-  private String createdBy;
-
-  /**
-   * modifiedBy
-   */
-  @Column(name = "modified_by")
-  private String modifiedBy;
-
-  /**
-   * comment
-   */
-  @Column(name = "comment")
-  private String comment;
+  @ManyToOne
+  @JsonIgnoreProperties(value = { "baseInfo", "messageContents", "masterUsers" }, allowSetters = true)
+  private MessageGroup messageGroup;
 
   // jhipster-needle-entity-add-field - JHipster will add fields here
   public Long getId() {
@@ -120,19 +152,6 @@ public class MessageContent implements Serializable {
     this.uuid = uuid;
   }
 
-  public String getGroupId() {
-    return this.groupId;
-  }
-
-  public MessageContent groupId(String groupId) {
-    this.groupId = groupId;
-    return this;
-  }
-
-  public void setGroupId(String groupId) {
-    this.groupId = groupId;
-  }
-
   public String getContent() {
     return this.content;
   }
@@ -144,19 +163,6 @@ public class MessageContent implements Serializable {
 
   public void setContent(String content) {
     this.content = content;
-  }
-
-  public String getSender() {
-    return this.sender;
-  }
-
-  public MessageContent sender(String sender) {
-    this.sender = sender;
-    return this;
-  }
-
-  public void setSender(String sender) {
-    this.sender = sender;
   }
 
   public String getStatus() {
@@ -185,82 +191,43 @@ public class MessageContent implements Serializable {
     this.searchField = searchField;
   }
 
-  public String getRole() {
-    return this.role;
+  public BaseInfo getBaseInfo() {
+    return this.baseInfo;
   }
 
-  public MessageContent role(String role) {
-    this.role = role;
+  public MessageContent baseInfo(BaseInfo baseInfo) {
+    this.setBaseInfo(baseInfo);
     return this;
   }
 
-  public void setRole(String role) {
-    this.role = role;
+  public void setBaseInfo(BaseInfo baseInfo) {
+    this.baseInfo = baseInfo;
   }
 
-  public Instant getCreatedDate() {
-    return this.createdDate;
+  public MasterUser getSender() {
+    return this.sender;
   }
 
-  public MessageContent createdDate(Instant createdDate) {
-    this.createdDate = createdDate;
+  public MessageContent sender(MasterUser masterUser) {
+    this.setSender(masterUser);
     return this;
   }
 
-  public void setCreatedDate(Instant createdDate) {
-    this.createdDate = createdDate;
+  public void setSender(MasterUser masterUser) {
+    this.sender = masterUser;
   }
 
-  public Instant getModifiedDate() {
-    return this.modifiedDate;
+  public MessageGroup getMessageGroup() {
+    return this.messageGroup;
   }
 
-  public MessageContent modifiedDate(Instant modifiedDate) {
-    this.modifiedDate = modifiedDate;
+  public MessageContent messageGroup(MessageGroup messageGroup) {
+    this.setMessageGroup(messageGroup);
     return this;
   }
 
-  public void setModifiedDate(Instant modifiedDate) {
-    this.modifiedDate = modifiedDate;
-  }
-
-  public String getCreatedBy() {
-    return this.createdBy;
-  }
-
-  public MessageContent createdBy(String createdBy) {
-    this.createdBy = createdBy;
-    return this;
-  }
-
-  public void setCreatedBy(String createdBy) {
-    this.createdBy = createdBy;
-  }
-
-  public String getModifiedBy() {
-    return this.modifiedBy;
-  }
-
-  public MessageContent modifiedBy(String modifiedBy) {
-    this.modifiedBy = modifiedBy;
-    return this;
-  }
-
-  public void setModifiedBy(String modifiedBy) {
-    this.modifiedBy = modifiedBy;
-  }
-
-  public String getComment() {
-    return this.comment;
-  }
-
-  public MessageContent comment(String comment) {
-    this.comment = comment;
-    return this;
-  }
-
-  public void setComment(String comment) {
-    this.comment = comment;
+  public void setMessageGroup(MessageGroup messageGroup) {
+    this.messageGroup = messageGroup;
   }
 
   // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
@@ -288,17 +255,9 @@ public class MessageContent implements Serializable {
         return "MessageContent{" +
             "id=" + getId() +
             ", uuid='" + getUuid() + "'" +
-            ", groupId='" + getGroupId() + "'" +
             ", content='" + getContent() + "'" +
-            ", sender='" + getSender() + "'" +
             ", status='" + getStatus() + "'" +
             ", searchField='" + getSearchField() + "'" +
-            ", role='" + getRole() + "'" +
-            ", createdDate='" + getCreatedDate() + "'" +
-            ", modifiedDate='" + getModifiedDate() + "'" +
-            ", createdBy='" + getCreatedBy() + "'" +
-            ", modifiedBy='" + getModifiedBy() + "'" +
-            ", comment='" + getComment() + "'" +
             "}";
     }
 }

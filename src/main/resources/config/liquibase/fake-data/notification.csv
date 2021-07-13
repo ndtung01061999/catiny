@@ -1,0 +1,11 @@
+id;uuid;notify_type;title;content
+1;61257d30-cc2b-44db-8d22-7cdd5d550f19;USER;Directives invoice payment;../fake-data/blob/hipster.txt
+2;e60dcaf6-174f-44ff-a74d-41256ba6d40e;SYSTEM;SMTP Avon FTP;../fake-data/blob/hipster.txt
+3;6a07866d-426c-49ff-80db-87c030df2025;ANONYMOUS;non-volatile;../fake-data/blob/hipster.txt
+4;c5cf4987-c0ca-47a8-9068-8b1c262aa7ee;USER;Global architectures;../fake-data/blob/hipster.txt
+5;6bec6bea-0418-4bd9-a904-209c60c3b8e2;ANONYMOUS;Outdoors payment;../fake-data/blob/hipster.txt
+6;86d4c9a0-6156-400b-8bf1-f6b2e1b653b3;SYSTEM;Tuna navigating Salad;../fake-data/blob/hipster.txt
+7;c37a0f47-b996-491e-a4a3-3b7aa33268a0;USER;withdrawal;../fake-data/blob/hipster.txt
+8;01d82195-f38e-4baf-aceb-b61ade7acca3;ANONYMOUS;IB Cotton Gruzia;../fake-data/blob/hipster.txt
+9;3bf82751-17d7-48f7-ab90-c197b901e81c;USER;interfaces Rustic;../fake-data/blob/hipster.txt
+10;43a7c5a0-da48-4553-8353-4a72f78e4409;MANAGER;SCSI Platinum;../fake-data/blob/hipster.txt

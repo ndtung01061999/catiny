@@ -99,32 +99,26 @@ public class MessageContentQueryService extends QueryService<MessageContent> {
       if (criteria.getUuid() != null) {
         specification = specification.and(buildSpecification(criteria.getUuid(), MessageContent_.uuid));
       }
-      if (criteria.getGroupId() != null) {
-        specification = specification.and(buildStringSpecification(criteria.getGroupId(), MessageContent_.groupId));
+      if (criteria.getBaseInfoId() != null) {
+        specification =
+          specification.and(
+            buildSpecification(criteria.getBaseInfoId(), root -> root.join(MessageContent_.baseInfo, JoinType.LEFT).get(BaseInfo_.id))
+          );
       }
-      if (criteria.getSender() != null) {
-        specification = specification.and(buildStringSpecification(criteria.getSender(), MessageContent_.sender));
+      if (criteria.getSenderId() != null) {
+        specification =
+          specification.and(
+            buildSpecification(criteria.getSenderId(), root -> root.join(MessageContent_.sender, JoinType.LEFT).get(MasterUser_.id))
+          );
       }
-      if (criteria.getStatus() != null) {
-        specification = specification.and(buildStringSpecification(criteria.getStatus(), MessageContent_.status));
-      }
-      if (criteria.getRole() != null) {
-        specification = specification.and(buildStringSpecification(criteria.getRole(), MessageContent_.role));
-      }
-      if (criteria.getCreatedDate() != null) {
-        specification = specification.and(buildRangeSpecification(criteria.getCreatedDate(), MessageContent_.createdDate));
-      }
-      if (criteria.getModifiedDate() != null) {
-        specification = specification.and(buildRangeSpecification(criteria.getModifiedDate(), MessageContent_.modifiedDate));
-      }
-      if (criteria.getCreatedBy() != null) {
-        specification = specification.and(buildStringSpecification(criteria.getCreatedBy(), MessageContent_.createdBy));
-      }
-      if (criteria.getModifiedBy() != null) {
-        specification = specification.and(buildStringSpecification(criteria.getModifiedBy(), MessageContent_.modifiedBy));
-      }
-      if (criteria.getComment() != null) {
-        specification = specification.and(buildStringSpecification(criteria.getComment(), MessageContent_.comment));
+      if (criteria.getMessageGroupId() != null) {
+        specification =
+          specification.and(
+            buildSpecification(
+              criteria.getMessageGroupId(),
+              root -> root.join(MessageContent_.messageGroup, JoinType.LEFT).get(MessageGroup_.id)
+            )
+          );
       }
     }
     return specification;

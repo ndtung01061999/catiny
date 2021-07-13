@@ -1,0 +1,40 @@
+{
+  "catinyApp": {
+    "deviceStatus": {
+      "home": {
+        "title": "Device Statuses",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Device Status",
+        "createOrEditLabel": "Create or edit a Device Status",
+        "search": "Search for Device Status",
+        "notFound": "No Device Statuses found"
+      },
+      "created": "A new Device Status is created with identifier {{ param }}",
+      "updated": "A Device Status is updated with identifier {{ param }}",
+      "deleted": "A Device Status is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Device Status {{ id }}?"
+      },
+      "detail": {
+        "title": "Device Status"
+      },
+      "id": "ID",
+      "uuid": "Uuid",
+      "deviceName": "Device Name",
+      "deviceType": "Device Type",
+      "deviceStatus": "Device Status",
+      "lastVisited": "Last Visited",
+      "statusComment": "Status Comment",
+      "baseInfo": "Base Info",
+      "accountStatus": "Account Status",
+      "help": {
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
+        "deviceName": "deviceName     : tên của thiết bị nếu có",
+        "deviceType": "deviceName     : loại thiết bị",
+        "deviceStatus": "deviceStatus   : trạng thái hiện tại của thiết bị là gì",
+        "lastVisited": "lastVisited    : thời gian truy cập lần cuối cùng của thiết bị này",
+        "statusComment": "statusComment  : người dùng comment lại trạng thái nếu muốn"
+      }
+    }
+  }
+}

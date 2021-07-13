@@ -1,11 +1,6 @@
 package com.regitiny.catiny.advance.repository.base;
 
-import com.regitiny.catiny.domain.MessageContent;
 import com.regitiny.catiny.repository.MessageContentRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
-import java.time.Instant;
 
 /**
  * Spring Data SQL repository for the {@link com.regitiny.catiny.domain.MessageContent} entity.
@@ -16,5 +11,4 @@ import java.time.Instant;
  */
 public interface MessageContentBaseRepository extends MessageContentRepository
 {
-  Page<MessageContent> findAllByGroupIdAndCreatedDateGreaterThanEqualOrderByCreatedDateDesc(String groupId, Instant createdDate, Pageable pageable);
 }

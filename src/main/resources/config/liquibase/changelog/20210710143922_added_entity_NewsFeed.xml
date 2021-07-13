@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity NewsFeed.
+    -->
+    <changeSet id="20210710143922-1" author="jhipster">
+        <createTable tableName="news_feed" remarks="@what?            -&gt; The NewsFeed entity.\n@why?             -&gt; người dùng mà xem trực tiếp các Post thì một số bài đăng sẽ không phù hợp dễ gây chán khi xem\n@use-to           -&gt; Ở đây chứa thông tin của những Post hiển thị cho người dùng xem\n@commonly-used-in -&gt; Được sử dụng trong phần hiển thị các bài đăng trên news feed\n\n@describe         -&gt; trong phần bản tin thay vì hiển thị trực tiếp các Post cho người dùng xem\nta sẽ tính toán độ phù hợp và add vào bảng này sau đó cho người dùng xem">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="uuid" type="${uuidType}" remarks="uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_news_feed__uuid" />
+            </column>
+            <column name="score" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="base_info_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_news_feed__base_info_id" />
+            </column>
+            <column name="post_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="master_user_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+
+    <!--
+        Load sample data generated with Faker.js
+        - This data can be easily edited using a CSV editor (or even MS Excel) and
+          is located in the 'src/main/resources/config/liquibase/fake-data' directory
+        - By default this data is applied when running with the JHipster 'dev' profile.
+          This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
+          Spring Boot configuration key.
+    -->
+    <changeSet id="20210710143922-1-data" author="jhipster" context="faker">
+        <loadData
+                  file="config/liquibase/fake-data/news_feed.csv"
+                  separator=";"
+                  tableName="news_feed">
+            <column name="id" type="numeric"/>
+            <column name="uuid" type="string"/>
+            <column name="score" type="numeric"/>
+            <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
+        </loadData>
+    </changeSet>
+</databaseChangeLog>

@@ -1,5 +1,8 @@
 package com.regitiny.catiny.advance.controller.model;
 
+import com.regitiny.catiny.service.dto.BaseInfoDTO;
+import com.regitiny.catiny.service.dto.MasterUserDTO;
+import com.regitiny.catiny.service.dto.MessageGroupDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +12,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Lob;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.UUID;
 
 @Data
@@ -23,41 +25,27 @@ public class MessageContentModel implements Serializable
   @NotNull
   @ApiModelProperty(
     required = true,
-    value = "uuid"
+    value = "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)"
   )
   private UUID uuid;
-
-  @NotNull
-  private String groupId;
 
   @Lob
   private String content;
 
-  private String sender;
-
+  @ApiModelProperty("status : trạng thái của tin nhắn này, đã gửi chưa , ai đã nhận được , đã xem chưa đã thu hồi hay đã xóa...\n"
+    + "@type           : Json")
+  @Lob
   private String status;
 
-  @ApiModelProperty("searchField")
+  @ApiModelProperty("searchField : lưu content tin nhắn lọc dấu ... để sau này search")
   @Lob
   private String searchField;
 
-  @ApiModelProperty("role")
-  private String role;
+  private BaseInfoDTO baseInfo;
 
-  @ApiModelProperty("createdDate")
-  private Instant createdDate;
+  private MasterUserDTO sender;
 
-  @ApiModelProperty("modifiedDate")
-  private Instant modifiedDate;
-
-  @ApiModelProperty("createdBy")
-  private String createdBy;
-
-  @ApiModelProperty("modifiedBy")
-  private String modifiedBy;
-
-  @ApiModelProperty("comment")
-  private String comment;
+  private MessageGroupDTO messageGroup;
 
   @Data
   @Builder
@@ -70,41 +58,27 @@ public class MessageContentModel implements Serializable
     @NotNull
     @ApiModelProperty(
       required = true,
-      value = "uuid"
+      value = "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)"
     )
     private UUID uuid;
-
-    @NotNull
-    private String groupId;
 
     @Lob
     private String content;
 
-    private String sender;
-
+    @ApiModelProperty("status : trạng thái của tin nhắn này, đã gửi chưa , ai đã nhận được , đã xem chưa đã thu hồi hay đã xóa...\n"
+      + "@type           : Json")
+    @Lob
     private String status;
 
-    @ApiModelProperty("searchField")
+    @ApiModelProperty("searchField : lưu content tin nhắn lọc dấu ... để sau này search")
     @Lob
     private String searchField;
 
-    @ApiModelProperty("role")
-    private String role;
+    private BaseInfoDTO baseInfo;
 
-    @ApiModelProperty("createdDate")
-    private Instant createdDate;
+    private MasterUserDTO sender;
 
-    @ApiModelProperty("modifiedDate")
-    private Instant modifiedDate;
-
-    @ApiModelProperty("createdBy")
-    private String createdBy;
-
-    @ApiModelProperty("modifiedBy")
-    private String modifiedBy;
-
-    @ApiModelProperty("comment")
-    private String comment;
+    private MessageGroupDTO messageGroup;
   }
 
   @Data
@@ -118,40 +92,26 @@ public class MessageContentModel implements Serializable
     @NotNull
     @ApiModelProperty(
       required = true,
-      value = "uuid"
+      value = "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)"
     )
     private UUID uuid;
-
-    @NotNull
-    private String groupId;
 
     @Lob
     private String content;
 
-    private String sender;
-
+    @ApiModelProperty("status : trạng thái của tin nhắn này, đã gửi chưa , ai đã nhận được , đã xem chưa đã thu hồi hay đã xóa...\n"
+      + "@type           : Json")
+    @Lob
     private String status;
 
-    @ApiModelProperty("searchField")
+    @ApiModelProperty("searchField : lưu content tin nhắn lọc dấu ... để sau này search")
     @Lob
     private String searchField;
 
-    @ApiModelProperty("role")
-    private String role;
+    private BaseInfoDTO baseInfo;
 
-    @ApiModelProperty("createdDate")
-    private Instant createdDate;
+    private MasterUserDTO sender;
 
-    @ApiModelProperty("modifiedDate")
-    private Instant modifiedDate;
-
-    @ApiModelProperty("createdBy")
-    private String createdBy;
-
-    @ApiModelProperty("modifiedBy")
-    private String modifiedBy;
-
-    @ApiModelProperty("comment")
-    private String comment;
+    private MessageGroupDTO messageGroup;
   }
 }

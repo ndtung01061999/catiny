@@ -1,0 +1,31 @@
+{
+  "catinyApp": {
+    "followGroup": {
+      "home": {
+        "title": "Follow Groups",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Follow Group",
+        "createOrEditLabel": "Create or edit a Follow Group",
+        "search": "Search for Follow Group",
+        "notFound": "No Follow Groups found"
+      },
+      "created": "A new Follow Group is created with identifier {{ param }}",
+      "updated": "A Follow Group is updated with identifier {{ param }}",
+      "deleted": "A Follow Group is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Follow Group {{ id }}?"
+      },
+      "detail": {
+        "title": "Follow Group"
+      },
+      "id": "ID",
+      "uuid": "Uuid",
+      "baseInfo": "Base Info",
+      "followGroupDetails": "Follow Group Details",
+      "masterUser": "Master User",
+      "help": {
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)"
+      }
+    }
+  }
+}

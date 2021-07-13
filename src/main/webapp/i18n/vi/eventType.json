@@ -1,0 +1,11 @@
+{
+  "catinyApp": {
+    "EventType": {
+      "null": "",
+      "DAY": "DAY",
+      "MONTH": "MONTH",
+      "YEAR": "YEAR",
+      "ONLY_ONE": "ONLY_ONE"
+    }
+  }
+}

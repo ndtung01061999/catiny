@@ -1,0 +1,30 @@
+{
+  "catinyApp": {
+    "pageProfile": {
+      "home": {
+        "title": "Page Profiles",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Thêm mới một Page Profile",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Page Profile",
+        "search": "Tìm Page Profile",
+        "notFound": "No Page Profiles found"
+      },
+      "created": "Một Page Profile mới được tạo với định danh {{ param }}",
+      "updated": "Một Page Profile cập nhật với định danh {{ param }}",
+      "deleted": "Một Page Profile đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Page Profile {{ id }}?"
+      },
+      "detail": {
+        "title": "Page Profile"
+      },
+      "id": "ID",
+      "uuid": "Uuid",
+      "baseInfo": "Base Info",
+      "page": "Page",
+      "help": {
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)"
+      }
+    }
+  }
+}

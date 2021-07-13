@@ -1,0 +1,32 @@
+{
+  "catinyApp": {
+    "friend": {
+      "home": {
+        "title": "Friends",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Thêm mới một Friend",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Friend",
+        "search": "Tìm Friend",
+        "notFound": "No Friends found"
+      },
+      "created": "Một Friend mới được tạo với định danh {{ param }}",
+      "updated": "Một Friend cập nhật với định danh {{ param }}",
+      "deleted": "Một Friend đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Friend {{ id }}?"
+      },
+      "detail": {
+        "title": "Friend"
+      },
+      "id": "ID",
+      "uuid": "Uuid",
+      "friendType": "Friend Type",
+      "baseInfo": "Base Info",
+      "friendDetails": "Friend Details",
+      "masterUser": "Master User",
+      "help": {
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)"
+      }
+    }
+  }
+}

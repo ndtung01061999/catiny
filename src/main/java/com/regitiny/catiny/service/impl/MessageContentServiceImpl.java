@@ -62,6 +62,7 @@ public class MessageContentServiceImpl implements MessageContentService {
       .map(
         existingMessageContent -> {
           messageContentMapper.partialUpdate(existingMessageContent, messageContentDTO);
+
           return existingMessageContent;
         }
       )

@@ -4,71 +4,43 @@
     {
       "fieldName": "uuid",
       "fieldType": "UUID",
-      "javadoc": "uuid",
+      "javadoc": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
       "fieldValidateRules": ["required", "unique"]
     },
     {
-      "fieldName": "userId",
-      "fieldType": "Long",
-      "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "groupId",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
-    },
-    {
       "fieldName": "groupName",
-      "fieldType": "String"
+      "fieldType": "String",
+      "javadoc": "groupName"
     },
     {
       "fieldName": "addBy",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "lastContent",
-      "fieldType": "byte[]",
-      "fieldTypeBlobContent": "text"
-    },
-    {
-      "fieldName": "searchField",
-      "fieldType": "byte[]",
-      "javadoc": "searchField",
-      "fieldTypeBlobContent": "text"
-    },
-    {
-      "fieldName": "role",
       "fieldType": "String",
-      "javadoc": "role"
-    },
-    {
-      "fieldName": "createdDate",
-      "fieldType": "Instant",
-      "javadoc": "createdDate"
-    },
-    {
-      "fieldName": "modifiedDate",
-      "fieldType": "Instant",
-      "javadoc": "modifiedDate"
-    },
-    {
-      "fieldName": "createdBy",
-      "fieldType": "String",
-      "javadoc": "createdBy"
-    },
-    {
-      "fieldName": "modifiedBy",
-      "fieldType": "String",
-      "javadoc": "modifiedBy"
-    },
-    {
-      "fieldName": "comment",
-      "fieldType": "String",
-      "javadoc": "comment"
+      "javadoc": "addBy"
     }
   ],
-  "relationships": [],
-  "javadoc": "The PostDetails entity.\\n@author A true hipster",
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "baseInfo",
+      "otherEntityRelationshipName": "messageGroup",
+      "relationshipName": "baseInfo",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "messageContent",
+      "otherEntityRelationshipName": "messageGroup",
+      "relationshipName": "messageContent"
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "masterUser",
+      "otherEntityRelationshipName": "messageGroup",
+      "relationshipName": "masterUser",
+      "ownerSide": false
+    }
+  ],
+  "javadoc": "@what?            -> The MessageGroup entity.\\n@why?             ->\\n@use-to           -> Chứa thông tin các nhóm mà hiện tại người dùng đang ở trong đó (phần nhắn tin)\\n@commonly-used-in -> Hiển thị các tin nhắn\\n\\n@describe         -> một nhóm tạo ra sẽ là một uuid . nếu nhắn tin cặp thì sẽ sắp xếp login sau đó hash md5 rồi chuyển thành định dạng uuid",
   "entityTableName": "message_group",
   "dto": "mapstruct",
   "pagination": "infinite-scroll",

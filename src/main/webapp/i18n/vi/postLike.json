@@ -1,0 +1,31 @@
+{
+  "catinyApp": {
+    "postLike": {
+      "home": {
+        "title": "Post Likes",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Thêm mới một Post Like",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Post Like",
+        "search": "Tìm Post Like",
+        "notFound": "No Post Likes found"
+      },
+      "created": "Một Post Like mới được tạo với định danh {{ param }}",
+      "updated": "Một Post Like cập nhật với định danh {{ param }}",
+      "deleted": "Một Post Like đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Post Like {{ id }}?"
+      },
+      "detail": {
+        "title": "Post Like"
+      },
+      "id": "ID",
+      "uuid": "Uuid",
+      "baseInfo": "Base Info",
+      "userLike": "User Like",
+      "post": "Post",
+      "help": {
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)"
+      }
+    }
+  }
+}

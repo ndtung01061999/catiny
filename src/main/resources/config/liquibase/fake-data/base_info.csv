@@ -1,0 +1,11 @@
+id;process_status;owner;role;modified_class;created_date;modified_date;created_by;modified_by;notes;history_update;deleted
+1;ERROR;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;asynchronous Compatible olive;2021-07-10T13:28:50;2021-07-10T08:38:20;Pound Illinois;Corporate;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;false
+2;NEED_HANDLE;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;Wall;2021-07-09T20:25:40;2021-07-10T14:18:52;panel;compressing Point;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;false
+3;NEED_HANDLE_NOW;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;extranet;2021-07-09T21:23:14;2021-07-10T07:11:28;online Loan evolve;Garden;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;true
+4;DONE;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;bypass quantify mobile;2021-07-10T09:15:08;2021-07-09T15:57:38;Fresh TCP;Computer;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;false
+5;ERROR;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;Tasty platforms;2021-07-10T08:12:37;2021-07-09T23:01:25;bypassing Account Steel;Reverse-engineered calculating;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;true
+6;DONE;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;SSL Shilling;2021-07-10T14:31:27;2021-07-10T10:23:16;Granite;Analyst;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;true
+7;ERROR;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;Rapids Metal;2021-07-09T23:15:20;2021-07-10T04:08:18;envisioneer;primary out-of-the-box Centralized;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;true
+8;NOT_PROCESSED;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;front-end;2021-07-09T17:30:41;2021-07-09T20:33:07;system;sticky;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;false
+9;DONE;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;sky clicks-and-mortar SQL;2021-07-10T10:31:32;2021-07-10T09:25:49;Mall mobile;Account;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;false
+10;NEED_PROCESS;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;Account proactive withdrawal;2021-07-09T23:47:17;2021-07-10T03:04:19;neutral connect;multi-byte Sharable;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;false

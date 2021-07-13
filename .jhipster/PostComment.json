@@ -1,0 +1,61 @@
+{
+  "name": "PostComment",
+  "fields": [
+    {
+      "fieldName": "uuid",
+      "fieldType": "UUID",
+      "javadoc": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "content",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "baseInfo",
+      "otherEntityRelationshipName": "postComment",
+      "relationshipName": "baseInfo",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "postComment",
+      "otherEntityRelationshipName": "commentParent",
+      "relationshipName": "commentReply"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "masterUser",
+      "otherEntityRelationshipName": "myComment",
+      "relationshipName": "userComment"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "post",
+      "otherEntityRelationshipName": "postComment",
+      "relationshipName": "post"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "postComment",
+      "otherEntityRelationshipName": "commentReply",
+      "relationshipName": "commentParent"
+    }
+  ],
+  "javadoc": "@what?            -> The PostComment entity.\\n@why?             ->\\n@use-to           -> Lưu những bình luận của người dùng trong một bài đăng cụ thể\\n@commonly-used-in -> được biết dưới dạng bình luận của các bài đăng\\n\\n@describe         ->",
+  "entityTableName": "post_comment",
+  "dto": "mapstruct",
+  "pagination": "infinite-scroll",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "searchEngine": "elasticsearch",
+  "changelogDate": "20210710143919"
+}

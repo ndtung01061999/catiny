@@ -1,0 +1,31 @@
+{
+  "catinyApp": {
+    "videoLiveStreamBuffer": {
+      "home": {
+        "title": "Video Live Stream Buffers",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Thêm mới một Video Live Stream Buffer",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Video Live Stream Buffer",
+        "search": "Tìm Video Live Stream Buffer",
+        "notFound": "No Video Live Stream Buffers found"
+      },
+      "created": "Một Video Live Stream Buffer mới được tạo với định danh {{ param }}",
+      "updated": "Một Video Live Stream Buffer cập nhật với định danh {{ param }}",
+      "deleted": "Một Video Live Stream Buffer đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Video Live Stream Buffer {{ id }}?"
+      },
+      "detail": {
+        "title": "Video Live Stream Buffer"
+      },
+      "id": "ID",
+      "uuid": "Uuid",
+      "bufferData": "Buffer Data",
+      "baseInfo": "Base Info",
+      "videoStream": "Video Stream",
+      "help": {
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)"
+      }
+    }
+  }
+}

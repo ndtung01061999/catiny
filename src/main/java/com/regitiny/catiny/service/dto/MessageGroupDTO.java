@@ -3,85 +3,45 @@ package com.regitiny.catiny.service.dto;
 import com.regitiny.catiny.GeneratedByJHipster;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
-import javax.persistence.Lob;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
+import javax.validation.constraints.*;
 
 /**
  * A DTO for the {@link com.regitiny.catiny.domain.MessageGroup} entity.
  */
-@ApiModel(description = "The PostDetails entity.\n@author A true hipster")
+@ApiModel(
+  description = "@what?            -> The MessageGroup entity.\n@why?             ->\n@use-to           -> Chứa thông tin các nhóm mà hiện tại người dùng đang ở trong đó (phần nhắn tin)\n@commonly-used-in -> Hiển thị các tin nhắn\n\n@describe         -> một nhóm tạo ra sẽ là một uuid . nếu nhắn tin cặp thì sẽ sắp xếp login sau đó hash md5 rồi chuyển thành định dạng uuid"
+)
 @GeneratedByJHipster
 public class MessageGroupDTO implements Serializable {
 
   private Long id;
 
   /**
-   * uuid
+   * uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
    */
   @NotNull
-  @ApiModelProperty(value = "uuid", required = true)
+  @ApiModelProperty(
+    value = "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
+    required = true
+  )
   private UUID uuid;
 
-  @NotNull
-  private Long userId;
-
-  @NotNull
-  private String groupId;
-
+  /**
+   * groupName
+   */
+  @ApiModelProperty(value = "groupName")
   private String groupName;
 
+  /**
+   * addBy
+   */
+  @ApiModelProperty(value = "addBy")
   private String addBy;
 
-  @Lob
-  private String lastContent;
-
-  /**
-   * searchField
-   */
-  @ApiModelProperty(value = "searchField")
-  @Lob
-  private String searchField;
-
-  /**
-   * role
-   */
-  @ApiModelProperty(value = "role")
-  private String role;
-
-  /**
-   * createdDate
-   */
-  @ApiModelProperty(value = "createdDate")
-  private Instant createdDate;
-
-  /**
-   * modifiedDate
-   */
-  @ApiModelProperty(value = "modifiedDate")
-  private Instant modifiedDate;
-
-  /**
-   * createdBy
-   */
-  @ApiModelProperty(value = "createdBy")
-  private String createdBy;
-
-  /**
-   * modifiedBy
-   */
-  @ApiModelProperty(value = "modifiedBy")
-  private String modifiedBy;
-
-  /**
-   * comment
-   */
-  @ApiModelProperty(value = "comment")
-  private String comment;
+  private BaseInfoDTO baseInfo;
 
   public Long getId() {
     return id;
@@ -97,22 +57,6 @@ public class MessageGroupDTO implements Serializable {
 
   public void setUuid(UUID uuid) {
     this.uuid = uuid;
-  }
-
-  public Long getUserId() {
-    return userId;
-  }
-
-  public void setUserId(Long userId) {
-    this.userId = userId;
-  }
-
-  public String getGroupId() {
-    return groupId;
-  }
-
-  public void setGroupId(String groupId) {
-    this.groupId = groupId;
   }
 
   public String getGroupName() {
@@ -131,68 +75,12 @@ public class MessageGroupDTO implements Serializable {
     this.addBy = addBy;
   }
 
-  public String getLastContent() {
-    return lastContent;
+  public BaseInfoDTO getBaseInfo() {
+    return baseInfo;
   }
 
-  public void setLastContent(String lastContent) {
-    this.lastContent = lastContent;
-  }
-
-  public String getSearchField() {
-    return searchField;
-  }
-
-  public void setSearchField(String searchField) {
-    this.searchField = searchField;
-  }
-
-  public String getRole() {
-    return role;
-  }
-
-  public void setRole(String role) {
-    this.role = role;
-  }
-
-  public Instant getCreatedDate() {
-    return createdDate;
-  }
-
-  public void setCreatedDate(Instant createdDate) {
-    this.createdDate = createdDate;
-  }
-
-  public Instant getModifiedDate() {
-    return modifiedDate;
-  }
-
-  public void setModifiedDate(Instant modifiedDate) {
-    this.modifiedDate = modifiedDate;
-  }
-
-  public String getCreatedBy() {
-    return createdBy;
-  }
-
-  public void setCreatedBy(String createdBy) {
-    this.createdBy = createdBy;
-  }
-
-  public String getModifiedBy() {
-    return modifiedBy;
-  }
-
-  public void setModifiedBy(String modifiedBy) {
-    this.modifiedBy = modifiedBy;
-  }
-
-  public String getComment() {
-    return comment;
-  }
-
-  public void setComment(String comment) {
-    this.comment = comment;
+  public void setBaseInfo(BaseInfoDTO baseInfo) {
+    this.baseInfo = baseInfo;
   }
 
   @Override
@@ -222,18 +110,9 @@ public class MessageGroupDTO implements Serializable {
         return "MessageGroupDTO{" +
             "id=" + getId() +
             ", uuid='" + getUuid() + "'" +
-            ", userId=" + getUserId() +
-            ", groupId='" + getGroupId() + "'" +
             ", groupName='" + getGroupName() + "'" +
             ", addBy='" + getAddBy() + "'" +
-            ", lastContent='" + getLastContent() + "'" +
-            ", searchField='" + getSearchField() + "'" +
-            ", role='" + getRole() + "'" +
-            ", createdDate='" + getCreatedDate() + "'" +
-            ", modifiedDate='" + getModifiedDate() + "'" +
-            ", createdBy='" + getCreatedBy() + "'" +
-            ", modifiedBy='" + getModifiedBy() + "'" +
-            ", comment='" + getComment() + "'" +
+            ", baseInfo=" + getBaseInfo() +
             "}";
     }
 }

@@ -1,0 +1,34 @@
+{
+  "catinyApp": {
+    "notification": {
+      "home": {
+        "title": "Notifications",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Notification",
+        "createOrEditLabel": "Create or edit a Notification",
+        "search": "Search for Notification",
+        "notFound": "No Notifications found"
+      },
+      "created": "A new Notification is created with identifier {{ param }}",
+      "updated": "A Notification is updated with identifier {{ param }}",
+      "deleted": "A Notification is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Notification {{ id }}?"
+      },
+      "detail": {
+        "title": "Notification"
+      },
+      "id": "ID",
+      "uuid": "Uuid",
+      "notifyType": "Notify Type",
+      "title": "Title",
+      "content": "Content",
+      "baseInfo": "Base Info",
+      "masterUser": "Master User",
+      "help": {
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
+        "notifyType": "notifyType     : loại thông báo"
+      }
+    }
+  }
+}

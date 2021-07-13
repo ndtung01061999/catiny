@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <!--
+        Added the constraints for entity FollowPage.
+    -->
+    <changeSet id="20210710143913-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="base_info_id"
+                                 baseTableName="follow_page"
+                                 constraintName="fk_follow_page__base_info_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="base_info"/>
+
+        <addForeignKeyConstraint baseColumnNames="follow_page_details_id"
+                                 baseTableName="follow_page"
+                                 constraintName="fk_follow_page__follow_page_details_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="page_post"/>
+
+        <addForeignKeyConstraint baseColumnNames="master_user_id"
+                                 baseTableName="follow_page"
+                                 constraintName="fk_follow_page__master_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="master_user"/>
+    </changeSet>
+</databaseChangeLog>

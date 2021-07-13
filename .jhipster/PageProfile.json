@@ -1,0 +1,39 @@
+{
+  "name": "PageProfile",
+  "fields": [
+    {
+      "fieldName": "uuid",
+      "fieldType": "UUID",
+      "javadoc": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
+      "fieldValidateRules": ["required", "unique"]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "baseInfo",
+      "otherEntityRelationshipName": "pageProfile",
+      "relationshipName": "baseInfo",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "pagePost",
+      "otherEntityRelationshipName": "profile",
+      "relationshipName": "page",
+      "ownerSide": false
+    }
+  ],
+  "javadoc": "@what?            -> The PageProfile entity\\n@why?             ->\\n@use-to           -> Lưu phần giới thiệu của các trang\\n@commonly-used-in -> hiển thị giới thiệu của các trang\\n\\n@describe         ->",
+  "entityTableName": "page_profile",
+  "dto": "mapstruct",
+  "pagination": "infinite-scroll",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "searchEngine": "elasticsearch",
+  "changelogDate": "20210710143916"
+}

@@ -1,0 +1,31 @@
+{
+  "catinyApp": {
+    "followPage": {
+      "home": {
+        "title": "Follow Pages",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Follow Page",
+        "createOrEditLabel": "Create or edit a Follow Page",
+        "search": "Search for Follow Page",
+        "notFound": "No Follow Pages found"
+      },
+      "created": "A new Follow Page is created with identifier {{ param }}",
+      "updated": "A Follow Page is updated with identifier {{ param }}",
+      "deleted": "A Follow Page is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Follow Page {{ id }}?"
+      },
+      "detail": {
+        "title": "Follow Page"
+      },
+      "id": "ID",
+      "uuid": "Uuid",
+      "baseInfo": "Base Info",
+      "followPageDetails": "Follow Page Details",
+      "masterUser": "Master User",
+      "help": {
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)"
+      }
+    }
+  }
+}
