@@ -1,6 +1,6 @@
 package com.regitiny.catiny.aop;
 
-import com.regitiny.catiny.domain.MasterUser;
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -8,10 +8,10 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
 
 import java.util.Arrays;
-import java.util.UUID;
 
 /**
  * Aspect for logging execution of service and repository Spring components.
@@ -21,23 +21,13 @@ import java.util.UUID;
 @Aspect
 public class AspectService
 {
-
   private final Environment env;
+  private final ApplicationContext applicationContext;
 
-  public AspectService(Environment env)
+  public AspectService(Environment env, ApplicationContext applicationContext)
   {
     this.env = env;
-  }
-
-  /**
-   * Pointcut that matches all repository search packages.
-   */
-  @Pointcut(
-    "within(com.regitiny.catiny.repository.search..*)"
-  )
-  public void repositorySearchPackagePointcut()
-  {
-    // Method is empty as this is just a Pointcut, the implementations are in the advices.
+    this.applicationContext = applicationContext;
   }
 
   /**
@@ -52,7 +42,9 @@ public class AspectService
   }
 
   /**
-   * Advice that logs when a method is entered and exited.
+   * sau khi save thì dữ liệu hibernate lồng nhau bởi các relationship
+   * với elasticsearch thì dữ liệu sẽ trở thành các jsonObject lồng nhau vô tận
+   * nên tạm thời sử dụng method này dùng MapStruct để : Entity -> EntityDTO -> Entity
    *
    * @param joinPoint join point for advice.
    * @return result.
@@ -66,17 +58,19 @@ public class AspectService
     log.debug("Enter: {}() with argument[s] = {}", joinPoint.getSignature().getName(), Arrays.toString(joinPoint.getArgs()));
     try
     {
-      var x = (MasterUser) joinPoint.getArgs()[0];
-      x.uuid(UUID.randomUUID());
-      Object result = joinPoint.proceed(new Object[]{x});
+      var args = joinPoint.getArgs();
+      if (args.length != 1)
+        return joinPoint.proceed();
+      var entity = args[0];
+      var entityName = entity.getClass().getSimpleName();
+      var mapper = applicationContext.getBean(StringUtils.uncapitalize(entityName) + "MapperImpl");// entityNameMapperImpl
+      var entityDTO = mapper.getClass().getMethod("toDto", Class.forName("com.regitiny.catiny.domain." + entityName)).invoke(mapper, entity);
+      var entityResult = mapper.getClass().getMethod("toEntity", Class.forName("com.regitiny.catiny.service.dto." + entityName + "DTO")).invoke(mapper, entityDTO);
 
+      log.debug("original data : {} = ", entity);
+      log.debug("processed data : {} = ", entityResult);
+      Object result = joinPoint.proceed(new Object[]{entityResult});
       log.debug("Exit: {}() with result = {}", joinPoint.getSignature().getName(), result);
-      if (result.getClass().getName().equals(MasterUser.class))
-      {
-        log.debug("hihi");
-        var r = (MasterUser) result;
-        log.debug(r.toString());
-      }
       return result;
     }
     catch (IllegalArgumentException e)

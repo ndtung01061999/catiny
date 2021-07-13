@@ -1,6 +1,7 @@
 package com.regitiny.catiny.config;
 
 import com.regitiny.catiny.aop.AspectService;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -14,8 +15,8 @@ public class AspectServiceConfiguration
 {
   @Bean
   @Profile(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT)
-  public AspectService aspectService(Environment env)
+  public AspectService aspectService(Environment env, ApplicationContext applicationContext)
   {
-    return new AspectService(env);
+    return new AspectService(env, applicationContext);
   }
 }
