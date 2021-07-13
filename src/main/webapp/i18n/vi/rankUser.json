@@ -1,0 +1,31 @@
+{
+  "catinyApp": {
+    "rankUser": {
+      "home": {
+        "title": "Rank Users",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Thêm mới một Rank User",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Rank User",
+        "search": "Tìm Rank User",
+        "notFound": "No Rank Users found"
+      },
+      "created": "Một Rank User mới được tạo với định danh {{ param }}",
+      "updated": "Một Rank User cập nhật với định danh {{ param }}",
+      "deleted": "Một Rank User đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Rank User {{ id }}?"
+      },
+      "detail": {
+        "title": "Rank User"
+      },
+      "id": "ID",
+      "uuid": "Uuid",
+      "ratingPoints": "Rating Points",
+      "baseInfo": "Base Info",
+      "rankGroup": "Rank Group",
+      "help": {
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)"
+      }
+    }
+  }
+}

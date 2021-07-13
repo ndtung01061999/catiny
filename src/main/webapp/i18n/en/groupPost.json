@@ -1,0 +1,37 @@
+{
+  "catinyApp": {
+    "groupPost": {
+      "home": {
+        "title": "Group Posts",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Group Post",
+        "createOrEditLabel": "Create or edit a Group Post",
+        "search": "Search for Group Post",
+        "notFound": "No Group Posts found"
+      },
+      "created": "A new Group Post is created with identifier {{ param }}",
+      "updated": "A Group Post is updated with identifier {{ param }}",
+      "deleted": "A Group Post is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Group Post {{ id }}?"
+      },
+      "detail": {
+        "title": "Group Post"
+      },
+      "id": "ID",
+      "uuid": "Uuid",
+      "name": "Name",
+      "quickInfo": "Quick Info",
+      "profile": "Profile",
+      "baseInfo": "Base Info",
+      "myPostInGroup": "My Post In Group",
+      "topicInterest": "Topic Interest",
+      "userInGroup": "User In Group",
+      "help": {
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
+        "name": "name           : tên của group này",
+        "quickInfo": "quickInfo      : @type Json -&gt; thông tin giới thiệu sơ qua của group này"
+      }
+    }
+  }
+}

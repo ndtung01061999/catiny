@@ -1,0 +1,11 @@
+id;uuid;post_in_type;post_type;content;search_field
+1;7bb689d8-0faf-4465-a205-18cc57406198;USER;FROALA;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+2;3b853a9a-375d-4cf6-b383-56f8d1b71c4d;GROUP;SIMPLE;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+3;5a94e5c6-d5f9-4832-8cc7-fb39ea471718;USER;SIMPLE;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+4;042b89b5-1c80-4161-a4fa-a6df4d8c9504;GROUP;FROALA;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+5;b1f3576f-cd5c-4aa6-abfc-66ce4fc859c4;PAGE;ADVANCE;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+6;08743a2a-a0e6-4d5f-a8d1-97a9331b338c;USER;FROALA;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+7;17165cd1-9a31-4f0c-b020-900c4567337d;PAGE;ADVANCE;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+8;9ddd8905-5e71-411b-b375-c0433ee898e4;PAGE;SIMPLE;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+9;7fbdb0e2-a6a6-476a-aec3-7d7f00a41433;USER;SIMPLE;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+10;39503ca5-0008-4ff6-abd9-683daebf50b2;PAGE;SIMPLE;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt

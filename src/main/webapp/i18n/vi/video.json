@@ -1,0 +1,35 @@
+{
+  "catinyApp": {
+    "video": {
+      "home": {
+        "title": "Videos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Thêm mới một Video",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Video",
+        "search": "Tìm Video",
+        "notFound": "No Videos found"
+      },
+      "created": "Một Video mới được tạo với định danh {{ param }}",
+      "updated": "Một Video cập nhật với định danh {{ param }}",
+      "deleted": "Một Video đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Video {{ id }}?"
+      },
+      "detail": {
+        "title": "Video"
+      },
+      "id": "ID",
+      "uuid": "Uuid",
+      "name": "Name",
+      "fileInfo": "File Info",
+      "baseInfo": "Base Info",
+      "videoProcessed": "Video Processed",
+      "videoStream": "Video Stream",
+      "videoOriginal": "Video Original",
+      "event": "Event",
+      "help": {
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)"
+      }
+    }
+  }
+}

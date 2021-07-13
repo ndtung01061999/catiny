@@ -1,0 +1,34 @@
+{
+  "catinyApp": {
+    "postComment": {
+      "home": {
+        "title": "Post Comments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Post Comment",
+        "createOrEditLabel": "Create or edit a Post Comment",
+        "search": "Search for Post Comment",
+        "notFound": "No Post Comments found"
+      },
+      "created": "A new Post Comment is created with identifier {{ param }}",
+      "updated": "A Post Comment is updated with identifier {{ param }}",
+      "deleted": "A Post Comment is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Post Comment {{ id }}?"
+      },
+      "detail": {
+        "title": "Post Comment"
+      },
+      "id": "ID",
+      "uuid": "Uuid",
+      "content": "Content",
+      "baseInfo": "Base Info",
+      "commentReply": "Comment Reply",
+      "userComment": "User Comment",
+      "post": "Post",
+      "commentParent": "Comment Parent",
+      "help": {
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)"
+      }
+    }
+  }
+}

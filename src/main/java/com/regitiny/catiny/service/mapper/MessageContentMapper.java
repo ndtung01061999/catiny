@@ -8,6 +8,11 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link MessageContent} and its DTO {@link MessageContentDTO}.
  */
-@Mapper(componentModel = "spring", uses = {})
+@Mapper(componentModel = "spring", uses = { BaseInfoMapper.class, MasterUserMapper.class, MessageGroupMapper.class })
 @GeneratedByJHipster
-public interface MessageContentMapper extends EntityMapper<MessageContentDTO, MessageContent> {}
+public interface MessageContentMapper extends EntityMapper<MessageContentDTO, MessageContent> {
+  @Mapping(target = "baseInfo", source = "baseInfo", qualifiedByName = "id")
+  @Mapping(target = "sender", source = "sender", qualifiedByName = "id")
+  @Mapping(target = "messageGroup", source = "messageGroup", qualifiedByName = "id")
+  MessageContentDTO toDto(MessageContent s);
+}

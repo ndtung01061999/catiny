@@ -1,0 +1,71 @@
+{
+  "name": "GroupPost",
+  "fields": [
+    {
+      "fieldName": "uuid",
+      "fieldType": "UUID",
+      "javadoc": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "javadoc": "name           : tên của group này",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "quickInfo",
+      "fieldType": "byte[]",
+      "javadoc": "quickInfo      : @type Json -> thông tin giới thiệu sơ qua của group này",
+      "fieldTypeBlobContent": "text"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "groupProfile",
+      "otherEntityRelationshipName": "group",
+      "relationshipName": "profile",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "baseInfo",
+      "otherEntityRelationshipName": "groupPost",
+      "relationshipName": "baseInfo",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "post",
+      "otherEntityRelationshipName": "groupPost",
+      "relationshipName": "myPostInGroup"
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "topicInterest",
+      "otherEntityRelationshipName": "groupPost",
+      "relationshipName": "topicInterest",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "masterUser",
+      "otherEntityRelationshipName": "myGroupPost",
+      "relationshipName": "userInGroup",
+      "ownerSide": false
+    }
+  ],
+  "javadoc": "@what?            -> The GroupPost entity\\n@why?             -> mọi người cần tạo ra một nhóm riêng hoặc chung để có thể trao đổi\\n@use-to           -> quản lý nhóm\\n@commonly-used-in -> các nhóm\\n\\n@describe         ->",
+  "entityTableName": "group_post",
+  "dto": "mapstruct",
+  "pagination": "infinite-scroll",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "searchEngine": "elasticsearch",
+  "changelogDate": "20210710143917"
+}

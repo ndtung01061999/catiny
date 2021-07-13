@@ -1,0 +1,38 @@
+{
+  "catinyApp": {
+    "event": {
+      "home": {
+        "title": "Events",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Event",
+        "createOrEditLabel": "Create or edit a Event",
+        "search": "Search for Event",
+        "notFound": "No Events found"
+      },
+      "created": "A new Event is created with identifier {{ param }}",
+      "updated": "A Event is updated with identifier {{ param }}",
+      "deleted": "A Event is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Event {{ id }}?"
+      },
+      "detail": {
+        "title": "Event"
+      },
+      "id": "ID",
+      "uuid": "Uuid",
+      "title": "Title",
+      "content": "Content",
+      "type": "Type",
+      "description": "Description",
+      "startTime": "Start Time",
+      "endTime": "End Time",
+      "tagLine": "Tag Line",
+      "baseInfo": "Base Info",
+      "otherImage": "Other Image",
+      "otherVideo": "Other Video",
+      "help": {
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)"
+      }
+    }
+  }
+}

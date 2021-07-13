@@ -361,7 +361,7 @@ public class GenerateEntityAdvanceUtils
         var annotations = Arrays.stream(field.getAnnotations())
           .map(AnnotationSpec::get).collect(Collectors.toList());
         var fieldBuilder = FieldSpec
-          .builder(field.getType(), field.getName(), Modifier.PRIVATE)
+          .builder(field.getGenericType(), field.getName(), Modifier.PRIVATE)
           .addAnnotations(annotations)
           .build();
 

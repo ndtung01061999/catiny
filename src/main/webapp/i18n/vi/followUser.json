@@ -1,0 +1,31 @@
+{
+  "catinyApp": {
+    "followUser": {
+      "home": {
+        "title": "Follow Users",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Thêm mới một Follow User",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Follow User",
+        "search": "Tìm Follow User",
+        "notFound": "No Follow Users found"
+      },
+      "created": "Một Follow User mới được tạo với định danh {{ param }}",
+      "updated": "Một Follow User cập nhật với định danh {{ param }}",
+      "deleted": "Một Follow User đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Follow User {{ id }}?"
+      },
+      "detail": {
+        "title": "Follow User"
+      },
+      "id": "ID",
+      "uuid": "Uuid",
+      "baseInfo": "Base Info",
+      "followUserDetails": "Follow User Details",
+      "masterUser": "Master User",
+      "help": {
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)"
+      }
+    }
+  }
+}

@@ -1,20 +1,15 @@
-import dayjs from 'dayjs';
+import { IBaseInfo } from 'app/shared/model/base-info.model';
+import { IMessageContent } from 'app/shared/model/message-content.model';
+import { IMasterUser } from 'app/shared/model/master-user.model';
 
 export interface IMessageGroup {
   id?: number;
   uuid?: string;
-  userId?: number;
-  groupId?: string;
   groupName?: string | null;
   addBy?: string | null;
-  lastContent?: string | null;
-  searchField?: string | null;
-  role?: string | null;
-  createdDate?: string | null;
-  modifiedDate?: string | null;
-  createdBy?: string | null;
-  modifiedBy?: string | null;
-  comment?: string | null;
+  baseInfo?: IBaseInfo | null;
+  messageContents?: IMessageContent[] | null;
+  masterUsers?: IMasterUser[] | null;
 }
 
 export const defaultValue: Readonly<IMessageGroup> = {};

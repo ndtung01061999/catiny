@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <!--
+        Added the constraints for entity Image.
+    -->
+    <changeSet id="20210710143928-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="file_info_id"
+                                 baseTableName="image"
+                                 constraintName="fk_image__file_info_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="file_info"/>
+
+        <addForeignKeyConstraint baseColumnNames="base_info_id"
+                                 baseTableName="image"
+                                 constraintName="fk_image__base_info_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="base_info"/>
+
+        <addForeignKeyConstraint baseColumnNames="image_original_id"
+                                 baseTableName="image"
+                                 constraintName="fk_image__image_original_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="image"/>
+
+        <addForeignKeyConstraint baseColumnNames="event_id"
+                                 baseTableName="image"
+                                 constraintName="fk_image__event_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="event"/>
+    </changeSet>
+</databaseChangeLog>

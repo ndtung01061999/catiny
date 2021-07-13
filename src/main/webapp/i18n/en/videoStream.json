@@ -1,0 +1,31 @@
+{
+  "catinyApp": {
+    "videoStream": {
+      "home": {
+        "title": "Video Streams",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Video Stream",
+        "createOrEditLabel": "Create or edit a Video Stream",
+        "search": "Search for Video Stream",
+        "notFound": "No Video Streams found"
+      },
+      "created": "A new Video Stream is created with identifier {{ param }}",
+      "updated": "A Video Stream is updated with identifier {{ param }}",
+      "deleted": "A Video Stream is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Video Stream {{ id }}?"
+      },
+      "detail": {
+        "title": "Video Stream"
+      },
+      "id": "ID",
+      "uuid": "Uuid",
+      "video": "Video",
+      "baseInfo": "Base Info",
+      "videoLiveStreamBuffer": "Video Live Stream Buffer",
+      "help": {
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)"
+      }
+    }
+  }
+}

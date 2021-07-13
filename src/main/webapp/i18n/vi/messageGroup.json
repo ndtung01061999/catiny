@@ -20,27 +20,15 @@
       },
       "id": "ID",
       "uuid": "Uuid",
-      "userId": "User Id",
-      "groupId": "Group Id",
       "groupName": "Group Name",
       "addBy": "Add By",
-      "lastContent": "Last Content",
-      "searchField": "Search Field",
-      "role": "Role",
-      "createdDate": "Created Date",
-      "modifiedDate": "Modified Date",
-      "createdBy": "Created By",
-      "modifiedBy": "Modified By",
-      "comment": "Comment",
+      "baseInfo": "Base Info",
+      "messageContent": "Message Content",
+      "masterUser": "Master User",
       "help": {
-        "uuid": "uuid",
-        "searchField": "searchField",
-        "role": "role",
-        "createdDate": "createdDate",
-        "modifiedDate": "modifiedDate",
-        "createdBy": "createdBy",
-        "modifiedBy": "modifiedBy",
-        "comment": "comment"
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
+        "groupName": "groupName",
+        "addBy": "addBy"
       }
     }
   }

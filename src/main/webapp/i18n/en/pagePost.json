@@ -1,0 +1,37 @@
+{
+  "catinyApp": {
+    "pagePost": {
+      "home": {
+        "title": "Page Posts",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Page Post",
+        "createOrEditLabel": "Create or edit a Page Post",
+        "search": "Search for Page Post",
+        "notFound": "No Page Posts found"
+      },
+      "created": "A new Page Post is created with identifier {{ param }}",
+      "updated": "A Page Post is updated with identifier {{ param }}",
+      "deleted": "A Page Post is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Page Post {{ id }}?"
+      },
+      "detail": {
+        "title": "Page Post"
+      },
+      "id": "ID",
+      "uuid": "Uuid",
+      "name": "Name",
+      "quickInfo": "Quick Info",
+      "profile": "Profile",
+      "baseInfo": "Base Info",
+      "myPostInPage": "My Post In Page",
+      "masterUser": "Master User",
+      "topicInterest": "Topic Interest",
+      "help": {
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
+        "name": "name           : tên của page này",
+        "quickInfo": "quickInfo      : @type Json -&gt;thông tin nổi bật giới thiệu sơ qua về page"
+      }
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "catinyApp": {
+    "fileInfo": {
+      "home": {
+        "title": "File Infos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new File Info",
+        "createOrEditLabel": "Create or edit a File Info",
+        "search": "Search for File Info",
+        "notFound": "No File Infos found"
+      },
+      "created": "A new File Info is created with identifier {{ param }}",
+      "updated": "A File Info is updated with identifier {{ param }}",
+      "deleted": "A File Info is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete File Info {{ id }}?"
+      },
+      "detail": {
+        "title": "File Info"
+      },
+      "id": "ID",
+      "uuid": "Uuid",
+      "nameFile": "Name File",
+      "typeFile": "Type File",
+      "path": "Path",
+      "dataSize": "Data Size",
+      "baseInfo": "Base Info",
+      "masterUser": "Master User",
+      "help": {
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
+        "nameFile": "nameFile       : tên của file nếu có",
+        "typeFile": "typeFile       : loại file",
+        "path": "path           : đường dẫn file nguyên gốc",
+        "dataSize": "dataSize       : kích thước file theo byte"
+      }
+    }
+  }
+}

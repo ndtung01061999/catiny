@@ -1,0 +1,32 @@
+{
+  "catinyApp": {
+    "todoList": {
+      "home": {
+        "title": "Todo Lists",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Thêm mới một Todo List",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Todo List",
+        "search": "Tìm Todo List",
+        "notFound": "No Todo Lists found"
+      },
+      "created": "Một Todo List mới được tạo với định danh {{ param }}",
+      "updated": "Một Todo List cập nhật với định danh {{ param }}",
+      "deleted": "Một Todo List đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Todo List {{ id }}?"
+      },
+      "detail": {
+        "title": "Todo List"
+      },
+      "id": "ID",
+      "uuid": "Uuid",
+      "title": "Title",
+      "content": "Content",
+      "baseInfo": "Base Info",
+      "masterUser": "Master User",
+      "help": {
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)"
+      }
+    }
+  }
+}

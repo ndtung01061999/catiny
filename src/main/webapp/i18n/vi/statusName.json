@@ -1,0 +1,11 @@
+{
+  "catinyApp": {
+    "StatusName": {
+      "null": "",
+      "ONLINE": "ONLINE",
+      "OFFLINE": "OFFLINE",
+      "BUSY": "BUSY",
+      "TEMPORARILY_ABSENT": "TEMPORARILY_ABSENT"
+    }
+  }
+}

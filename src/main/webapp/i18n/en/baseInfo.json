@@ -1,0 +1,77 @@
+{
+  "catinyApp": {
+    "baseInfo": {
+      "home": {
+        "title": "Base Infos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Base Info",
+        "createOrEditLabel": "Create or edit a Base Info",
+        "search": "Search for Base Info",
+        "notFound": "No Base Infos found"
+      },
+      "created": "A new Base Info is created with identifier {{ param }}",
+      "updated": "A Base Info is updated with identifier {{ param }}",
+      "deleted": "A Base Info is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Base Info {{ id }}?"
+      },
+      "detail": {
+        "title": "Base Info"
+      },
+      "id": "ID",
+      "processStatus": "Process Status",
+      "owner": "Owner",
+      "role": "Role",
+      "modifiedClass": "Modified Class",
+      "createdDate": "Created Date",
+      "modifiedDate": "Modified Date",
+      "createdBy": "Created By",
+      "modifiedBy": "Modified By",
+      "notes": "Notes",
+      "historyUpdate": "History Update",
+      "deleted": "Deleted",
+      "userProfile": "User Profile",
+      "accountStatus": "Account Status",
+      "deviceStatus": "Device Status",
+      "friend": "Friend",
+      "followUser": "Follow User",
+      "followGroup": "Follow Group",
+      "followPage": "Follow Page",
+      "fileInfo": "File Info",
+      "pagePost": "Page Post",
+      "pageProfile": "Page Profile",
+      "groupPost": "Group Post",
+      "post": "Post",
+      "postComment": "Post Comment",
+      "postLike": "Post Like",
+      "groupProfile": "Group Profile",
+      "newsFeed": "News Feed",
+      "messageGroup": "Message Group",
+      "messageContent": "Message Content",
+      "rankUser": "Rank User",
+      "rankGroup": "Rank Group",
+      "notification": "Notification",
+      "album": "Album",
+      "video": "Video",
+      "image": "Image",
+      "videoStream": "Video Stream",
+      "videoLiveStreamBuffer": "Video Live Stream Buffer",
+      "topicInterest": "Topic Interest",
+      "todoList": "Todo List",
+      "event": "Event",
+      "help": {
+        "processStatus": "processStatus *: @defaultValue( DONE ) -&gt; tình trạng xử lý sử dụng trong phê duyệt",
+        "owner": "owner *        : @type Json -&gt; chủ sở hữu bản ghi này --&gt; nhớ sử dụng Set thay cho List",
+        "role": "role *         : @type Json -&gt; những role được phép thực hiện &lt;xem,sửa,xóa&gt;",
+        "modifiedClass": "modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào",
+        "createdDate": "createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)",
+        "modifiedDate": "modifiedDate * : thời gian sửa bản ghi này",
+        "createdBy": "createdBy *    : người tạo ra bản gi này (lần đầu tiên)",
+        "modifiedBy": "modifiedBy *   : người sửa lại bản ghi này",
+        "notes": "notes *        : @type Json -&gt; chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json&#34;",
+        "historyUpdate": "historyUpdate *: @type Json -&gt; lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json",
+        "deleted": "deleted *      : @defaultValue( false ) -&gt; đánh dấu là đã xóa"
+      }
+    }
+  }
+}

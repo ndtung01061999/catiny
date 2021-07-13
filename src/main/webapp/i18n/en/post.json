@@ -1,0 +1,45 @@
+{
+  "catinyApp": {
+    "post": {
+      "home": {
+        "title": "Posts",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Post",
+        "createOrEditLabel": "Create or edit a Post",
+        "search": "Search for Post",
+        "notFound": "No Posts found"
+      },
+      "created": "A new Post is created with identifier {{ param }}",
+      "updated": "A Post is updated with identifier {{ param }}",
+      "deleted": "A Post is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Post {{ id }}?"
+      },
+      "detail": {
+        "title": "Post"
+      },
+      "id": "ID",
+      "uuid": "Uuid",
+      "postInType": "Post In Type",
+      "postType": "Post Type",
+      "content": "Content",
+      "searchField": "Search Field",
+      "baseInfo": "Base Info",
+      "postComment": "Post Comment",
+      "postLike": "Post Like",
+      "postShareChildren": "Post Share Children",
+      "groupPost": "Group Post",
+      "pagePost": "Page Post",
+      "postShareParent": "Post Share Parent",
+      "poster": "Poster",
+      "newsFeed": "News Feed",
+      "topicInterest": "Topic Interest",
+      "help": {
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
+        "postInType": "postInType     : bài đăng này đăng ở đâu : người dùng , nhóm hay trang",
+        "postType": "postType       : bài đăng này đơn giản , phức tạp hay dùng froala",
+        "content": "content        : @type Json -&gt; nội dùng bài đăng dữ liệu tùy theo postType"
+      }
+    }
+  }
+}

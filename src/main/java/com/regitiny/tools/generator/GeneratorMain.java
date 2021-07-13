@@ -17,16 +17,16 @@ public class GeneratorMain
 {
   public static void main(String[] args)
   {
-    var projectPath = "C:/Users/yuvytung/IdeaProjects/catiny";
-    generate(projectPath);
+    var thisClassPath = GeneratorMain.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+    var projectPath = thisClassPath.replace("/build/classes/java/main/","");
+    generate(projectPath,projectPath);
   }
 
-  @GetMapping("/test/hello")
-  public static void generate(String projectPath)
+  public static void generate(String thisProjectPath , String outputProjectPath)
   {
     try (
-      var fg = new FileInputStream(projectPath + "/.generate/generate-advance.json");
-      var fj = new FileInputStream(projectPath + "/.yo-rc.json"))
+      var fg = new FileInputStream(thisProjectPath + "/.generate/generate-advance.json");
+      var fj = new FileInputStream(thisProjectPath + "/.yo-rc.json"))
     {
       var allBytesGeneratedInfo = fg.readAllBytes();
       var allBytesJhipster = fj.readAllBytes();
@@ -61,7 +61,7 @@ public class GeneratorMain
       entityCanGenerate.forEach(s -> log.debug("entity has generate : {}", s));
       entityCanGenerate.forEach(entityName ->
       {
-        var result = GenerateEntityAdvanceUtils.Generate(entityName, "C:/Users/yuvytung/IdeaProjects/catiny2");
+        var result = GenerateEntityAdvanceUtils.Generate(entityName, outputProjectPath);
         var entities = jsonGenRoot.getJSONObject("entities");
         var json = entities.has(entityName)
           ? jsonGenRoot.getJSONObject("entities").getJSONObject(entityName)
@@ -70,7 +70,6 @@ public class GeneratorMain
         var generated = json.has("generated")
           ? json.getJSONObject("generated")
           : new JSONObject();
-        assert result != null;
         result._1().stream().map(JavaFile::toJavaFileObject)
           .forEach(javaFileObject -> generated.put(javaFileObject.getName(), true));
         result._2().stream().map(JavaFile::toJavaFileObject)
@@ -80,7 +79,7 @@ public class GeneratorMain
         entities.put(entityName, json);
         jsonGenRoot.put("entities", entities);
       });
-      var fgWriter = new FileOutputStream(projectPath + "/.generate/generate-advance.json");
+      var fgWriter = new FileOutputStream(thisProjectPath + "/.generate/generate-advance.json");
       fgWriter.write(jsonGenRoot.toString().getBytes());
       fgWriter.flush();
       fgWriter.close();
@@ -89,5 +88,6 @@ public class GeneratorMain
     {
       log.warn("err IOException", e);
     }
+    log.info("generate done. file output in : " + outputProjectPath);
   }
 }

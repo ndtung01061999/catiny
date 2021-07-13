@@ -1,0 +1,12 @@
+{
+  "catinyApp": {
+    "NotifyType": {
+      "null": "",
+      "SYSTEM": "SYSTEM",
+      "MANAGER": "MANAGER",
+      "ADMIN": "ADMIN",
+      "USER": "USER",
+      "ANONYMOUS": "ANONYMOUS"
+    }
+  }
+}

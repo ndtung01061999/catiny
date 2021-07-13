@@ -1,0 +1,10 @@
+{
+  "catinyApp": {
+    "PostType": {
+      "null": "",
+      "SIMPLE": "SIMPLE",
+      "ADVANCE": "ADVANCE",
+      "FROALA": "FROALA"
+    }
+  }
+}

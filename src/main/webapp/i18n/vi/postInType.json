@@ -1,0 +1,10 @@
+{
+  "catinyApp": {
+    "PostInType": {
+      "null": "",
+      "GROUP": "GROUP",
+      "USER": "USER",
+      "PAGE": "PAGE"
+    }
+  }
+}

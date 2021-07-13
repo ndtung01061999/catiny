@@ -72,18 +72,8 @@ class MessageGroupGatlingTest extends Simulation {
             .headers(headers_http_authenticated)
             .body(StringBody("""{
                 "uuid":null
-                , "userId":"0"
-                , "groupId":"SAMPLE_TEXT"
                 , "groupName":"SAMPLE_TEXT"
                 , "addBy":"SAMPLE_TEXT"
-                , "lastContent":null
-                , "searchField":null
-                , "role":"SAMPLE_TEXT"
-                , "createdDate":"2020-01-01T00:00:00.000Z"
-                , "modifiedDate":"2020-01-01T00:00:00.000Z"
-                , "createdBy":"SAMPLE_TEXT"
-                , "modifiedBy":"SAMPLE_TEXT"
-                , "comment":"SAMPLE_TEXT"
                 }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_messageGroup_url"))).exitHereIfFailed

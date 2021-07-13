@@ -4,13 +4,8 @@
     {
       "fieldName": "uuid",
       "fieldType": "UUID",
-      "javadoc": "uuid",
+      "javadoc": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
       "fieldValidateRules": ["required", "unique"]
-    },
-    {
-      "fieldName": "groupId",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "content",
@@ -18,52 +13,40 @@
       "fieldTypeBlobContent": "text"
     },
     {
-      "fieldName": "sender",
-      "fieldType": "String"
-    },
-    {
       "fieldName": "status",
-      "fieldType": "String"
+      "fieldType": "byte[]",
+      "javadoc": "status : trạng thái của tin nhắn này, đã gửi chưa , ai đã nhận được , đã xem chưa đã thu hồi hay đã xóa...\\n@type           : Json",
+      "fieldTypeBlobContent": "text"
     },
     {
       "fieldName": "searchField",
       "fieldType": "byte[]",
-      "javadoc": "searchField",
+      "javadoc": "searchField : lưu content tin nhắn lọc dấu ... để sau này search",
       "fieldTypeBlobContent": "text"
-    },
-    {
-      "fieldName": "role",
-      "fieldType": "String",
-      "javadoc": "role"
-    },
-    {
-      "fieldName": "createdDate",
-      "fieldType": "Instant",
-      "javadoc": "createdDate"
-    },
-    {
-      "fieldName": "modifiedDate",
-      "fieldType": "Instant",
-      "javadoc": "modifiedDate"
-    },
-    {
-      "fieldName": "createdBy",
-      "fieldType": "String",
-      "javadoc": "createdBy"
-    },
-    {
-      "fieldName": "modifiedBy",
-      "fieldType": "String",
-      "javadoc": "modifiedBy"
-    },
-    {
-      "fieldName": "comment",
-      "fieldType": "String",
-      "javadoc": "comment"
     }
   ],
-  "relationships": [],
-  "javadoc": "The PostDetails entity.\\n@author A true hipster",
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "baseInfo",
+      "otherEntityRelationshipName": "messageContent",
+      "relationshipName": "baseInfo",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "masterUser",
+      "otherEntityRelationshipName": "messageContent",
+      "relationshipName": "sender"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "messageGroup",
+      "otherEntityRelationshipName": "messageContent",
+      "relationshipName": "messageGroup"
+    }
+  ],
+  "javadoc": "@what?            -> The MessageContent entity.\\n@why?             ->\\n@use-to           -> Chứa Những tin nhắn trong các nhóm cụ thể\\n@commonly-used-in ->\\n\\n@describe         ->",
   "entityTableName": "message_content",
   "dto": "mapstruct",
   "pagination": "infinite-scroll",

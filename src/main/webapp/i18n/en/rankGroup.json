@@ -1,0 +1,30 @@
+{
+  "catinyApp": {
+    "rankGroup": {
+      "home": {
+        "title": "Rank Groups",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Rank Group",
+        "createOrEditLabel": "Create or edit a Rank Group",
+        "search": "Search for Rank Group",
+        "notFound": "No Rank Groups found"
+      },
+      "created": "A new Rank Group is created with identifier {{ param }}",
+      "updated": "A Rank Group is updated with identifier {{ param }}",
+      "deleted": "A Rank Group is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Rank Group {{ id }}?"
+      },
+      "detail": {
+        "title": "Rank Group"
+      },
+      "id": "ID",
+      "uuid": "Uuid",
+      "baseInfo": "Base Info",
+      "rankUser": "Rank User",
+      "help": {
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)"
+      }
+    }
+  }
+}

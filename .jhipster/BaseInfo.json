@@ -1,0 +1,282 @@
+{
+  "name": "BaseInfo",
+  "fields": [
+    {
+      "fieldName": "processStatus",
+      "fieldType": "ProcessStatus",
+      "javadoc": "processStatus *: @defaultValue( DONE ) -> tình trạng xử lý sử dụng trong phê duyệt",
+      "fieldValues": "NOT_PROCESSED,PROCESSING,PROCESSED,NEED_PROCESS,NEED_PROCESS_NOW,NEED_HANDLE,NEED_HANDLE_NOW,ERROR,DONE"
+    },
+    {
+      "fieldName": "owner",
+      "fieldType": "byte[]",
+      "javadoc": "owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "role",
+      "fieldType": "byte[]",
+      "javadoc": "role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa>",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "modifiedClass",
+      "fieldType": "String",
+      "javadoc": "modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào"
+    },
+    {
+      "fieldName": "createdDate",
+      "fieldType": "Instant",
+      "javadoc": "createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)"
+    },
+    {
+      "fieldName": "modifiedDate",
+      "fieldType": "Instant",
+      "javadoc": "modifiedDate * : thời gian sửa bản ghi này"
+    },
+    {
+      "fieldName": "createdBy",
+      "fieldType": "String",
+      "javadoc": "createdBy *    : người tạo ra bản gi này (lần đầu tiên)"
+    },
+    {
+      "fieldName": "modifiedBy",
+      "fieldType": "String",
+      "javadoc": "modifiedBy *   : người sửa lại bản ghi này"
+    },
+    {
+      "fieldName": "notes",
+      "fieldType": "byte[]",
+      "javadoc": "notes *        : @type Json -> chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json\"",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "historyUpdate",
+      "fieldType": "byte[]",
+      "javadoc": "historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "deleted",
+      "fieldType": "Boolean",
+      "javadoc": "deleted *      : @defaultValue( false ) -> đánh dấu là đã xóa"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "userProfile",
+      "otherEntityRelationshipName": "baseInfo",
+      "relationshipName": "userProfile",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "accountStatus",
+      "otherEntityRelationshipName": "baseInfo",
+      "relationshipName": "accountStatus",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "deviceStatus",
+      "otherEntityRelationshipName": "baseInfo",
+      "relationshipName": "deviceStatus",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "friend",
+      "otherEntityRelationshipName": "baseInfo",
+      "relationshipName": "friend",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "followUser",
+      "otherEntityRelationshipName": "baseInfo",
+      "relationshipName": "followUser",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "followGroup",
+      "otherEntityRelationshipName": "baseInfo",
+      "relationshipName": "followGroup",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "followPage",
+      "otherEntityRelationshipName": "baseInfo",
+      "relationshipName": "followPage",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "fileInfo",
+      "otherEntityRelationshipName": "baseInfo",
+      "relationshipName": "fileInfo",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "pagePost",
+      "otherEntityRelationshipName": "baseInfo",
+      "relationshipName": "pagePost",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "pageProfile",
+      "otherEntityRelationshipName": "baseInfo",
+      "relationshipName": "pageProfile",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "groupPost",
+      "otherEntityRelationshipName": "baseInfo",
+      "relationshipName": "groupPost",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "post",
+      "otherEntityRelationshipName": "baseInfo",
+      "relationshipName": "post",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "postComment",
+      "otherEntityRelationshipName": "baseInfo",
+      "relationshipName": "postComment",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "postLike",
+      "otherEntityRelationshipName": "baseInfo",
+      "relationshipName": "postLike",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "groupProfile",
+      "otherEntityRelationshipName": "baseInfo",
+      "relationshipName": "groupProfile",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "newsFeed",
+      "otherEntityRelationshipName": "baseInfo",
+      "relationshipName": "newsFeed",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "messageGroup",
+      "otherEntityRelationshipName": "baseInfo",
+      "relationshipName": "messageGroup",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "messageContent",
+      "otherEntityRelationshipName": "baseInfo",
+      "relationshipName": "messageContent",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "rankUser",
+      "otherEntityRelationshipName": "baseInfo",
+      "relationshipName": "rankUser",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "rankGroup",
+      "otherEntityRelationshipName": "baseInfo",
+      "relationshipName": "rankGroup",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "notification",
+      "otherEntityRelationshipName": "baseInfo",
+      "relationshipName": "notification",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "album",
+      "otherEntityRelationshipName": "baseInfo",
+      "relationshipName": "album",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "video",
+      "otherEntityRelationshipName": "baseInfo",
+      "relationshipName": "video",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "image",
+      "otherEntityRelationshipName": "baseInfo",
+      "relationshipName": "image",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "videoStream",
+      "otherEntityRelationshipName": "baseInfo",
+      "relationshipName": "videoStream",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "videoLiveStreamBuffer",
+      "otherEntityRelationshipName": "baseInfo",
+      "relationshipName": "videoLiveStreamBuffer",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "topicInterest",
+      "otherEntityRelationshipName": "baseInfo",
+      "relationshipName": "topicInterest",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "todoList",
+      "otherEntityRelationshipName": "baseInfo",
+      "relationshipName": "todoList",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "event",
+      "otherEntityRelationshipName": "baseInfo",
+      "relationshipName": "event",
+      "ownerSide": false
+    }
+  ],
+  "javadoc": "BaseInfo",
+  "entityTableName": "base_info",
+  "dto": "mapstruct",
+  "pagination": "infinite-scroll",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "searchEngine": "elasticsearch",
+  "changelogDate": "20210710143934"
+}
