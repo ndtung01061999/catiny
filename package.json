@@ -84,7 +84,8 @@
     "cypress:audits": "cypress open --config-file cypress-audits.json",
     "e2e:cypress:audits:headless": "npm run e2e:cypress -- --headless --config-file cypress-audits.json",
     "e2e:cypress:audits": "cypress run --browser chrome --record ${CYPRESS_ENABLE_RECORD:-false} --config-file cypress-audits.json",
-    "plantuml:catiny": "jdlbridge --uml --jdlfiles .generate/jdl/catiny.jdl"
+    "plantuml:catiny": "jdlbridge --uml --jdlfiles .generate/jdl/catiny.jdl",
+    "jdl:catiny": "jhipster jdl .generate/jdl/catiny.jdl"
   },
   "config": {
     "backend_port": "8080",

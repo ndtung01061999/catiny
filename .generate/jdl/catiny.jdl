@@ -439,8 +439,8 @@ entity Image
     height Integer
     /** quality        : chất lượng sau khi xử lý */
     quality Float min(0) max(1)
-    /** size           : kích thước của ảnh */
-    size Integer
+    /** pixelSize      : kích thước của ảnh */
+    pixelSize Integer
     /** priorityIndex  : chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)*/
     priorityIndex Long
     /** dataSize       : kích thước file theo byte */
@@ -510,6 +510,8 @@ entity MessageContent
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
+    /** senderName     : tên người gửi */
+    senderName String
 
     /** attachInfo     : đính kèm tệp ảnh video ... */
     attach TextBlob
@@ -651,8 +653,8 @@ entity Video
     qualityAudio Float min(0) max(1)
     /** quality        : chất lượng chung sau khi xử lý */
     quality Float min(0) max(1)
-    /** size           : kích thước của ảnh */
-    size Integer
+    /** pixelSize      : kích thước của ảnh */
+    pixelSize Integer
     /** priorityIndex  : chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)*/
     priorityIndex Long
     /** dataSize       : kích thước file theo byte */
@@ -770,40 +772,40 @@ relationship ManyToMany
 relationship OneToOne
 {
     MasterUser to User with jpaDerivedIdentifier
-    MasterUser{myProfile} to UserProfile
-    MasterUser{myAccountStatus} to AccountStatus
+//    MasterUser{myProfile} to UserProfile
+//    MasterUser{myAccountStatus} to AccountStatus
     MasterUser{myRank} to RankUser
 }
 relationship OneToMany
 {
-    MasterUser{myPage} to PagePost
-    MasterUser{myFile} to FileInfo
-    MasterUser{myNotification} to Notification
-    MasterUser{myFriend} to Friend{masterUser}
-    MasterUser{myFollowUser} to FollowUser{masterUser}
-    MasterUser{myFollowGroup} to FollowGroup{masterUser}
-    MasterUser{myFollowPage} to FollowPage{masterUser}
-    MasterUser{myNewsFeed} to NewsFeed
-    MasterUser{myTodoList} to TodoList
-    MasterUser{myPost} to Post{poster}
+//    MasterUser{myPage} to PagePost
+//    MasterUser{myFile} to FileInfo
+//    MasterUser{myNotification} to Notification
+//    MasterUser{myFriend} to Friend{masterUser}
+//    MasterUser{myFollowUser} to FollowUser{masterUser}
+//    MasterUser{myFollowGroup} to FollowGroup{masterUser}
+//    MasterUser{myFollowPage} to FollowPage{masterUser}
+//    MasterUser{myNewsFeed} to NewsFeed
+//    MasterUser{myTodoList} to TodoList
+//    MasterUser{myPost} to Post{poster}
 //  with  BaseInfo
     MasterUser{myBaseInfoCreated} to BaseInfo{createdBy}
     MasterUser{myBaseInfoModified} to BaseInfo{modifiedBy}
-    MasterUser{myBaseInfoOwner} to BaseInfo{owner}
+    MasterUser{OwnerOf} to BaseInfo{owner}
     MasterUser to Permission
 }
 relationship ManyToOne
 {
     Friend{friendDetails} to MasterUser
     FollowUser{followUserDetails} to MasterUser
-    MessageContent{sender} to MasterUser
-    PostLike{userLike} to MasterUser{myLike}
-    PostComment{userComment} to MasterUser{myComment}
+//    MessageContent{sender} to MasterUser
+//    PostLike{userLike} to MasterUser{myLike}
+//    PostComment{userComment} to MasterUser{myComment}
 }
 relationship ManyToMany
 {
-    MasterUser{myGroupPost} to GroupPost{userInGroup}
-    MasterUser to MessageGroup
+//    MasterUser{myGroupPost} to GroupPost{userInGroup}
+//    MasterUser to MessageGroup
     MasterUser to TopicInterest
 }
 entity Permission

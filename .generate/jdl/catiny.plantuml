@@ -33,7 +33,8 @@
 	enum FriendType {
 		FRIEND, 
 		BEST_FRIEND, 
-		FAMILY 
+		FAMILY, 
+		BLOCK 
 	}
 	enum ProcessStatus {
 		NOT_PROCESSED, 
@@ -94,6 +95,7 @@
 	class Album <<Option {Paginate,Search,Filter,Dto,Service}>> {
 		UUID uuid
 		String name
+		String note
 		TextBlob avatar
 	}
 	class DeviceStatus <<Option {Paginate,Search,Filter,Dto,Service}>> {
@@ -179,6 +181,7 @@
 	}
 	class MessageContent <<Option {Paginate,Search,Filter,Dto,Service}>> {
 		UUID uuid
+		String senderName
 		TextBlob attach
 		TextBlob content
 		TextBlob status
@@ -271,30 +274,13 @@
 	TopicInterest  "0..* " o--o "0..* "  PagePost
 	TopicInterest  "0..* " o--o "0..* "  GroupPost
 	MasterUser  "0..1 " -- "0..1 "  User
-	MasterUser  "myProfile 0..1 " -- "0..1 "  UserProfile
-	MasterUser  "myAccountStatus 0..1 " -- "0..1 "  AccountStatus
 	MasterUser  "myRank 0..1 " -- "0..1 "  RankUser
-	MasterUser  "myPage 0..1 " --o "0..* "  PagePost
-	MasterUser  "myFile 0..1 " --o "0..* "  FileInfo
-	MasterUser  "myNotification 0..1 " --o "0..* "  Notification
-	MasterUser  "myFriend 0..1 " --o "masterUser 0..* "  Friend
-	MasterUser  "myFollowUser 0..1 " --o "masterUser 0..* "  FollowUser
-	MasterUser  "myFollowGroup 0..1 " --o "masterUser 0..* "  FollowGroup
-	MasterUser  "myFollowPage 0..1 " --o "masterUser 0..* "  FollowPage
-	MasterUser  "myNewsFeed 0..1 " --o "0..* "  NewsFeed
-	MasterUser  "myTodoList 0..1 " --o "0..* "  TodoList
-	MasterUser  "myPost 0..1 " --o "poster 0..* "  Post
 	MasterUser  "myBaseInfoCreated 0..1 " --o "createdBy 0..* "  BaseInfo
 	MasterUser  "myBaseInfoModified 0..1 " --o "modifiedBy 0..* "  BaseInfo
-	MasterUser  "myBaseInfoOwner 0..1 " --o "owner 0..* "  BaseInfo
+	MasterUser  "OwnerOf 0..1 " --o "owner 0..* "  BaseInfo
 	MasterUser  "0..1 " --o "0..* "  Permission
 	Friend  "friendDetails 0..* " o-- "0..1 "  MasterUser
 	FollowUser  "followUserDetails 0..* " o-- "0..1 "  MasterUser
-	MessageContent  "sender 0..* " o-- "0..1 "  MasterUser
-	PostLike  "userLike 0..* " o-- "myLike 0..1 "  MasterUser
-	PostComment  "userComment 0..* " o-- "myComment 0..1 "  MasterUser
-	MasterUser  "myGroupPost 0..* " o--o "userInGroup 0..* "  GroupPost
-	MasterUser  "0..* " o--o "0..* "  MessageGroup
 	MasterUser  "0..* " o--o "0..* "  TopicInterest
 	class Permission <<Option {Paginate,Search,Filter,Dto,Service}>> {
 		Boolean read
