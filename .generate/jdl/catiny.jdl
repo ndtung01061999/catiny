@@ -9,16 +9,16 @@ filter *
 
 
 enum StatusName
-{
-	ONLINE
-	OFFLINE
-	BUSY
-	TEMPORARILY_ABSENT
+{  
+  ONLINE
+  OFFLINE
+  BUSY
+  TEMPORARILY_ABSENT
 }
 
 enum DeviceType
 {
-	MOBILE
+  MOBILE
   TABLE
   DESKTOP
   LAPTOP
@@ -53,6 +53,7 @@ enum FriendType
   FRIEND
   BEST_FRIEND
   FAMILY
+  BLOCK
 }
 enum ProcessStatus
 {
@@ -120,7 +121,7 @@ entity HanhChinhVN
     /** nameWithType Example("Quận Ninh Kiều") */
     nameWithType String  required
     /** code Example("916") */
-    code String required
+    code String required unique
     /** parentCode Example("92") , equal to 0 is the city*/
     parentCode String required
     /** path Example("Ninh Kiều, Cần Thơ")*/
@@ -249,8 +250,11 @@ entity Album
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
+    /** name           : tên của album */
     name String required
-    /** avatar : @type Json -> ảnh đại diện của Album */
+    /** note           : trú thích của album (ví dụ album đại học) */
+    note String 
+    /** avatar         : @type Json -> ảnh đại diện của Album */
     avatar TextBlob
 }
 /**
@@ -747,8 +751,9 @@ relationship OneToMany
     MessageGroup to MessageContent
     Image{imageProcessed} to Image{imageOriginal}
     Video{videoProcessed} to Video{videoOriginal}
-    Post to PostComment
-    Post to PostLike
+    Post{comment} to PostComment
+    Post{like} to PostLike
+    PostComment{like} to PostLike
     Post{postShareChildren} to Post{postShareParent}
     PostComment{commentReply} to PostComment{commentParent}
     VideoStream to VideoLiveStreamBuffer
@@ -823,8 +828,6 @@ entity BaseInfo
     processStatus ProcessStatus
     /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
     modifiedClass String
-    /** entityPKName * : thực hiện sửa đổi bản ghi này ở service class nào */
-    entityPKName String
     /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
     createdDate  Instant
     /** modifiedDate * : thời gian sửa bản ghi này */
@@ -835,6 +838,21 @@ entity BaseInfo
     historyUpdate TextBlob
     /** deleted *      : @defaultValue( false ) -> đánh dấu là đã xóa */
     deleted Boolean
+    /** priorityIndex *: chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao) */
+    priorityIndex Long
+    /** countUse *     : đếm số lần truy cập vào bản ghi này để xem sửa xóa **/
+    countUse Long
+}
+entity ClassInfo
+{
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
+    uuid UUID required unique
+    /** package *      : tên package */
+    package String
+    /** name *         : tên đầy đủ của class . package+ClassName */
+    name String required unique
+    /** simpleName *   : tên của class */
+    simpleName String
 }
 relationship OneToOne
 {
@@ -876,4 +894,5 @@ relationship OneToOne
 relationship ManyToOne
 {
     Permission to BaseInfo
+    BaseInfo to ClassInfo
 }
