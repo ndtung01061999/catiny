@@ -849,12 +849,12 @@ entity ClassInfo
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
-    /** package *      : tên package */
-    package String
-    /** name *         : tên đầy đủ của class . package+ClassName */
-    name String required unique
-    /** simpleName *   : tên của class */
-    simpleName String
+    /** packageName *  : tên package */
+    packageName String
+    /** fullName *     : tên đầy đủ của class . package+ClassName */
+    fullName String required unique
+    /** classname *    : tên của class */
+    className String
 }
 relationship OneToOne
 {
