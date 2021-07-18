@@ -106,6 +106,11 @@ describe('MasterUser e2e test', () => {
 
     cy.get(`[data-cy="nickname"]`).type('Open-source global Bedfordshire').should('have.value', 'Open-source global Bedfordshire');
 
+    cy.get(`[data-cy="avatar"]`)
+      .type('../fake-data/blob/hipster.txt')
+      .invoke('val')
+      .should('match', new RegExp('../fake-data/blob/hipster.txt'));
+
     cy.get(`[data-cy="quickInfo"]`)
       .type('../fake-data/blob/hipster.txt')
       .invoke('val')
@@ -113,19 +118,9 @@ describe('MasterUser e2e test', () => {
 
     cy.setFieldSelectToLastOfEntity('user');
 
-    cy.setFieldSelectToLastOfEntity('myProfile');
-
-    cy.setFieldSelectToLastOfEntity('myAccountStatus');
-
     cy.setFieldSelectToLastOfEntity('myRank');
 
-    cy.setFieldSelectToLastOfEntity('avatar');
-
     cy.setFieldSelectToLastOfEntity('baseInfo');
-
-    cy.setFieldSelectToLastOfEntity('myGroupPost');
-
-    cy.setFieldSelectToLastOfEntity('messageGroup');
 
     cy.setFieldSelectToLastOfEntity('topicInterest');
 

@@ -33,8 +33,6 @@ public class FollowGroupDTO implements Serializable {
 
   private GroupPostDTO followGroupDetails;
 
-  private MasterUserDTO masterUser;
-
   public Long getId() {
     return id;
   }
@@ -67,14 +65,6 @@ public class FollowGroupDTO implements Serializable {
     this.followGroupDetails = followGroupDetails;
   }
 
-  public MasterUserDTO getMasterUser() {
-    return masterUser;
-  }
-
-  public void setMasterUser(MasterUserDTO masterUser) {
-    this.masterUser = masterUser;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -104,7 +94,6 @@ public class FollowGroupDTO implements Serializable {
             ", uuid='" + getUuid() + "'" +
             ", baseInfo=" + getBaseInfo() +
             ", followGroupDetails=" + getFollowGroupDetails() +
-            ", masterUser=" + getMasterUser() +
             "}";
     }
 }

@@ -1,0 +1,11 @@
+id;jhi_read;jhi_write;share;jhi_delete;jhi_add;level
+1;false;true;false;true;true;60815
+2;false;true;false;false;true;43676
+3;true;true;false;true;false;38880
+4;false;false;false;true;false;49330
+5;true;true;false;true;true;90620
+6;true;false;true;false;true;73555
+7;false;true;false;false;true;75158
+8;true;false;false;false;true;88531
+9;false;true;false;false;true;83810
+10;true;false;true;true;true;62002

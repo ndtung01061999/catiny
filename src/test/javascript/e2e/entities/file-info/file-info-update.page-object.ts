@@ -13,7 +13,6 @@ export default class FileInfoUpdatePage {
   pathInput: ElementFinder = element(by.css('input#file-info-path'));
   dataSizeInput: ElementFinder = element(by.css('input#file-info-dataSize'));
   baseInfoSelect: ElementFinder = element(by.css('select#file-info-baseInfo'));
-  masterUserSelect: ElementFinder = element(by.css('select#file-info-masterUser'));
 
   getPageTitle() {
     return this.pageTitle;
@@ -75,22 +74,6 @@ export default class FileInfoUpdatePage {
     return this.baseInfoSelect.element(by.css('option:checked')).getText();
   }
 
-  async masterUserSelectLastOption() {
-    await this.masterUserSelect.all(by.tagName('option')).last().click();
-  }
-
-  async masterUserSelectOption(option) {
-    await this.masterUserSelect.sendKeys(option);
-  }
-
-  getMasterUserSelect() {
-    return this.masterUserSelect;
-  }
-
-  async getMasterUserSelectedOption() {
-    return this.masterUserSelect.element(by.css('option:checked')).getText();
-  }
-
   async save() {
     await this.saveButton.click();
   }
@@ -115,7 +98,6 @@ export default class FileInfoUpdatePage {
     await waitUntilDisplayed(this.saveButton);
     await this.setDataSizeInput('5');
     await this.baseInfoSelectLastOption();
-    await this.masterUserSelectLastOption();
     await this.save();
     await waitUntilHidden(this.saveButton);
   }

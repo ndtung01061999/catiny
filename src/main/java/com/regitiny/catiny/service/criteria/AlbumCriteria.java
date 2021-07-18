@@ -33,6 +33,8 @@ public class AlbumCriteria implements Serializable, Criteria {
 
   private StringFilter name;
 
+  private StringFilter note;
+
   private LongFilter baseInfoId;
 
   private LongFilter imageId;
@@ -43,6 +45,7 @@ public class AlbumCriteria implements Serializable, Criteria {
     this.id = other.id == null ? null : other.id.copy();
     this.uuid = other.uuid == null ? null : other.uuid.copy();
     this.name = other.name == null ? null : other.name.copy();
+    this.note = other.note == null ? null : other.note.copy();
     this.baseInfoId = other.baseInfoId == null ? null : other.baseInfoId.copy();
     this.imageId = other.imageId == null ? null : other.imageId.copy();
   }
@@ -97,6 +100,21 @@ public class AlbumCriteria implements Serializable, Criteria {
     this.name = name;
   }
 
+  public StringFilter getNote() {
+    return note;
+  }
+
+  public StringFilter note() {
+    if (note == null) {
+      note = new StringFilter();
+    }
+    return note;
+  }
+
+  public void setNote(StringFilter note) {
+    this.note = note;
+  }
+
   public LongFilter getBaseInfoId() {
     return baseInfoId;
   }
@@ -140,6 +158,7 @@ public class AlbumCriteria implements Serializable, Criteria {
       Objects.equals(id, that.id) &&
       Objects.equals(uuid, that.uuid) &&
       Objects.equals(name, that.name) &&
+      Objects.equals(note, that.note) &&
       Objects.equals(baseInfoId, that.baseInfoId) &&
       Objects.equals(imageId, that.imageId)
     );
@@ -147,7 +166,7 @@ public class AlbumCriteria implements Serializable, Criteria {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, uuid, name, baseInfoId, imageId);
+    return Objects.hash(id, uuid, name, note, baseInfoId, imageId);
   }
 
   // prettier-ignore
@@ -157,6 +176,7 @@ public class AlbumCriteria implements Serializable, Criteria {
             (id != null ? "id=" + id + ", " : "") +
             (uuid != null ? "uuid=" + uuid + ", " : "") +
             (name != null ? "name=" + name + ", " : "") +
+            (note != null ? "note=" + note + ", " : "") +
             (baseInfoId != null ? "baseInfoId=" + baseInfoId + ", " : "") +
             (imageId != null ? "imageId=" + imageId + ", " : "") +
             "}";

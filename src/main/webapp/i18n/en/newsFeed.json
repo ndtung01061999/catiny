@@ -20,12 +20,12 @@
       },
       "id": "ID",
       "uuid": "Uuid",
-      "score": "Score",
+      "priorityIndex": "Priority Index",
       "baseInfo": "Base Info",
       "post": "Post",
-      "masterUser": "Master User",
       "help": {
-        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)"
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
+        "priorityIndex": "priorityIndex  : chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)"
       }
     }
   }

@@ -72,6 +72,8 @@ class MessageContentGatlingTest extends Simulation {
             .headers(headers_http_authenticated)
             .body(StringBody("""{
                 "uuid":null
+                , "senderName":"SAMPLE_TEXT"
+                , "attach":null
                 , "content":null
                 , "status":null
                 , "searchField":null

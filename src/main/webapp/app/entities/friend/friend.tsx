@@ -203,9 +203,6 @@ export const Friend = (props: RouteComponentProps<{ url: string }>) => {
                   <th>
                     <Translate contentKey="catinyApp.friend.friendDetails">Friend Details</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
-                  <th>
-                    <Translate contentKey="catinyApp.friend.masterUser">Master User</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
                   <th />
                 </tr>
               </thead>
@@ -225,7 +222,6 @@ export const Friend = (props: RouteComponentProps<{ url: string }>) => {
                     <td>
                       {friend.friendDetails ? <Link to={`master-user/${friend.friendDetails.id}`}>{friend.friendDetails.id}</Link> : ''}
                     </td>
-                    <td>{friend.masterUser ? <Link to={`master-user/${friend.masterUser.id}`}>{friend.masterUser.id}</Link> : ''}</td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${friend.id}`} color="info" size="sm" data-cy="entityDetailsButton">

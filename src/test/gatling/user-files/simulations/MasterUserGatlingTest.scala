@@ -74,6 +74,7 @@ class MasterUserGatlingTest extends Simulation {
                 "uuid":null
                 , "fullName":"SAMPLE_TEXT"
                 , "nickname":"SAMPLE_TEXT"
+                , "avatar":null
                 , "quickInfo":null
                 }""")).asJson
             .check(status.is(201))

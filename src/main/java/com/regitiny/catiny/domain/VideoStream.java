@@ -38,13 +38,14 @@ public class VideoStream implements Serializable {
   @Column(name = "uuid", length = 36, nullable = false, unique = true)
   private UUID uuid;
 
-  @JsonIgnoreProperties(value = { "fileInfo", "baseInfo", "videoProcesseds", "videoStream", "videoOriginal", "event" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "fileInfo", "baseInfo", "videoProcesseds", "videoStream", "videoOriginal" }, allowSetters = true)
   @OneToOne
   @JoinColumn(unique = true)
   private Video video;
 
   @JsonIgnoreProperties(
     value = {
+      "classInfo",
       "userProfile",
       "accountStatus",
       "deviceStatus",
@@ -74,6 +75,10 @@ public class VideoStream implements Serializable {
       "topicInterest",
       "todoList",
       "event",
+      "createdBy",
+      "modifiedBy",
+      "owner",
+      "permissions",
     },
     allowSetters = true
   )

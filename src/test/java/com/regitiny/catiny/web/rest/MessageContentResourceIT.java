@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.regitiny.catiny.GeneratedByJHipster;
 import com.regitiny.catiny.IntegrationTest;
 import com.regitiny.catiny.domain.BaseInfo;
-import com.regitiny.catiny.domain.MasterUser;
 import com.regitiny.catiny.domain.MessageContent;
 import com.regitiny.catiny.domain.MessageGroup;
 import com.regitiny.catiny.repository.MessageContentRepository;
@@ -51,6 +50,12 @@ class MessageContentResourceIT {
 
   private static final UUID DEFAULT_UUID = UUID.randomUUID();
   private static final UUID UPDATED_UUID = UUID.randomUUID();
+
+  private static final String DEFAULT_SENDER_NAME = "AAAAAAAAAA";
+  private static final String UPDATED_SENDER_NAME = "BBBBBBBBBB";
+
+  private static final String DEFAULT_ATTACH = "AAAAAAAAAA";
+  private static final String UPDATED_ATTACH = "BBBBBBBBBB";
 
   private static final String DEFAULT_CONTENT = "AAAAAAAAAA";
   private static final String UPDATED_CONTENT = "BBBBBBBBBB";
@@ -99,6 +104,8 @@ class MessageContentResourceIT {
   public static MessageContent createEntity(EntityManager em) {
     MessageContent messageContent = new MessageContent()
       .uuid(DEFAULT_UUID)
+      .senderName(DEFAULT_SENDER_NAME)
+      .attach(DEFAULT_ATTACH)
       .content(DEFAULT_CONTENT)
       .status(DEFAULT_STATUS)
       .searchField(DEFAULT_SEARCH_FIELD);
@@ -114,6 +121,8 @@ class MessageContentResourceIT {
   public static MessageContent createUpdatedEntity(EntityManager em) {
     MessageContent messageContent = new MessageContent()
       .uuid(UPDATED_UUID)
+      .senderName(UPDATED_SENDER_NAME)
+      .attach(UPDATED_ATTACH)
       .content(UPDATED_CONTENT)
       .status(UPDATED_STATUS)
       .searchField(UPDATED_SEARCH_FIELD);
@@ -140,6 +149,8 @@ class MessageContentResourceIT {
     assertThat(messageContentList).hasSize(databaseSizeBeforeCreate + 1);
     MessageContent testMessageContent = messageContentList.get(messageContentList.size() - 1);
     assertThat(testMessageContent.getUuid()).isEqualTo(DEFAULT_UUID);
+    assertThat(testMessageContent.getSenderName()).isEqualTo(DEFAULT_SENDER_NAME);
+    assertThat(testMessageContent.getAttach()).isEqualTo(DEFAULT_ATTACH);
     assertThat(testMessageContent.getContent()).isEqualTo(DEFAULT_CONTENT);
     assertThat(testMessageContent.getStatus()).isEqualTo(DEFAULT_STATUS);
     assertThat(testMessageContent.getSearchField()).isEqualTo(DEFAULT_SEARCH_FIELD);
@@ -201,6 +212,8 @@ class MessageContentResourceIT {
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
       .andExpect(jsonPath("$.[*].id").value(hasItem(messageContent.getId().intValue())))
       .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
+      .andExpect(jsonPath("$.[*].senderName").value(hasItem(DEFAULT_SENDER_NAME)))
+      .andExpect(jsonPath("$.[*].attach").value(hasItem(DEFAULT_ATTACH.toString())))
       .andExpect(jsonPath("$.[*].content").value(hasItem(DEFAULT_CONTENT.toString())))
       .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
       .andExpect(jsonPath("$.[*].searchField").value(hasItem(DEFAULT_SEARCH_FIELD.toString())));
@@ -219,6 +232,8 @@ class MessageContentResourceIT {
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
       .andExpect(jsonPath("$.id").value(messageContent.getId().intValue()))
       .andExpect(jsonPath("$.uuid").value(DEFAULT_UUID.toString()))
+      .andExpect(jsonPath("$.senderName").value(DEFAULT_SENDER_NAME))
+      .andExpect(jsonPath("$.attach").value(DEFAULT_ATTACH.toString()))
       .andExpect(jsonPath("$.content").value(DEFAULT_CONTENT.toString()))
       .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
       .andExpect(jsonPath("$.searchField").value(DEFAULT_SEARCH_FIELD.toString()));
@@ -296,6 +311,84 @@ class MessageContentResourceIT {
 
   @Test
   @Transactional
+  void getAllMessageContentsBySenderNameIsEqualToSomething() throws Exception {
+    // Initialize the database
+    messageContentRepository.saveAndFlush(messageContent);
+
+    // Get all the messageContentList where senderName equals to DEFAULT_SENDER_NAME
+    defaultMessageContentShouldBeFound("senderName.equals=" + DEFAULT_SENDER_NAME);
+
+    // Get all the messageContentList where senderName equals to UPDATED_SENDER_NAME
+    defaultMessageContentShouldNotBeFound("senderName.equals=" + UPDATED_SENDER_NAME);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageContentsBySenderNameIsNotEqualToSomething() throws Exception {
+    // Initialize the database
+    messageContentRepository.saveAndFlush(messageContent);
+
+    // Get all the messageContentList where senderName not equals to DEFAULT_SENDER_NAME
+    defaultMessageContentShouldNotBeFound("senderName.notEquals=" + DEFAULT_SENDER_NAME);
+
+    // Get all the messageContentList where senderName not equals to UPDATED_SENDER_NAME
+    defaultMessageContentShouldBeFound("senderName.notEquals=" + UPDATED_SENDER_NAME);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageContentsBySenderNameIsInShouldWork() throws Exception {
+    // Initialize the database
+    messageContentRepository.saveAndFlush(messageContent);
+
+    // Get all the messageContentList where senderName in DEFAULT_SENDER_NAME or UPDATED_SENDER_NAME
+    defaultMessageContentShouldBeFound("senderName.in=" + DEFAULT_SENDER_NAME + "," + UPDATED_SENDER_NAME);
+
+    // Get all the messageContentList where senderName equals to UPDATED_SENDER_NAME
+    defaultMessageContentShouldNotBeFound("senderName.in=" + UPDATED_SENDER_NAME);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageContentsBySenderNameIsNullOrNotNull() throws Exception {
+    // Initialize the database
+    messageContentRepository.saveAndFlush(messageContent);
+
+    // Get all the messageContentList where senderName is not null
+    defaultMessageContentShouldBeFound("senderName.specified=true");
+
+    // Get all the messageContentList where senderName is null
+    defaultMessageContentShouldNotBeFound("senderName.specified=false");
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageContentsBySenderNameContainsSomething() throws Exception {
+    // Initialize the database
+    messageContentRepository.saveAndFlush(messageContent);
+
+    // Get all the messageContentList where senderName contains DEFAULT_SENDER_NAME
+    defaultMessageContentShouldBeFound("senderName.contains=" + DEFAULT_SENDER_NAME);
+
+    // Get all the messageContentList where senderName contains UPDATED_SENDER_NAME
+    defaultMessageContentShouldNotBeFound("senderName.contains=" + UPDATED_SENDER_NAME);
+  }
+
+  @Test
+  @Transactional
+  void getAllMessageContentsBySenderNameNotContainsSomething() throws Exception {
+    // Initialize the database
+    messageContentRepository.saveAndFlush(messageContent);
+
+    // Get all the messageContentList where senderName does not contain DEFAULT_SENDER_NAME
+    defaultMessageContentShouldNotBeFound("senderName.doesNotContain=" + DEFAULT_SENDER_NAME);
+
+    // Get all the messageContentList where senderName does not contain UPDATED_SENDER_NAME
+    defaultMessageContentShouldBeFound("senderName.doesNotContain=" + UPDATED_SENDER_NAME);
+  }
+
+  @Test
+  @Transactional
   void getAllMessageContentsByBaseInfoIsEqualToSomething() throws Exception {
     // Initialize the database
     messageContentRepository.saveAndFlush(messageContent);
@@ -311,25 +404,6 @@ class MessageContentResourceIT {
 
     // Get all the messageContentList where baseInfo equals to (baseInfoId + 1)
     defaultMessageContentShouldNotBeFound("baseInfoId.equals=" + (baseInfoId + 1));
-  }
-
-  @Test
-  @Transactional
-  void getAllMessageContentsBySenderIsEqualToSomething() throws Exception {
-    // Initialize the database
-    messageContentRepository.saveAndFlush(messageContent);
-    MasterUser sender = MasterUserResourceIT.createEntity(em);
-    em.persist(sender);
-    em.flush();
-    messageContent.setSender(sender);
-    messageContentRepository.saveAndFlush(messageContent);
-    Long senderId = sender.getId();
-
-    // Get all the messageContentList where sender equals to senderId
-    defaultMessageContentShouldBeFound("senderId.equals=" + senderId);
-
-    // Get all the messageContentList where sender equals to (senderId + 1)
-    defaultMessageContentShouldNotBeFound("senderId.equals=" + (senderId + 1));
   }
 
   @Test
@@ -361,6 +435,8 @@ class MessageContentResourceIT {
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
       .andExpect(jsonPath("$.[*].id").value(hasItem(messageContent.getId().intValue())))
       .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
+      .andExpect(jsonPath("$.[*].senderName").value(hasItem(DEFAULT_SENDER_NAME)))
+      .andExpect(jsonPath("$.[*].attach").value(hasItem(DEFAULT_ATTACH.toString())))
       .andExpect(jsonPath("$.[*].content").value(hasItem(DEFAULT_CONTENT.toString())))
       .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
       .andExpect(jsonPath("$.[*].searchField").value(hasItem(DEFAULT_SEARCH_FIELD.toString())));
@@ -411,7 +487,13 @@ class MessageContentResourceIT {
     MessageContent updatedMessageContent = messageContentRepository.findById(messageContent.getId()).get();
     // Disconnect from session so that the updates on updatedMessageContent are not directly saved in db
     em.detach(updatedMessageContent);
-    updatedMessageContent.uuid(UPDATED_UUID).content(UPDATED_CONTENT).status(UPDATED_STATUS).searchField(UPDATED_SEARCH_FIELD);
+    updatedMessageContent
+      .uuid(UPDATED_UUID)
+      .senderName(UPDATED_SENDER_NAME)
+      .attach(UPDATED_ATTACH)
+      .content(UPDATED_CONTENT)
+      .status(UPDATED_STATUS)
+      .searchField(UPDATED_SEARCH_FIELD);
     MessageContentDTO messageContentDTO = messageContentMapper.toDto(updatedMessageContent);
 
     restMessageContentMockMvc
@@ -427,6 +509,8 @@ class MessageContentResourceIT {
     assertThat(messageContentList).hasSize(databaseSizeBeforeUpdate);
     MessageContent testMessageContent = messageContentList.get(messageContentList.size() - 1);
     assertThat(testMessageContent.getUuid()).isEqualTo(UPDATED_UUID);
+    assertThat(testMessageContent.getSenderName()).isEqualTo(UPDATED_SENDER_NAME);
+    assertThat(testMessageContent.getAttach()).isEqualTo(UPDATED_ATTACH);
     assertThat(testMessageContent.getContent()).isEqualTo(UPDATED_CONTENT);
     assertThat(testMessageContent.getStatus()).isEqualTo(UPDATED_STATUS);
     assertThat(testMessageContent.getSearchField()).isEqualTo(UPDATED_SEARCH_FIELD);
@@ -521,7 +605,7 @@ class MessageContentResourceIT {
     MessageContent partialUpdatedMessageContent = new MessageContent();
     partialUpdatedMessageContent.setId(messageContent.getId());
 
-    partialUpdatedMessageContent.searchField(UPDATED_SEARCH_FIELD);
+    partialUpdatedMessageContent.content(UPDATED_CONTENT).status(UPDATED_STATUS);
 
     restMessageContentMockMvc
       .perform(
@@ -536,9 +620,11 @@ class MessageContentResourceIT {
     assertThat(messageContentList).hasSize(databaseSizeBeforeUpdate);
     MessageContent testMessageContent = messageContentList.get(messageContentList.size() - 1);
     assertThat(testMessageContent.getUuid()).isEqualTo(DEFAULT_UUID);
-    assertThat(testMessageContent.getContent()).isEqualTo(DEFAULT_CONTENT);
-    assertThat(testMessageContent.getStatus()).isEqualTo(DEFAULT_STATUS);
-    assertThat(testMessageContent.getSearchField()).isEqualTo(UPDATED_SEARCH_FIELD);
+    assertThat(testMessageContent.getSenderName()).isEqualTo(DEFAULT_SENDER_NAME);
+    assertThat(testMessageContent.getAttach()).isEqualTo(DEFAULT_ATTACH);
+    assertThat(testMessageContent.getContent()).isEqualTo(UPDATED_CONTENT);
+    assertThat(testMessageContent.getStatus()).isEqualTo(UPDATED_STATUS);
+    assertThat(testMessageContent.getSearchField()).isEqualTo(DEFAULT_SEARCH_FIELD);
   }
 
   @Test
@@ -553,7 +639,13 @@ class MessageContentResourceIT {
     MessageContent partialUpdatedMessageContent = new MessageContent();
     partialUpdatedMessageContent.setId(messageContent.getId());
 
-    partialUpdatedMessageContent.uuid(UPDATED_UUID).content(UPDATED_CONTENT).status(UPDATED_STATUS).searchField(UPDATED_SEARCH_FIELD);
+    partialUpdatedMessageContent
+      .uuid(UPDATED_UUID)
+      .senderName(UPDATED_SENDER_NAME)
+      .attach(UPDATED_ATTACH)
+      .content(UPDATED_CONTENT)
+      .status(UPDATED_STATUS)
+      .searchField(UPDATED_SEARCH_FIELD);
 
     restMessageContentMockMvc
       .perform(
@@ -568,6 +660,8 @@ class MessageContentResourceIT {
     assertThat(messageContentList).hasSize(databaseSizeBeforeUpdate);
     MessageContent testMessageContent = messageContentList.get(messageContentList.size() - 1);
     assertThat(testMessageContent.getUuid()).isEqualTo(UPDATED_UUID);
+    assertThat(testMessageContent.getSenderName()).isEqualTo(UPDATED_SENDER_NAME);
+    assertThat(testMessageContent.getAttach()).isEqualTo(UPDATED_ATTACH);
     assertThat(testMessageContent.getContent()).isEqualTo(UPDATED_CONTENT);
     assertThat(testMessageContent.getStatus()).isEqualTo(UPDATED_STATUS);
     assertThat(testMessageContent.getSearchField()).isEqualTo(UPDATED_SEARCH_FIELD);
@@ -686,6 +780,8 @@ class MessageContentResourceIT {
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
       .andExpect(jsonPath("$.[*].id").value(hasItem(messageContent.getId().intValue())))
       .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
+      .andExpect(jsonPath("$.[*].senderName").value(hasItem(DEFAULT_SENDER_NAME)))
+      .andExpect(jsonPath("$.[*].attach").value(hasItem(DEFAULT_ATTACH.toString())))
       .andExpect(jsonPath("$.[*].content").value(hasItem(DEFAULT_CONTENT.toString())))
       .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
       .andExpect(jsonPath("$.[*].searchField").value(hasItem(DEFAULT_SEARCH_FIELD.toString())));

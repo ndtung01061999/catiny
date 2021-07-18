@@ -19,7 +19,7 @@ public class GeneratorMain
   {
     var thisClassPath = GeneratorMain.class.getProtectionDomain().getCodeSource().getLocation().getPath();
     var projectPath = thisClassPath.replace("/build/classes/java/main/","");
-    generate(projectPath,projectPath);
+    generate(projectPath,projectPath+"2");
   }
 
   public static void generate(String thisProjectPath , String outputProjectPath)

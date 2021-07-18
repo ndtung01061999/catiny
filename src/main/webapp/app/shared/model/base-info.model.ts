@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { IClassInfo } from 'app/shared/model/class-info.model';
 import { IUserProfile } from 'app/shared/model/user-profile.model';
 import { IAccountStatus } from 'app/shared/model/account-status.model';
 import { IDeviceStatus } from 'app/shared/model/device-status.model';
@@ -28,21 +29,22 @@ import { IVideoLiveStreamBuffer } from 'app/shared/model/video-live-stream-buffe
 import { ITopicInterest } from 'app/shared/model/topic-interest.model';
 import { ITodoList } from 'app/shared/model/todo-list.model';
 import { IEvent } from 'app/shared/model/event.model';
+import { IMasterUser } from 'app/shared/model/master-user.model';
+import { IPermission } from 'app/shared/model/permission.model';
 import { ProcessStatus } from 'app/shared/model/enumerations/process-status.model';
 
 export interface IBaseInfo {
   id?: number;
   processStatus?: ProcessStatus | null;
-  owner?: string | null;
-  role?: string | null;
   modifiedClass?: string | null;
   createdDate?: string | null;
   modifiedDate?: string | null;
-  createdBy?: string | null;
-  modifiedBy?: string | null;
   notes?: string | null;
   historyUpdate?: string | null;
   deleted?: boolean | null;
+  priorityIndex?: number | null;
+  countUse?: number | null;
+  classInfo?: IClassInfo | null;
   userProfile?: IUserProfile | null;
   accountStatus?: IAccountStatus | null;
   deviceStatus?: IDeviceStatus | null;
@@ -72,6 +74,10 @@ export interface IBaseInfo {
   topicInterest?: ITopicInterest | null;
   todoList?: ITodoList | null;
   event?: IEvent | null;
+  createdBy?: IMasterUser | null;
+  modifiedBy?: IMasterUser | null;
+  owner?: IMasterUser | null;
+  permissions?: IPermission[] | null;
 }
 
 export const defaultValue: Readonly<IBaseInfo> = {

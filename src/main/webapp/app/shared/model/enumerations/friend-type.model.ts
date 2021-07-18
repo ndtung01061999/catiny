@@ -4,4 +4,6 @@ export enum FriendType {
   BEST_FRIEND = 'BEST_FRIEND',
 
   FAMILY = 'FAMILY',
+
+  BLOCK = 'BLOCK',
 }

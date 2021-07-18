@@ -73,6 +73,7 @@ class PagePostGatlingTest extends Simulation {
             .body(StringBody("""{
                 "uuid":null
                 , "name":"SAMPLE_TEXT"
+                , "avatar":null
                 , "quickInfo":null
                 }""")).asJson
             .check(status.is(201))

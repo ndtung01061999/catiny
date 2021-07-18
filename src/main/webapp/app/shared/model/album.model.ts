@@ -5,6 +5,8 @@ export interface IAlbum {
   id?: number;
   uuid?: string;
   name?: string;
+  note?: string | null;
+  avatar?: string | null;
   baseInfo?: IBaseInfo | null;
   images?: IImage[] | null;
 }

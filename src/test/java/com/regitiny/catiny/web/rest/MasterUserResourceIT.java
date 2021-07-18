@@ -9,28 +9,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.regitiny.catiny.GeneratedByJHipster;
 import com.regitiny.catiny.IntegrationTest;
-import com.regitiny.catiny.domain.AccountStatus;
 import com.regitiny.catiny.domain.BaseInfo;
-import com.regitiny.catiny.domain.FileInfo;
-import com.regitiny.catiny.domain.FollowGroup;
-import com.regitiny.catiny.domain.FollowPage;
-import com.regitiny.catiny.domain.FollowUser;
-import com.regitiny.catiny.domain.Friend;
-import com.regitiny.catiny.domain.GroupPost;
-import com.regitiny.catiny.domain.Image;
 import com.regitiny.catiny.domain.MasterUser;
-import com.regitiny.catiny.domain.MessageGroup;
-import com.regitiny.catiny.domain.NewsFeed;
-import com.regitiny.catiny.domain.Notification;
-import com.regitiny.catiny.domain.PagePost;
-import com.regitiny.catiny.domain.Post;
-import com.regitiny.catiny.domain.PostComment;
-import com.regitiny.catiny.domain.PostLike;
+import com.regitiny.catiny.domain.Permission;
 import com.regitiny.catiny.domain.RankUser;
-import com.regitiny.catiny.domain.TodoList;
 import com.regitiny.catiny.domain.TopicInterest;
 import com.regitiny.catiny.domain.User;
-import com.regitiny.catiny.domain.UserProfile;
 import com.regitiny.catiny.repository.MasterUserRepository;
 import com.regitiny.catiny.repository.search.MasterUserSearchRepository;
 import com.regitiny.catiny.service.MasterUserService;
@@ -77,6 +61,9 @@ class MasterUserResourceIT {
 
   private static final String DEFAULT_NICKNAME = "AAAAAAAAAA";
   private static final String UPDATED_NICKNAME = "BBBBBBBBBB";
+
+  private static final String DEFAULT_AVATAR = "AAAAAAAAAA";
+  private static final String UPDATED_AVATAR = "BBBBBBBBBB";
 
   private static final String DEFAULT_QUICK_INFO = "AAAAAAAAAA";
   private static final String UPDATED_QUICK_INFO = "BBBBBBBBBB";
@@ -127,6 +114,7 @@ class MasterUserResourceIT {
       .uuid(DEFAULT_UUID)
       .fullName(DEFAULT_FULL_NAME)
       .nickname(DEFAULT_NICKNAME)
+      .avatar(DEFAULT_AVATAR)
       .quickInfo(DEFAULT_QUICK_INFO);
     // Add required entity
     User user = UserResourceIT.createEntity(em);
@@ -147,6 +135,7 @@ class MasterUserResourceIT {
       .uuid(UPDATED_UUID)
       .fullName(UPDATED_FULL_NAME)
       .nickname(UPDATED_NICKNAME)
+      .avatar(UPDATED_AVATAR)
       .quickInfo(UPDATED_QUICK_INFO);
     // Add required entity
     User user = UserResourceIT.createEntity(em);
@@ -178,6 +167,7 @@ class MasterUserResourceIT {
     assertThat(testMasterUser.getUuid()).isEqualTo(DEFAULT_UUID);
     assertThat(testMasterUser.getFullName()).isEqualTo(DEFAULT_FULL_NAME);
     assertThat(testMasterUser.getNickname()).isEqualTo(DEFAULT_NICKNAME);
+    assertThat(testMasterUser.getAvatar()).isEqualTo(DEFAULT_AVATAR);
     assertThat(testMasterUser.getQuickInfo()).isEqualTo(DEFAULT_QUICK_INFO);
 
     // Validate the id for MapsId, the ids must be same
@@ -306,6 +296,7 @@ class MasterUserResourceIT {
       .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
       .andExpect(jsonPath("$.[*].fullName").value(hasItem(DEFAULT_FULL_NAME)))
       .andExpect(jsonPath("$.[*].nickname").value(hasItem(DEFAULT_NICKNAME)))
+      .andExpect(jsonPath("$.[*].avatar").value(hasItem(DEFAULT_AVATAR.toString())))
       .andExpect(jsonPath("$.[*].quickInfo").value(hasItem(DEFAULT_QUICK_INFO.toString())));
   }
 
@@ -342,6 +333,7 @@ class MasterUserResourceIT {
       .andExpect(jsonPath("$.uuid").value(DEFAULT_UUID.toString()))
       .andExpect(jsonPath("$.fullName").value(DEFAULT_FULL_NAME))
       .andExpect(jsonPath("$.nickname").value(DEFAULT_NICKNAME))
+      .andExpect(jsonPath("$.avatar").value(DEFAULT_AVATAR.toString()))
       .andExpect(jsonPath("$.quickInfo").value(DEFAULT_QUICK_INFO.toString()));
   }
 
@@ -588,44 +580,6 @@ class MasterUserResourceIT {
 
   @Test
   @Transactional
-  void getAllMasterUsersByMyProfileIsEqualToSomething() throws Exception {
-    // Initialize the database
-    masterUserRepository.saveAndFlush(masterUser);
-    UserProfile myProfile = UserProfileResourceIT.createEntity(em);
-    em.persist(myProfile);
-    em.flush();
-    masterUser.setMyProfile(myProfile);
-    masterUserRepository.saveAndFlush(masterUser);
-    Long myProfileId = myProfile.getId();
-
-    // Get all the masterUserList where myProfile equals to myProfileId
-    defaultMasterUserShouldBeFound("myProfileId.equals=" + myProfileId);
-
-    // Get all the masterUserList where myProfile equals to (myProfileId + 1)
-    defaultMasterUserShouldNotBeFound("myProfileId.equals=" + (myProfileId + 1));
-  }
-
-  @Test
-  @Transactional
-  void getAllMasterUsersByMyAccountStatusIsEqualToSomething() throws Exception {
-    // Initialize the database
-    masterUserRepository.saveAndFlush(masterUser);
-    AccountStatus myAccountStatus = AccountStatusResourceIT.createEntity(em);
-    em.persist(myAccountStatus);
-    em.flush();
-    masterUser.setMyAccountStatus(myAccountStatus);
-    masterUserRepository.saveAndFlush(masterUser);
-    Long myAccountStatusId = myAccountStatus.getId();
-
-    // Get all the masterUserList where myAccountStatus equals to myAccountStatusId
-    defaultMasterUserShouldBeFound("myAccountStatusId.equals=" + myAccountStatusId);
-
-    // Get all the masterUserList where myAccountStatus equals to (myAccountStatusId + 1)
-    defaultMasterUserShouldNotBeFound("myAccountStatusId.equals=" + (myAccountStatusId + 1));
-  }
-
-  @Test
-  @Transactional
   void getAllMasterUsersByMyRankIsEqualToSomething() throws Exception {
     // Initialize the database
     masterUserRepository.saveAndFlush(masterUser);
@@ -641,25 +595,6 @@ class MasterUserResourceIT {
 
     // Get all the masterUserList where myRank equals to (myRankId + 1)
     defaultMasterUserShouldNotBeFound("myRankId.equals=" + (myRankId + 1));
-  }
-
-  @Test
-  @Transactional
-  void getAllMasterUsersByAvatarIsEqualToSomething() throws Exception {
-    // Initialize the database
-    masterUserRepository.saveAndFlush(masterUser);
-    Image avatar = ImageResourceIT.createEntity(em);
-    em.persist(avatar);
-    em.flush();
-    masterUser.setAvatar(avatar);
-    masterUserRepository.saveAndFlush(masterUser);
-    Long avatarId = avatar.getId();
-
-    // Get all the masterUserList where avatar equals to avatarId
-    defaultMasterUserShouldBeFound("avatarId.equals=" + avatarId);
-
-    // Get all the masterUserList where avatar equals to (avatarId + 1)
-    defaultMasterUserShouldNotBeFound("avatarId.equals=" + (avatarId + 1));
   }
 
   @Test
@@ -683,230 +618,78 @@ class MasterUserResourceIT {
 
   @Test
   @Transactional
-  void getAllMasterUsersByMyPageIsEqualToSomething() throws Exception {
+  void getAllMasterUsersByMyBaseInfoCreatedIsEqualToSomething() throws Exception {
     // Initialize the database
     masterUserRepository.saveAndFlush(masterUser);
-    PagePost myPage = PagePostResourceIT.createEntity(em);
-    em.persist(myPage);
+    BaseInfo myBaseInfoCreated = BaseInfoResourceIT.createEntity(em);
+    em.persist(myBaseInfoCreated);
     em.flush();
-    masterUser.addMyPage(myPage);
+    masterUser.addMyBaseInfoCreated(myBaseInfoCreated);
     masterUserRepository.saveAndFlush(masterUser);
-    Long myPageId = myPage.getId();
+    Long myBaseInfoCreatedId = myBaseInfoCreated.getId();
 
-    // Get all the masterUserList where myPage equals to myPageId
-    defaultMasterUserShouldBeFound("myPageId.equals=" + myPageId);
+    // Get all the masterUserList where myBaseInfoCreated equals to myBaseInfoCreatedId
+    defaultMasterUserShouldBeFound("myBaseInfoCreatedId.equals=" + myBaseInfoCreatedId);
 
-    // Get all the masterUserList where myPage equals to (myPageId + 1)
-    defaultMasterUserShouldNotBeFound("myPageId.equals=" + (myPageId + 1));
+    // Get all the masterUserList where myBaseInfoCreated equals to (myBaseInfoCreatedId + 1)
+    defaultMasterUserShouldNotBeFound("myBaseInfoCreatedId.equals=" + (myBaseInfoCreatedId + 1));
   }
 
   @Test
   @Transactional
-  void getAllMasterUsersByMyFileIsEqualToSomething() throws Exception {
+  void getAllMasterUsersByMyBaseInfoModifiedIsEqualToSomething() throws Exception {
     // Initialize the database
     masterUserRepository.saveAndFlush(masterUser);
-    FileInfo myFile = FileInfoResourceIT.createEntity(em);
-    em.persist(myFile);
+    BaseInfo myBaseInfoModified = BaseInfoResourceIT.createEntity(em);
+    em.persist(myBaseInfoModified);
     em.flush();
-    masterUser.addMyFile(myFile);
+    masterUser.addMyBaseInfoModified(myBaseInfoModified);
     masterUserRepository.saveAndFlush(masterUser);
-    Long myFileId = myFile.getId();
+    Long myBaseInfoModifiedId = myBaseInfoModified.getId();
 
-    // Get all the masterUserList where myFile equals to myFileId
-    defaultMasterUserShouldBeFound("myFileId.equals=" + myFileId);
+    // Get all the masterUserList where myBaseInfoModified equals to myBaseInfoModifiedId
+    defaultMasterUserShouldBeFound("myBaseInfoModifiedId.equals=" + myBaseInfoModifiedId);
 
-    // Get all the masterUserList where myFile equals to (myFileId + 1)
-    defaultMasterUserShouldNotBeFound("myFileId.equals=" + (myFileId + 1));
+    // Get all the masterUserList where myBaseInfoModified equals to (myBaseInfoModifiedId + 1)
+    defaultMasterUserShouldNotBeFound("myBaseInfoModifiedId.equals=" + (myBaseInfoModifiedId + 1));
   }
 
   @Test
   @Transactional
-  void getAllMasterUsersByMyNotificationIsEqualToSomething() throws Exception {
+  void getAllMasterUsersByOwnerOfIsEqualToSomething() throws Exception {
     // Initialize the database
     masterUserRepository.saveAndFlush(masterUser);
-    Notification myNotification = NotificationResourceIT.createEntity(em);
-    em.persist(myNotification);
+    BaseInfo ownerOf = BaseInfoResourceIT.createEntity(em);
+    em.persist(ownerOf);
     em.flush();
-    masterUser.addMyNotification(myNotification);
+    masterUser.addOwnerOf(ownerOf);
     masterUserRepository.saveAndFlush(masterUser);
-    Long myNotificationId = myNotification.getId();
+    Long ownerOfId = ownerOf.getId();
 
-    // Get all the masterUserList where myNotification equals to myNotificationId
-    defaultMasterUserShouldBeFound("myNotificationId.equals=" + myNotificationId);
+    // Get all the masterUserList where ownerOf equals to ownerOfId
+    defaultMasterUserShouldBeFound("ownerOfId.equals=" + ownerOfId);
 
-    // Get all the masterUserList where myNotification equals to (myNotificationId + 1)
-    defaultMasterUserShouldNotBeFound("myNotificationId.equals=" + (myNotificationId + 1));
+    // Get all the masterUserList where ownerOf equals to (ownerOfId + 1)
+    defaultMasterUserShouldNotBeFound("ownerOfId.equals=" + (ownerOfId + 1));
   }
 
   @Test
   @Transactional
-  void getAllMasterUsersByMyFriendIsEqualToSomething() throws Exception {
+  void getAllMasterUsersByPermissionIsEqualToSomething() throws Exception {
     // Initialize the database
     masterUserRepository.saveAndFlush(masterUser);
-    Friend myFriend = FriendResourceIT.createEntity(em);
-    em.persist(myFriend);
+    Permission permission = PermissionResourceIT.createEntity(em);
+    em.persist(permission);
     em.flush();
-    masterUser.addMyFriend(myFriend);
+    masterUser.addPermission(permission);
     masterUserRepository.saveAndFlush(masterUser);
-    Long myFriendId = myFriend.getId();
+    Long permissionId = permission.getId();
 
-    // Get all the masterUserList where myFriend equals to myFriendId
-    defaultMasterUserShouldBeFound("myFriendId.equals=" + myFriendId);
+    // Get all the masterUserList where permission equals to permissionId
+    defaultMasterUserShouldBeFound("permissionId.equals=" + permissionId);
 
-    // Get all the masterUserList where myFriend equals to (myFriendId + 1)
-    defaultMasterUserShouldNotBeFound("myFriendId.equals=" + (myFriendId + 1));
-  }
-
-  @Test
-  @Transactional
-  void getAllMasterUsersByMyFollowUserIsEqualToSomething() throws Exception {
-    // Initialize the database
-    masterUserRepository.saveAndFlush(masterUser);
-    FollowUser myFollowUser = FollowUserResourceIT.createEntity(em);
-    em.persist(myFollowUser);
-    em.flush();
-    masterUser.addMyFollowUser(myFollowUser);
-    masterUserRepository.saveAndFlush(masterUser);
-    Long myFollowUserId = myFollowUser.getId();
-
-    // Get all the masterUserList where myFollowUser equals to myFollowUserId
-    defaultMasterUserShouldBeFound("myFollowUserId.equals=" + myFollowUserId);
-
-    // Get all the masterUserList where myFollowUser equals to (myFollowUserId + 1)
-    defaultMasterUserShouldNotBeFound("myFollowUserId.equals=" + (myFollowUserId + 1));
-  }
-
-  @Test
-  @Transactional
-  void getAllMasterUsersByMyFollowGroupIsEqualToSomething() throws Exception {
-    // Initialize the database
-    masterUserRepository.saveAndFlush(masterUser);
-    FollowGroup myFollowGroup = FollowGroupResourceIT.createEntity(em);
-    em.persist(myFollowGroup);
-    em.flush();
-    masterUser.addMyFollowGroup(myFollowGroup);
-    masterUserRepository.saveAndFlush(masterUser);
-    Long myFollowGroupId = myFollowGroup.getId();
-
-    // Get all the masterUserList where myFollowGroup equals to myFollowGroupId
-    defaultMasterUserShouldBeFound("myFollowGroupId.equals=" + myFollowGroupId);
-
-    // Get all the masterUserList where myFollowGroup equals to (myFollowGroupId + 1)
-    defaultMasterUserShouldNotBeFound("myFollowGroupId.equals=" + (myFollowGroupId + 1));
-  }
-
-  @Test
-  @Transactional
-  void getAllMasterUsersByMyFollowPageIsEqualToSomething() throws Exception {
-    // Initialize the database
-    masterUserRepository.saveAndFlush(masterUser);
-    FollowPage myFollowPage = FollowPageResourceIT.createEntity(em);
-    em.persist(myFollowPage);
-    em.flush();
-    masterUser.addMyFollowPage(myFollowPage);
-    masterUserRepository.saveAndFlush(masterUser);
-    Long myFollowPageId = myFollowPage.getId();
-
-    // Get all the masterUserList where myFollowPage equals to myFollowPageId
-    defaultMasterUserShouldBeFound("myFollowPageId.equals=" + myFollowPageId);
-
-    // Get all the masterUserList where myFollowPage equals to (myFollowPageId + 1)
-    defaultMasterUserShouldNotBeFound("myFollowPageId.equals=" + (myFollowPageId + 1));
-  }
-
-  @Test
-  @Transactional
-  void getAllMasterUsersByMyNewsFeedIsEqualToSomething() throws Exception {
-    // Initialize the database
-    masterUserRepository.saveAndFlush(masterUser);
-    NewsFeed myNewsFeed = NewsFeedResourceIT.createEntity(em);
-    em.persist(myNewsFeed);
-    em.flush();
-    masterUser.addMyNewsFeed(myNewsFeed);
-    masterUserRepository.saveAndFlush(masterUser);
-    Long myNewsFeedId = myNewsFeed.getId();
-
-    // Get all the masterUserList where myNewsFeed equals to myNewsFeedId
-    defaultMasterUserShouldBeFound("myNewsFeedId.equals=" + myNewsFeedId);
-
-    // Get all the masterUserList where myNewsFeed equals to (myNewsFeedId + 1)
-    defaultMasterUserShouldNotBeFound("myNewsFeedId.equals=" + (myNewsFeedId + 1));
-  }
-
-  @Test
-  @Transactional
-  void getAllMasterUsersByMyTodoListIsEqualToSomething() throws Exception {
-    // Initialize the database
-    masterUserRepository.saveAndFlush(masterUser);
-    TodoList myTodoList = TodoListResourceIT.createEntity(em);
-    em.persist(myTodoList);
-    em.flush();
-    masterUser.addMyTodoList(myTodoList);
-    masterUserRepository.saveAndFlush(masterUser);
-    Long myTodoListId = myTodoList.getId();
-
-    // Get all the masterUserList where myTodoList equals to myTodoListId
-    defaultMasterUserShouldBeFound("myTodoListId.equals=" + myTodoListId);
-
-    // Get all the masterUserList where myTodoList equals to (myTodoListId + 1)
-    defaultMasterUserShouldNotBeFound("myTodoListId.equals=" + (myTodoListId + 1));
-  }
-
-  @Test
-  @Transactional
-  void getAllMasterUsersByMyPostIsEqualToSomething() throws Exception {
-    // Initialize the database
-    masterUserRepository.saveAndFlush(masterUser);
-    Post myPost = PostResourceIT.createEntity(em);
-    em.persist(myPost);
-    em.flush();
-    masterUser.addMyPost(myPost);
-    masterUserRepository.saveAndFlush(masterUser);
-    Long myPostId = myPost.getId();
-
-    // Get all the masterUserList where myPost equals to myPostId
-    defaultMasterUserShouldBeFound("myPostId.equals=" + myPostId);
-
-    // Get all the masterUserList where myPost equals to (myPostId + 1)
-    defaultMasterUserShouldNotBeFound("myPostId.equals=" + (myPostId + 1));
-  }
-
-  @Test
-  @Transactional
-  void getAllMasterUsersByMyGroupPostIsEqualToSomething() throws Exception {
-    // Initialize the database
-    masterUserRepository.saveAndFlush(masterUser);
-    GroupPost myGroupPost = GroupPostResourceIT.createEntity(em);
-    em.persist(myGroupPost);
-    em.flush();
-    masterUser.addMyGroupPost(myGroupPost);
-    masterUserRepository.saveAndFlush(masterUser);
-    Long myGroupPostId = myGroupPost.getId();
-
-    // Get all the masterUserList where myGroupPost equals to myGroupPostId
-    defaultMasterUserShouldBeFound("myGroupPostId.equals=" + myGroupPostId);
-
-    // Get all the masterUserList where myGroupPost equals to (myGroupPostId + 1)
-    defaultMasterUserShouldNotBeFound("myGroupPostId.equals=" + (myGroupPostId + 1));
-  }
-
-  @Test
-  @Transactional
-  void getAllMasterUsersByMessageGroupIsEqualToSomething() throws Exception {
-    // Initialize the database
-    masterUserRepository.saveAndFlush(masterUser);
-    MessageGroup messageGroup = MessageGroupResourceIT.createEntity(em);
-    em.persist(messageGroup);
-    em.flush();
-    masterUser.addMessageGroup(messageGroup);
-    masterUserRepository.saveAndFlush(masterUser);
-    Long messageGroupId = messageGroup.getId();
-
-    // Get all the masterUserList where messageGroup equals to messageGroupId
-    defaultMasterUserShouldBeFound("messageGroupId.equals=" + messageGroupId);
-
-    // Get all the masterUserList where messageGroup equals to (messageGroupId + 1)
-    defaultMasterUserShouldNotBeFound("messageGroupId.equals=" + (messageGroupId + 1));
+    // Get all the masterUserList where permission equals to (permissionId + 1)
+    defaultMasterUserShouldNotBeFound("permissionId.equals=" + (permissionId + 1));
   }
 
   @Test
@@ -928,44 +711,6 @@ class MasterUserResourceIT {
     defaultMasterUserShouldNotBeFound("topicInterestId.equals=" + (topicInterestId + 1));
   }
 
-  @Test
-  @Transactional
-  void getAllMasterUsersByMyLikeIsEqualToSomething() throws Exception {
-    // Initialize the database
-    masterUserRepository.saveAndFlush(masterUser);
-    PostLike myLike = PostLikeResourceIT.createEntity(em);
-    em.persist(myLike);
-    em.flush();
-    masterUser.addMyLike(myLike);
-    masterUserRepository.saveAndFlush(masterUser);
-    Long myLikeId = myLike.getId();
-
-    // Get all the masterUserList where myLike equals to myLikeId
-    defaultMasterUserShouldBeFound("myLikeId.equals=" + myLikeId);
-
-    // Get all the masterUserList where myLike equals to (myLikeId + 1)
-    defaultMasterUserShouldNotBeFound("myLikeId.equals=" + (myLikeId + 1));
-  }
-
-  @Test
-  @Transactional
-  void getAllMasterUsersByMyCommentIsEqualToSomething() throws Exception {
-    // Initialize the database
-    masterUserRepository.saveAndFlush(masterUser);
-    PostComment myComment = PostCommentResourceIT.createEntity(em);
-    em.persist(myComment);
-    em.flush();
-    masterUser.addMyComment(myComment);
-    masterUserRepository.saveAndFlush(masterUser);
-    Long myCommentId = myComment.getId();
-
-    // Get all the masterUserList where myComment equals to myCommentId
-    defaultMasterUserShouldBeFound("myCommentId.equals=" + myCommentId);
-
-    // Get all the masterUserList where myComment equals to (myCommentId + 1)
-    defaultMasterUserShouldNotBeFound("myCommentId.equals=" + (myCommentId + 1));
-  }
-
   /**
    * Executes the search, and checks that the default entity is returned.
    */
@@ -978,6 +723,7 @@ class MasterUserResourceIT {
       .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
       .andExpect(jsonPath("$.[*].fullName").value(hasItem(DEFAULT_FULL_NAME)))
       .andExpect(jsonPath("$.[*].nickname").value(hasItem(DEFAULT_NICKNAME)))
+      .andExpect(jsonPath("$.[*].avatar").value(hasItem(DEFAULT_AVATAR.toString())))
       .andExpect(jsonPath("$.[*].quickInfo").value(hasItem(DEFAULT_QUICK_INFO.toString())));
 
     // Check, that the count call also returns 1
@@ -1026,7 +772,12 @@ class MasterUserResourceIT {
     MasterUser updatedMasterUser = masterUserRepository.findById(masterUser.getId()).get();
     // Disconnect from session so that the updates on updatedMasterUser are not directly saved in db
     em.detach(updatedMasterUser);
-    updatedMasterUser.uuid(UPDATED_UUID).fullName(UPDATED_FULL_NAME).nickname(UPDATED_NICKNAME).quickInfo(UPDATED_QUICK_INFO);
+    updatedMasterUser
+      .uuid(UPDATED_UUID)
+      .fullName(UPDATED_FULL_NAME)
+      .nickname(UPDATED_NICKNAME)
+      .avatar(UPDATED_AVATAR)
+      .quickInfo(UPDATED_QUICK_INFO);
     MasterUserDTO masterUserDTO = masterUserMapper.toDto(updatedMasterUser);
 
     restMasterUserMockMvc
@@ -1044,6 +795,7 @@ class MasterUserResourceIT {
     assertThat(testMasterUser.getUuid()).isEqualTo(UPDATED_UUID);
     assertThat(testMasterUser.getFullName()).isEqualTo(UPDATED_FULL_NAME);
     assertThat(testMasterUser.getNickname()).isEqualTo(UPDATED_NICKNAME);
+    assertThat(testMasterUser.getAvatar()).isEqualTo(UPDATED_AVATAR);
     assertThat(testMasterUser.getQuickInfo()).isEqualTo(UPDATED_QUICK_INFO);
 
     // Validate the MasterUser in Elasticsearch
@@ -1136,7 +888,12 @@ class MasterUserResourceIT {
     MasterUser partialUpdatedMasterUser = new MasterUser();
     partialUpdatedMasterUser.setId(masterUser.getId());
 
-    partialUpdatedMasterUser.uuid(UPDATED_UUID).fullName(UPDATED_FULL_NAME).nickname(UPDATED_NICKNAME).quickInfo(UPDATED_QUICK_INFO);
+    partialUpdatedMasterUser
+      .uuid(UPDATED_UUID)
+      .fullName(UPDATED_FULL_NAME)
+      .nickname(UPDATED_NICKNAME)
+      .avatar(UPDATED_AVATAR)
+      .quickInfo(UPDATED_QUICK_INFO);
 
     restMasterUserMockMvc
       .perform(
@@ -1153,6 +910,7 @@ class MasterUserResourceIT {
     assertThat(testMasterUser.getUuid()).isEqualTo(UPDATED_UUID);
     assertThat(testMasterUser.getFullName()).isEqualTo(UPDATED_FULL_NAME);
     assertThat(testMasterUser.getNickname()).isEqualTo(UPDATED_NICKNAME);
+    assertThat(testMasterUser.getAvatar()).isEqualTo(UPDATED_AVATAR);
     assertThat(testMasterUser.getQuickInfo()).isEqualTo(UPDATED_QUICK_INFO);
   }
 
@@ -1168,7 +926,12 @@ class MasterUserResourceIT {
     MasterUser partialUpdatedMasterUser = new MasterUser();
     partialUpdatedMasterUser.setId(masterUser.getId());
 
-    partialUpdatedMasterUser.uuid(UPDATED_UUID).fullName(UPDATED_FULL_NAME).nickname(UPDATED_NICKNAME).quickInfo(UPDATED_QUICK_INFO);
+    partialUpdatedMasterUser
+      .uuid(UPDATED_UUID)
+      .fullName(UPDATED_FULL_NAME)
+      .nickname(UPDATED_NICKNAME)
+      .avatar(UPDATED_AVATAR)
+      .quickInfo(UPDATED_QUICK_INFO);
 
     restMasterUserMockMvc
       .perform(
@@ -1185,6 +948,7 @@ class MasterUserResourceIT {
     assertThat(testMasterUser.getUuid()).isEqualTo(UPDATED_UUID);
     assertThat(testMasterUser.getFullName()).isEqualTo(UPDATED_FULL_NAME);
     assertThat(testMasterUser.getNickname()).isEqualTo(UPDATED_NICKNAME);
+    assertThat(testMasterUser.getAvatar()).isEqualTo(UPDATED_AVATAR);
     assertThat(testMasterUser.getQuickInfo()).isEqualTo(UPDATED_QUICK_INFO);
   }
 
@@ -1301,6 +1065,7 @@ class MasterUserResourceIT {
       .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
       .andExpect(jsonPath("$.[*].fullName").value(hasItem(DEFAULT_FULL_NAME)))
       .andExpect(jsonPath("$.[*].nickname").value(hasItem(DEFAULT_NICKNAME)))
+      .andExpect(jsonPath("$.[*].avatar").value(hasItem(DEFAULT_AVATAR.toString())))
       .andExpect(jsonPath("$.[*].quickInfo").value(hasItem(DEFAULT_QUICK_INFO.toString())));
   }
 }

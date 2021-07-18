@@ -21,14 +21,29 @@
       "id": "ID",
       "uuid": "Uuid",
       "name": "Name",
+      "width": "Width",
+      "height": "Height",
+      "qualityImage": "Quality Image",
+      "qualityAudio": "Quality Audio",
+      "quality": "Quality",
+      "pixelSize": "Pixel Size",
+      "priorityIndex": "Priority Index",
+      "dataSize": "Data Size",
       "fileInfo": "File Info",
       "baseInfo": "Base Info",
       "videoProcessed": "Video Processed",
       "videoStream": "Video Stream",
       "videoOriginal": "Video Original",
-      "event": "Event",
       "help": {
-        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)"
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
+        "width": "width          : chiều rộng video",
+        "height": "height         : chiều cao video",
+        "qualityImage": "qualityImage   : chất lượng ảnh sau khi xử lý",
+        "qualityAudio": "qualityAudio   : chất lượng âm thanh sau khi xử lý",
+        "quality": "quality        : chất lượng chung sau khi xử lý",
+        "pixelSize": "pixelSize      : kích thước của ảnh",
+        "priorityIndex": "priorityIndex  : chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)",
+        "dataSize": "dataSize       : kích thước file theo byte"
       }
     }
   }

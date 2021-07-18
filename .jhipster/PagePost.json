@@ -14,6 +14,12 @@
       "fieldValidateRules": ["required"]
     },
     {
+      "fieldName": "avatar",
+      "fieldType": "byte[]",
+      "javadoc": "avatar : @type Json -> ảnh đại diện của Page",
+      "fieldTypeBlobContent": "text"
+    },
+    {
       "fieldName": "quickInfo",
       "fieldType": "byte[]",
       "javadoc": "quickInfo      : @type Json ->thông tin nổi bật giới thiệu sơ qua về page",
@@ -40,12 +46,6 @@
       "otherEntityName": "post",
       "otherEntityRelationshipName": "pagePost",
       "relationshipName": "myPostInPage"
-    },
-    {
-      "relationshipType": "many-to-one",
-      "otherEntityName": "masterUser",
-      "otherEntityRelationshipName": "myPage",
-      "relationshipName": "masterUser"
     },
     {
       "relationshipType": "many-to-many",

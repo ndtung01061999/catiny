@@ -13,9 +13,4 @@ import org.mapstruct.*;
 public interface UserProfileMapper extends EntityMapper<UserProfileDTO, UserProfile> {
   @Mapping(target = "baseInfo", source = "baseInfo", qualifiedByName = "id")
   UserProfileDTO toDto(UserProfile s);
-
-  @Named("id")
-  @BeanMapping(ignoreByDefault = true)
-  @Mapping(target = "id", source = "id")
-  UserProfileDTO toDtoId(UserProfile userProfile);
 }

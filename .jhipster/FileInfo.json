@@ -20,7 +20,7 @@
     {
       "fieldName": "path",
       "fieldType": "String",
-      "javadoc": "path           : đường dẫn file nguyên gốc",
+      "javadoc": "path           : đường dẫn file trên server",
       "fieldValidateRules": ["maxlength"],
       "fieldValidateRulesMaxlength": "1024"
     },
@@ -37,12 +37,6 @@
       "otherEntityRelationshipName": "fileInfo",
       "relationshipName": "baseInfo",
       "ownerSide": true
-    },
-    {
-      "relationshipType": "many-to-one",
-      "otherEntityName": "masterUser",
-      "otherEntityRelationshipName": "myFile",
-      "relationshipName": "masterUser"
     }
   ],
   "javadoc": "@what?            -> The FileInfo entity.\\n@why?             ->\\n@use-to           -> Quản lý thông tin về file, vị trí file ...\\n@commonly-used-in -> Những file mà người dùng upload (ảnh video ...)\\n\\n@describe         ->",

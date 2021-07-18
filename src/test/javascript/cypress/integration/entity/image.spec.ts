@@ -104,13 +104,23 @@ describe('Image e2e test', () => {
 
     cy.get(`[data-cy="name"]`).type('Vista').should('have.value', 'Vista');
 
+    cy.get(`[data-cy="width"]`).type('8011').should('have.value', '8011');
+
+    cy.get(`[data-cy="height"]`).type('99599').should('have.value', '99599');
+
+    cy.get(`[data-cy="quality"]`).type('1').should('have.value', '1');
+
+    cy.get(`[data-cy="pixelSize"]`).type('15768').should('have.value', '15768');
+
+    cy.get(`[data-cy="priorityIndex"]`).type('88024').should('have.value', '88024');
+
+    cy.get(`[data-cy="dataSize"]`).type('16202').should('have.value', '16202');
+
     cy.setFieldSelectToLastOfEntity('fileInfo');
 
     cy.setFieldSelectToLastOfEntity('baseInfo');
 
     cy.setFieldSelectToLastOfEntity('imageOriginal');
-
-    cy.setFieldSelectToLastOfEntity('event');
 
     cy.get(entityCreateSaveButtonSelector).click({ force: true });
     cy.scrollTo('top', { ensureScrollable: false });

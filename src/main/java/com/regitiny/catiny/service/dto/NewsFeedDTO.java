@@ -29,13 +29,15 @@ public class NewsFeedDTO implements Serializable {
   )
   private UUID uuid;
 
-  private Double score;
+  /**
+   * priorityIndex  : chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)
+   */
+  @ApiModelProperty(value = "priorityIndex  : chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)")
+  private Long priorityIndex;
 
   private BaseInfoDTO baseInfo;
 
   private PostDTO post;
-
-  private MasterUserDTO masterUser;
 
   public Long getId() {
     return id;
@@ -53,12 +55,12 @@ public class NewsFeedDTO implements Serializable {
     this.uuid = uuid;
   }
 
-  public Double getScore() {
-    return score;
+  public Long getPriorityIndex() {
+    return priorityIndex;
   }
 
-  public void setScore(Double score) {
-    this.score = score;
+  public void setPriorityIndex(Long priorityIndex) {
+    this.priorityIndex = priorityIndex;
   }
 
   public BaseInfoDTO getBaseInfo() {
@@ -75,14 +77,6 @@ public class NewsFeedDTO implements Serializable {
 
   public void setPost(PostDTO post) {
     this.post = post;
-  }
-
-  public MasterUserDTO getMasterUser() {
-    return masterUser;
-  }
-
-  public void setMasterUser(MasterUserDTO masterUser) {
-    this.masterUser = masterUser;
   }
 
   @Override
@@ -112,10 +106,9 @@ public class NewsFeedDTO implements Serializable {
         return "NewsFeedDTO{" +
             "id=" + getId() +
             ", uuid='" + getUuid() + "'" +
-            ", score=" + getScore() +
+            ", priorityIndex=" + getPriorityIndex() +
             ", baseInfo=" + getBaseInfo() +
             ", post=" + getPost() +
-            ", masterUser=" + getMasterUser() +
             "}";
     }
 }

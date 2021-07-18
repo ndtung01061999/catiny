@@ -14,6 +14,12 @@
       "fieldValidateRules": ["required"]
     },
     {
+      "fieldName": "avatar",
+      "fieldType": "byte[]",
+      "javadoc": "avatar : @type Json -> ảnh đại diện của Group",
+      "fieldTypeBlobContent": "text"
+    },
+    {
       "fieldName": "quickInfo",
       "fieldType": "byte[]",
       "javadoc": "quickInfo      : @type Json -> thông tin giới thiệu sơ qua của group này",
@@ -46,13 +52,6 @@
       "otherEntityName": "topicInterest",
       "otherEntityRelationshipName": "groupPost",
       "relationshipName": "topicInterest",
-      "ownerSide": false
-    },
-    {
-      "relationshipType": "many-to-many",
-      "otherEntityName": "masterUser",
-      "otherEntityRelationshipName": "myGroupPost",
-      "relationshipName": "userInGroup",
       "ownerSide": false
     }
   ],

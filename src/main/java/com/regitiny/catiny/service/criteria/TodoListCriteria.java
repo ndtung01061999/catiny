@@ -35,8 +35,6 @@ public class TodoListCriteria implements Serializable, Criteria {
 
   private LongFilter baseInfoId;
 
-  private LongFilter masterUserId;
-
   public TodoListCriteria() {}
 
   public TodoListCriteria(TodoListCriteria other) {
@@ -44,7 +42,6 @@ public class TodoListCriteria implements Serializable, Criteria {
     this.uuid = other.uuid == null ? null : other.uuid.copy();
     this.title = other.title == null ? null : other.title.copy();
     this.baseInfoId = other.baseInfoId == null ? null : other.baseInfoId.copy();
-    this.masterUserId = other.masterUserId == null ? null : other.masterUserId.copy();
   }
 
   @Override
@@ -112,21 +109,6 @@ public class TodoListCriteria implements Serializable, Criteria {
     this.baseInfoId = baseInfoId;
   }
 
-  public LongFilter getMasterUserId() {
-    return masterUserId;
-  }
-
-  public LongFilter masterUserId() {
-    if (masterUserId == null) {
-      masterUserId = new LongFilter();
-    }
-    return masterUserId;
-  }
-
-  public void setMasterUserId(LongFilter masterUserId) {
-    this.masterUserId = masterUserId;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -140,14 +122,13 @@ public class TodoListCriteria implements Serializable, Criteria {
       Objects.equals(id, that.id) &&
       Objects.equals(uuid, that.uuid) &&
       Objects.equals(title, that.title) &&
-      Objects.equals(baseInfoId, that.baseInfoId) &&
-      Objects.equals(masterUserId, that.masterUserId)
+      Objects.equals(baseInfoId, that.baseInfoId)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, uuid, title, baseInfoId, masterUserId);
+    return Objects.hash(id, uuid, title, baseInfoId);
   }
 
   // prettier-ignore
@@ -158,7 +139,6 @@ public class TodoListCriteria implements Serializable, Criteria {
             (uuid != null ? "uuid=" + uuid + ", " : "") +
             (title != null ? "title=" + title + ", " : "") +
             (baseInfoId != null ? "baseInfoId=" + baseInfoId + ", " : "") +
-            (masterUserId != null ? "masterUserId=" + masterUserId + ", " : "") +
             "}";
     }
 }

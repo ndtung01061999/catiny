@@ -3,7 +3,6 @@ package com.regitiny.catiny.service.mapper;
 import com.regitiny.catiny.GeneratedByJHipster;
 import com.regitiny.catiny.domain.*;
 import com.regitiny.catiny.service.dto.MessageGroupDTO;
-import java.util.Set;
 import org.mapstruct.*;
 
 /**
@@ -19,9 +18,4 @@ public interface MessageGroupMapper extends EntityMapper<MessageGroupDTO, Messag
   @BeanMapping(ignoreByDefault = true)
   @Mapping(target = "id", source = "id")
   MessageGroupDTO toDtoId(MessageGroup messageGroup);
-
-  @Named("idSet")
-  @BeanMapping(ignoreByDefault = true)
-  @Mapping(target = "id", source = "id")
-  Set<MessageGroupDTO> toDtoIdSet(Set<MessageGroup> messageGroup);
 }

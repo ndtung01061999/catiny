@@ -45,6 +45,13 @@ public class MessageGroup implements Serializable {
   private String groupName;
 
   /**
+   * avatar : @type Json -> ảnh đại diện của MessageGroup
+   */
+  @Lob
+  @Column(name = "avatar")
+  private String avatar;
+
+  /**
    * addBy
    */
   @Column(name = "add_by")
@@ -52,6 +59,7 @@ public class MessageGroup implements Serializable {
 
   @JsonIgnoreProperties(
     value = {
+      "classInfo",
       "userProfile",
       "accountStatus",
       "deviceStatus",
@@ -81,6 +89,10 @@ public class MessageGroup implements Serializable {
       "topicInterest",
       "todoList",
       "event",
+      "createdBy",
+      "modifiedBy",
+      "owner",
+      "permissions",
     },
     allowSetters = true
   )
@@ -90,38 +102,8 @@ public class MessageGroup implements Serializable {
 
   @OneToMany(mappedBy = "messageGroup")
   @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-  @JsonIgnoreProperties(value = { "baseInfo", "sender", "messageGroup" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "baseInfo", "messageGroup" }, allowSetters = true)
   private Set<MessageContent> messageContents = new HashSet<>();
-
-  @ManyToMany(mappedBy = "messageGroups")
-  @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-  @JsonIgnoreProperties(
-    value = {
-      "user",
-      "myProfile",
-      "myAccountStatus",
-      "myRank",
-      "avatar",
-      "baseInfo",
-      "myPages",
-      "myFiles",
-      "myNotifications",
-      "myFriends",
-      "myFollowUsers",
-      "myFollowGroups",
-      "myFollowPages",
-      "myNewsFeeds",
-      "myTodoLists",
-      "myPosts",
-      "myGroupPosts",
-      "messageGroups",
-      "topicInterests",
-      "myLikes",
-      "myComments",
-    },
-    allowSetters = true
-  )
-  private Set<MasterUser> masterUsers = new HashSet<>();
 
   // jhipster-needle-entity-add-field - JHipster will add fields here
   public Long getId() {
@@ -161,6 +143,19 @@ public class MessageGroup implements Serializable {
 
   public void setGroupName(String groupName) {
     this.groupName = groupName;
+  }
+
+  public String getAvatar() {
+    return this.avatar;
+  }
+
+  public MessageGroup avatar(String avatar) {
+    this.avatar = avatar;
+    return this;
+  }
+
+  public void setAvatar(String avatar) {
+    this.avatar = avatar;
   }
 
   public String getAddBy() {
@@ -220,37 +215,6 @@ public class MessageGroup implements Serializable {
     this.messageContents = messageContents;
   }
 
-  public Set<MasterUser> getMasterUsers() {
-    return this.masterUsers;
-  }
-
-  public MessageGroup masterUsers(Set<MasterUser> masterUsers) {
-    this.setMasterUsers(masterUsers);
-    return this;
-  }
-
-  public MessageGroup addMasterUser(MasterUser masterUser) {
-    this.masterUsers.add(masterUser);
-    masterUser.getMessageGroups().add(this);
-    return this;
-  }
-
-  public MessageGroup removeMasterUser(MasterUser masterUser) {
-    this.masterUsers.remove(masterUser);
-    masterUser.getMessageGroups().remove(this);
-    return this;
-  }
-
-  public void setMasterUsers(Set<MasterUser> masterUsers) {
-    if (this.masterUsers != null) {
-      this.masterUsers.forEach(i -> i.removeMessageGroup(this));
-    }
-    if (masterUsers != null) {
-      masterUsers.forEach(i -> i.addMessageGroup(this));
-    }
-    this.masterUsers = masterUsers;
-  }
-
   // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
   @Override
@@ -277,6 +241,7 @@ public class MessageGroup implements Serializable {
             "id=" + getId() +
             ", uuid='" + getUuid() + "'" +
             ", groupName='" + getGroupName() + "'" +
+            ", avatar='" + getAvatar() + "'" +
             ", addBy='" + getAddBy() + "'" +
             "}";
     }

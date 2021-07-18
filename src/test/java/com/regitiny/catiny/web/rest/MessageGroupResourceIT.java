@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.regitiny.catiny.GeneratedByJHipster;
 import com.regitiny.catiny.IntegrationTest;
 import com.regitiny.catiny.domain.BaseInfo;
-import com.regitiny.catiny.domain.MasterUser;
 import com.regitiny.catiny.domain.MessageContent;
 import com.regitiny.catiny.domain.MessageGroup;
 import com.regitiny.catiny.repository.MessageGroupRepository;
@@ -37,6 +36,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Base64Utils;
 
 /**
  * Integration tests for the {@link MessageGroupResource} REST controller.
@@ -53,6 +53,9 @@ class MessageGroupResourceIT {
 
   private static final String DEFAULT_GROUP_NAME = "AAAAAAAAAA";
   private static final String UPDATED_GROUP_NAME = "BBBBBBBBBB";
+
+  private static final String DEFAULT_AVATAR = "AAAAAAAAAA";
+  private static final String UPDATED_AVATAR = "BBBBBBBBBB";
 
   private static final String DEFAULT_ADD_BY = "AAAAAAAAAA";
   private static final String UPDATED_ADD_BY = "BBBBBBBBBB";
@@ -93,7 +96,11 @@ class MessageGroupResourceIT {
    * if they test an entity which requires the current entity.
    */
   public static MessageGroup createEntity(EntityManager em) {
-    MessageGroup messageGroup = new MessageGroup().uuid(DEFAULT_UUID).groupName(DEFAULT_GROUP_NAME).addBy(DEFAULT_ADD_BY);
+    MessageGroup messageGroup = new MessageGroup()
+      .uuid(DEFAULT_UUID)
+      .groupName(DEFAULT_GROUP_NAME)
+      .avatar(DEFAULT_AVATAR)
+      .addBy(DEFAULT_ADD_BY);
     return messageGroup;
   }
 
@@ -104,7 +111,11 @@ class MessageGroupResourceIT {
    * if they test an entity which requires the current entity.
    */
   public static MessageGroup createUpdatedEntity(EntityManager em) {
-    MessageGroup messageGroup = new MessageGroup().uuid(UPDATED_UUID).groupName(UPDATED_GROUP_NAME).addBy(UPDATED_ADD_BY);
+    MessageGroup messageGroup = new MessageGroup()
+      .uuid(UPDATED_UUID)
+      .groupName(UPDATED_GROUP_NAME)
+      .avatar(UPDATED_AVATAR)
+      .addBy(UPDATED_ADD_BY);
     return messageGroup;
   }
 
@@ -129,6 +140,7 @@ class MessageGroupResourceIT {
     MessageGroup testMessageGroup = messageGroupList.get(messageGroupList.size() - 1);
     assertThat(testMessageGroup.getUuid()).isEqualTo(DEFAULT_UUID);
     assertThat(testMessageGroup.getGroupName()).isEqualTo(DEFAULT_GROUP_NAME);
+    assertThat(testMessageGroup.getAvatar()).isEqualTo(DEFAULT_AVATAR);
     assertThat(testMessageGroup.getAddBy()).isEqualTo(DEFAULT_ADD_BY);
 
     // Validate the MessageGroup in Elasticsearch
@@ -189,6 +201,7 @@ class MessageGroupResourceIT {
       .andExpect(jsonPath("$.[*].id").value(hasItem(messageGroup.getId().intValue())))
       .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
       .andExpect(jsonPath("$.[*].groupName").value(hasItem(DEFAULT_GROUP_NAME)))
+      .andExpect(jsonPath("$.[*].avatar").value(hasItem(DEFAULT_AVATAR.toString())))
       .andExpect(jsonPath("$.[*].addBy").value(hasItem(DEFAULT_ADD_BY)));
   }
 
@@ -206,6 +219,7 @@ class MessageGroupResourceIT {
       .andExpect(jsonPath("$.id").value(messageGroup.getId().intValue()))
       .andExpect(jsonPath("$.uuid").value(DEFAULT_UUID.toString()))
       .andExpect(jsonPath("$.groupName").value(DEFAULT_GROUP_NAME))
+      .andExpect(jsonPath("$.avatar").value(DEFAULT_AVATAR.toString()))
       .andExpect(jsonPath("$.addBy").value(DEFAULT_ADD_BY));
   }
 
@@ -473,25 +487,6 @@ class MessageGroupResourceIT {
     defaultMessageGroupShouldNotBeFound("messageContentId.equals=" + (messageContentId + 1));
   }
 
-  @Test
-  @Transactional
-  void getAllMessageGroupsByMasterUserIsEqualToSomething() throws Exception {
-    // Initialize the database
-    messageGroupRepository.saveAndFlush(messageGroup);
-    MasterUser masterUser = MasterUserResourceIT.createEntity(em);
-    em.persist(masterUser);
-    em.flush();
-    messageGroup.addMasterUser(masterUser);
-    messageGroupRepository.saveAndFlush(messageGroup);
-    Long masterUserId = masterUser.getId();
-
-    // Get all the messageGroupList where masterUser equals to masterUserId
-    defaultMessageGroupShouldBeFound("masterUserId.equals=" + masterUserId);
-
-    // Get all the messageGroupList where masterUser equals to (masterUserId + 1)
-    defaultMessageGroupShouldNotBeFound("masterUserId.equals=" + (masterUserId + 1));
-  }
-
   /**
    * Executes the search, and checks that the default entity is returned.
    */
@@ -503,6 +498,7 @@ class MessageGroupResourceIT {
       .andExpect(jsonPath("$.[*].id").value(hasItem(messageGroup.getId().intValue())))
       .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
       .andExpect(jsonPath("$.[*].groupName").value(hasItem(DEFAULT_GROUP_NAME)))
+      .andExpect(jsonPath("$.[*].avatar").value(hasItem(DEFAULT_AVATAR.toString())))
       .andExpect(jsonPath("$.[*].addBy").value(hasItem(DEFAULT_ADD_BY)));
 
     // Check, that the count call also returns 1
@@ -551,7 +547,7 @@ class MessageGroupResourceIT {
     MessageGroup updatedMessageGroup = messageGroupRepository.findById(messageGroup.getId()).get();
     // Disconnect from session so that the updates on updatedMessageGroup are not directly saved in db
     em.detach(updatedMessageGroup);
-    updatedMessageGroup.uuid(UPDATED_UUID).groupName(UPDATED_GROUP_NAME).addBy(UPDATED_ADD_BY);
+    updatedMessageGroup.uuid(UPDATED_UUID).groupName(UPDATED_GROUP_NAME).avatar(UPDATED_AVATAR).addBy(UPDATED_ADD_BY);
     MessageGroupDTO messageGroupDTO = messageGroupMapper.toDto(updatedMessageGroup);
 
     restMessageGroupMockMvc
@@ -568,6 +564,7 @@ class MessageGroupResourceIT {
     MessageGroup testMessageGroup = messageGroupList.get(messageGroupList.size() - 1);
     assertThat(testMessageGroup.getUuid()).isEqualTo(UPDATED_UUID);
     assertThat(testMessageGroup.getGroupName()).isEqualTo(UPDATED_GROUP_NAME);
+    assertThat(testMessageGroup.getAvatar()).isEqualTo(UPDATED_AVATAR);
     assertThat(testMessageGroup.getAddBy()).isEqualTo(UPDATED_ADD_BY);
 
     // Validate the MessageGroup in Elasticsearch
@@ -676,6 +673,7 @@ class MessageGroupResourceIT {
     MessageGroup testMessageGroup = messageGroupList.get(messageGroupList.size() - 1);
     assertThat(testMessageGroup.getUuid()).isEqualTo(UPDATED_UUID);
     assertThat(testMessageGroup.getGroupName()).isEqualTo(UPDATED_GROUP_NAME);
+    assertThat(testMessageGroup.getAvatar()).isEqualTo(DEFAULT_AVATAR);
     assertThat(testMessageGroup.getAddBy()).isEqualTo(DEFAULT_ADD_BY);
   }
 
@@ -691,7 +689,7 @@ class MessageGroupResourceIT {
     MessageGroup partialUpdatedMessageGroup = new MessageGroup();
     partialUpdatedMessageGroup.setId(messageGroup.getId());
 
-    partialUpdatedMessageGroup.uuid(UPDATED_UUID).groupName(UPDATED_GROUP_NAME).addBy(UPDATED_ADD_BY);
+    partialUpdatedMessageGroup.uuid(UPDATED_UUID).groupName(UPDATED_GROUP_NAME).avatar(UPDATED_AVATAR).addBy(UPDATED_ADD_BY);
 
     restMessageGroupMockMvc
       .perform(
@@ -707,6 +705,7 @@ class MessageGroupResourceIT {
     MessageGroup testMessageGroup = messageGroupList.get(messageGroupList.size() - 1);
     assertThat(testMessageGroup.getUuid()).isEqualTo(UPDATED_UUID);
     assertThat(testMessageGroup.getGroupName()).isEqualTo(UPDATED_GROUP_NAME);
+    assertThat(testMessageGroup.getAvatar()).isEqualTo(UPDATED_AVATAR);
     assertThat(testMessageGroup.getAddBy()).isEqualTo(UPDATED_ADD_BY);
   }
 
@@ -824,6 +823,7 @@ class MessageGroupResourceIT {
       .andExpect(jsonPath("$.[*].id").value(hasItem(messageGroup.getId().intValue())))
       .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
       .andExpect(jsonPath("$.[*].groupName").value(hasItem(DEFAULT_GROUP_NAME)))
+      .andExpect(jsonPath("$.[*].avatar").value(hasItem(DEFAULT_AVATAR.toString())))
       .andExpect(jsonPath("$.[*].addBy").value(hasItem(DEFAULT_ADD_BY)));
   }
 }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <!--
+        Added the constraints for entity BaseInfo.
+    -->
+    <changeSet id="20210710143934-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="class_info_id"
+                                 baseTableName="base_info"
+                                 constraintName="fk_base_info__class_info_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="class_info"/>
+
+        <addForeignKeyConstraint baseColumnNames="created_by_id"
+                                 baseTableName="base_info"
+                                 constraintName="fk_base_info__created_by_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="master_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="modified_by_id"
+                                 baseTableName="base_info"
+                                 constraintName="fk_base_info__modified_by_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="master_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="owner_id"
+                                 baseTableName="base_info"
+                                 constraintName="fk_base_info__owner_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="master_user"/>
+    </changeSet>
+</databaseChangeLog>

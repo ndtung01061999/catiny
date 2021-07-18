@@ -9,34 +9,59 @@
     },
     {
       "fieldName": "title",
-      "fieldType": "String"
+      "fieldType": "String",
+      "javadoc": "title          : tiêu đề event"
+    },
+    {
+      "fieldName": "avatar",
+      "fieldType": "byte[]",
+      "javadoc": "avatar         : @type Json -> ảnh đại diện event",
+      "fieldTypeBlobContent": "text"
     },
     {
       "fieldName": "content",
       "fieldType": "byte[]",
+      "javadoc": "content        : nội dung event",
       "fieldTypeBlobContent": "text"
     },
     {
       "fieldName": "type",
       "fieldType": "EventType",
+      "javadoc": "type           :loại event",
       "fieldValues": "DAY,MONTH,YEAR,ONLY_ONE"
     },
     {
       "fieldName": "description",
       "fieldType": "byte[]",
+      "javadoc": "description    : mô tả chi tết về event",
       "fieldTypeBlobContent": "text"
     },
     {
       "fieldName": "startTime",
-      "fieldType": "Instant"
+      "fieldType": "Instant",
+      "javadoc": "startTime      : thời gian bắt đầu"
     },
     {
       "fieldName": "endTime",
-      "fieldType": "Instant"
+      "fieldType": "Instant",
+      "javadoc": "endTime        : thời gian kết thúc"
     },
     {
       "fieldName": "tagLine",
-      "fieldType": "String"
+      "fieldType": "String",
+      "javadoc": "tagLine        : thẻ cho event"
+    },
+    {
+      "fieldName": "imageCollection",
+      "fieldType": "byte[]",
+      "javadoc": "imageCollection: @type Json -> tập ảnh của event",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "videoCollection",
+      "fieldType": "byte[]",
+      "javadoc": "videoCollection: @type Json -> tập video của event",
+      "fieldTypeBlobContent": "text"
     }
   ],
   "relationships": [
@@ -46,18 +71,6 @@
       "otherEntityRelationshipName": "event",
       "relationshipName": "baseInfo",
       "ownerSide": true
-    },
-    {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "image",
-      "otherEntityRelationshipName": "event",
-      "relationshipName": "otherImage"
-    },
-    {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "video",
-      "otherEntityRelationshipName": "event",
-      "relationshipName": "otherVideo"
     }
   ],
   "javadoc": "@what?            -> The Event entity.\\n@why?             ->\\n@use-to           -> Lưu những sự kiện\\n@commonly-used-in -> Tạo Sự kiện\\n\\n@describe         ->",

@@ -363,25 +363,6 @@ class FriendResourceIT {
     defaultFriendShouldNotBeFound("friendDetailsId.equals=" + (friendDetailsId + 1));
   }
 
-  @Test
-  @Transactional
-  void getAllFriendsByMasterUserIsEqualToSomething() throws Exception {
-    // Initialize the database
-    friendRepository.saveAndFlush(friend);
-    MasterUser masterUser = MasterUserResourceIT.createEntity(em);
-    em.persist(masterUser);
-    em.flush();
-    friend.setMasterUser(masterUser);
-    friendRepository.saveAndFlush(friend);
-    Long masterUserId = masterUser.getId();
-
-    // Get all the friendList where masterUser equals to masterUserId
-    defaultFriendShouldBeFound("masterUserId.equals=" + masterUserId);
-
-    // Get all the friendList where masterUser equals to (masterUserId + 1)
-    defaultFriendShouldNotBeFound("masterUserId.equals=" + (masterUserId + 1));
-  }
-
   /**
    * Executes the search, and checks that the default entity is returned.
    */

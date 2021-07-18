@@ -39,11 +39,14 @@ export const NewsFeedDetail = (props: RouteComponentProps<{ id: string }>) => {
           </dt>
           <dd>{newsFeedEntity.uuid}</dd>
           <dt>
-            <span id="score">
-              <Translate contentKey="catinyApp.newsFeed.score">Score</Translate>
+            <span id="priorityIndex">
+              <Translate contentKey="catinyApp.newsFeed.priorityIndex">Priority Index</Translate>
             </span>
+            <UncontrolledTooltip target="priorityIndex">
+              <Translate contentKey="catinyApp.newsFeed.help.priorityIndex" />
+            </UncontrolledTooltip>
           </dt>
-          <dd>{newsFeedEntity.score}</dd>
+          <dd>{newsFeedEntity.priorityIndex}</dd>
           <dt>
             <Translate contentKey="catinyApp.newsFeed.baseInfo">Base Info</Translate>
           </dt>
@@ -52,10 +55,6 @@ export const NewsFeedDetail = (props: RouteComponentProps<{ id: string }>) => {
             <Translate contentKey="catinyApp.newsFeed.post">Post</Translate>
           </dt>
           <dd>{newsFeedEntity.post ? newsFeedEntity.post.id : ''}</dd>
-          <dt>
-            <Translate contentKey="catinyApp.newsFeed.masterUser">Master User</Translate>
-          </dt>
-          <dd>{newsFeedEntity.masterUser ? newsFeedEntity.masterUser.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/news-feed" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

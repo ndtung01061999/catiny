@@ -56,8 +56,6 @@ public class NotificationCriteria implements Serializable, Criteria {
 
   private LongFilter baseInfoId;
 
-  private LongFilter masterUserId;
-
   public NotificationCriteria() {}
 
   public NotificationCriteria(NotificationCriteria other) {
@@ -66,7 +64,6 @@ public class NotificationCriteria implements Serializable, Criteria {
     this.notifyType = other.notifyType == null ? null : other.notifyType.copy();
     this.title = other.title == null ? null : other.title.copy();
     this.baseInfoId = other.baseInfoId == null ? null : other.baseInfoId.copy();
-    this.masterUserId = other.masterUserId == null ? null : other.masterUserId.copy();
   }
 
   @Override
@@ -149,21 +146,6 @@ public class NotificationCriteria implements Serializable, Criteria {
     this.baseInfoId = baseInfoId;
   }
 
-  public LongFilter getMasterUserId() {
-    return masterUserId;
-  }
-
-  public LongFilter masterUserId() {
-    if (masterUserId == null) {
-      masterUserId = new LongFilter();
-    }
-    return masterUserId;
-  }
-
-  public void setMasterUserId(LongFilter masterUserId) {
-    this.masterUserId = masterUserId;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -178,14 +160,13 @@ public class NotificationCriteria implements Serializable, Criteria {
       Objects.equals(uuid, that.uuid) &&
       Objects.equals(notifyType, that.notifyType) &&
       Objects.equals(title, that.title) &&
-      Objects.equals(baseInfoId, that.baseInfoId) &&
-      Objects.equals(masterUserId, that.masterUserId)
+      Objects.equals(baseInfoId, that.baseInfoId)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, uuid, notifyType, title, baseInfoId, masterUserId);
+    return Objects.hash(id, uuid, notifyType, title, baseInfoId);
   }
 
   // prettier-ignore
@@ -197,7 +178,6 @@ public class NotificationCriteria implements Serializable, Criteria {
             (notifyType != null ? "notifyType=" + notifyType + ", " : "") +
             (title != null ? "title=" + title + ", " : "") +
             (baseInfoId != null ? "baseInfoId=" + baseInfoId + ", " : "") +
-            (masterUserId != null ? "masterUserId=" + masterUserId + ", " : "") +
             "}";
     }
 }

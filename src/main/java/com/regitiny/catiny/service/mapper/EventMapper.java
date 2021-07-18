@@ -13,9 +13,4 @@ import org.mapstruct.*;
 public interface EventMapper extends EntityMapper<EventDTO, Event> {
   @Mapping(target = "baseInfo", source = "baseInfo", qualifiedByName = "id")
   EventDTO toDto(Event s);
-
-  @Named("id")
-  @BeanMapping(ignoreByDefault = true)
-  @Mapping(target = "id", source = "id")
-  EventDTO toDtoId(Event event);
 }

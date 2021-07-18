@@ -8,16 +8,18 @@ export default class BaseInfoUpdatePage {
   saveButton: ElementFinder = element(by.id('save-entity'));
   cancelButton: ElementFinder = element(by.id('cancel-save'));
   processStatusSelect: ElementFinder = element(by.css('select#base-info-processStatus'));
-  ownerInput: ElementFinder = element(by.css('textarea#base-info-owner'));
-  roleInput: ElementFinder = element(by.css('textarea#base-info-role'));
   modifiedClassInput: ElementFinder = element(by.css('input#base-info-modifiedClass'));
   createdDateInput: ElementFinder = element(by.css('input#base-info-createdDate'));
   modifiedDateInput: ElementFinder = element(by.css('input#base-info-modifiedDate'));
-  createdByInput: ElementFinder = element(by.css('input#base-info-createdBy'));
-  modifiedByInput: ElementFinder = element(by.css('input#base-info-modifiedBy'));
   notesInput: ElementFinder = element(by.css('textarea#base-info-notes'));
   historyUpdateInput: ElementFinder = element(by.css('textarea#base-info-historyUpdate'));
   deletedInput: ElementFinder = element(by.css('input#base-info-deleted'));
+  priorityIndexInput: ElementFinder = element(by.css('input#base-info-priorityIndex'));
+  countUseInput: ElementFinder = element(by.css('input#base-info-countUse'));
+  classInfoSelect: ElementFinder = element(by.css('select#base-info-classInfo'));
+  createdBySelect: ElementFinder = element(by.css('select#base-info-createdBy'));
+  modifiedBySelect: ElementFinder = element(by.css('select#base-info-modifiedBy'));
+  ownerSelect: ElementFinder = element(by.css('select#base-info-owner'));
 
   getPageTitle() {
     return this.pageTitle;
@@ -34,22 +36,6 @@ export default class BaseInfoUpdatePage {
   async processStatusSelectLastOption() {
     await this.processStatusSelect.all(by.tagName('option')).last().click();
   }
-  async setOwnerInput(owner) {
-    await this.ownerInput.sendKeys(owner);
-  }
-
-  async getOwnerInput() {
-    return this.ownerInput.getAttribute('value');
-  }
-
-  async setRoleInput(role) {
-    await this.roleInput.sendKeys(role);
-  }
-
-  async getRoleInput() {
-    return this.roleInput.getAttribute('value');
-  }
-
   async setModifiedClassInput(modifiedClass) {
     await this.modifiedClassInput.sendKeys(modifiedClass);
   }
@@ -74,22 +60,6 @@ export default class BaseInfoUpdatePage {
     return this.modifiedDateInput.getAttribute('value');
   }
 
-  async setCreatedByInput(createdBy) {
-    await this.createdByInput.sendKeys(createdBy);
-  }
-
-  async getCreatedByInput() {
-    return this.createdByInput.getAttribute('value');
-  }
-
-  async setModifiedByInput(modifiedBy) {
-    await this.modifiedByInput.sendKeys(modifiedBy);
-  }
-
-  async getModifiedByInput() {
-    return this.modifiedByInput.getAttribute('value');
-  }
-
   async setNotesInput(notes) {
     await this.notesInput.sendKeys(notes);
   }
@@ -109,6 +79,86 @@ export default class BaseInfoUpdatePage {
   getDeletedInput() {
     return this.deletedInput;
   }
+  async setPriorityIndexInput(priorityIndex) {
+    await this.priorityIndexInput.sendKeys(priorityIndex);
+  }
+
+  async getPriorityIndexInput() {
+    return this.priorityIndexInput.getAttribute('value');
+  }
+
+  async setCountUseInput(countUse) {
+    await this.countUseInput.sendKeys(countUse);
+  }
+
+  async getCountUseInput() {
+    return this.countUseInput.getAttribute('value');
+  }
+
+  async classInfoSelectLastOption() {
+    await this.classInfoSelect.all(by.tagName('option')).last().click();
+  }
+
+  async classInfoSelectOption(option) {
+    await this.classInfoSelect.sendKeys(option);
+  }
+
+  getClassInfoSelect() {
+    return this.classInfoSelect;
+  }
+
+  async getClassInfoSelectedOption() {
+    return this.classInfoSelect.element(by.css('option:checked')).getText();
+  }
+
+  async createdBySelectLastOption() {
+    await this.createdBySelect.all(by.tagName('option')).last().click();
+  }
+
+  async createdBySelectOption(option) {
+    await this.createdBySelect.sendKeys(option);
+  }
+
+  getCreatedBySelect() {
+    return this.createdBySelect;
+  }
+
+  async getCreatedBySelectedOption() {
+    return this.createdBySelect.element(by.css('option:checked')).getText();
+  }
+
+  async modifiedBySelectLastOption() {
+    await this.modifiedBySelect.all(by.tagName('option')).last().click();
+  }
+
+  async modifiedBySelectOption(option) {
+    await this.modifiedBySelect.sendKeys(option);
+  }
+
+  getModifiedBySelect() {
+    return this.modifiedBySelect;
+  }
+
+  async getModifiedBySelectedOption() {
+    return this.modifiedBySelect.element(by.css('option:checked')).getText();
+  }
+
+  async ownerSelectLastOption() {
+    await this.ownerSelect.all(by.tagName('option')).last().click();
+  }
+
+  async ownerSelectOption(option) {
+    await this.ownerSelect.sendKeys(option);
+  }
+
+  getOwnerSelect() {
+    return this.ownerSelect;
+  }
+
+  async getOwnerSelectedOption() {
+    return this.ownerSelect.element(by.css('option:checked')).getText();
+  }
+
   async save() {
     await this.saveButton.click();
   }
@@ -125,19 +175,11 @@ export default class BaseInfoUpdatePage {
     await waitUntilDisplayed(this.saveButton);
     await this.processStatusSelectLastOption();
     await waitUntilDisplayed(this.saveButton);
-    await this.setOwnerInput('owner');
-    await waitUntilDisplayed(this.saveButton);
-    await this.setRoleInput('role');
-    await waitUntilDisplayed(this.saveButton);
     await this.setModifiedClassInput('modifiedClass');
     await waitUntilDisplayed(this.saveButton);
     await this.setCreatedDateInput('01/01/2001' + protractor.Key.TAB + '02:30AM');
     await waitUntilDisplayed(this.saveButton);
     await this.setModifiedDateInput('01/01/2001' + protractor.Key.TAB + '02:30AM');
-    await waitUntilDisplayed(this.saveButton);
-    await this.setCreatedByInput('createdBy');
-    await waitUntilDisplayed(this.saveButton);
-    await this.setModifiedByInput('modifiedBy');
     await waitUntilDisplayed(this.saveButton);
     await this.setNotesInput('notes');
     await waitUntilDisplayed(this.saveButton);
@@ -149,6 +191,14 @@ export default class BaseInfoUpdatePage {
     } else {
       await this.getDeletedInput().click();
     }
+    await waitUntilDisplayed(this.saveButton);
+    await this.setPriorityIndexInput('5');
+    await waitUntilDisplayed(this.saveButton);
+    await this.setCountUseInput('5');
+    await this.classInfoSelectLastOption();
+    await this.createdBySelectLastOption();
+    await this.modifiedBySelectLastOption();
+    await this.ownerSelectLastOption();
     await this.save();
     await waitUntilHidden(this.saveButton);
   }

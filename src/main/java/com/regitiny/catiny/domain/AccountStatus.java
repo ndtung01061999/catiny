@@ -61,6 +61,7 @@ public class AccountStatus implements Serializable {
 
   @JsonIgnoreProperties(
     value = {
+      "classInfo",
       "userProfile",
       "accountStatus",
       "deviceStatus",
@@ -90,6 +91,10 @@ public class AccountStatus implements Serializable {
       "topicInterest",
       "todoList",
       "event",
+      "createdBy",
+      "modifiedBy",
+      "owner",
+      "permissions",
     },
     allowSetters = true
   )

@@ -117,6 +117,23 @@ export const AlbumUpdate = (props: RouteComponentProps<{ id: string }>) => {
                   required: { value: true, message: translate('entity.validation.required') },
                 }}
               />
+              <UncontrolledTooltip target="nameLabel">
+                <Translate contentKey="catinyApp.album.help.name" />
+              </UncontrolledTooltip>
+              <ValidatedField label={translate('catinyApp.album.note')} id="album-note" name="note" data-cy="note" type="text" />
+              <UncontrolledTooltip target="noteLabel">
+                <Translate contentKey="catinyApp.album.help.note" />
+              </UncontrolledTooltip>
+              <ValidatedField
+                label={translate('catinyApp.album.avatar')}
+                id="album-avatar"
+                name="avatar"
+                data-cy="avatar"
+                type="textarea"
+              />
+              <UncontrolledTooltip target="avatarLabel">
+                <Translate contentKey="catinyApp.album.help.avatar" />
+              </UncontrolledTooltip>
               <ValidatedField
                 id="album-baseInfo"
                 name="baseInfoId"

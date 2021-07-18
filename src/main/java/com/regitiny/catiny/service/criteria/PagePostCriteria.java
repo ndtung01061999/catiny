@@ -39,8 +39,6 @@ public class PagePostCriteria implements Serializable, Criteria {
 
   private LongFilter myPostInPageId;
 
-  private LongFilter masterUserId;
-
   private LongFilter topicInterestId;
 
   public PagePostCriteria() {}
@@ -52,7 +50,6 @@ public class PagePostCriteria implements Serializable, Criteria {
     this.profileId = other.profileId == null ? null : other.profileId.copy();
     this.baseInfoId = other.baseInfoId == null ? null : other.baseInfoId.copy();
     this.myPostInPageId = other.myPostInPageId == null ? null : other.myPostInPageId.copy();
-    this.masterUserId = other.masterUserId == null ? null : other.masterUserId.copy();
     this.topicInterestId = other.topicInterestId == null ? null : other.topicInterestId.copy();
   }
 
@@ -151,21 +148,6 @@ public class PagePostCriteria implements Serializable, Criteria {
     this.myPostInPageId = myPostInPageId;
   }
 
-  public LongFilter getMasterUserId() {
-    return masterUserId;
-  }
-
-  public LongFilter masterUserId() {
-    if (masterUserId == null) {
-      masterUserId = new LongFilter();
-    }
-    return masterUserId;
-  }
-
-  public void setMasterUserId(LongFilter masterUserId) {
-    this.masterUserId = masterUserId;
-  }
-
   public LongFilter getTopicInterestId() {
     return topicInterestId;
   }
@@ -197,14 +179,13 @@ public class PagePostCriteria implements Serializable, Criteria {
       Objects.equals(profileId, that.profileId) &&
       Objects.equals(baseInfoId, that.baseInfoId) &&
       Objects.equals(myPostInPageId, that.myPostInPageId) &&
-      Objects.equals(masterUserId, that.masterUserId) &&
       Objects.equals(topicInterestId, that.topicInterestId)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, uuid, name, profileId, baseInfoId, myPostInPageId, masterUserId, topicInterestId);
+    return Objects.hash(id, uuid, name, profileId, baseInfoId, myPostInPageId, topicInterestId);
   }
 
   // prettier-ignore
@@ -217,7 +198,6 @@ public class PagePostCriteria implements Serializable, Criteria {
             (profileId != null ? "profileId=" + profileId + ", " : "") +
             (baseInfoId != null ? "baseInfoId=" + baseInfoId + ", " : "") +
             (myPostInPageId != null ? "myPostInPageId=" + myPostInPageId + ", " : "") +
-            (masterUserId != null ? "masterUserId=" + masterUserId + ", " : "") +
             (topicInterestId != null ? "topicInterestId=" + topicInterestId + ", " : "") +
             "}";
     }

@@ -17,20 +17,23 @@
             <column name="uuid" type="${uuidType}" remarks="uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)">
                 <constraints nullable="false" unique="true" uniqueConstraintName="ux_message_content__uuid" />
             </column>
-            <column name="content" type="${clobType}">
+            <column name="sender_name" type="varchar(255)" remarks="senderName     : tên người gửi">
                 <constraints nullable="true" />
             </column>
-            <column name="status" type="${clobType}" remarks="status : trạng thái của tin nhắn này, đã gửi chưa , ai đã nhận được , đã xem chưa đã thu hồi hay đã xóa...\n@type           : Json">
+            <column name="attach" type="${clobType}" remarks="attachInfo     : đính kèm tệp ảnh video ...">
                 <constraints nullable="true" />
             </column>
-            <column name="search_field" type="${clobType}" remarks="searchField : lưu content tin nhắn lọc dấu ... để sau này search">
+            <column name="content" type="${clobType}" remarks="content        : nội dung tin nhắn">
+                <constraints nullable="true" />
+            </column>
+            <column name="status" type="${clobType}" remarks="status         : trạng thái của tin nhắn này, đã gửi chưa , ai đã nhận được , đã xem chưa đã thu hồi hay đã xóa...">
+                <constraints nullable="true" />
+            </column>
+            <column name="search_field" type="${clobType}" remarks="searchField    : lưu content tin nhắn lọc dấu ... để sau này search">
                 <constraints nullable="true" />
             </column>
             <column name="base_info_id" type="bigint">
                 <constraints nullable="true" unique="true" uniqueConstraintName="ux_message_content__base_info_id" />
-            </column>
-            <column name="sender_id" type="bigint">
-                <constraints nullable="true" />
             </column>
             <column name="message_group_id" type="bigint">
                 <constraints nullable="true" />
@@ -56,6 +59,8 @@
                   tableName="message_content">
             <column name="id" type="numeric"/>
             <column name="uuid" type="string"/>
+            <column name="sender_name" type="string"/>
+            <column name="attach" type="clob"/>
             <column name="content" type="clob"/>
             <column name="status" type="clob"/>
             <column name="search_field" type="clob"/>

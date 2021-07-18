@@ -35,8 +35,6 @@ public class FollowPageCriteria implements Serializable, Criteria {
 
   private LongFilter followPageDetailsId;
 
-  private LongFilter masterUserId;
-
   public FollowPageCriteria() {}
 
   public FollowPageCriteria(FollowPageCriteria other) {
@@ -44,7 +42,6 @@ public class FollowPageCriteria implements Serializable, Criteria {
     this.uuid = other.uuid == null ? null : other.uuid.copy();
     this.baseInfoId = other.baseInfoId == null ? null : other.baseInfoId.copy();
     this.followPageDetailsId = other.followPageDetailsId == null ? null : other.followPageDetailsId.copy();
-    this.masterUserId = other.masterUserId == null ? null : other.masterUserId.copy();
   }
 
   @Override
@@ -112,21 +109,6 @@ public class FollowPageCriteria implements Serializable, Criteria {
     this.followPageDetailsId = followPageDetailsId;
   }
 
-  public LongFilter getMasterUserId() {
-    return masterUserId;
-  }
-
-  public LongFilter masterUserId() {
-    if (masterUserId == null) {
-      masterUserId = new LongFilter();
-    }
-    return masterUserId;
-  }
-
-  public void setMasterUserId(LongFilter masterUserId) {
-    this.masterUserId = masterUserId;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -140,14 +122,13 @@ public class FollowPageCriteria implements Serializable, Criteria {
       Objects.equals(id, that.id) &&
       Objects.equals(uuid, that.uuid) &&
       Objects.equals(baseInfoId, that.baseInfoId) &&
-      Objects.equals(followPageDetailsId, that.followPageDetailsId) &&
-      Objects.equals(masterUserId, that.masterUserId)
+      Objects.equals(followPageDetailsId, that.followPageDetailsId)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, uuid, baseInfoId, followPageDetailsId, masterUserId);
+    return Objects.hash(id, uuid, baseInfoId, followPageDetailsId);
   }
 
   // prettier-ignore
@@ -158,7 +139,6 @@ public class FollowPageCriteria implements Serializable, Criteria {
             (uuid != null ? "uuid=" + uuid + ", " : "") +
             (baseInfoId != null ? "baseInfoId=" + baseInfoId + ", " : "") +
             (followPageDetailsId != null ? "followPageDetailsId=" + followPageDetailsId + ", " : "") +
-            (masterUserId != null ? "masterUserId=" + masterUserId + ", " : "") +
             "}";
     }
 }

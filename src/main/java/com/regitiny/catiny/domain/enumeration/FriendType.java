@@ -10,4 +10,5 @@ public enum FriendType {
   FRIEND,
   BEST_FRIEND,
   FAMILY,
+  BLOCK,
 }

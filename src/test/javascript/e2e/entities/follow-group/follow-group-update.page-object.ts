@@ -10,7 +10,6 @@ export default class FollowGroupUpdatePage {
   uuidInput: ElementFinder = element(by.css('input#follow-group-uuid'));
   baseInfoSelect: ElementFinder = element(by.css('select#follow-group-baseInfo'));
   followGroupDetailsSelect: ElementFinder = element(by.css('select#follow-group-followGroupDetails'));
-  masterUserSelect: ElementFinder = element(by.css('select#follow-group-masterUser'));
 
   getPageTitle() {
     return this.pageTitle;
@@ -56,22 +55,6 @@ export default class FollowGroupUpdatePage {
     return this.followGroupDetailsSelect.element(by.css('option:checked')).getText();
   }
 
-  async masterUserSelectLastOption() {
-    await this.masterUserSelect.all(by.tagName('option')).last().click();
-  }
-
-  async masterUserSelectOption(option) {
-    await this.masterUserSelect.sendKeys(option);
-  }
-
-  getMasterUserSelect() {
-    return this.masterUserSelect;
-  }
-
-  async getMasterUserSelectedOption() {
-    return this.masterUserSelect.element(by.css('option:checked')).getText();
-  }
-
   async save() {
     await this.saveButton.click();
   }
@@ -89,7 +72,6 @@ export default class FollowGroupUpdatePage {
     await this.setUuidInput('64c99148-3908-465d-8c4a-e510e3ade974');
     await this.baseInfoSelectLastOption();
     await this.followGroupDetailsSelectLastOption();
-    await this.masterUserSelectLastOption();
     await this.save();
     await waitUntilHidden(this.saveButton);
   }

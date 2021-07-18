@@ -56,8 +56,6 @@ public class FriendCriteria implements Serializable, Criteria {
 
   private LongFilter friendDetailsId;
 
-  private LongFilter masterUserId;
-
   public FriendCriteria() {}
 
   public FriendCriteria(FriendCriteria other) {
@@ -66,7 +64,6 @@ public class FriendCriteria implements Serializable, Criteria {
     this.friendType = other.friendType == null ? null : other.friendType.copy();
     this.baseInfoId = other.baseInfoId == null ? null : other.baseInfoId.copy();
     this.friendDetailsId = other.friendDetailsId == null ? null : other.friendDetailsId.copy();
-    this.masterUserId = other.masterUserId == null ? null : other.masterUserId.copy();
   }
 
   @Override
@@ -149,21 +146,6 @@ public class FriendCriteria implements Serializable, Criteria {
     this.friendDetailsId = friendDetailsId;
   }
 
-  public LongFilter getMasterUserId() {
-    return masterUserId;
-  }
-
-  public LongFilter masterUserId() {
-    if (masterUserId == null) {
-      masterUserId = new LongFilter();
-    }
-    return masterUserId;
-  }
-
-  public void setMasterUserId(LongFilter masterUserId) {
-    this.masterUserId = masterUserId;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -178,14 +160,13 @@ public class FriendCriteria implements Serializable, Criteria {
       Objects.equals(uuid, that.uuid) &&
       Objects.equals(friendType, that.friendType) &&
       Objects.equals(baseInfoId, that.baseInfoId) &&
-      Objects.equals(friendDetailsId, that.friendDetailsId) &&
-      Objects.equals(masterUserId, that.masterUserId)
+      Objects.equals(friendDetailsId, that.friendDetailsId)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, uuid, friendType, baseInfoId, friendDetailsId, masterUserId);
+    return Objects.hash(id, uuid, friendType, baseInfoId, friendDetailsId);
   }
 
   // prettier-ignore
@@ -197,7 +178,6 @@ public class FriendCriteria implements Serializable, Criteria {
             (friendType != null ? "friendType=" + friendType + ", " : "") +
             (baseInfoId != null ? "baseInfoId=" + baseInfoId + ", " : "") +
             (friendDetailsId != null ? "friendDetailsId=" + friendDetailsId + ", " : "") +
-            (masterUserId != null ? "masterUserId=" + masterUserId + ", " : "") +
             "}";
     }
 }

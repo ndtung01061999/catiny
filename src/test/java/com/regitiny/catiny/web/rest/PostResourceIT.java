@@ -11,7 +11,6 @@ import com.regitiny.catiny.GeneratedByJHipster;
 import com.regitiny.catiny.IntegrationTest;
 import com.regitiny.catiny.domain.BaseInfo;
 import com.regitiny.catiny.domain.GroupPost;
-import com.regitiny.catiny.domain.MasterUser;
 import com.regitiny.catiny.domain.NewsFeed;
 import com.regitiny.catiny.domain.PagePost;
 import com.regitiny.catiny.domain.Post;
@@ -435,40 +434,40 @@ class PostResourceIT {
 
   @Test
   @Transactional
-  void getAllPostsByPostCommentIsEqualToSomething() throws Exception {
+  void getAllPostsByCommentIsEqualToSomething() throws Exception {
     // Initialize the database
     postRepository.saveAndFlush(post);
-    PostComment postComment = PostCommentResourceIT.createEntity(em);
-    em.persist(postComment);
+    PostComment comment = PostCommentResourceIT.createEntity(em);
+    em.persist(comment);
     em.flush();
-    post.addPostComment(postComment);
+    post.addComment(comment);
     postRepository.saveAndFlush(post);
-    Long postCommentId = postComment.getId();
+    Long commentId = comment.getId();
 
-    // Get all the postList where postComment equals to postCommentId
-    defaultPostShouldBeFound("postCommentId.equals=" + postCommentId);
+    // Get all the postList where comment equals to commentId
+    defaultPostShouldBeFound("commentId.equals=" + commentId);
 
-    // Get all the postList where postComment equals to (postCommentId + 1)
-    defaultPostShouldNotBeFound("postCommentId.equals=" + (postCommentId + 1));
+    // Get all the postList where comment equals to (commentId + 1)
+    defaultPostShouldNotBeFound("commentId.equals=" + (commentId + 1));
   }
 
   @Test
   @Transactional
-  void getAllPostsByPostLikeIsEqualToSomething() throws Exception {
+  void getAllPostsByLikeIsEqualToSomething() throws Exception {
     // Initialize the database
     postRepository.saveAndFlush(post);
-    PostLike postLike = PostLikeResourceIT.createEntity(em);
-    em.persist(postLike);
+    PostLike like = PostLikeResourceIT.createEntity(em);
+    em.persist(like);
     em.flush();
-    post.addPostLike(postLike);
+    post.addLike(like);
     postRepository.saveAndFlush(post);
-    Long postLikeId = postLike.getId();
+    Long likeId = like.getId();
 
-    // Get all the postList where postLike equals to postLikeId
-    defaultPostShouldBeFound("postLikeId.equals=" + postLikeId);
+    // Get all the postList where like equals to likeId
+    defaultPostShouldBeFound("likeId.equals=" + likeId);
 
-    // Get all the postList where postLike equals to (postLikeId + 1)
-    defaultPostShouldNotBeFound("postLikeId.equals=" + (postLikeId + 1));
+    // Get all the postList where like equals to (likeId + 1)
+    defaultPostShouldNotBeFound("likeId.equals=" + (likeId + 1));
   }
 
   @Test
@@ -545,25 +544,6 @@ class PostResourceIT {
 
     // Get all the postList where postShareParent equals to (postShareParentId + 1)
     defaultPostShouldNotBeFound("postShareParentId.equals=" + (postShareParentId + 1));
-  }
-
-  @Test
-  @Transactional
-  void getAllPostsByPosterIsEqualToSomething() throws Exception {
-    // Initialize the database
-    postRepository.saveAndFlush(post);
-    MasterUser poster = MasterUserResourceIT.createEntity(em);
-    em.persist(poster);
-    em.flush();
-    post.setPoster(poster);
-    postRepository.saveAndFlush(post);
-    Long posterId = poster.getId();
-
-    // Get all the postList where poster equals to posterId
-    defaultPostShouldBeFound("posterId.equals=" + posterId);
-
-    // Get all the postList where poster equals to (posterId + 1)
-    defaultPostShouldNotBeFound("posterId.equals=" + (posterId + 1));
   }
 
   @Test

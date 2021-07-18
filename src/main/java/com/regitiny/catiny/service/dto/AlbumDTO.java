@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
+import javax.persistence.Lob;
 import javax.validation.constraints.*;
 
 /**
@@ -31,8 +32,25 @@ public class AlbumDTO implements Serializable {
   )
   private UUID uuid;
 
+  /**
+   * name           : tên của album
+   */
   @NotNull
+  @ApiModelProperty(value = "name           : tên của album", required = true)
   private String name;
+
+  /**
+   * note           : trú thích của album (ví dụ album đại học)
+   */
+  @ApiModelProperty(value = "note           : trú thích của album (ví dụ album đại học)")
+  private String note;
+
+  /**
+   * avatar         : @type Json -> ảnh đại diện của Album
+   */
+  @ApiModelProperty(value = "avatar         : @type Json -> ảnh đại diện của Album")
+  @Lob
+  private String avatar;
 
   private BaseInfoDTO baseInfo;
 
@@ -60,6 +78,22 @@ public class AlbumDTO implements Serializable {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public String getNote() {
+    return note;
+  }
+
+  public void setNote(String note) {
+    this.note = note;
+  }
+
+  public String getAvatar() {
+    return avatar;
+  }
+
+  public void setAvatar(String avatar) {
+    this.avatar = avatar;
   }
 
   public BaseInfoDTO getBaseInfo() {
@@ -106,6 +140,8 @@ public class AlbumDTO implements Serializable {
             "id=" + getId() +
             ", uuid='" + getUuid() + "'" +
             ", name='" + getName() + "'" +
+            ", note='" + getNote() + "'" +
+            ", avatar='" + getAvatar() + "'" +
             ", baseInfo=" + getBaseInfo() +
             ", images=" + getImages() +
             "}";

@@ -38,6 +38,7 @@ public class GroupProfile implements Serializable {
 
   @JsonIgnoreProperties(
     value = {
+      "classInfo",
       "userProfile",
       "accountStatus",
       "deviceStatus",
@@ -67,6 +68,10 @@ public class GroupProfile implements Serializable {
       "topicInterest",
       "todoList",
       "event",
+      "createdBy",
+      "modifiedBy",
+      "owner",
+      "permissions",
     },
     allowSetters = true
   )
@@ -74,7 +79,7 @@ public class GroupProfile implements Serializable {
   @JoinColumn(unique = true)
   private BaseInfo baseInfo;
 
-  @JsonIgnoreProperties(value = { "profile", "baseInfo", "myPostInGroups", "topicInterests", "userInGroups" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "profile", "baseInfo", "myPostInGroups", "topicInterests" }, allowSetters = true)
   @OneToOne(mappedBy = "profile")
   private GroupPost group;
 

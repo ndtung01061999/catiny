@@ -18,15 +18,15 @@
     },
     {
       "relationshipType": "many-to-one",
-      "otherEntityName": "masterUser",
-      "otherEntityRelationshipName": "myLike",
-      "relationshipName": "userLike"
+      "otherEntityName": "post",
+      "otherEntityRelationshipName": "like",
+      "relationshipName": "post"
     },
     {
       "relationshipType": "many-to-one",
-      "otherEntityName": "post",
-      "otherEntityRelationshipName": "postLike",
-      "relationshipName": "post"
+      "otherEntityName": "postComment",
+      "otherEntityRelationshipName": "like",
+      "relationshipName": "postComment"
     }
   ],
   "javadoc": "@what?            -> The PostLike entity.\\n@why?             ->\\n@use-to           -> Lưu thông tin về những lượt like của bài đăng\\n@commonly-used-in ->\\n\\n@describe         ->",

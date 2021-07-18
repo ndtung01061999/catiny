@@ -5,6 +5,8 @@ import com.regitiny.catiny.GeneratedByJHipster;
 import com.regitiny.catiny.domain.enumeration.ProcessStatus;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -35,20 +37,6 @@ public class BaseInfo implements Serializable {
   private ProcessStatus processStatus;
 
   /**
-   * owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List
-   */
-  @Lob
-  @Column(name = "owner")
-  private String owner;
-
-  /**
-   * role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa>
-   */
-  @Lob
-  @Column(name = "role")
-  private String role;
-
-  /**
    * modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào
    */
   @Column(name = "modified_class")
@@ -65,18 +53,6 @@ public class BaseInfo implements Serializable {
    */
   @Column(name = "modified_date")
   private Instant modifiedDate;
-
-  /**
-   * createdBy *    : người tạo ra bản gi này (lần đầu tiên)
-   */
-  @Column(name = "created_by")
-  private String createdBy;
-
-  /**
-   * modifiedBy *   : người sửa lại bản ghi này
-   */
-  @Column(name = "modified_by")
-  private String modifiedBy;
 
   /**
    * notes *        : @type Json -> chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json\"
@@ -98,6 +74,22 @@ public class BaseInfo implements Serializable {
   @Column(name = "deleted")
   private Boolean deleted;
 
+  /**
+   * priorityIndex *: chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)
+   */
+  @Column(name = "priority_index")
+  private Long priorityIndex;
+
+  /**
+   * countUse *     : đếm số lần truy cập vào bản ghi này để xem sửa xóa
+   */
+  @Column(name = "count_use")
+  private Long countUse;
+
+  @ManyToOne
+  @JsonIgnoreProperties(value = { "baseInfos" }, allowSetters = true)
+  private ClassInfo classInfo;
+
   @JsonIgnoreProperties(value = { "baseInfo" }, allowSetters = true)
   @OneToOne(mappedBy = "baseInfo")
   private UserProfile userProfile;
@@ -110,27 +102,27 @@ public class BaseInfo implements Serializable {
   @OneToOne(mappedBy = "baseInfo")
   private DeviceStatus deviceStatus;
 
-  @JsonIgnoreProperties(value = { "baseInfo", "friendDetails", "masterUser" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "baseInfo", "friendDetails" }, allowSetters = true)
   @OneToOne(mappedBy = "baseInfo")
   private Friend friend;
 
-  @JsonIgnoreProperties(value = { "baseInfo", "followUserDetails", "masterUser" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "baseInfo", "followUserDetails" }, allowSetters = true)
   @OneToOne(mappedBy = "baseInfo")
   private FollowUser followUser;
 
-  @JsonIgnoreProperties(value = { "baseInfo", "followGroupDetails", "masterUser" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "baseInfo", "followGroupDetails" }, allowSetters = true)
   @OneToOne(mappedBy = "baseInfo")
   private FollowGroup followGroup;
 
-  @JsonIgnoreProperties(value = { "baseInfo", "followPageDetails", "masterUser" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "baseInfo", "followPageDetails" }, allowSetters = true)
   @OneToOne(mappedBy = "baseInfo")
   private FollowPage followPage;
 
-  @JsonIgnoreProperties(value = { "baseInfo", "masterUser" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "baseInfo" }, allowSetters = true)
   @OneToOne(mappedBy = "baseInfo")
   private FileInfo fileInfo;
 
-  @JsonIgnoreProperties(value = { "profile", "baseInfo", "myPostInPages", "masterUser", "topicInterests" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "profile", "baseInfo", "myPostInPages", "topicInterests" }, allowSetters = true)
   @OneToOne(mappedBy = "baseInfo")
   private PagePost pagePost;
 
@@ -138,33 +130,24 @@ public class BaseInfo implements Serializable {
   @OneToOne(mappedBy = "baseInfo")
   private PageProfile pageProfile;
 
-  @JsonIgnoreProperties(value = { "profile", "baseInfo", "myPostInGroups", "topicInterests", "userInGroups" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "profile", "baseInfo", "myPostInGroups", "topicInterests" }, allowSetters = true)
   @OneToOne(mappedBy = "baseInfo")
   private GroupPost groupPost;
 
   @JsonIgnoreProperties(
     value = {
-      "baseInfo",
-      "postComments",
-      "postLikes",
-      "postShareChildren",
-      "groupPost",
-      "pagePost",
-      "postShareParent",
-      "poster",
-      "newsFeeds",
-      "topicInterests",
+      "baseInfo", "comments", "likes", "postShareChildren", "groupPost", "pagePost", "postShareParent", "newsFeeds", "topicInterests",
     },
     allowSetters = true
   )
   @OneToOne(mappedBy = "baseInfo")
   private Post post;
 
-  @JsonIgnoreProperties(value = { "baseInfo", "commentReplies", "userComment", "post", "commentParent" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "baseInfo", "likes", "commentReplies", "post", "commentParent" }, allowSetters = true)
   @OneToOne(mappedBy = "baseInfo")
   private PostComment postComment;
 
-  @JsonIgnoreProperties(value = { "baseInfo", "userLike", "post" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "baseInfo", "post", "postComment" }, allowSetters = true)
   @OneToOne(mappedBy = "baseInfo")
   private PostLike postLike;
 
@@ -172,15 +155,15 @@ public class BaseInfo implements Serializable {
   @OneToOne(mappedBy = "baseInfo")
   private GroupProfile groupProfile;
 
-  @JsonIgnoreProperties(value = { "baseInfo", "post", "masterUser" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "baseInfo", "post" }, allowSetters = true)
   @OneToOne(mappedBy = "baseInfo")
   private NewsFeed newsFeed;
 
-  @JsonIgnoreProperties(value = { "baseInfo", "messageContents", "masterUsers" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "baseInfo", "messageContents" }, allowSetters = true)
   @OneToOne(mappedBy = "baseInfo")
   private MessageGroup messageGroup;
 
-  @JsonIgnoreProperties(value = { "baseInfo", "sender", "messageGroup" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "baseInfo", "messageGroup" }, allowSetters = true)
   @OneToOne(mappedBy = "baseInfo")
   private MessageContent messageContent;
 
@@ -192,7 +175,7 @@ public class BaseInfo implements Serializable {
   @OneToOne(mappedBy = "baseInfo")
   private RankGroup rankGroup;
 
-  @JsonIgnoreProperties(value = { "baseInfo", "masterUser" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "baseInfo" }, allowSetters = true)
   @OneToOne(mappedBy = "baseInfo")
   private Notification notification;
 
@@ -200,11 +183,11 @@ public class BaseInfo implements Serializable {
   @OneToOne(mappedBy = "baseInfo")
   private Album album;
 
-  @JsonIgnoreProperties(value = { "fileInfo", "baseInfo", "videoProcesseds", "videoStream", "videoOriginal", "event" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "fileInfo", "baseInfo", "videoProcesseds", "videoStream", "videoOriginal" }, allowSetters = true)
   @OneToOne(mappedBy = "baseInfo")
   private Video video;
 
-  @JsonIgnoreProperties(value = { "fileInfo", "baseInfo", "imageProcesseds", "imageOriginal", "event", "albums" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "fileInfo", "baseInfo", "imageProcesseds", "imageOriginal", "albums" }, allowSetters = true)
   @OneToOne(mappedBy = "baseInfo")
   private Image image;
 
@@ -220,13 +203,39 @@ public class BaseInfo implements Serializable {
   @OneToOne(mappedBy = "baseInfo")
   private TopicInterest topicInterest;
 
-  @JsonIgnoreProperties(value = { "baseInfo", "masterUser" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "baseInfo" }, allowSetters = true)
   @OneToOne(mappedBy = "baseInfo")
   private TodoList todoList;
 
-  @JsonIgnoreProperties(value = { "baseInfo", "otherImages", "otherVideos" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "baseInfo" }, allowSetters = true)
   @OneToOne(mappedBy = "baseInfo")
   private Event event;
+
+  @ManyToOne
+  @JsonIgnoreProperties(
+    value = { "user", "myRank", "baseInfo", "myBaseInfoCreateds", "myBaseInfoModifieds", "ownerOfs", "permissions", "topicInterests" },
+    allowSetters = true
+  )
+  private MasterUser createdBy;
+
+  @ManyToOne
+  @JsonIgnoreProperties(
+    value = { "user", "myRank", "baseInfo", "myBaseInfoCreateds", "myBaseInfoModifieds", "ownerOfs", "permissions", "topicInterests" },
+    allowSetters = true
+  )
+  private MasterUser modifiedBy;
+
+  @ManyToOne
+  @JsonIgnoreProperties(
+    value = { "user", "myRank", "baseInfo", "myBaseInfoCreateds", "myBaseInfoModifieds", "ownerOfs", "permissions", "topicInterests" },
+    allowSetters = true
+  )
+  private MasterUser owner;
+
+  @OneToMany(mappedBy = "baseInfo")
+  @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+  @JsonIgnoreProperties(value = { "baseInfo", "masterUser" }, allowSetters = true)
+  private Set<Permission> permissions = new HashSet<>();
 
   // jhipster-needle-entity-add-field - JHipster will add fields here
   public Long getId() {
@@ -253,32 +262,6 @@ public class BaseInfo implements Serializable {
 
   public void setProcessStatus(ProcessStatus processStatus) {
     this.processStatus = processStatus;
-  }
-
-  public String getOwner() {
-    return this.owner;
-  }
-
-  public BaseInfo owner(String owner) {
-    this.owner = owner;
-    return this;
-  }
-
-  public void setOwner(String owner) {
-    this.owner = owner;
-  }
-
-  public String getRole() {
-    return this.role;
-  }
-
-  public BaseInfo role(String role) {
-    this.role = role;
-    return this;
-  }
-
-  public void setRole(String role) {
-    this.role = role;
   }
 
   public String getModifiedClass() {
@@ -320,32 +303,6 @@ public class BaseInfo implements Serializable {
     this.modifiedDate = modifiedDate;
   }
 
-  public String getCreatedBy() {
-    return this.createdBy;
-  }
-
-  public BaseInfo createdBy(String createdBy) {
-    this.createdBy = createdBy;
-    return this;
-  }
-
-  public void setCreatedBy(String createdBy) {
-    this.createdBy = createdBy;
-  }
-
-  public String getModifiedBy() {
-    return this.modifiedBy;
-  }
-
-  public BaseInfo modifiedBy(String modifiedBy) {
-    this.modifiedBy = modifiedBy;
-    return this;
-  }
-
-  public void setModifiedBy(String modifiedBy) {
-    this.modifiedBy = modifiedBy;
-  }
-
   public String getNotes() {
     return this.notes;
   }
@@ -383,6 +340,45 @@ public class BaseInfo implements Serializable {
 
   public void setDeleted(Boolean deleted) {
     this.deleted = deleted;
+  }
+
+  public Long getPriorityIndex() {
+    return this.priorityIndex;
+  }
+
+  public BaseInfo priorityIndex(Long priorityIndex) {
+    this.priorityIndex = priorityIndex;
+    return this;
+  }
+
+  public void setPriorityIndex(Long priorityIndex) {
+    this.priorityIndex = priorityIndex;
+  }
+
+  public Long getCountUse() {
+    return this.countUse;
+  }
+
+  public BaseInfo countUse(Long countUse) {
+    this.countUse = countUse;
+    return this;
+  }
+
+  public void setCountUse(Long countUse) {
+    this.countUse = countUse;
+  }
+
+  public ClassInfo getClassInfo() {
+    return this.classInfo;
+  }
+
+  public BaseInfo classInfo(ClassInfo classInfo) {
+    this.setClassInfo(classInfo);
+    return this;
+  }
+
+  public void setClassInfo(ClassInfo classInfo) {
+    this.classInfo = classInfo;
   }
 
   public UserProfile getUserProfile() {
@@ -936,6 +932,76 @@ public class BaseInfo implements Serializable {
     this.event = event;
   }
 
+  public MasterUser getCreatedBy() {
+    return this.createdBy;
+  }
+
+  public BaseInfo createdBy(MasterUser masterUser) {
+    this.setCreatedBy(masterUser);
+    return this;
+  }
+
+  public void setCreatedBy(MasterUser masterUser) {
+    this.createdBy = masterUser;
+  }
+
+  public MasterUser getModifiedBy() {
+    return this.modifiedBy;
+  }
+
+  public BaseInfo modifiedBy(MasterUser masterUser) {
+    this.setModifiedBy(masterUser);
+    return this;
+  }
+
+  public void setModifiedBy(MasterUser masterUser) {
+    this.modifiedBy = masterUser;
+  }
+
+  public MasterUser getOwner() {
+    return this.owner;
+  }
+
+  public BaseInfo owner(MasterUser masterUser) {
+    this.setOwner(masterUser);
+    return this;
+  }
+
+  public void setOwner(MasterUser masterUser) {
+    this.owner = masterUser;
+  }
+
+  public Set<Permission> getPermissions() {
+    return this.permissions;
+  }
+
+  public BaseInfo permissions(Set<Permission> permissions) {
+    this.setPermissions(permissions);
+    return this;
+  }
+
+  public BaseInfo addPermission(Permission permission) {
+    this.permissions.add(permission);
+    permission.setBaseInfo(this);
+    return this;
+  }
+
+  public BaseInfo removePermission(Permission permission) {
+    this.permissions.remove(permission);
+    permission.setBaseInfo(null);
+    return this;
+  }
+
+  public void setPermissions(Set<Permission> permissions) {
+    if (this.permissions != null) {
+      this.permissions.forEach(i -> i.setBaseInfo(null));
+    }
+    if (permissions != null) {
+      permissions.forEach(i -> i.setBaseInfo(this));
+    }
+    this.permissions = permissions;
+  }
+
   // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
   @Override
@@ -961,16 +1027,14 @@ public class BaseInfo implements Serializable {
         return "BaseInfo{" +
             "id=" + getId() +
             ", processStatus='" + getProcessStatus() + "'" +
-            ", owner='" + getOwner() + "'" +
-            ", role='" + getRole() + "'" +
             ", modifiedClass='" + getModifiedClass() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", modifiedDate='" + getModifiedDate() + "'" +
-            ", createdBy='" + getCreatedBy() + "'" +
-            ", modifiedBy='" + getModifiedBy() + "'" +
             ", notes='" + getNotes() + "'" +
             ", historyUpdate='" + getHistoryUpdate() + "'" +
             ", deleted='" + getDeleted() + "'" +
+            ", priorityIndex=" + getPriorityIndex() +
+            ", countUse=" + getCountUse() +
             "}";
     }
 }

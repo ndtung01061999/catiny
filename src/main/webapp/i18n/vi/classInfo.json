@@ -1,0 +1,35 @@
+{
+  "catinyApp": {
+    "classInfo": {
+      "home": {
+        "title": "Class Infos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Thêm mới một Class Info",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Class Info",
+        "search": "Tìm Class Info",
+        "notFound": "No Class Infos found"
+      },
+      "created": "Một Class Info mới được tạo với định danh {{ param }}",
+      "updated": "Một Class Info cập nhật với định danh {{ param }}",
+      "deleted": "Một Class Info đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Class Info {{ id }}?"
+      },
+      "detail": {
+        "title": "Class Info"
+      },
+      "id": "ID",
+      "uuid": "Uuid",
+      "packageName": "Package Name",
+      "fullName": "Full Name",
+      "className": "Class Name",
+      "baseInfo": "Base Info",
+      "help": {
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
+        "packageName": "packageName *  : tên package",
+        "fullName": "fullName *     : tên đầy đủ của class . package+ClassName",
+        "className": "classname *    : tên của class"
+      }
+    }
+  }
+}

@@ -63,10 +63,6 @@ export const NotificationDetail = (props: RouteComponentProps<{ id: string }>) =
             <Translate contentKey="catinyApp.notification.baseInfo">Base Info</Translate>
           </dt>
           <dd>{notificationEntity.baseInfo ? notificationEntity.baseInfo.id : ''}</dd>
-          <dt>
-            <Translate contentKey="catinyApp.notification.masterUser">Master User</Translate>
-          </dt>
-          <dd>{notificationEntity.masterUser ? notificationEntity.masterUser.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/notification" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

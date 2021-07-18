@@ -33,6 +33,22 @@ public class VideoCriteria implements Serializable, Criteria {
 
   private StringFilter name;
 
+  private IntegerFilter width;
+
+  private IntegerFilter height;
+
+  private FloatFilter qualityImage;
+
+  private FloatFilter qualityAudio;
+
+  private FloatFilter quality;
+
+  private IntegerFilter pixelSize;
+
+  private LongFilter priorityIndex;
+
+  private LongFilter dataSize;
+
   private LongFilter fileInfoId;
 
   private LongFilter baseInfoId;
@@ -43,20 +59,25 @@ public class VideoCriteria implements Serializable, Criteria {
 
   private LongFilter videoOriginalId;
 
-  private LongFilter eventId;
-
   public VideoCriteria() {}
 
   public VideoCriteria(VideoCriteria other) {
     this.id = other.id == null ? null : other.id.copy();
     this.uuid = other.uuid == null ? null : other.uuid.copy();
     this.name = other.name == null ? null : other.name.copy();
+    this.width = other.width == null ? null : other.width.copy();
+    this.height = other.height == null ? null : other.height.copy();
+    this.qualityImage = other.qualityImage == null ? null : other.qualityImage.copy();
+    this.qualityAudio = other.qualityAudio == null ? null : other.qualityAudio.copy();
+    this.quality = other.quality == null ? null : other.quality.copy();
+    this.pixelSize = other.pixelSize == null ? null : other.pixelSize.copy();
+    this.priorityIndex = other.priorityIndex == null ? null : other.priorityIndex.copy();
+    this.dataSize = other.dataSize == null ? null : other.dataSize.copy();
     this.fileInfoId = other.fileInfoId == null ? null : other.fileInfoId.copy();
     this.baseInfoId = other.baseInfoId == null ? null : other.baseInfoId.copy();
     this.videoProcessedId = other.videoProcessedId == null ? null : other.videoProcessedId.copy();
     this.videoStreamId = other.videoStreamId == null ? null : other.videoStreamId.copy();
     this.videoOriginalId = other.videoOriginalId == null ? null : other.videoOriginalId.copy();
-    this.eventId = other.eventId == null ? null : other.eventId.copy();
   }
 
   @Override
@@ -107,6 +128,126 @@ public class VideoCriteria implements Serializable, Criteria {
 
   public void setName(StringFilter name) {
     this.name = name;
+  }
+
+  public IntegerFilter getWidth() {
+    return width;
+  }
+
+  public IntegerFilter width() {
+    if (width == null) {
+      width = new IntegerFilter();
+    }
+    return width;
+  }
+
+  public void setWidth(IntegerFilter width) {
+    this.width = width;
+  }
+
+  public IntegerFilter getHeight() {
+    return height;
+  }
+
+  public IntegerFilter height() {
+    if (height == null) {
+      height = new IntegerFilter();
+    }
+    return height;
+  }
+
+  public void setHeight(IntegerFilter height) {
+    this.height = height;
+  }
+
+  public FloatFilter getQualityImage() {
+    return qualityImage;
+  }
+
+  public FloatFilter qualityImage() {
+    if (qualityImage == null) {
+      qualityImage = new FloatFilter();
+    }
+    return qualityImage;
+  }
+
+  public void setQualityImage(FloatFilter qualityImage) {
+    this.qualityImage = qualityImage;
+  }
+
+  public FloatFilter getQualityAudio() {
+    return qualityAudio;
+  }
+
+  public FloatFilter qualityAudio() {
+    if (qualityAudio == null) {
+      qualityAudio = new FloatFilter();
+    }
+    return qualityAudio;
+  }
+
+  public void setQualityAudio(FloatFilter qualityAudio) {
+    this.qualityAudio = qualityAudio;
+  }
+
+  public FloatFilter getQuality() {
+    return quality;
+  }
+
+  public FloatFilter quality() {
+    if (quality == null) {
+      quality = new FloatFilter();
+    }
+    return quality;
+  }
+
+  public void setQuality(FloatFilter quality) {
+    this.quality = quality;
+  }
+
+  public IntegerFilter getPixelSize() {
+    return pixelSize;
+  }
+
+  public IntegerFilter pixelSize() {
+    if (pixelSize == null) {
+      pixelSize = new IntegerFilter();
+    }
+    return pixelSize;
+  }
+
+  public void setPixelSize(IntegerFilter pixelSize) {
+    this.pixelSize = pixelSize;
+  }
+
+  public LongFilter getPriorityIndex() {
+    return priorityIndex;
+  }
+
+  public LongFilter priorityIndex() {
+    if (priorityIndex == null) {
+      priorityIndex = new LongFilter();
+    }
+    return priorityIndex;
+  }
+
+  public void setPriorityIndex(LongFilter priorityIndex) {
+    this.priorityIndex = priorityIndex;
+  }
+
+  public LongFilter getDataSize() {
+    return dataSize;
+  }
+
+  public LongFilter dataSize() {
+    if (dataSize == null) {
+      dataSize = new LongFilter();
+    }
+    return dataSize;
+  }
+
+  public void setDataSize(LongFilter dataSize) {
+    this.dataSize = dataSize;
   }
 
   public LongFilter getFileInfoId() {
@@ -184,21 +325,6 @@ public class VideoCriteria implements Serializable, Criteria {
     this.videoOriginalId = videoOriginalId;
   }
 
-  public LongFilter getEventId() {
-    return eventId;
-  }
-
-  public LongFilter eventId() {
-    if (eventId == null) {
-      eventId = new LongFilter();
-    }
-    return eventId;
-  }
-
-  public void setEventId(LongFilter eventId) {
-    this.eventId = eventId;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -212,18 +338,42 @@ public class VideoCriteria implements Serializable, Criteria {
       Objects.equals(id, that.id) &&
       Objects.equals(uuid, that.uuid) &&
       Objects.equals(name, that.name) &&
+      Objects.equals(width, that.width) &&
+      Objects.equals(height, that.height) &&
+      Objects.equals(qualityImage, that.qualityImage) &&
+      Objects.equals(qualityAudio, that.qualityAudio) &&
+      Objects.equals(quality, that.quality) &&
+      Objects.equals(pixelSize, that.pixelSize) &&
+      Objects.equals(priorityIndex, that.priorityIndex) &&
+      Objects.equals(dataSize, that.dataSize) &&
       Objects.equals(fileInfoId, that.fileInfoId) &&
       Objects.equals(baseInfoId, that.baseInfoId) &&
       Objects.equals(videoProcessedId, that.videoProcessedId) &&
       Objects.equals(videoStreamId, that.videoStreamId) &&
-      Objects.equals(videoOriginalId, that.videoOriginalId) &&
-      Objects.equals(eventId, that.eventId)
+      Objects.equals(videoOriginalId, that.videoOriginalId)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, uuid, name, fileInfoId, baseInfoId, videoProcessedId, videoStreamId, videoOriginalId, eventId);
+    return Objects.hash(
+      id,
+      uuid,
+      name,
+      width,
+      height,
+      qualityImage,
+      qualityAudio,
+      quality,
+      pixelSize,
+      priorityIndex,
+      dataSize,
+      fileInfoId,
+      baseInfoId,
+      videoProcessedId,
+      videoStreamId,
+      videoOriginalId
+    );
   }
 
   // prettier-ignore
@@ -233,12 +383,19 @@ public class VideoCriteria implements Serializable, Criteria {
             (id != null ? "id=" + id + ", " : "") +
             (uuid != null ? "uuid=" + uuid + ", " : "") +
             (name != null ? "name=" + name + ", " : "") +
+            (width != null ? "width=" + width + ", " : "") +
+            (height != null ? "height=" + height + ", " : "") +
+            (qualityImage != null ? "qualityImage=" + qualityImage + ", " : "") +
+            (qualityAudio != null ? "qualityAudio=" + qualityAudio + ", " : "") +
+            (quality != null ? "quality=" + quality + ", " : "") +
+            (pixelSize != null ? "pixelSize=" + pixelSize + ", " : "") +
+            (priorityIndex != null ? "priorityIndex=" + priorityIndex + ", " : "") +
+            (dataSize != null ? "dataSize=" + dataSize + ", " : "") +
             (fileInfoId != null ? "fileInfoId=" + fileInfoId + ", " : "") +
             (baseInfoId != null ? "baseInfoId=" + baseInfoId + ", " : "") +
             (videoProcessedId != null ? "videoProcessedId=" + videoProcessedId + ", " : "") +
             (videoStreamId != null ? "videoStreamId=" + videoStreamId + ", " : "") +
             (videoOriginalId != null ? "videoOriginalId=" + videoOriginalId + ", " : "") +
-            (eventId != null ? "eventId=" + eventId + ", " : "") +
             "}";
     }
 }

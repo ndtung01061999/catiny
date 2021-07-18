@@ -47,6 +47,7 @@ public class TopicInterest implements Serializable {
 
   @JsonIgnoreProperties(
     value = {
+      "classInfo",
       "userProfile",
       "accountStatus",
       "deviceStatus",
@@ -76,6 +77,10 @@ public class TopicInterest implements Serializable {
       "topicInterest",
       "todoList",
       "event",
+      "createdBy",
+      "modifiedBy",
+      "owner",
+      "permissions",
     },
     allowSetters = true
   )
@@ -92,16 +97,7 @@ public class TopicInterest implements Serializable {
   )
   @JsonIgnoreProperties(
     value = {
-      "baseInfo",
-      "postComments",
-      "postLikes",
-      "postShareChildren",
-      "groupPost",
-      "pagePost",
-      "postShareParent",
-      "poster",
-      "newsFeeds",
-      "topicInterests",
+      "baseInfo", "comments", "likes", "postShareChildren", "groupPost", "pagePost", "postShareParent", "newsFeeds", "topicInterests",
     },
     allowSetters = true
   )
@@ -114,7 +110,7 @@ public class TopicInterest implements Serializable {
     joinColumns = @JoinColumn(name = "topic_interest_id"),
     inverseJoinColumns = @JoinColumn(name = "page_post_id")
   )
-  @JsonIgnoreProperties(value = { "profile", "baseInfo", "myPostInPages", "masterUser", "topicInterests" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "profile", "baseInfo", "myPostInPages", "topicInterests" }, allowSetters = true)
   private Set<PagePost> pagePosts = new HashSet<>();
 
   @ManyToMany
@@ -124,35 +120,13 @@ public class TopicInterest implements Serializable {
     joinColumns = @JoinColumn(name = "topic_interest_id"),
     inverseJoinColumns = @JoinColumn(name = "group_post_id")
   )
-  @JsonIgnoreProperties(value = { "profile", "baseInfo", "myPostInGroups", "topicInterests", "userInGroups" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "profile", "baseInfo", "myPostInGroups", "topicInterests" }, allowSetters = true)
   private Set<GroupPost> groupPosts = new HashSet<>();
 
   @ManyToMany(mappedBy = "topicInterests")
   @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
   @JsonIgnoreProperties(
-    value = {
-      "user",
-      "myProfile",
-      "myAccountStatus",
-      "myRank",
-      "avatar",
-      "baseInfo",
-      "myPages",
-      "myFiles",
-      "myNotifications",
-      "myFriends",
-      "myFollowUsers",
-      "myFollowGroups",
-      "myFollowPages",
-      "myNewsFeeds",
-      "myTodoLists",
-      "myPosts",
-      "myGroupPosts",
-      "messageGroups",
-      "topicInterests",
-      "myLikes",
-      "myComments",
-    },
+    value = { "user", "myRank", "baseInfo", "myBaseInfoCreateds", "myBaseInfoModifieds", "ownerOfs", "permissions", "topicInterests" },
     allowSetters = true
   )
   private Set<MasterUser> masterUsers = new HashSet<>();

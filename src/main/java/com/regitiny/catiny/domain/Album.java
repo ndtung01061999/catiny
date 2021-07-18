@@ -38,12 +38,29 @@ public class Album implements Serializable {
   @Column(name = "uuid", length = 36, nullable = false, unique = true)
   private UUID uuid;
 
+  /**
+   * name           : tên của album
+   */
   @NotNull
   @Column(name = "name", nullable = false)
   private String name;
 
+  /**
+   * note           : trú thích của album (ví dụ album đại học)
+   */
+  @Column(name = "note")
+  private String note;
+
+  /**
+   * avatar         : @type Json -> ảnh đại diện của Album
+   */
+  @Lob
+  @Column(name = "avatar")
+  private String avatar;
+
   @JsonIgnoreProperties(
     value = {
+      "classInfo",
       "userProfile",
       "accountStatus",
       "deviceStatus",
@@ -73,6 +90,10 @@ public class Album implements Serializable {
       "topicInterest",
       "todoList",
       "event",
+      "createdBy",
+      "modifiedBy",
+      "owner",
+      "permissions",
     },
     allowSetters = true
   )
@@ -83,7 +104,7 @@ public class Album implements Serializable {
   @ManyToMany
   @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
   @JoinTable(name = "rel_album__image", joinColumns = @JoinColumn(name = "album_id"), inverseJoinColumns = @JoinColumn(name = "image_id"))
-  @JsonIgnoreProperties(value = { "fileInfo", "baseInfo", "imageProcesseds", "imageOriginal", "event", "albums" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "fileInfo", "baseInfo", "imageProcesseds", "imageOriginal", "albums" }, allowSetters = true)
   private Set<Image> images = new HashSet<>();
 
   // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -124,6 +145,32 @@ public class Album implements Serializable {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public String getNote() {
+    return this.note;
+  }
+
+  public Album note(String note) {
+    this.note = note;
+    return this;
+  }
+
+  public void setNote(String note) {
+    this.note = note;
+  }
+
+  public String getAvatar() {
+    return this.avatar;
+  }
+
+  public Album avatar(String avatar) {
+    this.avatar = avatar;
+    return this;
+  }
+
+  public void setAvatar(String avatar) {
+    this.avatar = avatar;
   }
 
   public BaseInfo getBaseInfo() {
@@ -190,6 +237,8 @@ public class Album implements Serializable {
             "id=" + getId() +
             ", uuid='" + getUuid() + "'" +
             ", name='" + getName() + "'" +
+            ", note='" + getNote() + "'" +
+            ", avatar='" + getAvatar() + "'" +
             "}";
     }
 }

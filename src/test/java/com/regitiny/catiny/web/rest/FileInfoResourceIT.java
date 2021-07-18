@@ -11,7 +11,6 @@ import com.regitiny.catiny.GeneratedByJHipster;
 import com.regitiny.catiny.IntegrationTest;
 import com.regitiny.catiny.domain.BaseInfo;
 import com.regitiny.catiny.domain.FileInfo;
-import com.regitiny.catiny.domain.MasterUser;
 import com.regitiny.catiny.repository.FileInfoRepository;
 import com.regitiny.catiny.repository.search.FileInfoSearchRepository;
 import com.regitiny.catiny.service.criteria.FileInfoCriteria;
@@ -656,25 +655,6 @@ class FileInfoResourceIT {
 
     // Get all the fileInfoList where baseInfo equals to (baseInfoId + 1)
     defaultFileInfoShouldNotBeFound("baseInfoId.equals=" + (baseInfoId + 1));
-  }
-
-  @Test
-  @Transactional
-  void getAllFileInfosByMasterUserIsEqualToSomething() throws Exception {
-    // Initialize the database
-    fileInfoRepository.saveAndFlush(fileInfo);
-    MasterUser masterUser = MasterUserResourceIT.createEntity(em);
-    em.persist(masterUser);
-    em.flush();
-    fileInfo.setMasterUser(masterUser);
-    fileInfoRepository.saveAndFlush(fileInfo);
-    Long masterUserId = masterUser.getId();
-
-    // Get all the fileInfoList where masterUser equals to masterUserId
-    defaultFileInfoShouldBeFound("masterUserId.equals=" + masterUserId);
-
-    // Get all the fileInfoList where masterUser equals to (masterUserId + 1)
-    defaultFileInfoShouldNotBeFound("masterUserId.equals=" + (masterUserId + 1));
   }
 
   /**

@@ -21,14 +21,26 @@
       "id": "ID",
       "uuid": "Uuid",
       "name": "Name",
+      "width": "Width",
+      "height": "Height",
+      "quality": "Quality",
+      "pixelSize": "Pixel Size",
+      "priorityIndex": "Priority Index",
+      "dataSize": "Data Size",
       "fileInfo": "File Info",
       "baseInfo": "Base Info",
       "imageProcessed": "Image Processed",
       "imageOriginal": "Image Original",
-      "event": "Event",
       "album": "Album",
       "help": {
-        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)"
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
+        "name": "name           : tên của ảnh . muốn lấy ảnh sẽ gọi theo tên này. sẽ ra một danh sách các anh gồm (ảnh nguyên gốc , các ảnh đã tối ưu , cắt ... từ ảnh gốc đó)",
+        "width": "width          : chiều rộng ảnh",
+        "height": "height         : chiều cao ảnh",
+        "quality": "quality        : chất lượng sau khi xử lý",
+        "pixelSize": "pixelSize      : kích thước của ảnh",
+        "priorityIndex": "priorityIndex  : chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)",
+        "dataSize": "dataSize       : kích thước file theo byte"
       }
     }
   }

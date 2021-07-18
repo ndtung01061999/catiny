@@ -11,8 +11,6 @@ import com.regitiny.catiny.GeneratedByJHipster;
 import com.regitiny.catiny.IntegrationTest;
 import com.regitiny.catiny.domain.BaseInfo;
 import com.regitiny.catiny.domain.Event;
-import com.regitiny.catiny.domain.Image;
-import com.regitiny.catiny.domain.Video;
 import com.regitiny.catiny.domain.enumeration.EventType;
 import com.regitiny.catiny.repository.EventRepository;
 import com.regitiny.catiny.repository.search.EventSearchRepository;
@@ -58,6 +56,9 @@ class EventResourceIT {
   private static final String DEFAULT_TITLE = "AAAAAAAAAA";
   private static final String UPDATED_TITLE = "BBBBBBBBBB";
 
+  private static final String DEFAULT_AVATAR = "AAAAAAAAAA";
+  private static final String UPDATED_AVATAR = "BBBBBBBBBB";
+
   private static final String DEFAULT_CONTENT = "AAAAAAAAAA";
   private static final String UPDATED_CONTENT = "BBBBBBBBBB";
 
@@ -75,6 +76,12 @@ class EventResourceIT {
 
   private static final String DEFAULT_TAG_LINE = "AAAAAAAAAA";
   private static final String UPDATED_TAG_LINE = "BBBBBBBBBB";
+
+  private static final String DEFAULT_IMAGE_COLLECTION = "AAAAAAAAAA";
+  private static final String UPDATED_IMAGE_COLLECTION = "BBBBBBBBBB";
+
+  private static final String DEFAULT_VIDEO_COLLECTION = "AAAAAAAAAA";
+  private static final String UPDATED_VIDEO_COLLECTION = "BBBBBBBBBB";
 
   private static final String ENTITY_API_URL = "/api/events";
   private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -115,12 +122,15 @@ class EventResourceIT {
     Event event = new Event()
       .uuid(DEFAULT_UUID)
       .title(DEFAULT_TITLE)
+      .avatar(DEFAULT_AVATAR)
       .content(DEFAULT_CONTENT)
       .type(DEFAULT_TYPE)
       .description(DEFAULT_DESCRIPTION)
       .startTime(DEFAULT_START_TIME)
       .endTime(DEFAULT_END_TIME)
-      .tagLine(DEFAULT_TAG_LINE);
+      .tagLine(DEFAULT_TAG_LINE)
+      .imageCollection(DEFAULT_IMAGE_COLLECTION)
+      .videoCollection(DEFAULT_VIDEO_COLLECTION);
     return event;
   }
 
@@ -134,12 +144,15 @@ class EventResourceIT {
     Event event = new Event()
       .uuid(UPDATED_UUID)
       .title(UPDATED_TITLE)
+      .avatar(UPDATED_AVATAR)
       .content(UPDATED_CONTENT)
       .type(UPDATED_TYPE)
       .description(UPDATED_DESCRIPTION)
       .startTime(UPDATED_START_TIME)
       .endTime(UPDATED_END_TIME)
-      .tagLine(UPDATED_TAG_LINE);
+      .tagLine(UPDATED_TAG_LINE)
+      .imageCollection(UPDATED_IMAGE_COLLECTION)
+      .videoCollection(UPDATED_VIDEO_COLLECTION);
     return event;
   }
 
@@ -164,12 +177,15 @@ class EventResourceIT {
     Event testEvent = eventList.get(eventList.size() - 1);
     assertThat(testEvent.getUuid()).isEqualTo(DEFAULT_UUID);
     assertThat(testEvent.getTitle()).isEqualTo(DEFAULT_TITLE);
+    assertThat(testEvent.getAvatar()).isEqualTo(DEFAULT_AVATAR);
     assertThat(testEvent.getContent()).isEqualTo(DEFAULT_CONTENT);
     assertThat(testEvent.getType()).isEqualTo(DEFAULT_TYPE);
     assertThat(testEvent.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
     assertThat(testEvent.getStartTime()).isEqualTo(DEFAULT_START_TIME);
     assertThat(testEvent.getEndTime()).isEqualTo(DEFAULT_END_TIME);
     assertThat(testEvent.getTagLine()).isEqualTo(DEFAULT_TAG_LINE);
+    assertThat(testEvent.getImageCollection()).isEqualTo(DEFAULT_IMAGE_COLLECTION);
+    assertThat(testEvent.getVideoCollection()).isEqualTo(DEFAULT_VIDEO_COLLECTION);
 
     // Validate the Event in Elasticsearch
     verify(mockEventSearchRepository, times(1)).save(testEvent);
@@ -229,12 +245,15 @@ class EventResourceIT {
       .andExpect(jsonPath("$.[*].id").value(hasItem(event.getId().intValue())))
       .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
       .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
+      .andExpect(jsonPath("$.[*].avatar").value(hasItem(DEFAULT_AVATAR.toString())))
       .andExpect(jsonPath("$.[*].content").value(hasItem(DEFAULT_CONTENT.toString())))
       .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
       .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
       .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME.toString())))
       .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME.toString())))
-      .andExpect(jsonPath("$.[*].tagLine").value(hasItem(DEFAULT_TAG_LINE)));
+      .andExpect(jsonPath("$.[*].tagLine").value(hasItem(DEFAULT_TAG_LINE)))
+      .andExpect(jsonPath("$.[*].imageCollection").value(hasItem(DEFAULT_IMAGE_COLLECTION.toString())))
+      .andExpect(jsonPath("$.[*].videoCollection").value(hasItem(DEFAULT_VIDEO_COLLECTION.toString())));
   }
 
   @Test
@@ -251,12 +270,15 @@ class EventResourceIT {
       .andExpect(jsonPath("$.id").value(event.getId().intValue()))
       .andExpect(jsonPath("$.uuid").value(DEFAULT_UUID.toString()))
       .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
+      .andExpect(jsonPath("$.avatar").value(DEFAULT_AVATAR.toString()))
       .andExpect(jsonPath("$.content").value(DEFAULT_CONTENT.toString()))
       .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()))
       .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
       .andExpect(jsonPath("$.startTime").value(DEFAULT_START_TIME.toString()))
       .andExpect(jsonPath("$.endTime").value(DEFAULT_END_TIME.toString()))
-      .andExpect(jsonPath("$.tagLine").value(DEFAULT_TAG_LINE));
+      .andExpect(jsonPath("$.tagLine").value(DEFAULT_TAG_LINE))
+      .andExpect(jsonPath("$.imageCollection").value(DEFAULT_IMAGE_COLLECTION.toString()))
+      .andExpect(jsonPath("$.videoCollection").value(DEFAULT_VIDEO_COLLECTION.toString()));
   }
 
   @Test
@@ -660,44 +682,6 @@ class EventResourceIT {
     defaultEventShouldNotBeFound("baseInfoId.equals=" + (baseInfoId + 1));
   }
 
-  @Test
-  @Transactional
-  void getAllEventsByOtherImageIsEqualToSomething() throws Exception {
-    // Initialize the database
-    eventRepository.saveAndFlush(event);
-    Image otherImage = ImageResourceIT.createEntity(em);
-    em.persist(otherImage);
-    em.flush();
-    event.addOtherImage(otherImage);
-    eventRepository.saveAndFlush(event);
-    Long otherImageId = otherImage.getId();
-
-    // Get all the eventList where otherImage equals to otherImageId
-    defaultEventShouldBeFound("otherImageId.equals=" + otherImageId);
-
-    // Get all the eventList where otherImage equals to (otherImageId + 1)
-    defaultEventShouldNotBeFound("otherImageId.equals=" + (otherImageId + 1));
-  }
-
-  @Test
-  @Transactional
-  void getAllEventsByOtherVideoIsEqualToSomething() throws Exception {
-    // Initialize the database
-    eventRepository.saveAndFlush(event);
-    Video otherVideo = VideoResourceIT.createEntity(em);
-    em.persist(otherVideo);
-    em.flush();
-    event.addOtherVideo(otherVideo);
-    eventRepository.saveAndFlush(event);
-    Long otherVideoId = otherVideo.getId();
-
-    // Get all the eventList where otherVideo equals to otherVideoId
-    defaultEventShouldBeFound("otherVideoId.equals=" + otherVideoId);
-
-    // Get all the eventList where otherVideo equals to (otherVideoId + 1)
-    defaultEventShouldNotBeFound("otherVideoId.equals=" + (otherVideoId + 1));
-  }
-
   /**
    * Executes the search, and checks that the default entity is returned.
    */
@@ -709,12 +693,15 @@ class EventResourceIT {
       .andExpect(jsonPath("$.[*].id").value(hasItem(event.getId().intValue())))
       .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
       .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
+      .andExpect(jsonPath("$.[*].avatar").value(hasItem(DEFAULT_AVATAR.toString())))
       .andExpect(jsonPath("$.[*].content").value(hasItem(DEFAULT_CONTENT.toString())))
       .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
       .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
       .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME.toString())))
       .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME.toString())))
-      .andExpect(jsonPath("$.[*].tagLine").value(hasItem(DEFAULT_TAG_LINE)));
+      .andExpect(jsonPath("$.[*].tagLine").value(hasItem(DEFAULT_TAG_LINE)))
+      .andExpect(jsonPath("$.[*].imageCollection").value(hasItem(DEFAULT_IMAGE_COLLECTION.toString())))
+      .andExpect(jsonPath("$.[*].videoCollection").value(hasItem(DEFAULT_VIDEO_COLLECTION.toString())));
 
     // Check, that the count call also returns 1
     restEventMockMvc
@@ -765,12 +752,15 @@ class EventResourceIT {
     updatedEvent
       .uuid(UPDATED_UUID)
       .title(UPDATED_TITLE)
+      .avatar(UPDATED_AVATAR)
       .content(UPDATED_CONTENT)
       .type(UPDATED_TYPE)
       .description(UPDATED_DESCRIPTION)
       .startTime(UPDATED_START_TIME)
       .endTime(UPDATED_END_TIME)
-      .tagLine(UPDATED_TAG_LINE);
+      .tagLine(UPDATED_TAG_LINE)
+      .imageCollection(UPDATED_IMAGE_COLLECTION)
+      .videoCollection(UPDATED_VIDEO_COLLECTION);
     EventDTO eventDTO = eventMapper.toDto(updatedEvent);
 
     restEventMockMvc
@@ -787,12 +777,15 @@ class EventResourceIT {
     Event testEvent = eventList.get(eventList.size() - 1);
     assertThat(testEvent.getUuid()).isEqualTo(UPDATED_UUID);
     assertThat(testEvent.getTitle()).isEqualTo(UPDATED_TITLE);
+    assertThat(testEvent.getAvatar()).isEqualTo(UPDATED_AVATAR);
     assertThat(testEvent.getContent()).isEqualTo(UPDATED_CONTENT);
     assertThat(testEvent.getType()).isEqualTo(UPDATED_TYPE);
     assertThat(testEvent.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
     assertThat(testEvent.getStartTime()).isEqualTo(UPDATED_START_TIME);
     assertThat(testEvent.getEndTime()).isEqualTo(UPDATED_END_TIME);
     assertThat(testEvent.getTagLine()).isEqualTo(UPDATED_TAG_LINE);
+    assertThat(testEvent.getImageCollection()).isEqualTo(UPDATED_IMAGE_COLLECTION);
+    assertThat(testEvent.getVideoCollection()).isEqualTo(UPDATED_VIDEO_COLLECTION);
 
     // Validate the Event in Elasticsearch
     verify(mockEventSearchRepository).save(testEvent);
@@ -884,7 +877,7 @@ class EventResourceIT {
     Event partialUpdatedEvent = new Event();
     partialUpdatedEvent.setId(event.getId());
 
-    partialUpdatedEvent.title(UPDATED_TITLE).tagLine(UPDATED_TAG_LINE);
+    partialUpdatedEvent.title(UPDATED_TITLE).endTime(UPDATED_END_TIME);
 
     restEventMockMvc
       .perform(
@@ -900,12 +893,15 @@ class EventResourceIT {
     Event testEvent = eventList.get(eventList.size() - 1);
     assertThat(testEvent.getUuid()).isEqualTo(DEFAULT_UUID);
     assertThat(testEvent.getTitle()).isEqualTo(UPDATED_TITLE);
+    assertThat(testEvent.getAvatar()).isEqualTo(DEFAULT_AVATAR);
     assertThat(testEvent.getContent()).isEqualTo(DEFAULT_CONTENT);
     assertThat(testEvent.getType()).isEqualTo(DEFAULT_TYPE);
     assertThat(testEvent.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
     assertThat(testEvent.getStartTime()).isEqualTo(DEFAULT_START_TIME);
-    assertThat(testEvent.getEndTime()).isEqualTo(DEFAULT_END_TIME);
-    assertThat(testEvent.getTagLine()).isEqualTo(UPDATED_TAG_LINE);
+    assertThat(testEvent.getEndTime()).isEqualTo(UPDATED_END_TIME);
+    assertThat(testEvent.getTagLine()).isEqualTo(DEFAULT_TAG_LINE);
+    assertThat(testEvent.getImageCollection()).isEqualTo(DEFAULT_IMAGE_COLLECTION);
+    assertThat(testEvent.getVideoCollection()).isEqualTo(DEFAULT_VIDEO_COLLECTION);
   }
 
   @Test
@@ -923,12 +919,15 @@ class EventResourceIT {
     partialUpdatedEvent
       .uuid(UPDATED_UUID)
       .title(UPDATED_TITLE)
+      .avatar(UPDATED_AVATAR)
       .content(UPDATED_CONTENT)
       .type(UPDATED_TYPE)
       .description(UPDATED_DESCRIPTION)
       .startTime(UPDATED_START_TIME)
       .endTime(UPDATED_END_TIME)
-      .tagLine(UPDATED_TAG_LINE);
+      .tagLine(UPDATED_TAG_LINE)
+      .imageCollection(UPDATED_IMAGE_COLLECTION)
+      .videoCollection(UPDATED_VIDEO_COLLECTION);
 
     restEventMockMvc
       .perform(
@@ -944,12 +943,15 @@ class EventResourceIT {
     Event testEvent = eventList.get(eventList.size() - 1);
     assertThat(testEvent.getUuid()).isEqualTo(UPDATED_UUID);
     assertThat(testEvent.getTitle()).isEqualTo(UPDATED_TITLE);
+    assertThat(testEvent.getAvatar()).isEqualTo(UPDATED_AVATAR);
     assertThat(testEvent.getContent()).isEqualTo(UPDATED_CONTENT);
     assertThat(testEvent.getType()).isEqualTo(UPDATED_TYPE);
     assertThat(testEvent.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
     assertThat(testEvent.getStartTime()).isEqualTo(UPDATED_START_TIME);
     assertThat(testEvent.getEndTime()).isEqualTo(UPDATED_END_TIME);
     assertThat(testEvent.getTagLine()).isEqualTo(UPDATED_TAG_LINE);
+    assertThat(testEvent.getImageCollection()).isEqualTo(UPDATED_IMAGE_COLLECTION);
+    assertThat(testEvent.getVideoCollection()).isEqualTo(UPDATED_VIDEO_COLLECTION);
   }
 
   @Test
@@ -1062,11 +1064,14 @@ class EventResourceIT {
       .andExpect(jsonPath("$.[*].id").value(hasItem(event.getId().intValue())))
       .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
       .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
+      .andExpect(jsonPath("$.[*].avatar").value(hasItem(DEFAULT_AVATAR.toString())))
       .andExpect(jsonPath("$.[*].content").value(hasItem(DEFAULT_CONTENT.toString())))
       .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
       .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
       .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME.toString())))
       .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME.toString())))
-      .andExpect(jsonPath("$.[*].tagLine").value(hasItem(DEFAULT_TAG_LINE)));
+      .andExpect(jsonPath("$.[*].tagLine").value(hasItem(DEFAULT_TAG_LINE)))
+      .andExpect(jsonPath("$.[*].imageCollection").value(hasItem(DEFAULT_IMAGE_COLLECTION.toString())))
+      .andExpect(jsonPath("$.[*].videoCollection").value(hasItem(DEFAULT_VIDEO_COLLECTION.toString())));
   }
 }

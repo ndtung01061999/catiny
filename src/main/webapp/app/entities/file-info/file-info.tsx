@@ -209,9 +209,6 @@ export const FileInfo = (props: RouteComponentProps<{ url: string }>) => {
                   <th>
                     <Translate contentKey="catinyApp.fileInfo.baseInfo">Base Info</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
-                  <th>
-                    <Translate contentKey="catinyApp.fileInfo.masterUser">Master User</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
                   <th />
                 </tr>
               </thead>
@@ -229,7 +226,6 @@ export const FileInfo = (props: RouteComponentProps<{ url: string }>) => {
                     <td>{fileInfo.path}</td>
                     <td>{fileInfo.dataSize}</td>
                     <td>{fileInfo.baseInfo ? <Link to={`base-info/${fileInfo.baseInfo.id}`}>{fileInfo.baseInfo.id}</Link> : ''}</td>
-                    <td>{fileInfo.masterUser ? <Link to={`master-user/${fileInfo.masterUser.id}`}>{fileInfo.masterUser.id}</Link> : ''}</td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${fileInfo.id}`} color="info" size="sm" data-cy="entityDetailsButton">

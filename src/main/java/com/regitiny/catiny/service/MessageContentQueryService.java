@@ -99,16 +99,13 @@ public class MessageContentQueryService extends QueryService<MessageContent> {
       if (criteria.getUuid() != null) {
         specification = specification.and(buildSpecification(criteria.getUuid(), MessageContent_.uuid));
       }
+      if (criteria.getSenderName() != null) {
+        specification = specification.and(buildStringSpecification(criteria.getSenderName(), MessageContent_.senderName));
+      }
       if (criteria.getBaseInfoId() != null) {
         specification =
           specification.and(
             buildSpecification(criteria.getBaseInfoId(), root -> root.join(MessageContent_.baseInfo, JoinType.LEFT).get(BaseInfo_.id))
-          );
-      }
-      if (criteria.getSenderId() != null) {
-        specification =
-          specification.and(
-            buildSpecification(criteria.getSenderId(), root -> root.join(MessageContent_.sender, JoinType.LEFT).get(MasterUser_.id))
           );
       }
       if (criteria.getMessageGroupId() != null) {

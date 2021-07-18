@@ -20,16 +20,20 @@
       },
       "id": "ID",
       "uuid": "Uuid",
+      "senderName": "Sender Name",
+      "attach": "Attach",
       "content": "Content",
       "status": "Status",
       "searchField": "Search Field",
       "baseInfo": "Base Info",
-      "sender": "Sender",
       "messageGroup": "Message Group",
       "help": {
         "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
-        "status": "status : trạng thái của tin nhắn này, đã gửi chưa , ai đã nhận được , đã xem chưa đã thu hồi hay đã xóa...\n@type           : Json",
-        "searchField": "searchField : lưu content tin nhắn lọc dấu ... để sau này search"
+        "senderName": "senderName     : tên người gửi",
+        "attach": "attachInfo     : đính kèm tệp ảnh video ...",
+        "content": "content        : nội dung tin nhắn",
+        "status": "status         : trạng thái của tin nhắn này, đã gửi chưa , ai đã nhận được , đã xem chưa đã thu hồi hay đã xóa...",
+        "searchField": "searchField    : lưu content tin nhắn lọc dấu ... để sau này search"
       }
     }
   }

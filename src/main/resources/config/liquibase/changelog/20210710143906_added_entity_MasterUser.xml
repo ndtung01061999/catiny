@@ -23,20 +23,14 @@
             <column name="nickname" type="varchar(255)" remarks="nickname : biệt danh của người dùng">
                 <constraints nullable="true" />
             </column>
+            <column name="avatar" type="${clobType}" remarks="avatar : @type Json -&gt; ảnh đại diện của người dùng">
+                <constraints nullable="true" />
+            </column>
             <column name="quick_info" type="${clobType}" remarks="quickInfo      : @type Json -&gt; thông tin nhanh về người dùng này dùng trong giới thiệu sơ khi chỉ chuột vào người dùng">
                 <constraints nullable="true" />
             </column>
-            <column name="my_profile_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_master_user__my_profile_id" />
-            </column>
-            <column name="my_account_status_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_master_user__my_account_status_id" />
-            </column>
             <column name="my_rank_id" type="bigint">
                 <constraints nullable="true" unique="true" uniqueConstraintName="ux_master_user__my_rank_id" />
-            </column>
-            <column name="avatar_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_master_user__avatar_id" />
             </column>
             <column name="base_info_id" type="bigint">
                 <constraints nullable="true" unique="true" uniqueConstraintName="ux_master_user__base_info_id" />
@@ -46,28 +40,6 @@
     </changeSet>
 
     <changeSet id="20210710143906-1-relations" author="jhipster">
-
-        <createTable tableName="rel_master_user__my_group_post">
-            <column name="my_group_post_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="master_user_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addPrimaryKey columnNames="master_user_id, my_group_post_id" tableName="rel_master_user__my_group_post"/>
-
-        <createTable tableName="rel_master_user__message_group">
-            <column name="message_group_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="master_user_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addPrimaryKey columnNames="master_user_id, message_group_id" tableName="rel_master_user__message_group"/>
 
         <createTable tableName="rel_master_user__topic_interest">
             <column name="topic_interest_id" type="bigint">
@@ -100,6 +72,7 @@
             <column name="uuid" type="string"/>
             <column name="full_name" type="string"/>
             <column name="nickname" type="string"/>
+            <column name="avatar" type="clob"/>
             <column name="quick_info" type="clob"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>

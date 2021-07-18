@@ -57,6 +57,15 @@ export const MasterUserDetail = (props: RouteComponentProps<{ id: string }>) => 
           </dt>
           <dd>{masterUserEntity.nickname}</dd>
           <dt>
+            <span id="avatar">
+              <Translate contentKey="catinyApp.masterUser.avatar">Avatar</Translate>
+            </span>
+            <UncontrolledTooltip target="avatar">
+              <Translate contentKey="catinyApp.masterUser.help.avatar" />
+            </UncontrolledTooltip>
+          </dt>
+          <dd>{masterUserEntity.avatar}</dd>
+          <dt>
             <span id="quickInfo">
               <Translate contentKey="catinyApp.masterUser.quickInfo">Quick Info</Translate>
             </span>
@@ -70,51 +79,13 @@ export const MasterUserDetail = (props: RouteComponentProps<{ id: string }>) => 
           </dt>
           <dd>{masterUserEntity.user ? masterUserEntity.user.id : ''}</dd>
           <dt>
-            <Translate contentKey="catinyApp.masterUser.myProfile">My Profile</Translate>
-          </dt>
-          <dd>{masterUserEntity.myProfile ? masterUserEntity.myProfile.id : ''}</dd>
-          <dt>
-            <Translate contentKey="catinyApp.masterUser.myAccountStatus">My Account Status</Translate>
-          </dt>
-          <dd>{masterUserEntity.myAccountStatus ? masterUserEntity.myAccountStatus.id : ''}</dd>
-          <dt>
             <Translate contentKey="catinyApp.masterUser.myRank">My Rank</Translate>
           </dt>
           <dd>{masterUserEntity.myRank ? masterUserEntity.myRank.id : ''}</dd>
           <dt>
-            <Translate contentKey="catinyApp.masterUser.avatar">Avatar</Translate>
-          </dt>
-          <dd>{masterUserEntity.avatar ? masterUserEntity.avatar.id : ''}</dd>
-          <dt>
             <Translate contentKey="catinyApp.masterUser.baseInfo">Base Info</Translate>
           </dt>
           <dd>{masterUserEntity.baseInfo ? masterUserEntity.baseInfo.id : ''}</dd>
-          <dt>
-            <Translate contentKey="catinyApp.masterUser.myGroupPost">My Group Post</Translate>
-          </dt>
-          <dd>
-            {masterUserEntity.myGroupPosts
-              ? masterUserEntity.myGroupPosts.map((val, i) => (
-                  <span key={val.id}>
-                    <a>{val.id}</a>
-                    {masterUserEntity.myGroupPosts && i === masterUserEntity.myGroupPosts.length - 1 ? '' : ', '}
-                  </span>
-                ))
-              : null}
-          </dd>
-          <dt>
-            <Translate contentKey="catinyApp.masterUser.messageGroup">Message Group</Translate>
-          </dt>
-          <dd>
-            {masterUserEntity.messageGroups
-              ? masterUserEntity.messageGroups.map((val, i) => (
-                  <span key={val.id}>
-                    <a>{val.id}</a>
-                    {masterUserEntity.messageGroups && i === masterUserEntity.messageGroups.length - 1 ? '' : ', '}
-                  </span>
-                ))
-              : null}
-          </dd>
           <dt>
             <Translate contentKey="catinyApp.masterUser.topicInterest">Topic Interest</Translate>
           </dt>

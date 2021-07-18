@@ -52,10 +52,6 @@ export const FriendDetail = (props: RouteComponentProps<{ id: string }>) => {
             <Translate contentKey="catinyApp.friend.friendDetails">Friend Details</Translate>
           </dt>
           <dd>{friendEntity.friendDetails ? friendEntity.friendDetails.id : ''}</dd>
-          <dt>
-            <Translate contentKey="catinyApp.friend.masterUser">Master User</Translate>
-          </dt>
-          <dd>{friendEntity.masterUser ? friendEntity.masterUser.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/friend" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

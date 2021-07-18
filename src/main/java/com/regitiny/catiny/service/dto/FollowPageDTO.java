@@ -33,8 +33,6 @@ public class FollowPageDTO implements Serializable {
 
   private PagePostDTO followPageDetails;
 
-  private MasterUserDTO masterUser;
-
   public Long getId() {
     return id;
   }
@@ -67,14 +65,6 @@ public class FollowPageDTO implements Serializable {
     this.followPageDetails = followPageDetails;
   }
 
-  public MasterUserDTO getMasterUser() {
-    return masterUser;
-  }
-
-  public void setMasterUser(MasterUserDTO masterUser) {
-    this.masterUser = masterUser;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -104,7 +94,6 @@ public class FollowPageDTO implements Serializable {
             ", uuid='" + getUuid() + "'" +
             ", baseInfo=" + getBaseInfo() +
             ", followPageDetails=" + getFollowPageDetails() +
-            ", masterUser=" + getMasterUser() +
             "}";
     }
 }

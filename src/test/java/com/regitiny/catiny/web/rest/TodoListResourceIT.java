@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.regitiny.catiny.GeneratedByJHipster;
 import com.regitiny.catiny.IntegrationTest;
 import com.regitiny.catiny.domain.BaseInfo;
-import com.regitiny.catiny.domain.MasterUser;
 import com.regitiny.catiny.domain.TodoList;
 import com.regitiny.catiny.repository.TodoListRepository;
 import com.regitiny.catiny.repository.search.TodoListSearchRepository;
@@ -374,25 +373,6 @@ class TodoListResourceIT {
 
     // Get all the todoListList where baseInfo equals to (baseInfoId + 1)
     defaultTodoListShouldNotBeFound("baseInfoId.equals=" + (baseInfoId + 1));
-  }
-
-  @Test
-  @Transactional
-  void getAllTodoListsByMasterUserIsEqualToSomething() throws Exception {
-    // Initialize the database
-    todoListRepository.saveAndFlush(todoList);
-    MasterUser masterUser = MasterUserResourceIT.createEntity(em);
-    em.persist(masterUser);
-    em.flush();
-    todoList.setMasterUser(masterUser);
-    todoListRepository.saveAndFlush(todoList);
-    Long masterUserId = masterUser.getId();
-
-    // Get all the todoListList where masterUser equals to masterUserId
-    defaultTodoListShouldBeFound("masterUserId.equals=" + masterUserId);
-
-    // Get all the todoListList where masterUser equals to (masterUserId + 1)
-    defaultTodoListShouldNotBeFound("masterUserId.equals=" + (masterUserId + 1));
   }
 
   /**

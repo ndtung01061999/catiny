@@ -114,12 +114,6 @@ public class FollowGroupQueryService extends QueryService<FollowGroup> {
             )
           );
       }
-      if (criteria.getMasterUserId() != null) {
-        specification =
-          specification.and(
-            buildSpecification(criteria.getMasterUserId(), root -> root.join(FollowGroup_.masterUser, JoinType.LEFT).get(MasterUser_.id))
-          );
-      }
     }
     return specification;
   }

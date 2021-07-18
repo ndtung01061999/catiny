@@ -16,7 +16,6 @@ export default class PostUpdatePage {
   groupPostSelect: ElementFinder = element(by.css('select#post-groupPost'));
   pagePostSelect: ElementFinder = element(by.css('select#post-pagePost'));
   postShareParentSelect: ElementFinder = element(by.css('select#post-postShareParent'));
-  posterSelect: ElementFinder = element(by.css('select#post-poster'));
 
   getPageTitle() {
     return this.pageTitle;
@@ -132,22 +131,6 @@ export default class PostUpdatePage {
     return this.postShareParentSelect.element(by.css('option:checked')).getText();
   }
 
-  async posterSelectLastOption() {
-    await this.posterSelect.all(by.tagName('option')).last().click();
-  }
-
-  async posterSelectOption(option) {
-    await this.posterSelect.sendKeys(option);
-  }
-
-  getPosterSelect() {
-    return this.posterSelect;
-  }
-
-  async getPosterSelectedOption() {
-    return this.posterSelect.element(by.css('option:checked')).getText();
-  }
-
   async save() {
     await this.saveButton.click();
   }
@@ -175,7 +158,6 @@ export default class PostUpdatePage {
     await this.groupPostSelectLastOption();
     await this.pagePostSelectLastOption();
     await this.postShareParentSelectLastOption();
-    await this.posterSelectLastOption();
     await this.save();
     await waitUntilHidden(this.saveButton);
   }

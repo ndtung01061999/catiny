@@ -42,10 +42,10 @@ public class FileInfoDTO implements Serializable {
   private String typeFile;
 
   /**
-   * path           : đường dẫn file nguyên gốc
+   * path           : đường dẫn file trên server
    */
   @Size(max = 1024)
-  @ApiModelProperty(value = "path           : đường dẫn file nguyên gốc")
+  @ApiModelProperty(value = "path           : đường dẫn file trên server")
   private String path;
 
   /**
@@ -55,8 +55,6 @@ public class FileInfoDTO implements Serializable {
   private Long dataSize;
 
   private BaseInfoDTO baseInfo;
-
-  private MasterUserDTO masterUser;
 
   public Long getId() {
     return id;
@@ -114,14 +112,6 @@ public class FileInfoDTO implements Serializable {
     this.baseInfo = baseInfo;
   }
 
-  public MasterUserDTO getMasterUser() {
-    return masterUser;
-  }
-
-  public void setMasterUser(MasterUserDTO masterUser) {
-    this.masterUser = masterUser;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -154,7 +144,6 @@ public class FileInfoDTO implements Serializable {
             ", path='" + getPath() + "'" +
             ", dataSize=" + getDataSize() +
             ", baseInfo=" + getBaseInfo() +
-            ", masterUser=" + getMasterUser() +
             "}";
     }
 }

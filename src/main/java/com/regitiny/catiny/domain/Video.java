@@ -41,13 +41,68 @@ public class Video implements Serializable {
   @Column(name = "name")
   private String name;
 
-  @JsonIgnoreProperties(value = { "baseInfo", "masterUser" }, allowSetters = true)
+  /**
+   * width          : chiều rộng video
+   */
+  @Column(name = "width")
+  private Integer width;
+
+  /**
+   * height         : chiều cao video
+   */
+  @Column(name = "height")
+  private Integer height;
+
+  /**
+   * qualityImage   : chất lượng ảnh sau khi xử lý
+   */
+  @DecimalMin(value = "0")
+  @DecimalMax(value = "1")
+  @Column(name = "quality_image")
+  private Float qualityImage;
+
+  /**
+   * qualityAudio   : chất lượng âm thanh sau khi xử lý
+   */
+  @DecimalMin(value = "0")
+  @DecimalMax(value = "1")
+  @Column(name = "quality_audio")
+  private Float qualityAudio;
+
+  /**
+   * quality        : chất lượng chung sau khi xử lý
+   */
+  @DecimalMin(value = "0")
+  @DecimalMax(value = "1")
+  @Column(name = "quality")
+  private Float quality;
+
+  /**
+   * pixelSize      : kích thước của ảnh
+   */
+  @Column(name = "pixel_size")
+  private Integer pixelSize;
+
+  /**
+   * priorityIndex  : chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)
+   */
+  @Column(name = "priority_index")
+  private Long priorityIndex;
+
+  /**
+   * dataSize       : kích thước file theo byte
+   */
+  @Column(name = "data_size")
+  private Long dataSize;
+
+  @JsonIgnoreProperties(value = { "baseInfo" }, allowSetters = true)
   @OneToOne
   @JoinColumn(unique = true)
   private FileInfo fileInfo;
 
   @JsonIgnoreProperties(
     value = {
+      "classInfo",
       "userProfile",
       "accountStatus",
       "deviceStatus",
@@ -77,6 +132,10 @@ public class Video implements Serializable {
       "topicInterest",
       "todoList",
       "event",
+      "createdBy",
+      "modifiedBy",
+      "owner",
+      "permissions",
     },
     allowSetters = true
   )
@@ -86,7 +145,7 @@ public class Video implements Serializable {
 
   @OneToMany(mappedBy = "videoOriginal")
   @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-  @JsonIgnoreProperties(value = { "fileInfo", "baseInfo", "videoProcesseds", "videoStream", "videoOriginal", "event" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "fileInfo", "baseInfo", "videoProcesseds", "videoStream", "videoOriginal" }, allowSetters = true)
   private Set<Video> videoProcesseds = new HashSet<>();
 
   @JsonIgnoreProperties(value = { "video", "baseInfo", "videoLiveStreamBuffers" }, allowSetters = true)
@@ -94,12 +153,8 @@ public class Video implements Serializable {
   private VideoStream videoStream;
 
   @ManyToOne
-  @JsonIgnoreProperties(value = { "fileInfo", "baseInfo", "videoProcesseds", "videoStream", "videoOriginal", "event" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "fileInfo", "baseInfo", "videoProcesseds", "videoStream", "videoOriginal" }, allowSetters = true)
   private Video videoOriginal;
-
-  @ManyToOne
-  @JsonIgnoreProperties(value = { "baseInfo", "otherImages", "otherVideos" }, allowSetters = true)
-  private Event event;
 
   // jhipster-needle-entity-add-field - JHipster will add fields here
   public Long getId() {
@@ -139,6 +194,110 @@ public class Video implements Serializable {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public Integer getWidth() {
+    return this.width;
+  }
+
+  public Video width(Integer width) {
+    this.width = width;
+    return this;
+  }
+
+  public void setWidth(Integer width) {
+    this.width = width;
+  }
+
+  public Integer getHeight() {
+    return this.height;
+  }
+
+  public Video height(Integer height) {
+    this.height = height;
+    return this;
+  }
+
+  public void setHeight(Integer height) {
+    this.height = height;
+  }
+
+  public Float getQualityImage() {
+    return this.qualityImage;
+  }
+
+  public Video qualityImage(Float qualityImage) {
+    this.qualityImage = qualityImage;
+    return this;
+  }
+
+  public void setQualityImage(Float qualityImage) {
+    this.qualityImage = qualityImage;
+  }
+
+  public Float getQualityAudio() {
+    return this.qualityAudio;
+  }
+
+  public Video qualityAudio(Float qualityAudio) {
+    this.qualityAudio = qualityAudio;
+    return this;
+  }
+
+  public void setQualityAudio(Float qualityAudio) {
+    this.qualityAudio = qualityAudio;
+  }
+
+  public Float getQuality() {
+    return this.quality;
+  }
+
+  public Video quality(Float quality) {
+    this.quality = quality;
+    return this;
+  }
+
+  public void setQuality(Float quality) {
+    this.quality = quality;
+  }
+
+  public Integer getPixelSize() {
+    return this.pixelSize;
+  }
+
+  public Video pixelSize(Integer pixelSize) {
+    this.pixelSize = pixelSize;
+    return this;
+  }
+
+  public void setPixelSize(Integer pixelSize) {
+    this.pixelSize = pixelSize;
+  }
+
+  public Long getPriorityIndex() {
+    return this.priorityIndex;
+  }
+
+  public Video priorityIndex(Long priorityIndex) {
+    this.priorityIndex = priorityIndex;
+    return this;
+  }
+
+  public void setPriorityIndex(Long priorityIndex) {
+    this.priorityIndex = priorityIndex;
+  }
+
+  public Long getDataSize() {
+    return this.dataSize;
+  }
+
+  public Video dataSize(Long dataSize) {
+    this.dataSize = dataSize;
+    return this;
+  }
+
+  public void setDataSize(Long dataSize) {
+    this.dataSize = dataSize;
   }
 
   public FileInfo getFileInfo() {
@@ -230,19 +389,6 @@ public class Video implements Serializable {
     this.videoOriginal = video;
   }
 
-  public Event getEvent() {
-    return this.event;
-  }
-
-  public Video event(Event event) {
-    this.setEvent(event);
-    return this;
-  }
-
-  public void setEvent(Event event) {
-    this.event = event;
-  }
-
   // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
   @Override
@@ -269,6 +415,14 @@ public class Video implements Serializable {
             "id=" + getId() +
             ", uuid='" + getUuid() + "'" +
             ", name='" + getName() + "'" +
+            ", width=" + getWidth() +
+            ", height=" + getHeight() +
+            ", qualityImage=" + getQualityImage() +
+            ", qualityAudio=" + getQualityAudio() +
+            ", quality=" + getQuality() +
+            ", pixelSize=" + getPixelSize() +
+            ", priorityIndex=" + getPriorityIndex() +
+            ", dataSize=" + getDataSize() +
             "}";
     }
 }

@@ -38,6 +38,7 @@ public class FollowGroup implements Serializable {
 
   @JsonIgnoreProperties(
     value = {
+      "classInfo",
       "userProfile",
       "accountStatus",
       "deviceStatus",
@@ -67,6 +68,10 @@ public class FollowGroup implements Serializable {
       "topicInterest",
       "todoList",
       "event",
+      "createdBy",
+      "modifiedBy",
+      "owner",
+      "permissions",
     },
     allowSetters = true
   )
@@ -75,37 +80,8 @@ public class FollowGroup implements Serializable {
   private BaseInfo baseInfo;
 
   @ManyToOne
-  @JsonIgnoreProperties(value = { "profile", "baseInfo", "myPostInGroups", "topicInterests", "userInGroups" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "profile", "baseInfo", "myPostInGroups", "topicInterests" }, allowSetters = true)
   private GroupPost followGroupDetails;
-
-  @ManyToOne
-  @JsonIgnoreProperties(
-    value = {
-      "user",
-      "myProfile",
-      "myAccountStatus",
-      "myRank",
-      "avatar",
-      "baseInfo",
-      "myPages",
-      "myFiles",
-      "myNotifications",
-      "myFriends",
-      "myFollowUsers",
-      "myFollowGroups",
-      "myFollowPages",
-      "myNewsFeeds",
-      "myTodoLists",
-      "myPosts",
-      "myGroupPosts",
-      "messageGroups",
-      "topicInterests",
-      "myLikes",
-      "myComments",
-    },
-    allowSetters = true
-  )
-  private MasterUser masterUser;
 
   // jhipster-needle-entity-add-field - JHipster will add fields here
   public Long getId() {
@@ -158,19 +134,6 @@ public class FollowGroup implements Serializable {
 
   public void setFollowGroupDetails(GroupPost groupPost) {
     this.followGroupDetails = groupPost;
-  }
-
-  public MasterUser getMasterUser() {
-    return this.masterUser;
-  }
-
-  public FollowGroup masterUser(MasterUser masterUser) {
-    this.setMasterUser(masterUser);
-    return this;
-  }
-
-  public void setMasterUser(MasterUser masterUser) {
-    this.masterUser = masterUser;
   }
 
   // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

@@ -1,0 +1,40 @@
+{
+  "catinyApp": {
+    "permission": {
+      "home": {
+        "title": "Permissions",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Permission",
+        "createOrEditLabel": "Create or edit a Permission",
+        "search": "Search for Permission",
+        "notFound": "No Permissions found"
+      },
+      "created": "A new Permission is created with identifier {{ param }}",
+      "updated": "A Permission is updated with identifier {{ param }}",
+      "deleted": "A Permission is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Permission {{ id }}?"
+      },
+      "detail": {
+        "title": "Permission"
+      },
+      "id": "ID",
+      "read": "Read",
+      "write": "Write",
+      "share": "Share",
+      "delete": "Delete",
+      "add": "Add",
+      "level": "Level",
+      "baseInfo": "Base Info",
+      "masterUser": "Master User",
+      "help": {
+        "read": "quyền đọc",
+        "write": "quyền ghi và sửa",
+        "share": "quyền chia sẻ",
+        "delete": "quyền xóa",
+        "add": "quyền trao quyền cho user khác",
+        "level": "cấp độ 0-&gt;* số nhỏ hơn sẽ có quyền lớn hơn"
+      }
+    }
+  }
+}

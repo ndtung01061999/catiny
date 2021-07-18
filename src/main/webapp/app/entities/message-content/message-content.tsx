@@ -194,6 +194,12 @@ export const MessageContent = (props: RouteComponentProps<{ url: string }>) => {
                   <th className="hand" onClick={sort('uuid')}>
                     <Translate contentKey="catinyApp.messageContent.uuid">Uuid</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
+                  <th className="hand" onClick={sort('senderName')}>
+                    <Translate contentKey="catinyApp.messageContent.senderName">Sender Name</Translate> <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th className="hand" onClick={sort('attach')}>
+                    <Translate contentKey="catinyApp.messageContent.attach">Attach</Translate> <FontAwesomeIcon icon="sort" />
+                  </th>
                   <th className="hand" onClick={sort('content')}>
                     <Translate contentKey="catinyApp.messageContent.content">Content</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
@@ -205,9 +211,6 @@ export const MessageContent = (props: RouteComponentProps<{ url: string }>) => {
                   </th>
                   <th>
                     <Translate contentKey="catinyApp.messageContent.baseInfo">Base Info</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th>
-                    <Translate contentKey="catinyApp.messageContent.sender">Sender</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
                   <th>
                     <Translate contentKey="catinyApp.messageContent.messageGroup">Message Group</Translate> <FontAwesomeIcon icon="sort" />
@@ -224,6 +227,8 @@ export const MessageContent = (props: RouteComponentProps<{ url: string }>) => {
                       </Button>
                     </td>
                     <td>{messageContent.uuid}</td>
+                    <td>{messageContent.senderName}</td>
+                    <td>{messageContent.attach}</td>
                     <td>{messageContent.content}</td>
                     <td>{messageContent.status}</td>
                     <td>{messageContent.searchField}</td>
@@ -233,9 +238,6 @@ export const MessageContent = (props: RouteComponentProps<{ url: string }>) => {
                       ) : (
                         ''
                       )}
-                    </td>
-                    <td>
-                      {messageContent.sender ? <Link to={`master-user/${messageContent.sender.id}`}>{messageContent.sender.id}</Link> : ''}
                     </td>
                     <td>
                       {messageContent.messageGroup ? (

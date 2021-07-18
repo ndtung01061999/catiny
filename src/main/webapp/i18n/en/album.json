@@ -21,10 +21,15 @@
       "id": "ID",
       "uuid": "Uuid",
       "name": "Name",
+      "note": "Note",
+      "avatar": "Avatar",
       "baseInfo": "Base Info",
       "image": "Image",
       "help": {
-        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)"
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
+        "name": "name           : tên của album",
+        "note": "note           : trú thích của album (ví dụ album đại học)",
+        "avatar": "avatar         : @type Json -&gt; ảnh đại diện của Album"
       }
     }
   }

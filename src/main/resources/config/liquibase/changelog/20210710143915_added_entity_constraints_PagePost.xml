@@ -19,11 +19,5 @@
                                  constraintName="fk_page_post__base_info_id"
                                  referencedColumnNames="id"
                                  referencedTableName="base_info"/>
-
-        <addForeignKeyConstraint baseColumnNames="master_user_id"
-                                 baseTableName="page_post"
-                                 constraintName="fk_page_post__master_user_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="master_user"/>
     </changeSet>
 </databaseChangeLog>

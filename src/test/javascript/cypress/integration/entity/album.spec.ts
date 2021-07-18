@@ -104,6 +104,13 @@ describe('Album e2e test', () => {
 
     cy.get(`[data-cy="name"]`).type('Forward Chair compressing').should('have.value', 'Forward Chair compressing');
 
+    cy.get(`[data-cy="note"]`).type('redefine').should('have.value', 'redefine');
+
+    cy.get(`[data-cy="avatar"]`)
+      .type('../fake-data/blob/hipster.txt')
+      .invoke('val')
+      .should('match', new RegExp('../fake-data/blob/hipster.txt'));
+
     cy.setFieldSelectToLastOfEntity('baseInfo');
 
     cy.setFieldSelectToLastOfEntity('image');

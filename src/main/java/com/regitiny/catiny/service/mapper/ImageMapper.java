@@ -9,13 +9,12 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link Image} and its DTO {@link ImageDTO}.
  */
-@Mapper(componentModel = "spring", uses = { FileInfoMapper.class, BaseInfoMapper.class, EventMapper.class })
+@Mapper(componentModel = "spring", uses = { FileInfoMapper.class, BaseInfoMapper.class })
 @GeneratedByJHipster
 public interface ImageMapper extends EntityMapper<ImageDTO, Image> {
   @Mapping(target = "fileInfo", source = "fileInfo", qualifiedByName = "id")
   @Mapping(target = "baseInfo", source = "baseInfo", qualifiedByName = "id")
   @Mapping(target = "imageOriginal", source = "imageOriginal", qualifiedByName = "id")
-  @Mapping(target = "event", source = "event", qualifiedByName = "id")
   ImageDTO toDto(Image s);
 
   @Named("id")

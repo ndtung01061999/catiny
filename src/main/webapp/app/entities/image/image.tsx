@@ -197,6 +197,24 @@ export const Image = (props: RouteComponentProps<{ url: string }>) => {
                   <th className="hand" onClick={sort('name')}>
                     <Translate contentKey="catinyApp.image.name">Name</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
+                  <th className="hand" onClick={sort('width')}>
+                    <Translate contentKey="catinyApp.image.width">Width</Translate> <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th className="hand" onClick={sort('height')}>
+                    <Translate contentKey="catinyApp.image.height">Height</Translate> <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th className="hand" onClick={sort('quality')}>
+                    <Translate contentKey="catinyApp.image.quality">Quality</Translate> <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th className="hand" onClick={sort('pixelSize')}>
+                    <Translate contentKey="catinyApp.image.pixelSize">Pixel Size</Translate> <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th className="hand" onClick={sort('priorityIndex')}>
+                    <Translate contentKey="catinyApp.image.priorityIndex">Priority Index</Translate> <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th className="hand" onClick={sort('dataSize')}>
+                    <Translate contentKey="catinyApp.image.dataSize">Data Size</Translate> <FontAwesomeIcon icon="sort" />
+                  </th>
                   <th>
                     <Translate contentKey="catinyApp.image.fileInfo">File Info</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
@@ -205,9 +223,6 @@ export const Image = (props: RouteComponentProps<{ url: string }>) => {
                   </th>
                   <th>
                     <Translate contentKey="catinyApp.image.imageOriginal">Image Original</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th>
-                    <Translate contentKey="catinyApp.image.event">Event</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
                   <th />
                 </tr>
@@ -222,10 +237,15 @@ export const Image = (props: RouteComponentProps<{ url: string }>) => {
                     </td>
                     <td>{image.uuid}</td>
                     <td>{image.name}</td>
+                    <td>{image.width}</td>
+                    <td>{image.height}</td>
+                    <td>{image.quality}</td>
+                    <td>{image.pixelSize}</td>
+                    <td>{image.priorityIndex}</td>
+                    <td>{image.dataSize}</td>
                     <td>{image.fileInfo ? <Link to={`file-info/${image.fileInfo.id}`}>{image.fileInfo.id}</Link> : ''}</td>
                     <td>{image.baseInfo ? <Link to={`base-info/${image.baseInfo.id}`}>{image.baseInfo.id}</Link> : ''}</td>
                     <td>{image.imageOriginal ? <Link to={`image/${image.imageOriginal.id}`}>{image.imageOriginal.id}</Link> : ''}</td>
-                    <td>{image.event ? <Link to={`event/${image.event.id}`}>{image.event.id}</Link> : ''}</td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${image.id}`} color="info" size="sm" data-cy="entityDetailsButton">

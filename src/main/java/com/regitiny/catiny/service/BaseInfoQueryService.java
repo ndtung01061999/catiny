@@ -108,14 +108,20 @@ public class BaseInfoQueryService extends QueryService<BaseInfo> {
       if (criteria.getModifiedDate() != null) {
         specification = specification.and(buildRangeSpecification(criteria.getModifiedDate(), BaseInfo_.modifiedDate));
       }
-      if (criteria.getCreatedBy() != null) {
-        specification = specification.and(buildStringSpecification(criteria.getCreatedBy(), BaseInfo_.createdBy));
-      }
-      if (criteria.getModifiedBy() != null) {
-        specification = specification.and(buildStringSpecification(criteria.getModifiedBy(), BaseInfo_.modifiedBy));
-      }
       if (criteria.getDeleted() != null) {
         specification = specification.and(buildSpecification(criteria.getDeleted(), BaseInfo_.deleted));
+      }
+      if (criteria.getPriorityIndex() != null) {
+        specification = specification.and(buildRangeSpecification(criteria.getPriorityIndex(), BaseInfo_.priorityIndex));
+      }
+      if (criteria.getCountUse() != null) {
+        specification = specification.and(buildRangeSpecification(criteria.getCountUse(), BaseInfo_.countUse));
+      }
+      if (criteria.getClassInfoId() != null) {
+        specification =
+          specification.and(
+            buildSpecification(criteria.getClassInfoId(), root -> root.join(BaseInfo_.classInfo, JoinType.LEFT).get(ClassInfo_.id))
+          );
       }
       if (criteria.getUserProfileId() != null) {
         specification =
@@ -290,6 +296,30 @@ public class BaseInfoQueryService extends QueryService<BaseInfo> {
       if (criteria.getEventId() != null) {
         specification =
           specification.and(buildSpecification(criteria.getEventId(), root -> root.join(BaseInfo_.event, JoinType.LEFT).get(Event_.id)));
+      }
+      if (criteria.getCreatedById() != null) {
+        specification =
+          specification.and(
+            buildSpecification(criteria.getCreatedById(), root -> root.join(BaseInfo_.createdBy, JoinType.LEFT).get(MasterUser_.id))
+          );
+      }
+      if (criteria.getModifiedById() != null) {
+        specification =
+          specification.and(
+            buildSpecification(criteria.getModifiedById(), root -> root.join(BaseInfo_.modifiedBy, JoinType.LEFT).get(MasterUser_.id))
+          );
+      }
+      if (criteria.getOwnerId() != null) {
+        specification =
+          specification.and(
+            buildSpecification(criteria.getOwnerId(), root -> root.join(BaseInfo_.owner, JoinType.LEFT).get(MasterUser_.id))
+          );
+      }
+      if (criteria.getPermissionId() != null) {
+        specification =
+          specification.and(
+            buildSpecification(criteria.getPermissionId(), root -> root.join(BaseInfo_.permissions, JoinType.LEFT).get(Permission_.id))
+          );
       }
     }
     return specification;

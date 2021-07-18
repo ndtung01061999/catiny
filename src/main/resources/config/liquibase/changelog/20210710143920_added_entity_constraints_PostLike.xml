@@ -14,16 +14,16 @@
                                  referencedColumnNames="id"
                                  referencedTableName="base_info"/>
 
-        <addForeignKeyConstraint baseColumnNames="user_like_id"
-                                 baseTableName="post_like"
-                                 constraintName="fk_post_like__user_like_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="master_user"/>
-
         <addForeignKeyConstraint baseColumnNames="post_id"
                                  baseTableName="post_like"
                                  constraintName="fk_post_like__post_id"
                                  referencedColumnNames="id"
                                  referencedTableName="post"/>
+
+        <addForeignKeyConstraint baseColumnNames="post_comment_id"
+                                 baseTableName="post_like"
+                                 constraintName="fk_post_like__post_comment_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="post_comment"/>
     </changeSet>
 </databaseChangeLog>

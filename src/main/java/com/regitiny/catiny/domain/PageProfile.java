@@ -38,6 +38,7 @@ public class PageProfile implements Serializable {
 
   @JsonIgnoreProperties(
     value = {
+      "classInfo",
       "userProfile",
       "accountStatus",
       "deviceStatus",
@@ -67,6 +68,10 @@ public class PageProfile implements Serializable {
       "topicInterest",
       "todoList",
       "event",
+      "createdBy",
+      "modifiedBy",
+      "owner",
+      "permissions",
     },
     allowSetters = true
   )
@@ -74,7 +79,7 @@ public class PageProfile implements Serializable {
   @JoinColumn(unique = true)
   private BaseInfo baseInfo;
 
-  @JsonIgnoreProperties(value = { "profile", "baseInfo", "myPostInPages", "masterUser", "topicInterests" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "profile", "baseInfo", "myPostInPages", "topicInterests" }, allowSetters = true)
   @OneToOne(mappedBy = "profile")
   private PagePost page;
 

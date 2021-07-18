@@ -73,6 +73,7 @@ class MessageGroupGatlingTest extends Simulation {
             .body(StringBody("""{
                 "uuid":null
                 , "groupName":"SAMPLE_TEXT"
+                , "avatar":null
                 , "addBy":"SAMPLE_TEXT"
                 }""")).asJson
             .check(status.is(201))

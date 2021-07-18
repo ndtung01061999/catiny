@@ -44,6 +44,7 @@ public class PostComment implements Serializable {
 
   @JsonIgnoreProperties(
     value = {
+      "classInfo",
       "userProfile",
       "accountStatus",
       "deviceStatus",
@@ -73,6 +74,10 @@ public class PostComment implements Serializable {
       "topicInterest",
       "todoList",
       "event",
+      "createdBy",
+      "modifiedBy",
+      "owner",
+      "permissions",
     },
     allowSetters = true
   )
@@ -80,60 +85,27 @@ public class PostComment implements Serializable {
   @JoinColumn(unique = true)
   private BaseInfo baseInfo;
 
+  @OneToMany(mappedBy = "postComment")
+  @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+  @JsonIgnoreProperties(value = { "baseInfo", "post", "postComment" }, allowSetters = true)
+  private Set<PostLike> likes = new HashSet<>();
+
   @OneToMany(mappedBy = "commentParent")
   @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-  @JsonIgnoreProperties(value = { "baseInfo", "commentReplies", "userComment", "post", "commentParent" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "baseInfo", "likes", "commentReplies", "post", "commentParent" }, allowSetters = true)
   private Set<PostComment> commentReplies = new HashSet<>();
 
   @ManyToOne
   @JsonIgnoreProperties(
     value = {
-      "user",
-      "myProfile",
-      "myAccountStatus",
-      "myRank",
-      "avatar",
-      "baseInfo",
-      "myPages",
-      "myFiles",
-      "myNotifications",
-      "myFriends",
-      "myFollowUsers",
-      "myFollowGroups",
-      "myFollowPages",
-      "myNewsFeeds",
-      "myTodoLists",
-      "myPosts",
-      "myGroupPosts",
-      "messageGroups",
-      "topicInterests",
-      "myLikes",
-      "myComments",
-    },
-    allowSetters = true
-  )
-  private MasterUser userComment;
-
-  @ManyToOne
-  @JsonIgnoreProperties(
-    value = {
-      "baseInfo",
-      "postComments",
-      "postLikes",
-      "postShareChildren",
-      "groupPost",
-      "pagePost",
-      "postShareParent",
-      "poster",
-      "newsFeeds",
-      "topicInterests",
+      "baseInfo", "comments", "likes", "postShareChildren", "groupPost", "pagePost", "postShareParent", "newsFeeds", "topicInterests",
     },
     allowSetters = true
   )
   private Post post;
 
   @ManyToOne
-  @JsonIgnoreProperties(value = { "baseInfo", "commentReplies", "userComment", "post", "commentParent" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "baseInfo", "likes", "commentReplies", "post", "commentParent" }, allowSetters = true)
   private PostComment commentParent;
 
   // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -189,6 +161,37 @@ public class PostComment implements Serializable {
     this.baseInfo = baseInfo;
   }
 
+  public Set<PostLike> getLikes() {
+    return this.likes;
+  }
+
+  public PostComment likes(Set<PostLike> postLikes) {
+    this.setLikes(postLikes);
+    return this;
+  }
+
+  public PostComment addLike(PostLike postLike) {
+    this.likes.add(postLike);
+    postLike.setPostComment(this);
+    return this;
+  }
+
+  public PostComment removeLike(PostLike postLike) {
+    this.likes.remove(postLike);
+    postLike.setPostComment(null);
+    return this;
+  }
+
+  public void setLikes(Set<PostLike> postLikes) {
+    if (this.likes != null) {
+      this.likes.forEach(i -> i.setPostComment(null));
+    }
+    if (postLikes != null) {
+      postLikes.forEach(i -> i.setPostComment(this));
+    }
+    this.likes = postLikes;
+  }
+
   public Set<PostComment> getCommentReplies() {
     return this.commentReplies;
   }
@@ -218,19 +221,6 @@ public class PostComment implements Serializable {
       postComments.forEach(i -> i.setCommentParent(this));
     }
     this.commentReplies = postComments;
-  }
-
-  public MasterUser getUserComment() {
-    return this.userComment;
-  }
-
-  public PostComment userComment(MasterUser masterUser) {
-    this.setUserComment(masterUser);
-    return this;
-  }
-
-  public void setUserComment(MasterUser masterUser) {
-    this.userComment = masterUser;
   }
 
   public Post getPost() {

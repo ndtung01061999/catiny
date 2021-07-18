@@ -48,6 +48,15 @@ export const GroupPostDetail = (props: RouteComponentProps<{ id: string }>) => {
           </dt>
           <dd>{groupPostEntity.name}</dd>
           <dt>
+            <span id="avatar">
+              <Translate contentKey="catinyApp.groupPost.avatar">Avatar</Translate>
+            </span>
+            <UncontrolledTooltip target="avatar">
+              <Translate contentKey="catinyApp.groupPost.help.avatar" />
+            </UncontrolledTooltip>
+          </dt>
+          <dd>{groupPostEntity.avatar}</dd>
+          <dt>
             <span id="quickInfo">
               <Translate contentKey="catinyApp.groupPost.quickInfo">Quick Info</Translate>
             </span>

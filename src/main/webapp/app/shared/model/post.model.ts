@@ -3,7 +3,6 @@ import { IPostComment } from 'app/shared/model/post-comment.model';
 import { IPostLike } from 'app/shared/model/post-like.model';
 import { IGroupPost } from 'app/shared/model/group-post.model';
 import { IPagePost } from 'app/shared/model/page-post.model';
-import { IMasterUser } from 'app/shared/model/master-user.model';
 import { INewsFeed } from 'app/shared/model/news-feed.model';
 import { ITopicInterest } from 'app/shared/model/topic-interest.model';
 import { PostInType } from 'app/shared/model/enumerations/post-in-type.model';
@@ -17,13 +16,12 @@ export interface IPost {
   content?: string | null;
   searchField?: string | null;
   baseInfo?: IBaseInfo | null;
-  postComments?: IPostComment[] | null;
-  postLikes?: IPostLike[] | null;
+  comments?: IPostComment[] | null;
+  likes?: IPostLike[] | null;
   postShareChildren?: IPost[] | null;
   groupPost?: IGroupPost | null;
   pagePost?: IPagePost | null;
   postShareParent?: IPost | null;
-  poster?: IMasterUser | null;
   newsFeeds?: INewsFeed[] | null;
   topicInterests?: ITopicInterest[] | null;
 }

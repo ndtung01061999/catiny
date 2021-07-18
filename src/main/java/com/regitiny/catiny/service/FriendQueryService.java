@@ -110,12 +110,6 @@ public class FriendQueryService extends QueryService<Friend> {
             buildSpecification(criteria.getFriendDetailsId(), root -> root.join(Friend_.friendDetails, JoinType.LEFT).get(MasterUser_.id))
           );
       }
-      if (criteria.getMasterUserId() != null) {
-        specification =
-          specification.and(
-            buildSpecification(criteria.getMasterUserId(), root -> root.join(Friend_.masterUser, JoinType.LEFT).get(MasterUser_.id))
-          );
-      }
     }
     return specification;
   }

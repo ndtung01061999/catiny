@@ -99,25 +99,11 @@ describe('BaseInfo e2e test', () => {
 
     cy.get(`[data-cy="processStatus"]`).select('NEED_PROCESS_NOW');
 
-    cy.get(`[data-cy="owner"]`)
-      .type('../fake-data/blob/hipster.txt')
-      .invoke('val')
-      .should('match', new RegExp('../fake-data/blob/hipster.txt'));
-
-    cy.get(`[data-cy="role"]`)
-      .type('../fake-data/blob/hipster.txt')
-      .invoke('val')
-      .should('match', new RegExp('../fake-data/blob/hipster.txt'));
-
     cy.get(`[data-cy="modifiedClass"]`).type('Games').should('have.value', 'Games');
 
     cy.get(`[data-cy="createdDate"]`).type('2021-07-10T04:22').should('have.value', '2021-07-10T04:22');
 
     cy.get(`[data-cy="modifiedDate"]`).type('2021-07-09T17:29').should('have.value', '2021-07-09T17:29');
-
-    cy.get(`[data-cy="createdBy"]`).type('indexing copy Communications').should('have.value', 'indexing copy Communications');
-
-    cy.get(`[data-cy="modifiedBy"]`).type('Ball ubiquitous Dinar').should('have.value', 'Ball ubiquitous Dinar');
 
     cy.get(`[data-cy="notes"]`)
       .type('../fake-data/blob/hipster.txt')
@@ -131,6 +117,18 @@ describe('BaseInfo e2e test', () => {
 
     cy.get(`[data-cy="deleted"]`).should('not.be.checked');
     cy.get(`[data-cy="deleted"]`).click().should('be.checked');
+
+    cy.get(`[data-cy="priorityIndex"]`).type('84433').should('have.value', '84433');
+
+    cy.get(`[data-cy="countUse"]`).type('48392').should('have.value', '48392');
+
+    cy.setFieldSelectToLastOfEntity('classInfo');
+
+    cy.setFieldSelectToLastOfEntity('createdBy');
+
+    cy.setFieldSelectToLastOfEntity('modifiedBy');
+
+    cy.setFieldSelectToLastOfEntity('owner');
 
     cy.get(entityCreateSaveButtonSelector).click({ force: true });
     cy.scrollTo('top', { ensureScrollable: false });

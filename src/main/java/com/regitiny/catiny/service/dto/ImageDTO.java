@@ -29,15 +29,57 @@ public class ImageDTO implements Serializable {
   )
   private UUID uuid;
 
+  /**
+   * name           : tên của ảnh . muốn lấy ảnh sẽ gọi theo tên này. sẽ ra một danh sách các anh gồm (ảnh nguyên gốc , các ảnh đã tối ưu , cắt ... từ ảnh gốc đó)
+   */
+  @ApiModelProperty(
+    value = "name           : tên của ảnh . muốn lấy ảnh sẽ gọi theo tên này. sẽ ra một danh sách các anh gồm (ảnh nguyên gốc , các ảnh đã tối ưu , cắt ... từ ảnh gốc đó)"
+  )
   private String name;
+
+  /**
+   * width          : chiều rộng ảnh
+   */
+  @ApiModelProperty(value = "width          : chiều rộng ảnh")
+  private Integer width;
+
+  /**
+   * height         : chiều cao ảnh
+   */
+  @ApiModelProperty(value = "height         : chiều cao ảnh")
+  private Integer height;
+
+  /**
+   * quality        : chất lượng sau khi xử lý
+   */
+  @DecimalMin(value = "0")
+  @DecimalMax(value = "1")
+  @ApiModelProperty(value = "quality        : chất lượng sau khi xử lý")
+  private Float quality;
+
+  /**
+   * pixelSize      : kích thước của ảnh
+   */
+  @ApiModelProperty(value = "pixelSize      : kích thước của ảnh")
+  private Integer pixelSize;
+
+  /**
+   * priorityIndex  : chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)
+   */
+  @ApiModelProperty(value = "priorityIndex  : chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)")
+  private Long priorityIndex;
+
+  /**
+   * dataSize       : kích thước file theo byte
+   */
+  @ApiModelProperty(value = "dataSize       : kích thước file theo byte")
+  private Long dataSize;
 
   private FileInfoDTO fileInfo;
 
   private BaseInfoDTO baseInfo;
 
   private ImageDTO imageOriginal;
-
-  private EventDTO event;
 
   public Long getId() {
     return id;
@@ -63,6 +105,54 @@ public class ImageDTO implements Serializable {
     this.name = name;
   }
 
+  public Integer getWidth() {
+    return width;
+  }
+
+  public void setWidth(Integer width) {
+    this.width = width;
+  }
+
+  public Integer getHeight() {
+    return height;
+  }
+
+  public void setHeight(Integer height) {
+    this.height = height;
+  }
+
+  public Float getQuality() {
+    return quality;
+  }
+
+  public void setQuality(Float quality) {
+    this.quality = quality;
+  }
+
+  public Integer getPixelSize() {
+    return pixelSize;
+  }
+
+  public void setPixelSize(Integer pixelSize) {
+    this.pixelSize = pixelSize;
+  }
+
+  public Long getPriorityIndex() {
+    return priorityIndex;
+  }
+
+  public void setPriorityIndex(Long priorityIndex) {
+    this.priorityIndex = priorityIndex;
+  }
+
+  public Long getDataSize() {
+    return dataSize;
+  }
+
+  public void setDataSize(Long dataSize) {
+    this.dataSize = dataSize;
+  }
+
   public FileInfoDTO getFileInfo() {
     return fileInfo;
   }
@@ -85,14 +175,6 @@ public class ImageDTO implements Serializable {
 
   public void setImageOriginal(ImageDTO imageOriginal) {
     this.imageOriginal = imageOriginal;
-  }
-
-  public EventDTO getEvent() {
-    return event;
-  }
-
-  public void setEvent(EventDTO event) {
-    this.event = event;
   }
 
   @Override
@@ -123,10 +205,15 @@ public class ImageDTO implements Serializable {
             "id=" + getId() +
             ", uuid='" + getUuid() + "'" +
             ", name='" + getName() + "'" +
+            ", width=" + getWidth() +
+            ", height=" + getHeight() +
+            ", quality=" + getQuality() +
+            ", pixelSize=" + getPixelSize() +
+            ", priorityIndex=" + getPriorityIndex() +
+            ", dataSize=" + getDataSize() +
             ", fileInfo=" + getFileInfo() +
             ", baseInfo=" + getBaseInfo() +
             ", imageOriginal=" + getImageOriginal() +
-            ", event=" + getEvent() +
             "}";
     }
 }

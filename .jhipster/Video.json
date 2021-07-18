@@ -10,6 +10,55 @@
     {
       "fieldName": "name",
       "fieldType": "String"
+    },
+    {
+      "fieldName": "width",
+      "fieldType": "Integer",
+      "javadoc": "width          : chiều rộng video"
+    },
+    {
+      "fieldName": "height",
+      "fieldType": "Integer",
+      "javadoc": "height         : chiều cao video"
+    },
+    {
+      "fieldName": "qualityImage",
+      "fieldType": "Float",
+      "javadoc": "qualityImage   : chất lượng ảnh sau khi xử lý",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMin": "0",
+      "fieldValidateRulesMax": "1"
+    },
+    {
+      "fieldName": "qualityAudio",
+      "fieldType": "Float",
+      "javadoc": "qualityAudio   : chất lượng âm thanh sau khi xử lý",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMin": "0",
+      "fieldValidateRulesMax": "1"
+    },
+    {
+      "fieldName": "quality",
+      "fieldType": "Float",
+      "javadoc": "quality        : chất lượng chung sau khi xử lý",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMin": "0",
+      "fieldValidateRulesMax": "1"
+    },
+    {
+      "fieldName": "pixelSize",
+      "fieldType": "Integer",
+      "javadoc": "pixelSize      : kích thước của ảnh"
+    },
+    {
+      "fieldName": "priorityIndex",
+      "fieldType": "Long",
+      "javadoc": "priorityIndex  : chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)"
+    },
+    {
+      "fieldName": "dataSize",
+      "fieldType": "Long",
+      "javadoc": "dataSize       : kích thước file theo byte"
     }
   ],
   "relationships": [
@@ -45,12 +94,6 @@
       "otherEntityName": "video",
       "otherEntityRelationshipName": "videoProcessed",
       "relationshipName": "videoOriginal"
-    },
-    {
-      "relationshipType": "many-to-one",
-      "otherEntityName": "event",
-      "otherEntityRelationshipName": "otherVideo",
-      "relationshipName": "event"
     }
   ],
   "javadoc": "@what?            -> The Video entity.\\n@why?             ->\\n@use-to           -> Lưu thông tin video mà người dùng upload lên\\n@commonly-used-in ->\\n\\n@describe         ->",

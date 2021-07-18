@@ -23,7 +23,7 @@
             <column name="type_file" type="varchar(255)" remarks="typeFile       : loại file">
                 <constraints nullable="true" />
             </column>
-            <column name="path" type="varchar(1024)" remarks="path           : đường dẫn file nguyên gốc">
+            <column name="path" type="varchar(1024)" remarks="path           : đường dẫn file trên server">
                 <constraints nullable="true" />
             </column>
             <column name="data_size" type="bigint" remarks="dataSize       : kích thước file theo byte">
@@ -31,9 +31,6 @@
             </column>
             <column name="base_info_id" type="bigint">
                 <constraints nullable="true" unique="true" uniqueConstraintName="ux_file_info__base_info_id" />
-            </column>
-            <column name="master_user_id" type="bigint">
-                <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>

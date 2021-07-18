@@ -14,12 +14,6 @@
                                  referencedColumnNames="id"
                                  referencedTableName="base_info"/>
 
-        <addForeignKeyConstraint baseColumnNames="sender_id"
-                                 baseTableName="message_content"
-                                 constraintName="fk_message_content__sender_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="master_user"/>
-
         <addForeignKeyConstraint baseColumnNames="message_group_id"
                                  baseTableName="message_content"
                                  constraintName="fk_message_content__message_group_id"

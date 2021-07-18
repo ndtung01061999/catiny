@@ -9,10 +9,17 @@ export default class VideoUpdatePage {
   cancelButton: ElementFinder = element(by.id('cancel-save'));
   uuidInput: ElementFinder = element(by.css('input#video-uuid'));
   nameInput: ElementFinder = element(by.css('input#video-name'));
+  widthInput: ElementFinder = element(by.css('input#video-width'));
+  heightInput: ElementFinder = element(by.css('input#video-height'));
+  qualityImageInput: ElementFinder = element(by.css('input#video-qualityImage'));
+  qualityAudioInput: ElementFinder = element(by.css('input#video-qualityAudio'));
+  qualityInput: ElementFinder = element(by.css('input#video-quality'));
+  pixelSizeInput: ElementFinder = element(by.css('input#video-pixelSize'));
+  priorityIndexInput: ElementFinder = element(by.css('input#video-priorityIndex'));
+  dataSizeInput: ElementFinder = element(by.css('input#video-dataSize'));
   fileInfoSelect: ElementFinder = element(by.css('select#video-fileInfo'));
   baseInfoSelect: ElementFinder = element(by.css('select#video-baseInfo'));
   videoOriginalSelect: ElementFinder = element(by.css('select#video-videoOriginal'));
-  eventSelect: ElementFinder = element(by.css('select#video-event'));
 
   getPageTitle() {
     return this.pageTitle;
@@ -32,6 +39,70 @@ export default class VideoUpdatePage {
 
   async getNameInput() {
     return this.nameInput.getAttribute('value');
+  }
+
+  async setWidthInput(width) {
+    await this.widthInput.sendKeys(width);
+  }
+
+  async getWidthInput() {
+    return this.widthInput.getAttribute('value');
+  }
+
+  async setHeightInput(height) {
+    await this.heightInput.sendKeys(height);
+  }
+
+  async getHeightInput() {
+    return this.heightInput.getAttribute('value');
+  }
+
+  async setQualityImageInput(qualityImage) {
+    await this.qualityImageInput.sendKeys(qualityImage);
+  }
+
+  async getQualityImageInput() {
+    return this.qualityImageInput.getAttribute('value');
+  }
+
+  async setQualityAudioInput(qualityAudio) {
+    await this.qualityAudioInput.sendKeys(qualityAudio);
+  }
+
+  async getQualityAudioInput() {
+    return this.qualityAudioInput.getAttribute('value');
+  }
+
+  async setQualityInput(quality) {
+    await this.qualityInput.sendKeys(quality);
+  }
+
+  async getQualityInput() {
+    return this.qualityInput.getAttribute('value');
+  }
+
+  async setPixelSizeInput(pixelSize) {
+    await this.pixelSizeInput.sendKeys(pixelSize);
+  }
+
+  async getPixelSizeInput() {
+    return this.pixelSizeInput.getAttribute('value');
+  }
+
+  async setPriorityIndexInput(priorityIndex) {
+    await this.priorityIndexInput.sendKeys(priorityIndex);
+  }
+
+  async getPriorityIndexInput() {
+    return this.priorityIndexInput.getAttribute('value');
+  }
+
+  async setDataSizeInput(dataSize) {
+    await this.dataSizeInput.sendKeys(dataSize);
+  }
+
+  async getDataSizeInput() {
+    return this.dataSizeInput.getAttribute('value');
   }
 
   async fileInfoSelectLastOption() {
@@ -82,22 +153,6 @@ export default class VideoUpdatePage {
     return this.videoOriginalSelect.element(by.css('option:checked')).getText();
   }
 
-  async eventSelectLastOption() {
-    await this.eventSelect.all(by.tagName('option')).last().click();
-  }
-
-  async eventSelectOption(option) {
-    await this.eventSelect.sendKeys(option);
-  }
-
-  getEventSelect() {
-    return this.eventSelect;
-  }
-
-  async getEventSelectedOption() {
-    return this.eventSelect.element(by.css('option:checked')).getText();
-  }
-
   async save() {
     await this.saveButton.click();
   }
@@ -115,10 +170,25 @@ export default class VideoUpdatePage {
     await this.setUuidInput('64c99148-3908-465d-8c4a-e510e3ade974');
     await waitUntilDisplayed(this.saveButton);
     await this.setNameInput('name');
+    await waitUntilDisplayed(this.saveButton);
+    await this.setWidthInput('5');
+    await waitUntilDisplayed(this.saveButton);
+    await this.setHeightInput('5');
+    await waitUntilDisplayed(this.saveButton);
+    await this.setQualityImageInput('5');
+    await waitUntilDisplayed(this.saveButton);
+    await this.setQualityAudioInput('5');
+    await waitUntilDisplayed(this.saveButton);
+    await this.setQualityInput('5');
+    await waitUntilDisplayed(this.saveButton);
+    await this.setPixelSizeInput('5');
+    await waitUntilDisplayed(this.saveButton);
+    await this.setPriorityIndexInput('5');
+    await waitUntilDisplayed(this.saveButton);
+    await this.setDataSizeInput('5');
     await this.fileInfoSelectLastOption();
     await this.baseInfoSelectLastOption();
     await this.videoOriginalSelectLastOption();
-    await this.eventSelectLastOption();
     await this.save();
     await waitUntilHidden(this.saveButton);
   }

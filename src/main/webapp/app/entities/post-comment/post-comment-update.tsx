@@ -7,8 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IBaseInfo } from 'app/shared/model/base-info.model';
 import { getEntities as getBaseInfos } from 'app/entities/base-info/base-info.reducer';
 import { getEntities as getPostComments } from 'app/entities/post-comment/post-comment.reducer';
-import { IMasterUser } from 'app/shared/model/master-user.model';
-import { getEntities as getMasterUsers } from 'app/entities/master-user/master-user.reducer';
 import { IPost } from 'app/shared/model/post.model';
 import { getEntities as getPosts } from 'app/entities/post/post.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './post-comment.reducer';
@@ -24,7 +22,6 @@ export const PostCommentUpdate = (props: RouteComponentProps<{ id: string }>) =>
 
   const baseInfos = useAppSelector(state => state.baseInfo.entities);
   const postComments = useAppSelector(state => state.postComment.entities);
-  const masterUsers = useAppSelector(state => state.masterUser.entities);
   const posts = useAppSelector(state => state.post.entities);
   const postCommentEntity = useAppSelector(state => state.postComment.entity);
   const loading = useAppSelector(state => state.postComment.loading);
@@ -42,7 +39,6 @@ export const PostCommentUpdate = (props: RouteComponentProps<{ id: string }>) =>
 
     dispatch(getBaseInfos({}));
     dispatch(getPostComments({}));
-    dispatch(getMasterUsers({}));
     dispatch(getPosts({}));
   }, []);
 
@@ -58,7 +54,6 @@ export const PostCommentUpdate = (props: RouteComponentProps<{ id: string }>) =>
       ...values,
       baseInfo: baseInfos.find(it => it.id.toString() === values.baseInfoId.toString()),
       commentParent: postComments.find(it => it.id.toString() === values.commentParentId.toString()),
-      userComment: masterUsers.find(it => it.id.toString() === values.userCommentId.toString()),
       post: posts.find(it => it.id.toString() === values.postId.toString()),
     };
 
@@ -75,7 +70,6 @@ export const PostCommentUpdate = (props: RouteComponentProps<{ id: string }>) =>
       : {
           ...postCommentEntity,
           baseInfoId: postCommentEntity?.baseInfo?.id,
-          userCommentId: postCommentEntity?.userComment?.id,
           postId: postCommentEntity?.post?.id,
           commentParentId: postCommentEntity?.commentParent?.id,
         };
@@ -135,22 +129,6 @@ export const PostCommentUpdate = (props: RouteComponentProps<{ id: string }>) =>
                 <option value="" key="0" />
                 {baseInfos
                   ? baseInfos.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField
-                id="post-comment-userComment"
-                name="userCommentId"
-                data-cy="userComment"
-                label={translate('catinyApp.postComment.userComment')}
-                type="select"
-              >
-                <option value="" key="0" />
-                {masterUsers
-                  ? masterUsers.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

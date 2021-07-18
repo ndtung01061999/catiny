@@ -75,6 +75,10 @@ import todoList from 'app/entities/todo-list/todo-list.reducer';
 import event from 'app/entities/event/event.reducer';
 // prettier-ignore
 import baseInfo from 'app/entities/base-info/base-info.reducer';
+// prettier-ignore
+import permission from 'app/entities/permission/permission.reducer';
+// prettier-ignore
+import classInfo from 'app/entities/class-info/class-info.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 const rootReducer = {
@@ -120,6 +124,8 @@ const rootReducer = {
   todoList,
   event,
   baseInfo,
+  permission,
+  classInfo,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar,
 };

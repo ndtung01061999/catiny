@@ -104,6 +104,11 @@ describe('Event e2e test', () => {
 
     cy.get(`[data-cy="title"]`).type('Industrial Loan').should('have.value', 'Industrial Loan');
 
+    cy.get(`[data-cy="avatar"]`)
+      .type('../fake-data/blob/hipster.txt')
+      .invoke('val')
+      .should('match', new RegExp('../fake-data/blob/hipster.txt'));
+
     cy.get(`[data-cy="content"]`)
       .type('../fake-data/blob/hipster.txt')
       .invoke('val')
@@ -121,6 +126,16 @@ describe('Event e2e test', () => {
     cy.get(`[data-cy="endTime"]`).type('2021-07-10T11:32').should('have.value', '2021-07-10T11:32');
 
     cy.get(`[data-cy="tagLine"]`).type('Practical Chief').should('have.value', 'Practical Chief');
+
+    cy.get(`[data-cy="imageCollection"]`)
+      .type('../fake-data/blob/hipster.txt')
+      .invoke('val')
+      .should('match', new RegExp('../fake-data/blob/hipster.txt'));
+
+    cy.get(`[data-cy="videoCollection"]`)
+      .type('../fake-data/blob/hipster.txt')
+      .invoke('val')
+      .should('match', new RegExp('../fake-data/blob/hipster.txt'));
 
     cy.setFieldSelectToLastOfEntity('baseInfo');
 

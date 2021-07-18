@@ -114,12 +114,6 @@ public class FollowUserQueryService extends QueryService<FollowUser> {
             )
           );
       }
-      if (criteria.getMasterUserId() != null) {
-        specification =
-          specification.and(
-            buildSpecification(criteria.getMasterUserId(), root -> root.join(FollowUser_.masterUser, JoinType.LEFT).get(MasterUser_.id))
-          );
-      }
     }
     return specification;
   }

@@ -37,45 +37,19 @@ public class MasterUserCriteria implements Serializable, Criteria {
 
   private LongFilter userId;
 
-  private LongFilter myProfileId;
-
-  private LongFilter myAccountStatusId;
-
   private LongFilter myRankId;
-
-  private LongFilter avatarId;
 
   private LongFilter baseInfoId;
 
-  private LongFilter myPageId;
+  private LongFilter myBaseInfoCreatedId;
 
-  private LongFilter myFileId;
+  private LongFilter myBaseInfoModifiedId;
 
-  private LongFilter myNotificationId;
+  private LongFilter ownerOfId;
 
-  private LongFilter myFriendId;
-
-  private LongFilter myFollowUserId;
-
-  private LongFilter myFollowGroupId;
-
-  private LongFilter myFollowPageId;
-
-  private LongFilter myNewsFeedId;
-
-  private LongFilter myTodoListId;
-
-  private LongFilter myPostId;
-
-  private LongFilter myGroupPostId;
-
-  private LongFilter messageGroupId;
+  private LongFilter permissionId;
 
   private LongFilter topicInterestId;
-
-  private LongFilter myLikeId;
-
-  private LongFilter myCommentId;
 
   public MasterUserCriteria() {}
 
@@ -85,26 +59,13 @@ public class MasterUserCriteria implements Serializable, Criteria {
     this.fullName = other.fullName == null ? null : other.fullName.copy();
     this.nickname = other.nickname == null ? null : other.nickname.copy();
     this.userId = other.userId == null ? null : other.userId.copy();
-    this.myProfileId = other.myProfileId == null ? null : other.myProfileId.copy();
-    this.myAccountStatusId = other.myAccountStatusId == null ? null : other.myAccountStatusId.copy();
     this.myRankId = other.myRankId == null ? null : other.myRankId.copy();
-    this.avatarId = other.avatarId == null ? null : other.avatarId.copy();
     this.baseInfoId = other.baseInfoId == null ? null : other.baseInfoId.copy();
-    this.myPageId = other.myPageId == null ? null : other.myPageId.copy();
-    this.myFileId = other.myFileId == null ? null : other.myFileId.copy();
-    this.myNotificationId = other.myNotificationId == null ? null : other.myNotificationId.copy();
-    this.myFriendId = other.myFriendId == null ? null : other.myFriendId.copy();
-    this.myFollowUserId = other.myFollowUserId == null ? null : other.myFollowUserId.copy();
-    this.myFollowGroupId = other.myFollowGroupId == null ? null : other.myFollowGroupId.copy();
-    this.myFollowPageId = other.myFollowPageId == null ? null : other.myFollowPageId.copy();
-    this.myNewsFeedId = other.myNewsFeedId == null ? null : other.myNewsFeedId.copy();
-    this.myTodoListId = other.myTodoListId == null ? null : other.myTodoListId.copy();
-    this.myPostId = other.myPostId == null ? null : other.myPostId.copy();
-    this.myGroupPostId = other.myGroupPostId == null ? null : other.myGroupPostId.copy();
-    this.messageGroupId = other.messageGroupId == null ? null : other.messageGroupId.copy();
+    this.myBaseInfoCreatedId = other.myBaseInfoCreatedId == null ? null : other.myBaseInfoCreatedId.copy();
+    this.myBaseInfoModifiedId = other.myBaseInfoModifiedId == null ? null : other.myBaseInfoModifiedId.copy();
+    this.ownerOfId = other.ownerOfId == null ? null : other.ownerOfId.copy();
+    this.permissionId = other.permissionId == null ? null : other.permissionId.copy();
     this.topicInterestId = other.topicInterestId == null ? null : other.topicInterestId.copy();
-    this.myLikeId = other.myLikeId == null ? null : other.myLikeId.copy();
-    this.myCommentId = other.myCommentId == null ? null : other.myCommentId.copy();
   }
 
   @Override
@@ -187,36 +148,6 @@ public class MasterUserCriteria implements Serializable, Criteria {
     this.userId = userId;
   }
 
-  public LongFilter getMyProfileId() {
-    return myProfileId;
-  }
-
-  public LongFilter myProfileId() {
-    if (myProfileId == null) {
-      myProfileId = new LongFilter();
-    }
-    return myProfileId;
-  }
-
-  public void setMyProfileId(LongFilter myProfileId) {
-    this.myProfileId = myProfileId;
-  }
-
-  public LongFilter getMyAccountStatusId() {
-    return myAccountStatusId;
-  }
-
-  public LongFilter myAccountStatusId() {
-    if (myAccountStatusId == null) {
-      myAccountStatusId = new LongFilter();
-    }
-    return myAccountStatusId;
-  }
-
-  public void setMyAccountStatusId(LongFilter myAccountStatusId) {
-    this.myAccountStatusId = myAccountStatusId;
-  }
-
   public LongFilter getMyRankId() {
     return myRankId;
   }
@@ -230,21 +161,6 @@ public class MasterUserCriteria implements Serializable, Criteria {
 
   public void setMyRankId(LongFilter myRankId) {
     this.myRankId = myRankId;
-  }
-
-  public LongFilter getAvatarId() {
-    return avatarId;
-  }
-
-  public LongFilter avatarId() {
-    if (avatarId == null) {
-      avatarId = new LongFilter();
-    }
-    return avatarId;
-  }
-
-  public void setAvatarId(LongFilter avatarId) {
-    this.avatarId = avatarId;
   }
 
   public LongFilter getBaseInfoId() {
@@ -262,184 +178,64 @@ public class MasterUserCriteria implements Serializable, Criteria {
     this.baseInfoId = baseInfoId;
   }
 
-  public LongFilter getMyPageId() {
-    return myPageId;
+  public LongFilter getMyBaseInfoCreatedId() {
+    return myBaseInfoCreatedId;
   }
 
-  public LongFilter myPageId() {
-    if (myPageId == null) {
-      myPageId = new LongFilter();
+  public LongFilter myBaseInfoCreatedId() {
+    if (myBaseInfoCreatedId == null) {
+      myBaseInfoCreatedId = new LongFilter();
     }
-    return myPageId;
+    return myBaseInfoCreatedId;
   }
 
-  public void setMyPageId(LongFilter myPageId) {
-    this.myPageId = myPageId;
+  public void setMyBaseInfoCreatedId(LongFilter myBaseInfoCreatedId) {
+    this.myBaseInfoCreatedId = myBaseInfoCreatedId;
   }
 
-  public LongFilter getMyFileId() {
-    return myFileId;
+  public LongFilter getMyBaseInfoModifiedId() {
+    return myBaseInfoModifiedId;
   }
 
-  public LongFilter myFileId() {
-    if (myFileId == null) {
-      myFileId = new LongFilter();
+  public LongFilter myBaseInfoModifiedId() {
+    if (myBaseInfoModifiedId == null) {
+      myBaseInfoModifiedId = new LongFilter();
     }
-    return myFileId;
+    return myBaseInfoModifiedId;
   }
 
-  public void setMyFileId(LongFilter myFileId) {
-    this.myFileId = myFileId;
+  public void setMyBaseInfoModifiedId(LongFilter myBaseInfoModifiedId) {
+    this.myBaseInfoModifiedId = myBaseInfoModifiedId;
   }
 
-  public LongFilter getMyNotificationId() {
-    return myNotificationId;
+  public LongFilter getOwnerOfId() {
+    return ownerOfId;
   }
 
-  public LongFilter myNotificationId() {
-    if (myNotificationId == null) {
-      myNotificationId = new LongFilter();
+  public LongFilter ownerOfId() {
+    if (ownerOfId == null) {
+      ownerOfId = new LongFilter();
     }
-    return myNotificationId;
+    return ownerOfId;
   }
 
-  public void setMyNotificationId(LongFilter myNotificationId) {
-    this.myNotificationId = myNotificationId;
+  public void setOwnerOfId(LongFilter ownerOfId) {
+    this.ownerOfId = ownerOfId;
   }
 
-  public LongFilter getMyFriendId() {
-    return myFriendId;
+  public LongFilter getPermissionId() {
+    return permissionId;
   }
 
-  public LongFilter myFriendId() {
-    if (myFriendId == null) {
-      myFriendId = new LongFilter();
+  public LongFilter permissionId() {
+    if (permissionId == null) {
+      permissionId = new LongFilter();
     }
-    return myFriendId;
+    return permissionId;
   }
 
-  public void setMyFriendId(LongFilter myFriendId) {
-    this.myFriendId = myFriendId;
-  }
-
-  public LongFilter getMyFollowUserId() {
-    return myFollowUserId;
-  }
-
-  public LongFilter myFollowUserId() {
-    if (myFollowUserId == null) {
-      myFollowUserId = new LongFilter();
-    }
-    return myFollowUserId;
-  }
-
-  public void setMyFollowUserId(LongFilter myFollowUserId) {
-    this.myFollowUserId = myFollowUserId;
-  }
-
-  public LongFilter getMyFollowGroupId() {
-    return myFollowGroupId;
-  }
-
-  public LongFilter myFollowGroupId() {
-    if (myFollowGroupId == null) {
-      myFollowGroupId = new LongFilter();
-    }
-    return myFollowGroupId;
-  }
-
-  public void setMyFollowGroupId(LongFilter myFollowGroupId) {
-    this.myFollowGroupId = myFollowGroupId;
-  }
-
-  public LongFilter getMyFollowPageId() {
-    return myFollowPageId;
-  }
-
-  public LongFilter myFollowPageId() {
-    if (myFollowPageId == null) {
-      myFollowPageId = new LongFilter();
-    }
-    return myFollowPageId;
-  }
-
-  public void setMyFollowPageId(LongFilter myFollowPageId) {
-    this.myFollowPageId = myFollowPageId;
-  }
-
-  public LongFilter getMyNewsFeedId() {
-    return myNewsFeedId;
-  }
-
-  public LongFilter myNewsFeedId() {
-    if (myNewsFeedId == null) {
-      myNewsFeedId = new LongFilter();
-    }
-    return myNewsFeedId;
-  }
-
-  public void setMyNewsFeedId(LongFilter myNewsFeedId) {
-    this.myNewsFeedId = myNewsFeedId;
-  }
-
-  public LongFilter getMyTodoListId() {
-    return myTodoListId;
-  }
-
-  public LongFilter myTodoListId() {
-    if (myTodoListId == null) {
-      myTodoListId = new LongFilter();
-    }
-    return myTodoListId;
-  }
-
-  public void setMyTodoListId(LongFilter myTodoListId) {
-    this.myTodoListId = myTodoListId;
-  }
-
-  public LongFilter getMyPostId() {
-    return myPostId;
-  }
-
-  public LongFilter myPostId() {
-    if (myPostId == null) {
-      myPostId = new LongFilter();
-    }
-    return myPostId;
-  }
-
-  public void setMyPostId(LongFilter myPostId) {
-    this.myPostId = myPostId;
-  }
-
-  public LongFilter getMyGroupPostId() {
-    return myGroupPostId;
-  }
-
-  public LongFilter myGroupPostId() {
-    if (myGroupPostId == null) {
-      myGroupPostId = new LongFilter();
-    }
-    return myGroupPostId;
-  }
-
-  public void setMyGroupPostId(LongFilter myGroupPostId) {
-    this.myGroupPostId = myGroupPostId;
-  }
-
-  public LongFilter getMessageGroupId() {
-    return messageGroupId;
-  }
-
-  public LongFilter messageGroupId() {
-    if (messageGroupId == null) {
-      messageGroupId = new LongFilter();
-    }
-    return messageGroupId;
-  }
-
-  public void setMessageGroupId(LongFilter messageGroupId) {
-    this.messageGroupId = messageGroupId;
+  public void setPermissionId(LongFilter permissionId) {
+    this.permissionId = permissionId;
   }
 
   public LongFilter getTopicInterestId() {
@@ -457,36 +253,6 @@ public class MasterUserCriteria implements Serializable, Criteria {
     this.topicInterestId = topicInterestId;
   }
 
-  public LongFilter getMyLikeId() {
-    return myLikeId;
-  }
-
-  public LongFilter myLikeId() {
-    if (myLikeId == null) {
-      myLikeId = new LongFilter();
-    }
-    return myLikeId;
-  }
-
-  public void setMyLikeId(LongFilter myLikeId) {
-    this.myLikeId = myLikeId;
-  }
-
-  public LongFilter getMyCommentId() {
-    return myCommentId;
-  }
-
-  public LongFilter myCommentId() {
-    if (myCommentId == null) {
-      myCommentId = new LongFilter();
-    }
-    return myCommentId;
-  }
-
-  public void setMyCommentId(LongFilter myCommentId) {
-    this.myCommentId = myCommentId;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -502,26 +268,13 @@ public class MasterUserCriteria implements Serializable, Criteria {
       Objects.equals(fullName, that.fullName) &&
       Objects.equals(nickname, that.nickname) &&
       Objects.equals(userId, that.userId) &&
-      Objects.equals(myProfileId, that.myProfileId) &&
-      Objects.equals(myAccountStatusId, that.myAccountStatusId) &&
       Objects.equals(myRankId, that.myRankId) &&
-      Objects.equals(avatarId, that.avatarId) &&
       Objects.equals(baseInfoId, that.baseInfoId) &&
-      Objects.equals(myPageId, that.myPageId) &&
-      Objects.equals(myFileId, that.myFileId) &&
-      Objects.equals(myNotificationId, that.myNotificationId) &&
-      Objects.equals(myFriendId, that.myFriendId) &&
-      Objects.equals(myFollowUserId, that.myFollowUserId) &&
-      Objects.equals(myFollowGroupId, that.myFollowGroupId) &&
-      Objects.equals(myFollowPageId, that.myFollowPageId) &&
-      Objects.equals(myNewsFeedId, that.myNewsFeedId) &&
-      Objects.equals(myTodoListId, that.myTodoListId) &&
-      Objects.equals(myPostId, that.myPostId) &&
-      Objects.equals(myGroupPostId, that.myGroupPostId) &&
-      Objects.equals(messageGroupId, that.messageGroupId) &&
-      Objects.equals(topicInterestId, that.topicInterestId) &&
-      Objects.equals(myLikeId, that.myLikeId) &&
-      Objects.equals(myCommentId, that.myCommentId)
+      Objects.equals(myBaseInfoCreatedId, that.myBaseInfoCreatedId) &&
+      Objects.equals(myBaseInfoModifiedId, that.myBaseInfoModifiedId) &&
+      Objects.equals(ownerOfId, that.ownerOfId) &&
+      Objects.equals(permissionId, that.permissionId) &&
+      Objects.equals(topicInterestId, that.topicInterestId)
     );
   }
 
@@ -533,26 +286,13 @@ public class MasterUserCriteria implements Serializable, Criteria {
       fullName,
       nickname,
       userId,
-      myProfileId,
-      myAccountStatusId,
       myRankId,
-      avatarId,
       baseInfoId,
-      myPageId,
-      myFileId,
-      myNotificationId,
-      myFriendId,
-      myFollowUserId,
-      myFollowGroupId,
-      myFollowPageId,
-      myNewsFeedId,
-      myTodoListId,
-      myPostId,
-      myGroupPostId,
-      messageGroupId,
-      topicInterestId,
-      myLikeId,
-      myCommentId
+      myBaseInfoCreatedId,
+      myBaseInfoModifiedId,
+      ownerOfId,
+      permissionId,
+      topicInterestId
     );
   }
 
@@ -565,26 +305,13 @@ public class MasterUserCriteria implements Serializable, Criteria {
             (fullName != null ? "fullName=" + fullName + ", " : "") +
             (nickname != null ? "nickname=" + nickname + ", " : "") +
             (userId != null ? "userId=" + userId + ", " : "") +
-            (myProfileId != null ? "myProfileId=" + myProfileId + ", " : "") +
-            (myAccountStatusId != null ? "myAccountStatusId=" + myAccountStatusId + ", " : "") +
             (myRankId != null ? "myRankId=" + myRankId + ", " : "") +
-            (avatarId != null ? "avatarId=" + avatarId + ", " : "") +
             (baseInfoId != null ? "baseInfoId=" + baseInfoId + ", " : "") +
-            (myPageId != null ? "myPageId=" + myPageId + ", " : "") +
-            (myFileId != null ? "myFileId=" + myFileId + ", " : "") +
-            (myNotificationId != null ? "myNotificationId=" + myNotificationId + ", " : "") +
-            (myFriendId != null ? "myFriendId=" + myFriendId + ", " : "") +
-            (myFollowUserId != null ? "myFollowUserId=" + myFollowUserId + ", " : "") +
-            (myFollowGroupId != null ? "myFollowGroupId=" + myFollowGroupId + ", " : "") +
-            (myFollowPageId != null ? "myFollowPageId=" + myFollowPageId + ", " : "") +
-            (myNewsFeedId != null ? "myNewsFeedId=" + myNewsFeedId + ", " : "") +
-            (myTodoListId != null ? "myTodoListId=" + myTodoListId + ", " : "") +
-            (myPostId != null ? "myPostId=" + myPostId + ", " : "") +
-            (myGroupPostId != null ? "myGroupPostId=" + myGroupPostId + ", " : "") +
-            (messageGroupId != null ? "messageGroupId=" + messageGroupId + ", " : "") +
+            (myBaseInfoCreatedId != null ? "myBaseInfoCreatedId=" + myBaseInfoCreatedId + ", " : "") +
+            (myBaseInfoModifiedId != null ? "myBaseInfoModifiedId=" + myBaseInfoModifiedId + ", " : "") +
+            (ownerOfId != null ? "ownerOfId=" + ownerOfId + ", " : "") +
+            (permissionId != null ? "permissionId=" + permissionId + ", " : "") +
             (topicInterestId != null ? "topicInterestId=" + topicInterestId + ", " : "") +
-            (myLikeId != null ? "myLikeId=" + myLikeId + ", " : "") +
-            (myCommentId != null ? "myCommentId=" + myCommentId + ", " : "") +
             "}";
     }
 }

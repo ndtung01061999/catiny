@@ -105,6 +105,12 @@ public class PostCommentQueryService extends QueryService<PostComment> {
             buildSpecification(criteria.getBaseInfoId(), root -> root.join(PostComment_.baseInfo, JoinType.LEFT).get(BaseInfo_.id))
           );
       }
+      if (criteria.getLikeId() != null) {
+        specification =
+          specification.and(
+            buildSpecification(criteria.getLikeId(), root -> root.join(PostComment_.likes, JoinType.LEFT).get(PostLike_.id))
+          );
+      }
       if (criteria.getCommentReplyId() != null) {
         specification =
           specification.and(
@@ -112,12 +118,6 @@ public class PostCommentQueryService extends QueryService<PostComment> {
               criteria.getCommentReplyId(),
               root -> root.join(PostComment_.commentReplies, JoinType.LEFT).get(PostComment_.id)
             )
-          );
-      }
-      if (criteria.getUserCommentId() != null) {
-        specification =
-          specification.and(
-            buildSpecification(criteria.getUserCommentId(), root -> root.join(PostComment_.userComment, JoinType.LEFT).get(MasterUser_.id))
           );
       }
       if (criteria.getPostId() != null) {

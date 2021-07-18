@@ -67,6 +67,7 @@ public class Post implements Serializable {
 
   @JsonIgnoreProperties(
     value = {
+      "classInfo",
       "userProfile",
       "accountStatus",
       "deviceStatus",
@@ -96,6 +97,10 @@ public class Post implements Serializable {
       "topicInterest",
       "todoList",
       "event",
+      "createdBy",
+      "modifiedBy",
+      "owner",
+      "permissions",
     },
     allowSetters = true
   )
@@ -105,91 +110,44 @@ public class Post implements Serializable {
 
   @OneToMany(mappedBy = "post")
   @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-  @JsonIgnoreProperties(value = { "baseInfo", "commentReplies", "userComment", "post", "commentParent" }, allowSetters = true)
-  private Set<PostComment> postComments = new HashSet<>();
+  @JsonIgnoreProperties(value = { "baseInfo", "likes", "commentReplies", "post", "commentParent" }, allowSetters = true)
+  private Set<PostComment> comments = new HashSet<>();
 
   @OneToMany(mappedBy = "post")
   @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-  @JsonIgnoreProperties(value = { "baseInfo", "userLike", "post" }, allowSetters = true)
-  private Set<PostLike> postLikes = new HashSet<>();
+  @JsonIgnoreProperties(value = { "baseInfo", "post", "postComment" }, allowSetters = true)
+  private Set<PostLike> likes = new HashSet<>();
 
   @OneToMany(mappedBy = "postShareParent")
   @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
   @JsonIgnoreProperties(
     value = {
-      "baseInfo",
-      "postComments",
-      "postLikes",
-      "postShareChildren",
-      "groupPost",
-      "pagePost",
-      "postShareParent",
-      "poster",
-      "newsFeeds",
-      "topicInterests",
+      "baseInfo", "comments", "likes", "postShareChildren", "groupPost", "pagePost", "postShareParent", "newsFeeds", "topicInterests",
     },
     allowSetters = true
   )
   private Set<Post> postShareChildren = new HashSet<>();
 
   @ManyToOne
-  @JsonIgnoreProperties(value = { "profile", "baseInfo", "myPostInGroups", "topicInterests", "userInGroups" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "profile", "baseInfo", "myPostInGroups", "topicInterests" }, allowSetters = true)
   private GroupPost groupPost;
 
   @ManyToOne
-  @JsonIgnoreProperties(value = { "profile", "baseInfo", "myPostInPages", "masterUser", "topicInterests" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "profile", "baseInfo", "myPostInPages", "topicInterests" }, allowSetters = true)
   private PagePost pagePost;
 
   @ManyToOne
   @JsonIgnoreProperties(
     value = {
-      "baseInfo",
-      "postComments",
-      "postLikes",
-      "postShareChildren",
-      "groupPost",
-      "pagePost",
-      "postShareParent",
-      "poster",
-      "newsFeeds",
-      "topicInterests",
+      "baseInfo", "comments", "likes", "postShareChildren", "groupPost", "pagePost", "postShareParent", "newsFeeds", "topicInterests",
     },
     allowSetters = true
   )
   private Post postShareParent;
 
-  @ManyToOne
-  @JsonIgnoreProperties(
-    value = {
-      "user",
-      "myProfile",
-      "myAccountStatus",
-      "myRank",
-      "avatar",
-      "baseInfo",
-      "myPages",
-      "myFiles",
-      "myNotifications",
-      "myFriends",
-      "myFollowUsers",
-      "myFollowGroups",
-      "myFollowPages",
-      "myNewsFeeds",
-      "myTodoLists",
-      "myPosts",
-      "myGroupPosts",
-      "messageGroups",
-      "topicInterests",
-      "myLikes",
-      "myComments",
-    },
-    allowSetters = true
-  )
-  private MasterUser poster;
-
   @OneToMany(mappedBy = "post")
   @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-  @JsonIgnoreProperties(value = { "baseInfo", "post", "masterUser" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "baseInfo", "post" }, allowSetters = true)
   private Set<NewsFeed> newsFeeds = new HashSet<>();
 
   @ManyToMany(mappedBy = "posts")
@@ -289,66 +247,66 @@ public class Post implements Serializable {
     this.baseInfo = baseInfo;
   }
 
-  public Set<PostComment> getPostComments() {
-    return this.postComments;
+  public Set<PostComment> getComments() {
+    return this.comments;
   }
 
-  public Post postComments(Set<PostComment> postComments) {
-    this.setPostComments(postComments);
+  public Post comments(Set<PostComment> postComments) {
+    this.setComments(postComments);
     return this;
   }
 
-  public Post addPostComment(PostComment postComment) {
-    this.postComments.add(postComment);
+  public Post addComment(PostComment postComment) {
+    this.comments.add(postComment);
     postComment.setPost(this);
     return this;
   }
 
-  public Post removePostComment(PostComment postComment) {
-    this.postComments.remove(postComment);
+  public Post removeComment(PostComment postComment) {
+    this.comments.remove(postComment);
     postComment.setPost(null);
     return this;
   }
 
-  public void setPostComments(Set<PostComment> postComments) {
-    if (this.postComments != null) {
-      this.postComments.forEach(i -> i.setPost(null));
+  public void setComments(Set<PostComment> postComments) {
+    if (this.comments != null) {
+      this.comments.forEach(i -> i.setPost(null));
     }
     if (postComments != null) {
       postComments.forEach(i -> i.setPost(this));
     }
-    this.postComments = postComments;
+    this.comments = postComments;
   }
 
-  public Set<PostLike> getPostLikes() {
-    return this.postLikes;
+  public Set<PostLike> getLikes() {
+    return this.likes;
   }
 
-  public Post postLikes(Set<PostLike> postLikes) {
-    this.setPostLikes(postLikes);
+  public Post likes(Set<PostLike> postLikes) {
+    this.setLikes(postLikes);
     return this;
   }
 
-  public Post addPostLike(PostLike postLike) {
-    this.postLikes.add(postLike);
+  public Post addLike(PostLike postLike) {
+    this.likes.add(postLike);
     postLike.setPost(this);
     return this;
   }
 
-  public Post removePostLike(PostLike postLike) {
-    this.postLikes.remove(postLike);
+  public Post removeLike(PostLike postLike) {
+    this.likes.remove(postLike);
     postLike.setPost(null);
     return this;
   }
 
-  public void setPostLikes(Set<PostLike> postLikes) {
-    if (this.postLikes != null) {
-      this.postLikes.forEach(i -> i.setPost(null));
+  public void setLikes(Set<PostLike> postLikes) {
+    if (this.likes != null) {
+      this.likes.forEach(i -> i.setPost(null));
     }
     if (postLikes != null) {
       postLikes.forEach(i -> i.setPost(this));
     }
-    this.postLikes = postLikes;
+    this.likes = postLikes;
   }
 
   public Set<Post> getPostShareChildren() {
@@ -419,19 +377,6 @@ public class Post implements Serializable {
 
   public void setPostShareParent(Post post) {
     this.postShareParent = post;
-  }
-
-  public MasterUser getPoster() {
-    return this.poster;
-  }
-
-  public Post poster(MasterUser masterUser) {
-    this.setPoster(masterUser);
-    return this;
-  }
-
-  public void setPoster(MasterUser masterUser) {
-    this.poster = masterUser;
   }
 
   public Set<NewsFeed> getNewsFeeds() {

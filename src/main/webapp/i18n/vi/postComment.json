@@ -22,8 +22,8 @@
       "uuid": "Uuid",
       "content": "Content",
       "baseInfo": "Base Info",
+      "like": "Like",
       "commentReply": "Comment Reply",
-      "userComment": "User Comment",
       "post": "Post",
       "commentParent": "Comment Parent",
       "help": {

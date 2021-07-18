@@ -8,8 +8,6 @@ import { IPageProfile } from 'app/shared/model/page-profile.model';
 import { getEntities as getPageProfiles } from 'app/entities/page-profile/page-profile.reducer';
 import { IBaseInfo } from 'app/shared/model/base-info.model';
 import { getEntities as getBaseInfos } from 'app/entities/base-info/base-info.reducer';
-import { IMasterUser } from 'app/shared/model/master-user.model';
-import { getEntities as getMasterUsers } from 'app/entities/master-user/master-user.reducer';
 import { ITopicInterest } from 'app/shared/model/topic-interest.model';
 import { getEntities as getTopicInterests } from 'app/entities/topic-interest/topic-interest.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './page-post.reducer';
@@ -25,7 +23,6 @@ export const PagePostUpdate = (props: RouteComponentProps<{ id: string }>) => {
 
   const pageProfiles = useAppSelector(state => state.pageProfile.entities);
   const baseInfos = useAppSelector(state => state.baseInfo.entities);
-  const masterUsers = useAppSelector(state => state.masterUser.entities);
   const topicInterests = useAppSelector(state => state.topicInterest.entities);
   const pagePostEntity = useAppSelector(state => state.pagePost.entity);
   const loading = useAppSelector(state => state.pagePost.loading);
@@ -43,7 +40,6 @@ export const PagePostUpdate = (props: RouteComponentProps<{ id: string }>) => {
 
     dispatch(getPageProfiles({}));
     dispatch(getBaseInfos({}));
-    dispatch(getMasterUsers({}));
     dispatch(getTopicInterests({}));
   }, []);
 
@@ -59,7 +55,6 @@ export const PagePostUpdate = (props: RouteComponentProps<{ id: string }>) => {
       ...values,
       profile: pageProfiles.find(it => it.id.toString() === values.profileId.toString()),
       baseInfo: baseInfos.find(it => it.id.toString() === values.baseInfoId.toString()),
-      masterUser: masterUsers.find(it => it.id.toString() === values.masterUserId.toString()),
     };
 
     if (isNew) {
@@ -76,7 +71,6 @@ export const PagePostUpdate = (props: RouteComponentProps<{ id: string }>) => {
           ...pagePostEntity,
           profileId: pagePostEntity?.profile?.id,
           baseInfoId: pagePostEntity?.baseInfo?.id,
-          masterUserId: pagePostEntity?.masterUser?.id,
         };
 
   return (
@@ -131,6 +125,16 @@ export const PagePostUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 <Translate contentKey="catinyApp.pagePost.help.name" />
               </UncontrolledTooltip>
               <ValidatedField
+                label={translate('catinyApp.pagePost.avatar')}
+                id="page-post-avatar"
+                name="avatar"
+                data-cy="avatar"
+                type="textarea"
+              />
+              <UncontrolledTooltip target="avatarLabel">
+                <Translate contentKey="catinyApp.pagePost.help.avatar" />
+              </UncontrolledTooltip>
+              <ValidatedField
                 label={translate('catinyApp.pagePost.quickInfo')}
                 id="page-post-quickInfo"
                 name="quickInfo"
@@ -166,22 +170,6 @@ export const PagePostUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 <option value="" key="0" />
                 {baseInfos
                   ? baseInfos.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField
-                id="page-post-masterUser"
-                name="masterUserId"
-                data-cy="masterUser"
-                label={translate('catinyApp.pagePost.masterUser')}
-                type="select"
-              >
-                <option value="" key="0" />
-                {masterUsers
-                  ? masterUsers.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

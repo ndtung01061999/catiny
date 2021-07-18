@@ -9,6 +9,7 @@ export default class MessageGroupUpdatePage {
   cancelButton: ElementFinder = element(by.id('cancel-save'));
   uuidInput: ElementFinder = element(by.css('input#message-group-uuid'));
   groupNameInput: ElementFinder = element(by.css('input#message-group-groupName'));
+  avatarInput: ElementFinder = element(by.css('textarea#message-group-avatar'));
   addByInput: ElementFinder = element(by.css('input#message-group-addBy'));
   baseInfoSelect: ElementFinder = element(by.css('select#message-group-baseInfo'));
 
@@ -30,6 +31,14 @@ export default class MessageGroupUpdatePage {
 
   async getGroupNameInput() {
     return this.groupNameInput.getAttribute('value');
+  }
+
+  async setAvatarInput(avatar) {
+    await this.avatarInput.sendKeys(avatar);
+  }
+
+  async getAvatarInput() {
+    return this.avatarInput.getAttribute('value');
   }
 
   async setAddByInput(addBy) {
@@ -73,6 +82,8 @@ export default class MessageGroupUpdatePage {
     await this.setUuidInput('64c99148-3908-465d-8c4a-e510e3ade974');
     await waitUntilDisplayed(this.saveButton);
     await this.setGroupNameInput('groupName');
+    await waitUntilDisplayed(this.saveButton);
+    await this.setAvatarInput('avatar');
     await waitUntilDisplayed(this.saveButton);
     await this.setAddByInput('addBy');
     await this.baseInfoSelectLastOption();

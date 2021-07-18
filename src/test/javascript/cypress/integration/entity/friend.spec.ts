@@ -108,8 +108,6 @@ describe('Friend e2e test', () => {
 
     cy.setFieldSelectToLastOfEntity('friendDetails');
 
-    cy.setFieldSelectToLastOfEntity('masterUser');
-
     cy.get(entityCreateSaveButtonSelector).click({ force: true });
     cy.scrollTo('top', { ensureScrollable: false });
     cy.get(entityCreateSaveButtonSelector).should('not.exist');

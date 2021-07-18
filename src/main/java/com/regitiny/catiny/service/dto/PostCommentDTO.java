@@ -35,8 +35,6 @@ public class PostCommentDTO implements Serializable {
 
   private BaseInfoDTO baseInfo;
 
-  private MasterUserDTO userComment;
-
   private PostDTO post;
 
   private PostCommentDTO commentParent;
@@ -71,14 +69,6 @@ public class PostCommentDTO implements Serializable {
 
   public void setBaseInfo(BaseInfoDTO baseInfo) {
     this.baseInfo = baseInfo;
-  }
-
-  public MasterUserDTO getUserComment() {
-    return userComment;
-  }
-
-  public void setUserComment(MasterUserDTO userComment) {
-    this.userComment = userComment;
   }
 
   public PostDTO getPost() {
@@ -126,7 +116,6 @@ public class PostCommentDTO implements Serializable {
             ", uuid='" + getUuid() + "'" +
             ", content='" + getContent() + "'" +
             ", baseInfo=" + getBaseInfo() +
-            ", userComment=" + getUserComment() +
             ", post=" + getPost() +
             ", commentParent=" + getCommentParent() +
             "}";

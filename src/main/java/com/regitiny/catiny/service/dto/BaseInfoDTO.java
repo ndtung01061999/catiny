@@ -25,20 +25,6 @@ public class BaseInfoDTO implements Serializable {
   private ProcessStatus processStatus;
 
   /**
-   * owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List
-   */
-  @ApiModelProperty(value = "owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List")
-  @Lob
-  private String owner;
-
-  /**
-   * role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa>
-   */
-  @ApiModelProperty(value = "role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa>")
-  @Lob
-  private String role;
-
-  /**
    * modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào
    */
   @ApiModelProperty(value = "modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào")
@@ -55,18 +41,6 @@ public class BaseInfoDTO implements Serializable {
    */
   @ApiModelProperty(value = "modifiedDate * : thời gian sửa bản ghi này")
   private Instant modifiedDate;
-
-  /**
-   * createdBy *    : người tạo ra bản gi này (lần đầu tiên)
-   */
-  @ApiModelProperty(value = "createdBy *    : người tạo ra bản gi này (lần đầu tiên)")
-  private String createdBy;
-
-  /**
-   * modifiedBy *   : người sửa lại bản ghi này
-   */
-  @ApiModelProperty(value = "modifiedBy *   : người sửa lại bản ghi này")
-  private String modifiedBy;
 
   /**
    * notes *        : @type Json -> chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json\"
@@ -90,6 +64,26 @@ public class BaseInfoDTO implements Serializable {
   @ApiModelProperty(value = "deleted *      : @defaultValue( false ) -> đánh dấu là đã xóa")
   private Boolean deleted;
 
+  /**
+   * priorityIndex *: chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)
+   */
+  @ApiModelProperty(value = "priorityIndex *: chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)")
+  private Long priorityIndex;
+
+  /**
+   * countUse *     : đếm số lần truy cập vào bản ghi này để xem sửa xóa
+   */
+  @ApiModelProperty(value = "countUse *     : đếm số lần truy cập vào bản ghi này để xem sửa xóa")
+  private Long countUse;
+
+  private ClassInfoDTO classInfo;
+
+  private MasterUserDTO createdBy;
+
+  private MasterUserDTO modifiedBy;
+
+  private MasterUserDTO owner;
+
   public Long getId() {
     return id;
   }
@@ -104,22 +98,6 @@ public class BaseInfoDTO implements Serializable {
 
   public void setProcessStatus(ProcessStatus processStatus) {
     this.processStatus = processStatus;
-  }
-
-  public String getOwner() {
-    return owner;
-  }
-
-  public void setOwner(String owner) {
-    this.owner = owner;
-  }
-
-  public String getRole() {
-    return role;
-  }
-
-  public void setRole(String role) {
-    this.role = role;
   }
 
   public String getModifiedClass() {
@@ -146,22 +124,6 @@ public class BaseInfoDTO implements Serializable {
     this.modifiedDate = modifiedDate;
   }
 
-  public String getCreatedBy() {
-    return createdBy;
-  }
-
-  public void setCreatedBy(String createdBy) {
-    this.createdBy = createdBy;
-  }
-
-  public String getModifiedBy() {
-    return modifiedBy;
-  }
-
-  public void setModifiedBy(String modifiedBy) {
-    this.modifiedBy = modifiedBy;
-  }
-
   public String getNotes() {
     return notes;
   }
@@ -184,6 +146,54 @@ public class BaseInfoDTO implements Serializable {
 
   public void setDeleted(Boolean deleted) {
     this.deleted = deleted;
+  }
+
+  public Long getPriorityIndex() {
+    return priorityIndex;
+  }
+
+  public void setPriorityIndex(Long priorityIndex) {
+    this.priorityIndex = priorityIndex;
+  }
+
+  public Long getCountUse() {
+    return countUse;
+  }
+
+  public void setCountUse(Long countUse) {
+    this.countUse = countUse;
+  }
+
+  public ClassInfoDTO getClassInfo() {
+    return classInfo;
+  }
+
+  public void setClassInfo(ClassInfoDTO classInfo) {
+    this.classInfo = classInfo;
+  }
+
+  public MasterUserDTO getCreatedBy() {
+    return createdBy;
+  }
+
+  public void setCreatedBy(MasterUserDTO createdBy) {
+    this.createdBy = createdBy;
+  }
+
+  public MasterUserDTO getModifiedBy() {
+    return modifiedBy;
+  }
+
+  public void setModifiedBy(MasterUserDTO modifiedBy) {
+    this.modifiedBy = modifiedBy;
+  }
+
+  public MasterUserDTO getOwner() {
+    return owner;
+  }
+
+  public void setOwner(MasterUserDTO owner) {
+    this.owner = owner;
   }
 
   @Override
@@ -213,16 +223,18 @@ public class BaseInfoDTO implements Serializable {
         return "BaseInfoDTO{" +
             "id=" + getId() +
             ", processStatus='" + getProcessStatus() + "'" +
-            ", owner='" + getOwner() + "'" +
-            ", role='" + getRole() + "'" +
             ", modifiedClass='" + getModifiedClass() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", modifiedDate='" + getModifiedDate() + "'" +
-            ", createdBy='" + getCreatedBy() + "'" +
-            ", modifiedBy='" + getModifiedBy() + "'" +
             ", notes='" + getNotes() + "'" +
             ", historyUpdate='" + getHistoryUpdate() + "'" +
             ", deleted='" + getDeleted() + "'" +
+            ", priorityIndex=" + getPriorityIndex() +
+            ", countUse=" + getCountUse() +
+            ", classInfo=" + getClassInfo() +
+            ", createdBy=" + getCreatedBy() +
+            ", modifiedBy=" + getModifiedBy() +
+            ", owner=" + getOwner() +
             "}";
     }
 }

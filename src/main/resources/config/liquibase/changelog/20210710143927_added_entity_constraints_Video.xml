@@ -25,11 +25,5 @@
                                  constraintName="fk_video__video_original_id"
                                  referencedColumnNames="id"
                                  referencedTableName="video"/>
-
-        <addForeignKeyConstraint baseColumnNames="event_id"
-                                 baseTableName="video"
-                                 constraintName="fk_video__event_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="event"/>
     </changeSet>
 </databaseChangeLog>

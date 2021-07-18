@@ -8,11 +8,12 @@ export default class MessageContentUpdatePage {
   saveButton: ElementFinder = element(by.id('save-entity'));
   cancelButton: ElementFinder = element(by.id('cancel-save'));
   uuidInput: ElementFinder = element(by.css('input#message-content-uuid'));
+  senderNameInput: ElementFinder = element(by.css('input#message-content-senderName'));
+  attachInput: ElementFinder = element(by.css('textarea#message-content-attach'));
   contentInput: ElementFinder = element(by.css('textarea#message-content-content'));
   statusInput: ElementFinder = element(by.css('textarea#message-content-status'));
   searchFieldInput: ElementFinder = element(by.css('textarea#message-content-searchField'));
   baseInfoSelect: ElementFinder = element(by.css('select#message-content-baseInfo'));
-  senderSelect: ElementFinder = element(by.css('select#message-content-sender'));
   messageGroupSelect: ElementFinder = element(by.css('select#message-content-messageGroup'));
 
   getPageTitle() {
@@ -25,6 +26,22 @@ export default class MessageContentUpdatePage {
 
   async getUuidInput() {
     return this.uuidInput.getAttribute('value');
+  }
+
+  async setSenderNameInput(senderName) {
+    await this.senderNameInput.sendKeys(senderName);
+  }
+
+  async getSenderNameInput() {
+    return this.senderNameInput.getAttribute('value');
+  }
+
+  async setAttachInput(attach) {
+    await this.attachInput.sendKeys(attach);
+  }
+
+  async getAttachInput() {
+    return this.attachInput.getAttribute('value');
   }
 
   async setContentInput(content) {
@@ -67,22 +84,6 @@ export default class MessageContentUpdatePage {
     return this.baseInfoSelect.element(by.css('option:checked')).getText();
   }
 
-  async senderSelectLastOption() {
-    await this.senderSelect.all(by.tagName('option')).last().click();
-  }
-
-  async senderSelectOption(option) {
-    await this.senderSelect.sendKeys(option);
-  }
-
-  getSenderSelect() {
-    return this.senderSelect;
-  }
-
-  async getSenderSelectedOption() {
-    return this.senderSelect.element(by.css('option:checked')).getText();
-  }
-
   async messageGroupSelectLastOption() {
     await this.messageGroupSelect.all(by.tagName('option')).last().click();
   }
@@ -115,13 +116,16 @@ export default class MessageContentUpdatePage {
     await waitUntilDisplayed(this.saveButton);
     await this.setUuidInput('64c99148-3908-465d-8c4a-e510e3ade974');
     await waitUntilDisplayed(this.saveButton);
+    await this.setSenderNameInput('senderName');
+    await waitUntilDisplayed(this.saveButton);
+    await this.setAttachInput('attach');
+    await waitUntilDisplayed(this.saveButton);
     await this.setContentInput('content');
     await waitUntilDisplayed(this.saveButton);
     await this.setStatusInput('status');
     await waitUntilDisplayed(this.saveButton);
     await this.setSearchFieldInput('searchField');
     await this.baseInfoSelectLastOption();
-    await this.senderSelectLastOption();
     await this.messageGroupSelectLastOption();
     await this.save();
     await waitUntilHidden(this.saveButton);

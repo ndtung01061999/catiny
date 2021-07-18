@@ -6,10 +6,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IBaseInfo } from 'app/shared/model/base-info.model';
 import { getEntities as getBaseInfos } from 'app/entities/base-info/base-info.reducer';
-import { IMasterUser } from 'app/shared/model/master-user.model';
-import { getEntities as getMasterUsers } from 'app/entities/master-user/master-user.reducer';
 import { IPost } from 'app/shared/model/post.model';
 import { getEntities as getPosts } from 'app/entities/post/post.reducer';
+import { IPostComment } from 'app/shared/model/post-comment.model';
+import { getEntities as getPostComments } from 'app/entities/post-comment/post-comment.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './post-like.reducer';
 import { IPostLike } from 'app/shared/model/post-like.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -22,8 +22,8 @@ export const PostLikeUpdate = (props: RouteComponentProps<{ id: string }>) => {
   const [isNew] = useState(!props.match.params || !props.match.params.id);
 
   const baseInfos = useAppSelector(state => state.baseInfo.entities);
-  const masterUsers = useAppSelector(state => state.masterUser.entities);
   const posts = useAppSelector(state => state.post.entities);
+  const postComments = useAppSelector(state => state.postComment.entities);
   const postLikeEntity = useAppSelector(state => state.postLike.entity);
   const loading = useAppSelector(state => state.postLike.loading);
   const updating = useAppSelector(state => state.postLike.updating);
@@ -39,8 +39,8 @@ export const PostLikeUpdate = (props: RouteComponentProps<{ id: string }>) => {
     }
 
     dispatch(getBaseInfos({}));
-    dispatch(getMasterUsers({}));
     dispatch(getPosts({}));
+    dispatch(getPostComments({}));
   }, []);
 
   useEffect(() => {
@@ -54,8 +54,8 @@ export const PostLikeUpdate = (props: RouteComponentProps<{ id: string }>) => {
       ...postLikeEntity,
       ...values,
       baseInfo: baseInfos.find(it => it.id.toString() === values.baseInfoId.toString()),
-      userLike: masterUsers.find(it => it.id.toString() === values.userLikeId.toString()),
       post: posts.find(it => it.id.toString() === values.postId.toString()),
+      postComment: postComments.find(it => it.id.toString() === values.postCommentId.toString()),
     };
 
     if (isNew) {
@@ -71,8 +71,8 @@ export const PostLikeUpdate = (props: RouteComponentProps<{ id: string }>) => {
       : {
           ...postLikeEntity,
           baseInfoId: postLikeEntity?.baseInfo?.id,
-          userLikeId: postLikeEntity?.userLike?.id,
           postId: postLikeEntity?.post?.id,
+          postCommentId: postLikeEntity?.postComment?.id,
         };
 
   return (
@@ -129,26 +129,26 @@ export const PostLikeUpdate = (props: RouteComponentProps<{ id: string }>) => {
                     ))
                   : null}
               </ValidatedField>
-              <ValidatedField
-                id="post-like-userLike"
-                name="userLikeId"
-                data-cy="userLike"
-                label={translate('catinyApp.postLike.userLike')}
-                type="select"
-              >
+              <ValidatedField id="post-like-post" name="postId" data-cy="post" label={translate('catinyApp.postLike.post')} type="select">
                 <option value="" key="0" />
-                {masterUsers
-                  ? masterUsers.map(otherEntity => (
+                {posts
+                  ? posts.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>
                     ))
                   : null}
               </ValidatedField>
-              <ValidatedField id="post-like-post" name="postId" data-cy="post" label={translate('catinyApp.postLike.post')} type="select">
+              <ValidatedField
+                id="post-like-postComment"
+                name="postCommentId"
+                data-cy="postComment"
+                label={translate('catinyApp.postLike.postComment')}
+                type="select"
+              >
                 <option value="" key="0" />
-                {posts
-                  ? posts.map(otherEntity => (
+                {postComments
+                  ? postComments.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

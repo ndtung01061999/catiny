@@ -33,9 +33,9 @@ public class PostLikeCriteria implements Serializable, Criteria {
 
   private LongFilter baseInfoId;
 
-  private LongFilter userLikeId;
-
   private LongFilter postId;
+
+  private LongFilter postCommentId;
 
   public PostLikeCriteria() {}
 
@@ -43,8 +43,8 @@ public class PostLikeCriteria implements Serializable, Criteria {
     this.id = other.id == null ? null : other.id.copy();
     this.uuid = other.uuid == null ? null : other.uuid.copy();
     this.baseInfoId = other.baseInfoId == null ? null : other.baseInfoId.copy();
-    this.userLikeId = other.userLikeId == null ? null : other.userLikeId.copy();
     this.postId = other.postId == null ? null : other.postId.copy();
+    this.postCommentId = other.postCommentId == null ? null : other.postCommentId.copy();
   }
 
   @Override
@@ -97,21 +97,6 @@ public class PostLikeCriteria implements Serializable, Criteria {
     this.baseInfoId = baseInfoId;
   }
 
-  public LongFilter getUserLikeId() {
-    return userLikeId;
-  }
-
-  public LongFilter userLikeId() {
-    if (userLikeId == null) {
-      userLikeId = new LongFilter();
-    }
-    return userLikeId;
-  }
-
-  public void setUserLikeId(LongFilter userLikeId) {
-    this.userLikeId = userLikeId;
-  }
-
   public LongFilter getPostId() {
     return postId;
   }
@@ -127,6 +112,21 @@ public class PostLikeCriteria implements Serializable, Criteria {
     this.postId = postId;
   }
 
+  public LongFilter getPostCommentId() {
+    return postCommentId;
+  }
+
+  public LongFilter postCommentId() {
+    if (postCommentId == null) {
+      postCommentId = new LongFilter();
+    }
+    return postCommentId;
+  }
+
+  public void setPostCommentId(LongFilter postCommentId) {
+    this.postCommentId = postCommentId;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -140,14 +140,14 @@ public class PostLikeCriteria implements Serializable, Criteria {
       Objects.equals(id, that.id) &&
       Objects.equals(uuid, that.uuid) &&
       Objects.equals(baseInfoId, that.baseInfoId) &&
-      Objects.equals(userLikeId, that.userLikeId) &&
-      Objects.equals(postId, that.postId)
+      Objects.equals(postId, that.postId) &&
+      Objects.equals(postCommentId, that.postCommentId)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, uuid, baseInfoId, userLikeId, postId);
+    return Objects.hash(id, uuid, baseInfoId, postId, postCommentId);
   }
 
   // prettier-ignore
@@ -157,8 +157,8 @@ public class PostLikeCriteria implements Serializable, Criteria {
             (id != null ? "id=" + id + ", " : "") +
             (uuid != null ? "uuid=" + uuid + ", " : "") +
             (baseInfoId != null ? "baseInfoId=" + baseInfoId + ", " : "") +
-            (userLikeId != null ? "userLikeId=" + userLikeId + ", " : "") +
             (postId != null ? "postId=" + postId + ", " : "") +
+            (postCommentId != null ? "postCommentId=" + postCommentId + ", " : "") +
             "}";
     }
 }

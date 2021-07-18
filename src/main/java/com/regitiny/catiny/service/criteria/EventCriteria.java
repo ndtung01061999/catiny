@@ -63,10 +63,6 @@ public class EventCriteria implements Serializable, Criteria {
 
   private LongFilter baseInfoId;
 
-  private LongFilter otherImageId;
-
-  private LongFilter otherVideoId;
-
   public EventCriteria() {}
 
   public EventCriteria(EventCriteria other) {
@@ -78,8 +74,6 @@ public class EventCriteria implements Serializable, Criteria {
     this.endTime = other.endTime == null ? null : other.endTime.copy();
     this.tagLine = other.tagLine == null ? null : other.tagLine.copy();
     this.baseInfoId = other.baseInfoId == null ? null : other.baseInfoId.copy();
-    this.otherImageId = other.otherImageId == null ? null : other.otherImageId.copy();
-    this.otherVideoId = other.otherVideoId == null ? null : other.otherVideoId.copy();
   }
 
   @Override
@@ -207,36 +201,6 @@ public class EventCriteria implements Serializable, Criteria {
     this.baseInfoId = baseInfoId;
   }
 
-  public LongFilter getOtherImageId() {
-    return otherImageId;
-  }
-
-  public LongFilter otherImageId() {
-    if (otherImageId == null) {
-      otherImageId = new LongFilter();
-    }
-    return otherImageId;
-  }
-
-  public void setOtherImageId(LongFilter otherImageId) {
-    this.otherImageId = otherImageId;
-  }
-
-  public LongFilter getOtherVideoId() {
-    return otherVideoId;
-  }
-
-  public LongFilter otherVideoId() {
-    if (otherVideoId == null) {
-      otherVideoId = new LongFilter();
-    }
-    return otherVideoId;
-  }
-
-  public void setOtherVideoId(LongFilter otherVideoId) {
-    this.otherVideoId = otherVideoId;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -254,15 +218,13 @@ public class EventCriteria implements Serializable, Criteria {
       Objects.equals(startTime, that.startTime) &&
       Objects.equals(endTime, that.endTime) &&
       Objects.equals(tagLine, that.tagLine) &&
-      Objects.equals(baseInfoId, that.baseInfoId) &&
-      Objects.equals(otherImageId, that.otherImageId) &&
-      Objects.equals(otherVideoId, that.otherVideoId)
+      Objects.equals(baseInfoId, that.baseInfoId)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, uuid, title, type, startTime, endTime, tagLine, baseInfoId, otherImageId, otherVideoId);
+    return Objects.hash(id, uuid, title, type, startTime, endTime, tagLine, baseInfoId);
   }
 
   // prettier-ignore
@@ -277,8 +239,6 @@ public class EventCriteria implements Serializable, Criteria {
             (endTime != null ? "endTime=" + endTime + ", " : "") +
             (tagLine != null ? "tagLine=" + tagLine + ", " : "") +
             (baseInfoId != null ? "baseInfoId=" + baseInfoId + ", " : "") +
-            (otherImageId != null ? "otherImageId=" + otherImageId + ", " : "") +
-            (otherVideoId != null ? "otherVideoId=" + otherVideoId + ", " : "") +
             "}";
     }
 }

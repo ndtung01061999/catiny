@@ -9,10 +9,10 @@ export default class PagePostUpdatePage {
   cancelButton: ElementFinder = element(by.id('cancel-save'));
   uuidInput: ElementFinder = element(by.css('input#page-post-uuid'));
   nameInput: ElementFinder = element(by.css('input#page-post-name'));
+  avatarInput: ElementFinder = element(by.css('textarea#page-post-avatar'));
   quickInfoInput: ElementFinder = element(by.css('textarea#page-post-quickInfo'));
   profileSelect: ElementFinder = element(by.css('select#page-post-profile'));
   baseInfoSelect: ElementFinder = element(by.css('select#page-post-baseInfo'));
-  masterUserSelect: ElementFinder = element(by.css('select#page-post-masterUser'));
 
   getPageTitle() {
     return this.pageTitle;
@@ -32,6 +32,14 @@ export default class PagePostUpdatePage {
 
   async getNameInput() {
     return this.nameInput.getAttribute('value');
+  }
+
+  async setAvatarInput(avatar) {
+    await this.avatarInput.sendKeys(avatar);
+  }
+
+  async getAvatarInput() {
+    return this.avatarInput.getAttribute('value');
   }
 
   async setQuickInfoInput(quickInfo) {
@@ -74,22 +82,6 @@ export default class PagePostUpdatePage {
     return this.baseInfoSelect.element(by.css('option:checked')).getText();
   }
 
-  async masterUserSelectLastOption() {
-    await this.masterUserSelect.all(by.tagName('option')).last().click();
-  }
-
-  async masterUserSelectOption(option) {
-    await this.masterUserSelect.sendKeys(option);
-  }
-
-  getMasterUserSelect() {
-    return this.masterUserSelect;
-  }
-
-  async getMasterUserSelectedOption() {
-    return this.masterUserSelect.element(by.css('option:checked')).getText();
-  }
-
   async save() {
     await this.saveButton.click();
   }
@@ -108,10 +100,11 @@ export default class PagePostUpdatePage {
     await waitUntilDisplayed(this.saveButton);
     await this.setNameInput('name');
     await waitUntilDisplayed(this.saveButton);
+    await this.setAvatarInput('avatar');
+    await waitUntilDisplayed(this.saveButton);
     await this.setQuickInfoInput('quickInfo');
     await this.profileSelectLastOption();
     await this.baseInfoSelectLastOption();
-    await this.masterUserSelectLastOption();
     await this.save();
     await waitUntilHidden(this.saveButton);
   }

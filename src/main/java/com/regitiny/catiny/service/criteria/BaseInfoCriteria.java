@@ -56,11 +56,13 @@ public class BaseInfoCriteria implements Serializable, Criteria {
 
   private InstantFilter modifiedDate;
 
-  private StringFilter createdBy;
-
-  private StringFilter modifiedBy;
-
   private BooleanFilter deleted;
+
+  private LongFilter priorityIndex;
+
+  private LongFilter countUse;
+
+  private LongFilter classInfoId;
 
   private LongFilter userProfileId;
 
@@ -120,6 +122,14 @@ public class BaseInfoCriteria implements Serializable, Criteria {
 
   private LongFilter eventId;
 
+  private LongFilter createdById;
+
+  private LongFilter modifiedById;
+
+  private LongFilter ownerId;
+
+  private LongFilter permissionId;
+
   public BaseInfoCriteria() {}
 
   public BaseInfoCriteria(BaseInfoCriteria other) {
@@ -128,9 +138,10 @@ public class BaseInfoCriteria implements Serializable, Criteria {
     this.modifiedClass = other.modifiedClass == null ? null : other.modifiedClass.copy();
     this.createdDate = other.createdDate == null ? null : other.createdDate.copy();
     this.modifiedDate = other.modifiedDate == null ? null : other.modifiedDate.copy();
-    this.createdBy = other.createdBy == null ? null : other.createdBy.copy();
-    this.modifiedBy = other.modifiedBy == null ? null : other.modifiedBy.copy();
     this.deleted = other.deleted == null ? null : other.deleted.copy();
+    this.priorityIndex = other.priorityIndex == null ? null : other.priorityIndex.copy();
+    this.countUse = other.countUse == null ? null : other.countUse.copy();
+    this.classInfoId = other.classInfoId == null ? null : other.classInfoId.copy();
     this.userProfileId = other.userProfileId == null ? null : other.userProfileId.copy();
     this.accountStatusId = other.accountStatusId == null ? null : other.accountStatusId.copy();
     this.deviceStatusId = other.deviceStatusId == null ? null : other.deviceStatusId.copy();
@@ -160,6 +171,10 @@ public class BaseInfoCriteria implements Serializable, Criteria {
     this.topicInterestId = other.topicInterestId == null ? null : other.topicInterestId.copy();
     this.todoListId = other.todoListId == null ? null : other.todoListId.copy();
     this.eventId = other.eventId == null ? null : other.eventId.copy();
+    this.createdById = other.createdById == null ? null : other.createdById.copy();
+    this.modifiedById = other.modifiedById == null ? null : other.modifiedById.copy();
+    this.ownerId = other.ownerId == null ? null : other.ownerId.copy();
+    this.permissionId = other.permissionId == null ? null : other.permissionId.copy();
   }
 
   @Override
@@ -242,36 +257,6 @@ public class BaseInfoCriteria implements Serializable, Criteria {
     this.modifiedDate = modifiedDate;
   }
 
-  public StringFilter getCreatedBy() {
-    return createdBy;
-  }
-
-  public StringFilter createdBy() {
-    if (createdBy == null) {
-      createdBy = new StringFilter();
-    }
-    return createdBy;
-  }
-
-  public void setCreatedBy(StringFilter createdBy) {
-    this.createdBy = createdBy;
-  }
-
-  public StringFilter getModifiedBy() {
-    return modifiedBy;
-  }
-
-  public StringFilter modifiedBy() {
-    if (modifiedBy == null) {
-      modifiedBy = new StringFilter();
-    }
-    return modifiedBy;
-  }
-
-  public void setModifiedBy(StringFilter modifiedBy) {
-    this.modifiedBy = modifiedBy;
-  }
-
   public BooleanFilter getDeleted() {
     return deleted;
   }
@@ -285,6 +270,51 @@ public class BaseInfoCriteria implements Serializable, Criteria {
 
   public void setDeleted(BooleanFilter deleted) {
     this.deleted = deleted;
+  }
+
+  public LongFilter getPriorityIndex() {
+    return priorityIndex;
+  }
+
+  public LongFilter priorityIndex() {
+    if (priorityIndex == null) {
+      priorityIndex = new LongFilter();
+    }
+    return priorityIndex;
+  }
+
+  public void setPriorityIndex(LongFilter priorityIndex) {
+    this.priorityIndex = priorityIndex;
+  }
+
+  public LongFilter getCountUse() {
+    return countUse;
+  }
+
+  public LongFilter countUse() {
+    if (countUse == null) {
+      countUse = new LongFilter();
+    }
+    return countUse;
+  }
+
+  public void setCountUse(LongFilter countUse) {
+    this.countUse = countUse;
+  }
+
+  public LongFilter getClassInfoId() {
+    return classInfoId;
+  }
+
+  public LongFilter classInfoId() {
+    if (classInfoId == null) {
+      classInfoId = new LongFilter();
+    }
+    return classInfoId;
+  }
+
+  public void setClassInfoId(LongFilter classInfoId) {
+    this.classInfoId = classInfoId;
   }
 
   public LongFilter getUserProfileId() {
@@ -722,6 +752,66 @@ public class BaseInfoCriteria implements Serializable, Criteria {
     this.eventId = eventId;
   }
 
+  public LongFilter getCreatedById() {
+    return createdById;
+  }
+
+  public LongFilter createdById() {
+    if (createdById == null) {
+      createdById = new LongFilter();
+    }
+    return createdById;
+  }
+
+  public void setCreatedById(LongFilter createdById) {
+    this.createdById = createdById;
+  }
+
+  public LongFilter getModifiedById() {
+    return modifiedById;
+  }
+
+  public LongFilter modifiedById() {
+    if (modifiedById == null) {
+      modifiedById = new LongFilter();
+    }
+    return modifiedById;
+  }
+
+  public void setModifiedById(LongFilter modifiedById) {
+    this.modifiedById = modifiedById;
+  }
+
+  public LongFilter getOwnerId() {
+    return ownerId;
+  }
+
+  public LongFilter ownerId() {
+    if (ownerId == null) {
+      ownerId = new LongFilter();
+    }
+    return ownerId;
+  }
+
+  public void setOwnerId(LongFilter ownerId) {
+    this.ownerId = ownerId;
+  }
+
+  public LongFilter getPermissionId() {
+    return permissionId;
+  }
+
+  public LongFilter permissionId() {
+    if (permissionId == null) {
+      permissionId = new LongFilter();
+    }
+    return permissionId;
+  }
+
+  public void setPermissionId(LongFilter permissionId) {
+    this.permissionId = permissionId;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -737,9 +827,10 @@ public class BaseInfoCriteria implements Serializable, Criteria {
       Objects.equals(modifiedClass, that.modifiedClass) &&
       Objects.equals(createdDate, that.createdDate) &&
       Objects.equals(modifiedDate, that.modifiedDate) &&
-      Objects.equals(createdBy, that.createdBy) &&
-      Objects.equals(modifiedBy, that.modifiedBy) &&
       Objects.equals(deleted, that.deleted) &&
+      Objects.equals(priorityIndex, that.priorityIndex) &&
+      Objects.equals(countUse, that.countUse) &&
+      Objects.equals(classInfoId, that.classInfoId) &&
       Objects.equals(userProfileId, that.userProfileId) &&
       Objects.equals(accountStatusId, that.accountStatusId) &&
       Objects.equals(deviceStatusId, that.deviceStatusId) &&
@@ -768,7 +859,11 @@ public class BaseInfoCriteria implements Serializable, Criteria {
       Objects.equals(videoLiveStreamBufferId, that.videoLiveStreamBufferId) &&
       Objects.equals(topicInterestId, that.topicInterestId) &&
       Objects.equals(todoListId, that.todoListId) &&
-      Objects.equals(eventId, that.eventId)
+      Objects.equals(eventId, that.eventId) &&
+      Objects.equals(createdById, that.createdById) &&
+      Objects.equals(modifiedById, that.modifiedById) &&
+      Objects.equals(ownerId, that.ownerId) &&
+      Objects.equals(permissionId, that.permissionId)
     );
   }
 
@@ -780,9 +875,10 @@ public class BaseInfoCriteria implements Serializable, Criteria {
       modifiedClass,
       createdDate,
       modifiedDate,
-      createdBy,
-      modifiedBy,
       deleted,
+      priorityIndex,
+      countUse,
+      classInfoId,
       userProfileId,
       accountStatusId,
       deviceStatusId,
@@ -811,7 +907,11 @@ public class BaseInfoCriteria implements Serializable, Criteria {
       videoLiveStreamBufferId,
       topicInterestId,
       todoListId,
-      eventId
+      eventId,
+      createdById,
+      modifiedById,
+      ownerId,
+      permissionId
     );
   }
 
@@ -824,9 +924,10 @@ public class BaseInfoCriteria implements Serializable, Criteria {
             (modifiedClass != null ? "modifiedClass=" + modifiedClass + ", " : "") +
             (createdDate != null ? "createdDate=" + createdDate + ", " : "") +
             (modifiedDate != null ? "modifiedDate=" + modifiedDate + ", " : "") +
-            (createdBy != null ? "createdBy=" + createdBy + ", " : "") +
-            (modifiedBy != null ? "modifiedBy=" + modifiedBy + ", " : "") +
             (deleted != null ? "deleted=" + deleted + ", " : "") +
+            (priorityIndex != null ? "priorityIndex=" + priorityIndex + ", " : "") +
+            (countUse != null ? "countUse=" + countUse + ", " : "") +
+            (classInfoId != null ? "classInfoId=" + classInfoId + ", " : "") +
             (userProfileId != null ? "userProfileId=" + userProfileId + ", " : "") +
             (accountStatusId != null ? "accountStatusId=" + accountStatusId + ", " : "") +
             (deviceStatusId != null ? "deviceStatusId=" + deviceStatusId + ", " : "") +
@@ -856,6 +957,10 @@ public class BaseInfoCriteria implements Serializable, Criteria {
             (topicInterestId != null ? "topicInterestId=" + topicInterestId + ", " : "") +
             (todoListId != null ? "todoListId=" + todoListId + ", " : "") +
             (eventId != null ? "eventId=" + eventId + ", " : "") +
+            (createdById != null ? "createdById=" + createdById + ", " : "") +
+            (modifiedById != null ? "modifiedById=" + modifiedById + ", " : "") +
+            (ownerId != null ? "ownerId=" + ownerId + ", " : "") +
+            (permissionId != null ? "permissionId=" + permissionId + ", " : "") +
             "}";
     }
 }

@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.regitiny.catiny.GeneratedByJHipster;
 import com.regitiny.catiny.IntegrationTest;
 import com.regitiny.catiny.domain.BaseInfo;
-import com.regitiny.catiny.domain.Event;
 import com.regitiny.catiny.domain.FileInfo;
 import com.regitiny.catiny.domain.Video;
 import com.regitiny.catiny.domain.Video;
@@ -56,6 +55,38 @@ class VideoResourceIT {
   private static final String DEFAULT_NAME = "AAAAAAAAAA";
   private static final String UPDATED_NAME = "BBBBBBBBBB";
 
+  private static final Integer DEFAULT_WIDTH = 1;
+  private static final Integer UPDATED_WIDTH = 2;
+  private static final Integer SMALLER_WIDTH = 1 - 1;
+
+  private static final Integer DEFAULT_HEIGHT = 1;
+  private static final Integer UPDATED_HEIGHT = 2;
+  private static final Integer SMALLER_HEIGHT = 1 - 1;
+
+  private static final Float DEFAULT_QUALITY_IMAGE = 0F;
+  private static final Float UPDATED_QUALITY_IMAGE = 1F;
+  private static final Float SMALLER_QUALITY_IMAGE = 0F - 1F;
+
+  private static final Float DEFAULT_QUALITY_AUDIO = 0F;
+  private static final Float UPDATED_QUALITY_AUDIO = 1F;
+  private static final Float SMALLER_QUALITY_AUDIO = 0F - 1F;
+
+  private static final Float DEFAULT_QUALITY = 0F;
+  private static final Float UPDATED_QUALITY = 1F;
+  private static final Float SMALLER_QUALITY = 0F - 1F;
+
+  private static final Integer DEFAULT_PIXEL_SIZE = 1;
+  private static final Integer UPDATED_PIXEL_SIZE = 2;
+  private static final Integer SMALLER_PIXEL_SIZE = 1 - 1;
+
+  private static final Long DEFAULT_PRIORITY_INDEX = 1L;
+  private static final Long UPDATED_PRIORITY_INDEX = 2L;
+  private static final Long SMALLER_PRIORITY_INDEX = 1L - 1L;
+
+  private static final Long DEFAULT_DATA_SIZE = 1L;
+  private static final Long UPDATED_DATA_SIZE = 2L;
+  private static final Long SMALLER_DATA_SIZE = 1L - 1L;
+
   private static final String ENTITY_API_URL = "/api/videos";
   private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
   private static final String ENTITY_SEARCH_API_URL = "/api/_search/videos";
@@ -92,7 +123,17 @@ class VideoResourceIT {
    * if they test an entity which requires the current entity.
    */
   public static Video createEntity(EntityManager em) {
-    Video video = new Video().uuid(DEFAULT_UUID).name(DEFAULT_NAME);
+    Video video = new Video()
+      .uuid(DEFAULT_UUID)
+      .name(DEFAULT_NAME)
+      .width(DEFAULT_WIDTH)
+      .height(DEFAULT_HEIGHT)
+      .qualityImage(DEFAULT_QUALITY_IMAGE)
+      .qualityAudio(DEFAULT_QUALITY_AUDIO)
+      .quality(DEFAULT_QUALITY)
+      .pixelSize(DEFAULT_PIXEL_SIZE)
+      .priorityIndex(DEFAULT_PRIORITY_INDEX)
+      .dataSize(DEFAULT_DATA_SIZE);
     return video;
   }
 
@@ -103,7 +144,17 @@ class VideoResourceIT {
    * if they test an entity which requires the current entity.
    */
   public static Video createUpdatedEntity(EntityManager em) {
-    Video video = new Video().uuid(UPDATED_UUID).name(UPDATED_NAME);
+    Video video = new Video()
+      .uuid(UPDATED_UUID)
+      .name(UPDATED_NAME)
+      .width(UPDATED_WIDTH)
+      .height(UPDATED_HEIGHT)
+      .qualityImage(UPDATED_QUALITY_IMAGE)
+      .qualityAudio(UPDATED_QUALITY_AUDIO)
+      .quality(UPDATED_QUALITY)
+      .pixelSize(UPDATED_PIXEL_SIZE)
+      .priorityIndex(UPDATED_PRIORITY_INDEX)
+      .dataSize(UPDATED_DATA_SIZE);
     return video;
   }
 
@@ -128,6 +179,14 @@ class VideoResourceIT {
     Video testVideo = videoList.get(videoList.size() - 1);
     assertThat(testVideo.getUuid()).isEqualTo(DEFAULT_UUID);
     assertThat(testVideo.getName()).isEqualTo(DEFAULT_NAME);
+    assertThat(testVideo.getWidth()).isEqualTo(DEFAULT_WIDTH);
+    assertThat(testVideo.getHeight()).isEqualTo(DEFAULT_HEIGHT);
+    assertThat(testVideo.getQualityImage()).isEqualTo(DEFAULT_QUALITY_IMAGE);
+    assertThat(testVideo.getQualityAudio()).isEqualTo(DEFAULT_QUALITY_AUDIO);
+    assertThat(testVideo.getQuality()).isEqualTo(DEFAULT_QUALITY);
+    assertThat(testVideo.getPixelSize()).isEqualTo(DEFAULT_PIXEL_SIZE);
+    assertThat(testVideo.getPriorityIndex()).isEqualTo(DEFAULT_PRIORITY_INDEX);
+    assertThat(testVideo.getDataSize()).isEqualTo(DEFAULT_DATA_SIZE);
 
     // Validate the Video in Elasticsearch
     verify(mockVideoSearchRepository, times(1)).save(testVideo);
@@ -186,7 +245,15 @@ class VideoResourceIT {
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
       .andExpect(jsonPath("$.[*].id").value(hasItem(video.getId().intValue())))
       .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
-      .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
+      .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+      .andExpect(jsonPath("$.[*].width").value(hasItem(DEFAULT_WIDTH)))
+      .andExpect(jsonPath("$.[*].height").value(hasItem(DEFAULT_HEIGHT)))
+      .andExpect(jsonPath("$.[*].qualityImage").value(hasItem(DEFAULT_QUALITY_IMAGE.doubleValue())))
+      .andExpect(jsonPath("$.[*].qualityAudio").value(hasItem(DEFAULT_QUALITY_AUDIO.doubleValue())))
+      .andExpect(jsonPath("$.[*].quality").value(hasItem(DEFAULT_QUALITY.doubleValue())))
+      .andExpect(jsonPath("$.[*].pixelSize").value(hasItem(DEFAULT_PIXEL_SIZE)))
+      .andExpect(jsonPath("$.[*].priorityIndex").value(hasItem(DEFAULT_PRIORITY_INDEX.intValue())))
+      .andExpect(jsonPath("$.[*].dataSize").value(hasItem(DEFAULT_DATA_SIZE.intValue())));
   }
 
   @Test
@@ -202,7 +269,15 @@ class VideoResourceIT {
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
       .andExpect(jsonPath("$.id").value(video.getId().intValue()))
       .andExpect(jsonPath("$.uuid").value(DEFAULT_UUID.toString()))
-      .andExpect(jsonPath("$.name").value(DEFAULT_NAME));
+      .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
+      .andExpect(jsonPath("$.width").value(DEFAULT_WIDTH))
+      .andExpect(jsonPath("$.height").value(DEFAULT_HEIGHT))
+      .andExpect(jsonPath("$.qualityImage").value(DEFAULT_QUALITY_IMAGE.doubleValue()))
+      .andExpect(jsonPath("$.qualityAudio").value(DEFAULT_QUALITY_AUDIO.doubleValue()))
+      .andExpect(jsonPath("$.quality").value(DEFAULT_QUALITY.doubleValue()))
+      .andExpect(jsonPath("$.pixelSize").value(DEFAULT_PIXEL_SIZE))
+      .andExpect(jsonPath("$.priorityIndex").value(DEFAULT_PRIORITY_INDEX.intValue()))
+      .andExpect(jsonPath("$.dataSize").value(DEFAULT_DATA_SIZE.intValue()));
   }
 
   @Test
@@ -355,6 +430,838 @@ class VideoResourceIT {
 
   @Test
   @Transactional
+  void getAllVideosByWidthIsEqualToSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where width equals to DEFAULT_WIDTH
+    defaultVideoShouldBeFound("width.equals=" + DEFAULT_WIDTH);
+
+    // Get all the videoList where width equals to UPDATED_WIDTH
+    defaultVideoShouldNotBeFound("width.equals=" + UPDATED_WIDTH);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByWidthIsNotEqualToSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where width not equals to DEFAULT_WIDTH
+    defaultVideoShouldNotBeFound("width.notEquals=" + DEFAULT_WIDTH);
+
+    // Get all the videoList where width not equals to UPDATED_WIDTH
+    defaultVideoShouldBeFound("width.notEquals=" + UPDATED_WIDTH);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByWidthIsInShouldWork() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where width in DEFAULT_WIDTH or UPDATED_WIDTH
+    defaultVideoShouldBeFound("width.in=" + DEFAULT_WIDTH + "," + UPDATED_WIDTH);
+
+    // Get all the videoList where width equals to UPDATED_WIDTH
+    defaultVideoShouldNotBeFound("width.in=" + UPDATED_WIDTH);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByWidthIsNullOrNotNull() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where width is not null
+    defaultVideoShouldBeFound("width.specified=true");
+
+    // Get all the videoList where width is null
+    defaultVideoShouldNotBeFound("width.specified=false");
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByWidthIsGreaterThanOrEqualToSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where width is greater than or equal to DEFAULT_WIDTH
+    defaultVideoShouldBeFound("width.greaterThanOrEqual=" + DEFAULT_WIDTH);
+
+    // Get all the videoList where width is greater than or equal to UPDATED_WIDTH
+    defaultVideoShouldNotBeFound("width.greaterThanOrEqual=" + UPDATED_WIDTH);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByWidthIsLessThanOrEqualToSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where width is less than or equal to DEFAULT_WIDTH
+    defaultVideoShouldBeFound("width.lessThanOrEqual=" + DEFAULT_WIDTH);
+
+    // Get all the videoList where width is less than or equal to SMALLER_WIDTH
+    defaultVideoShouldNotBeFound("width.lessThanOrEqual=" + SMALLER_WIDTH);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByWidthIsLessThanSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where width is less than DEFAULT_WIDTH
+    defaultVideoShouldNotBeFound("width.lessThan=" + DEFAULT_WIDTH);
+
+    // Get all the videoList where width is less than UPDATED_WIDTH
+    defaultVideoShouldBeFound("width.lessThan=" + UPDATED_WIDTH);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByWidthIsGreaterThanSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where width is greater than DEFAULT_WIDTH
+    defaultVideoShouldNotBeFound("width.greaterThan=" + DEFAULT_WIDTH);
+
+    // Get all the videoList where width is greater than SMALLER_WIDTH
+    defaultVideoShouldBeFound("width.greaterThan=" + SMALLER_WIDTH);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByHeightIsEqualToSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where height equals to DEFAULT_HEIGHT
+    defaultVideoShouldBeFound("height.equals=" + DEFAULT_HEIGHT);
+
+    // Get all the videoList where height equals to UPDATED_HEIGHT
+    defaultVideoShouldNotBeFound("height.equals=" + UPDATED_HEIGHT);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByHeightIsNotEqualToSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where height not equals to DEFAULT_HEIGHT
+    defaultVideoShouldNotBeFound("height.notEquals=" + DEFAULT_HEIGHT);
+
+    // Get all the videoList where height not equals to UPDATED_HEIGHT
+    defaultVideoShouldBeFound("height.notEquals=" + UPDATED_HEIGHT);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByHeightIsInShouldWork() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where height in DEFAULT_HEIGHT or UPDATED_HEIGHT
+    defaultVideoShouldBeFound("height.in=" + DEFAULT_HEIGHT + "," + UPDATED_HEIGHT);
+
+    // Get all the videoList where height equals to UPDATED_HEIGHT
+    defaultVideoShouldNotBeFound("height.in=" + UPDATED_HEIGHT);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByHeightIsNullOrNotNull() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where height is not null
+    defaultVideoShouldBeFound("height.specified=true");
+
+    // Get all the videoList where height is null
+    defaultVideoShouldNotBeFound("height.specified=false");
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByHeightIsGreaterThanOrEqualToSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where height is greater than or equal to DEFAULT_HEIGHT
+    defaultVideoShouldBeFound("height.greaterThanOrEqual=" + DEFAULT_HEIGHT);
+
+    // Get all the videoList where height is greater than or equal to UPDATED_HEIGHT
+    defaultVideoShouldNotBeFound("height.greaterThanOrEqual=" + UPDATED_HEIGHT);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByHeightIsLessThanOrEqualToSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where height is less than or equal to DEFAULT_HEIGHT
+    defaultVideoShouldBeFound("height.lessThanOrEqual=" + DEFAULT_HEIGHT);
+
+    // Get all the videoList where height is less than or equal to SMALLER_HEIGHT
+    defaultVideoShouldNotBeFound("height.lessThanOrEqual=" + SMALLER_HEIGHT);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByHeightIsLessThanSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where height is less than DEFAULT_HEIGHT
+    defaultVideoShouldNotBeFound("height.lessThan=" + DEFAULT_HEIGHT);
+
+    // Get all the videoList where height is less than UPDATED_HEIGHT
+    defaultVideoShouldBeFound("height.lessThan=" + UPDATED_HEIGHT);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByHeightIsGreaterThanSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where height is greater than DEFAULT_HEIGHT
+    defaultVideoShouldNotBeFound("height.greaterThan=" + DEFAULT_HEIGHT);
+
+    // Get all the videoList where height is greater than SMALLER_HEIGHT
+    defaultVideoShouldBeFound("height.greaterThan=" + SMALLER_HEIGHT);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByQualityImageIsEqualToSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where qualityImage equals to DEFAULT_QUALITY_IMAGE
+    defaultVideoShouldBeFound("qualityImage.equals=" + DEFAULT_QUALITY_IMAGE);
+
+    // Get all the videoList where qualityImage equals to UPDATED_QUALITY_IMAGE
+    defaultVideoShouldNotBeFound("qualityImage.equals=" + UPDATED_QUALITY_IMAGE);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByQualityImageIsNotEqualToSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where qualityImage not equals to DEFAULT_QUALITY_IMAGE
+    defaultVideoShouldNotBeFound("qualityImage.notEquals=" + DEFAULT_QUALITY_IMAGE);
+
+    // Get all the videoList where qualityImage not equals to UPDATED_QUALITY_IMAGE
+    defaultVideoShouldBeFound("qualityImage.notEquals=" + UPDATED_QUALITY_IMAGE);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByQualityImageIsInShouldWork() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where qualityImage in DEFAULT_QUALITY_IMAGE or UPDATED_QUALITY_IMAGE
+    defaultVideoShouldBeFound("qualityImage.in=" + DEFAULT_QUALITY_IMAGE + "," + UPDATED_QUALITY_IMAGE);
+
+    // Get all the videoList where qualityImage equals to UPDATED_QUALITY_IMAGE
+    defaultVideoShouldNotBeFound("qualityImage.in=" + UPDATED_QUALITY_IMAGE);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByQualityImageIsNullOrNotNull() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where qualityImage is not null
+    defaultVideoShouldBeFound("qualityImage.specified=true");
+
+    // Get all the videoList where qualityImage is null
+    defaultVideoShouldNotBeFound("qualityImage.specified=false");
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByQualityImageIsGreaterThanOrEqualToSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where qualityImage is greater than or equal to DEFAULT_QUALITY_IMAGE
+    defaultVideoShouldBeFound("qualityImage.greaterThanOrEqual=" + DEFAULT_QUALITY_IMAGE);
+
+    // Get all the videoList where qualityImage is greater than or equal to (DEFAULT_QUALITY_IMAGE + 1)
+    defaultVideoShouldNotBeFound("qualityImage.greaterThanOrEqual=" + (DEFAULT_QUALITY_IMAGE + 1));
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByQualityImageIsLessThanOrEqualToSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where qualityImage is less than or equal to DEFAULT_QUALITY_IMAGE
+    defaultVideoShouldBeFound("qualityImage.lessThanOrEqual=" + DEFAULT_QUALITY_IMAGE);
+
+    // Get all the videoList where qualityImage is less than or equal to SMALLER_QUALITY_IMAGE
+    defaultVideoShouldNotBeFound("qualityImage.lessThanOrEqual=" + SMALLER_QUALITY_IMAGE);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByQualityImageIsLessThanSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where qualityImage is less than DEFAULT_QUALITY_IMAGE
+    defaultVideoShouldNotBeFound("qualityImage.lessThan=" + DEFAULT_QUALITY_IMAGE);
+
+    // Get all the videoList where qualityImage is less than (DEFAULT_QUALITY_IMAGE + 1)
+    defaultVideoShouldBeFound("qualityImage.lessThan=" + (DEFAULT_QUALITY_IMAGE + 1));
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByQualityImageIsGreaterThanSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where qualityImage is greater than DEFAULT_QUALITY_IMAGE
+    defaultVideoShouldNotBeFound("qualityImage.greaterThan=" + DEFAULT_QUALITY_IMAGE);
+
+    // Get all the videoList where qualityImage is greater than SMALLER_QUALITY_IMAGE
+    defaultVideoShouldBeFound("qualityImage.greaterThan=" + SMALLER_QUALITY_IMAGE);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByQualityAudioIsEqualToSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where qualityAudio equals to DEFAULT_QUALITY_AUDIO
+    defaultVideoShouldBeFound("qualityAudio.equals=" + DEFAULT_QUALITY_AUDIO);
+
+    // Get all the videoList where qualityAudio equals to UPDATED_QUALITY_AUDIO
+    defaultVideoShouldNotBeFound("qualityAudio.equals=" + UPDATED_QUALITY_AUDIO);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByQualityAudioIsNotEqualToSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where qualityAudio not equals to DEFAULT_QUALITY_AUDIO
+    defaultVideoShouldNotBeFound("qualityAudio.notEquals=" + DEFAULT_QUALITY_AUDIO);
+
+    // Get all the videoList where qualityAudio not equals to UPDATED_QUALITY_AUDIO
+    defaultVideoShouldBeFound("qualityAudio.notEquals=" + UPDATED_QUALITY_AUDIO);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByQualityAudioIsInShouldWork() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where qualityAudio in DEFAULT_QUALITY_AUDIO or UPDATED_QUALITY_AUDIO
+    defaultVideoShouldBeFound("qualityAudio.in=" + DEFAULT_QUALITY_AUDIO + "," + UPDATED_QUALITY_AUDIO);
+
+    // Get all the videoList where qualityAudio equals to UPDATED_QUALITY_AUDIO
+    defaultVideoShouldNotBeFound("qualityAudio.in=" + UPDATED_QUALITY_AUDIO);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByQualityAudioIsNullOrNotNull() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where qualityAudio is not null
+    defaultVideoShouldBeFound("qualityAudio.specified=true");
+
+    // Get all the videoList where qualityAudio is null
+    defaultVideoShouldNotBeFound("qualityAudio.specified=false");
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByQualityAudioIsGreaterThanOrEqualToSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where qualityAudio is greater than or equal to DEFAULT_QUALITY_AUDIO
+    defaultVideoShouldBeFound("qualityAudio.greaterThanOrEqual=" + DEFAULT_QUALITY_AUDIO);
+
+    // Get all the videoList where qualityAudio is greater than or equal to (DEFAULT_QUALITY_AUDIO + 1)
+    defaultVideoShouldNotBeFound("qualityAudio.greaterThanOrEqual=" + (DEFAULT_QUALITY_AUDIO + 1));
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByQualityAudioIsLessThanOrEqualToSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where qualityAudio is less than or equal to DEFAULT_QUALITY_AUDIO
+    defaultVideoShouldBeFound("qualityAudio.lessThanOrEqual=" + DEFAULT_QUALITY_AUDIO);
+
+    // Get all the videoList where qualityAudio is less than or equal to SMALLER_QUALITY_AUDIO
+    defaultVideoShouldNotBeFound("qualityAudio.lessThanOrEqual=" + SMALLER_QUALITY_AUDIO);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByQualityAudioIsLessThanSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where qualityAudio is less than DEFAULT_QUALITY_AUDIO
+    defaultVideoShouldNotBeFound("qualityAudio.lessThan=" + DEFAULT_QUALITY_AUDIO);
+
+    // Get all the videoList where qualityAudio is less than (DEFAULT_QUALITY_AUDIO + 1)
+    defaultVideoShouldBeFound("qualityAudio.lessThan=" + (DEFAULT_QUALITY_AUDIO + 1));
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByQualityAudioIsGreaterThanSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where qualityAudio is greater than DEFAULT_QUALITY_AUDIO
+    defaultVideoShouldNotBeFound("qualityAudio.greaterThan=" + DEFAULT_QUALITY_AUDIO);
+
+    // Get all the videoList where qualityAudio is greater than SMALLER_QUALITY_AUDIO
+    defaultVideoShouldBeFound("qualityAudio.greaterThan=" + SMALLER_QUALITY_AUDIO);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByQualityIsEqualToSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where quality equals to DEFAULT_QUALITY
+    defaultVideoShouldBeFound("quality.equals=" + DEFAULT_QUALITY);
+
+    // Get all the videoList where quality equals to UPDATED_QUALITY
+    defaultVideoShouldNotBeFound("quality.equals=" + UPDATED_QUALITY);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByQualityIsNotEqualToSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where quality not equals to DEFAULT_QUALITY
+    defaultVideoShouldNotBeFound("quality.notEquals=" + DEFAULT_QUALITY);
+
+    // Get all the videoList where quality not equals to UPDATED_QUALITY
+    defaultVideoShouldBeFound("quality.notEquals=" + UPDATED_QUALITY);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByQualityIsInShouldWork() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where quality in DEFAULT_QUALITY or UPDATED_QUALITY
+    defaultVideoShouldBeFound("quality.in=" + DEFAULT_QUALITY + "," + UPDATED_QUALITY);
+
+    // Get all the videoList where quality equals to UPDATED_QUALITY
+    defaultVideoShouldNotBeFound("quality.in=" + UPDATED_QUALITY);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByQualityIsNullOrNotNull() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where quality is not null
+    defaultVideoShouldBeFound("quality.specified=true");
+
+    // Get all the videoList where quality is null
+    defaultVideoShouldNotBeFound("quality.specified=false");
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByQualityIsGreaterThanOrEqualToSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where quality is greater than or equal to DEFAULT_QUALITY
+    defaultVideoShouldBeFound("quality.greaterThanOrEqual=" + DEFAULT_QUALITY);
+
+    // Get all the videoList where quality is greater than or equal to (DEFAULT_QUALITY + 1)
+    defaultVideoShouldNotBeFound("quality.greaterThanOrEqual=" + (DEFAULT_QUALITY + 1));
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByQualityIsLessThanOrEqualToSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where quality is less than or equal to DEFAULT_QUALITY
+    defaultVideoShouldBeFound("quality.lessThanOrEqual=" + DEFAULT_QUALITY);
+
+    // Get all the videoList where quality is less than or equal to SMALLER_QUALITY
+    defaultVideoShouldNotBeFound("quality.lessThanOrEqual=" + SMALLER_QUALITY);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByQualityIsLessThanSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where quality is less than DEFAULT_QUALITY
+    defaultVideoShouldNotBeFound("quality.lessThan=" + DEFAULT_QUALITY);
+
+    // Get all the videoList where quality is less than (DEFAULT_QUALITY + 1)
+    defaultVideoShouldBeFound("quality.lessThan=" + (DEFAULT_QUALITY + 1));
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByQualityIsGreaterThanSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where quality is greater than DEFAULT_QUALITY
+    defaultVideoShouldNotBeFound("quality.greaterThan=" + DEFAULT_QUALITY);
+
+    // Get all the videoList where quality is greater than SMALLER_QUALITY
+    defaultVideoShouldBeFound("quality.greaterThan=" + SMALLER_QUALITY);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByPixelSizeIsEqualToSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where pixelSize equals to DEFAULT_PIXEL_SIZE
+    defaultVideoShouldBeFound("pixelSize.equals=" + DEFAULT_PIXEL_SIZE);
+
+    // Get all the videoList where pixelSize equals to UPDATED_PIXEL_SIZE
+    defaultVideoShouldNotBeFound("pixelSize.equals=" + UPDATED_PIXEL_SIZE);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByPixelSizeIsNotEqualToSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where pixelSize not equals to DEFAULT_PIXEL_SIZE
+    defaultVideoShouldNotBeFound("pixelSize.notEquals=" + DEFAULT_PIXEL_SIZE);
+
+    // Get all the videoList where pixelSize not equals to UPDATED_PIXEL_SIZE
+    defaultVideoShouldBeFound("pixelSize.notEquals=" + UPDATED_PIXEL_SIZE);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByPixelSizeIsInShouldWork() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where pixelSize in DEFAULT_PIXEL_SIZE or UPDATED_PIXEL_SIZE
+    defaultVideoShouldBeFound("pixelSize.in=" + DEFAULT_PIXEL_SIZE + "," + UPDATED_PIXEL_SIZE);
+
+    // Get all the videoList where pixelSize equals to UPDATED_PIXEL_SIZE
+    defaultVideoShouldNotBeFound("pixelSize.in=" + UPDATED_PIXEL_SIZE);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByPixelSizeIsNullOrNotNull() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where pixelSize is not null
+    defaultVideoShouldBeFound("pixelSize.specified=true");
+
+    // Get all the videoList where pixelSize is null
+    defaultVideoShouldNotBeFound("pixelSize.specified=false");
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByPixelSizeIsGreaterThanOrEqualToSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where pixelSize is greater than or equal to DEFAULT_PIXEL_SIZE
+    defaultVideoShouldBeFound("pixelSize.greaterThanOrEqual=" + DEFAULT_PIXEL_SIZE);
+
+    // Get all the videoList where pixelSize is greater than or equal to UPDATED_PIXEL_SIZE
+    defaultVideoShouldNotBeFound("pixelSize.greaterThanOrEqual=" + UPDATED_PIXEL_SIZE);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByPixelSizeIsLessThanOrEqualToSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where pixelSize is less than or equal to DEFAULT_PIXEL_SIZE
+    defaultVideoShouldBeFound("pixelSize.lessThanOrEqual=" + DEFAULT_PIXEL_SIZE);
+
+    // Get all the videoList where pixelSize is less than or equal to SMALLER_PIXEL_SIZE
+    defaultVideoShouldNotBeFound("pixelSize.lessThanOrEqual=" + SMALLER_PIXEL_SIZE);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByPixelSizeIsLessThanSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where pixelSize is less than DEFAULT_PIXEL_SIZE
+    defaultVideoShouldNotBeFound("pixelSize.lessThan=" + DEFAULT_PIXEL_SIZE);
+
+    // Get all the videoList where pixelSize is less than UPDATED_PIXEL_SIZE
+    defaultVideoShouldBeFound("pixelSize.lessThan=" + UPDATED_PIXEL_SIZE);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByPixelSizeIsGreaterThanSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where pixelSize is greater than DEFAULT_PIXEL_SIZE
+    defaultVideoShouldNotBeFound("pixelSize.greaterThan=" + DEFAULT_PIXEL_SIZE);
+
+    // Get all the videoList where pixelSize is greater than SMALLER_PIXEL_SIZE
+    defaultVideoShouldBeFound("pixelSize.greaterThan=" + SMALLER_PIXEL_SIZE);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByPriorityIndexIsEqualToSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where priorityIndex equals to DEFAULT_PRIORITY_INDEX
+    defaultVideoShouldBeFound("priorityIndex.equals=" + DEFAULT_PRIORITY_INDEX);
+
+    // Get all the videoList where priorityIndex equals to UPDATED_PRIORITY_INDEX
+    defaultVideoShouldNotBeFound("priorityIndex.equals=" + UPDATED_PRIORITY_INDEX);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByPriorityIndexIsNotEqualToSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where priorityIndex not equals to DEFAULT_PRIORITY_INDEX
+    defaultVideoShouldNotBeFound("priorityIndex.notEquals=" + DEFAULT_PRIORITY_INDEX);
+
+    // Get all the videoList where priorityIndex not equals to UPDATED_PRIORITY_INDEX
+    defaultVideoShouldBeFound("priorityIndex.notEquals=" + UPDATED_PRIORITY_INDEX);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByPriorityIndexIsInShouldWork() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where priorityIndex in DEFAULT_PRIORITY_INDEX or UPDATED_PRIORITY_INDEX
+    defaultVideoShouldBeFound("priorityIndex.in=" + DEFAULT_PRIORITY_INDEX + "," + UPDATED_PRIORITY_INDEX);
+
+    // Get all the videoList where priorityIndex equals to UPDATED_PRIORITY_INDEX
+    defaultVideoShouldNotBeFound("priorityIndex.in=" + UPDATED_PRIORITY_INDEX);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByPriorityIndexIsNullOrNotNull() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where priorityIndex is not null
+    defaultVideoShouldBeFound("priorityIndex.specified=true");
+
+    // Get all the videoList where priorityIndex is null
+    defaultVideoShouldNotBeFound("priorityIndex.specified=false");
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByPriorityIndexIsGreaterThanOrEqualToSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where priorityIndex is greater than or equal to DEFAULT_PRIORITY_INDEX
+    defaultVideoShouldBeFound("priorityIndex.greaterThanOrEqual=" + DEFAULT_PRIORITY_INDEX);
+
+    // Get all the videoList where priorityIndex is greater than or equal to UPDATED_PRIORITY_INDEX
+    defaultVideoShouldNotBeFound("priorityIndex.greaterThanOrEqual=" + UPDATED_PRIORITY_INDEX);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByPriorityIndexIsLessThanOrEqualToSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where priorityIndex is less than or equal to DEFAULT_PRIORITY_INDEX
+    defaultVideoShouldBeFound("priorityIndex.lessThanOrEqual=" + DEFAULT_PRIORITY_INDEX);
+
+    // Get all the videoList where priorityIndex is less than or equal to SMALLER_PRIORITY_INDEX
+    defaultVideoShouldNotBeFound("priorityIndex.lessThanOrEqual=" + SMALLER_PRIORITY_INDEX);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByPriorityIndexIsLessThanSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where priorityIndex is less than DEFAULT_PRIORITY_INDEX
+    defaultVideoShouldNotBeFound("priorityIndex.lessThan=" + DEFAULT_PRIORITY_INDEX);
+
+    // Get all the videoList where priorityIndex is less than UPDATED_PRIORITY_INDEX
+    defaultVideoShouldBeFound("priorityIndex.lessThan=" + UPDATED_PRIORITY_INDEX);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByPriorityIndexIsGreaterThanSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where priorityIndex is greater than DEFAULT_PRIORITY_INDEX
+    defaultVideoShouldNotBeFound("priorityIndex.greaterThan=" + DEFAULT_PRIORITY_INDEX);
+
+    // Get all the videoList where priorityIndex is greater than SMALLER_PRIORITY_INDEX
+    defaultVideoShouldBeFound("priorityIndex.greaterThan=" + SMALLER_PRIORITY_INDEX);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByDataSizeIsEqualToSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where dataSize equals to DEFAULT_DATA_SIZE
+    defaultVideoShouldBeFound("dataSize.equals=" + DEFAULT_DATA_SIZE);
+
+    // Get all the videoList where dataSize equals to UPDATED_DATA_SIZE
+    defaultVideoShouldNotBeFound("dataSize.equals=" + UPDATED_DATA_SIZE);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByDataSizeIsNotEqualToSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where dataSize not equals to DEFAULT_DATA_SIZE
+    defaultVideoShouldNotBeFound("dataSize.notEquals=" + DEFAULT_DATA_SIZE);
+
+    // Get all the videoList where dataSize not equals to UPDATED_DATA_SIZE
+    defaultVideoShouldBeFound("dataSize.notEquals=" + UPDATED_DATA_SIZE);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByDataSizeIsInShouldWork() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where dataSize in DEFAULT_DATA_SIZE or UPDATED_DATA_SIZE
+    defaultVideoShouldBeFound("dataSize.in=" + DEFAULT_DATA_SIZE + "," + UPDATED_DATA_SIZE);
+
+    // Get all the videoList where dataSize equals to UPDATED_DATA_SIZE
+    defaultVideoShouldNotBeFound("dataSize.in=" + UPDATED_DATA_SIZE);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByDataSizeIsNullOrNotNull() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where dataSize is not null
+    defaultVideoShouldBeFound("dataSize.specified=true");
+
+    // Get all the videoList where dataSize is null
+    defaultVideoShouldNotBeFound("dataSize.specified=false");
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByDataSizeIsGreaterThanOrEqualToSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where dataSize is greater than or equal to DEFAULT_DATA_SIZE
+    defaultVideoShouldBeFound("dataSize.greaterThanOrEqual=" + DEFAULT_DATA_SIZE);
+
+    // Get all the videoList where dataSize is greater than or equal to UPDATED_DATA_SIZE
+    defaultVideoShouldNotBeFound("dataSize.greaterThanOrEqual=" + UPDATED_DATA_SIZE);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByDataSizeIsLessThanOrEqualToSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where dataSize is less than or equal to DEFAULT_DATA_SIZE
+    defaultVideoShouldBeFound("dataSize.lessThanOrEqual=" + DEFAULT_DATA_SIZE);
+
+    // Get all the videoList where dataSize is less than or equal to SMALLER_DATA_SIZE
+    defaultVideoShouldNotBeFound("dataSize.lessThanOrEqual=" + SMALLER_DATA_SIZE);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByDataSizeIsLessThanSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where dataSize is less than DEFAULT_DATA_SIZE
+    defaultVideoShouldNotBeFound("dataSize.lessThan=" + DEFAULT_DATA_SIZE);
+
+    // Get all the videoList where dataSize is less than UPDATED_DATA_SIZE
+    defaultVideoShouldBeFound("dataSize.lessThan=" + UPDATED_DATA_SIZE);
+  }
+
+  @Test
+  @Transactional
+  void getAllVideosByDataSizeIsGreaterThanSomething() throws Exception {
+    // Initialize the database
+    videoRepository.saveAndFlush(video);
+
+    // Get all the videoList where dataSize is greater than DEFAULT_DATA_SIZE
+    defaultVideoShouldNotBeFound("dataSize.greaterThan=" + DEFAULT_DATA_SIZE);
+
+    // Get all the videoList where dataSize is greater than SMALLER_DATA_SIZE
+    defaultVideoShouldBeFound("dataSize.greaterThan=" + SMALLER_DATA_SIZE);
+  }
+
+  @Test
+  @Transactional
   void getAllVideosByFileInfoIsEqualToSomething() throws Exception {
     // Initialize the database
     videoRepository.saveAndFlush(video);
@@ -449,25 +1356,6 @@ class VideoResourceIT {
     defaultVideoShouldNotBeFound("videoOriginalId.equals=" + (videoOriginalId + 1));
   }
 
-  @Test
-  @Transactional
-  void getAllVideosByEventIsEqualToSomething() throws Exception {
-    // Initialize the database
-    videoRepository.saveAndFlush(video);
-    Event event = EventResourceIT.createEntity(em);
-    em.persist(event);
-    em.flush();
-    video.setEvent(event);
-    videoRepository.saveAndFlush(video);
-    Long eventId = event.getId();
-
-    // Get all the videoList where event equals to eventId
-    defaultVideoShouldBeFound("eventId.equals=" + eventId);
-
-    // Get all the videoList where event equals to (eventId + 1)
-    defaultVideoShouldNotBeFound("eventId.equals=" + (eventId + 1));
-  }
-
   /**
    * Executes the search, and checks that the default entity is returned.
    */
@@ -478,7 +1366,15 @@ class VideoResourceIT {
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
       .andExpect(jsonPath("$.[*].id").value(hasItem(video.getId().intValue())))
       .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
-      .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
+      .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+      .andExpect(jsonPath("$.[*].width").value(hasItem(DEFAULT_WIDTH)))
+      .andExpect(jsonPath("$.[*].height").value(hasItem(DEFAULT_HEIGHT)))
+      .andExpect(jsonPath("$.[*].qualityImage").value(hasItem(DEFAULT_QUALITY_IMAGE.doubleValue())))
+      .andExpect(jsonPath("$.[*].qualityAudio").value(hasItem(DEFAULT_QUALITY_AUDIO.doubleValue())))
+      .andExpect(jsonPath("$.[*].quality").value(hasItem(DEFAULT_QUALITY.doubleValue())))
+      .andExpect(jsonPath("$.[*].pixelSize").value(hasItem(DEFAULT_PIXEL_SIZE)))
+      .andExpect(jsonPath("$.[*].priorityIndex").value(hasItem(DEFAULT_PRIORITY_INDEX.intValue())))
+      .andExpect(jsonPath("$.[*].dataSize").value(hasItem(DEFAULT_DATA_SIZE.intValue())));
 
     // Check, that the count call also returns 1
     restVideoMockMvc
@@ -526,7 +1422,17 @@ class VideoResourceIT {
     Video updatedVideo = videoRepository.findById(video.getId()).get();
     // Disconnect from session so that the updates on updatedVideo are not directly saved in db
     em.detach(updatedVideo);
-    updatedVideo.uuid(UPDATED_UUID).name(UPDATED_NAME);
+    updatedVideo
+      .uuid(UPDATED_UUID)
+      .name(UPDATED_NAME)
+      .width(UPDATED_WIDTH)
+      .height(UPDATED_HEIGHT)
+      .qualityImage(UPDATED_QUALITY_IMAGE)
+      .qualityAudio(UPDATED_QUALITY_AUDIO)
+      .quality(UPDATED_QUALITY)
+      .pixelSize(UPDATED_PIXEL_SIZE)
+      .priorityIndex(UPDATED_PRIORITY_INDEX)
+      .dataSize(UPDATED_DATA_SIZE);
     VideoDTO videoDTO = videoMapper.toDto(updatedVideo);
 
     restVideoMockMvc
@@ -543,6 +1449,14 @@ class VideoResourceIT {
     Video testVideo = videoList.get(videoList.size() - 1);
     assertThat(testVideo.getUuid()).isEqualTo(UPDATED_UUID);
     assertThat(testVideo.getName()).isEqualTo(UPDATED_NAME);
+    assertThat(testVideo.getWidth()).isEqualTo(UPDATED_WIDTH);
+    assertThat(testVideo.getHeight()).isEqualTo(UPDATED_HEIGHT);
+    assertThat(testVideo.getQualityImage()).isEqualTo(UPDATED_QUALITY_IMAGE);
+    assertThat(testVideo.getQualityAudio()).isEqualTo(UPDATED_QUALITY_AUDIO);
+    assertThat(testVideo.getQuality()).isEqualTo(UPDATED_QUALITY);
+    assertThat(testVideo.getPixelSize()).isEqualTo(UPDATED_PIXEL_SIZE);
+    assertThat(testVideo.getPriorityIndex()).isEqualTo(UPDATED_PRIORITY_INDEX);
+    assertThat(testVideo.getDataSize()).isEqualTo(UPDATED_DATA_SIZE);
 
     // Validate the Video in Elasticsearch
     verify(mockVideoSearchRepository).save(testVideo);
@@ -634,7 +1548,7 @@ class VideoResourceIT {
     Video partialUpdatedVideo = new Video();
     partialUpdatedVideo.setId(video.getId());
 
-    partialUpdatedVideo.name(UPDATED_NAME);
+    partialUpdatedVideo.name(UPDATED_NAME).qualityImage(UPDATED_QUALITY_IMAGE).pixelSize(UPDATED_PIXEL_SIZE);
 
     restVideoMockMvc
       .perform(
@@ -650,6 +1564,14 @@ class VideoResourceIT {
     Video testVideo = videoList.get(videoList.size() - 1);
     assertThat(testVideo.getUuid()).isEqualTo(DEFAULT_UUID);
     assertThat(testVideo.getName()).isEqualTo(UPDATED_NAME);
+    assertThat(testVideo.getWidth()).isEqualTo(DEFAULT_WIDTH);
+    assertThat(testVideo.getHeight()).isEqualTo(DEFAULT_HEIGHT);
+    assertThat(testVideo.getQualityImage()).isEqualTo(UPDATED_QUALITY_IMAGE);
+    assertThat(testVideo.getQualityAudio()).isEqualTo(DEFAULT_QUALITY_AUDIO);
+    assertThat(testVideo.getQuality()).isEqualTo(DEFAULT_QUALITY);
+    assertThat(testVideo.getPixelSize()).isEqualTo(UPDATED_PIXEL_SIZE);
+    assertThat(testVideo.getPriorityIndex()).isEqualTo(DEFAULT_PRIORITY_INDEX);
+    assertThat(testVideo.getDataSize()).isEqualTo(DEFAULT_DATA_SIZE);
   }
 
   @Test
@@ -664,7 +1586,17 @@ class VideoResourceIT {
     Video partialUpdatedVideo = new Video();
     partialUpdatedVideo.setId(video.getId());
 
-    partialUpdatedVideo.uuid(UPDATED_UUID).name(UPDATED_NAME);
+    partialUpdatedVideo
+      .uuid(UPDATED_UUID)
+      .name(UPDATED_NAME)
+      .width(UPDATED_WIDTH)
+      .height(UPDATED_HEIGHT)
+      .qualityImage(UPDATED_QUALITY_IMAGE)
+      .qualityAudio(UPDATED_QUALITY_AUDIO)
+      .quality(UPDATED_QUALITY)
+      .pixelSize(UPDATED_PIXEL_SIZE)
+      .priorityIndex(UPDATED_PRIORITY_INDEX)
+      .dataSize(UPDATED_DATA_SIZE);
 
     restVideoMockMvc
       .perform(
@@ -680,6 +1612,14 @@ class VideoResourceIT {
     Video testVideo = videoList.get(videoList.size() - 1);
     assertThat(testVideo.getUuid()).isEqualTo(UPDATED_UUID);
     assertThat(testVideo.getName()).isEqualTo(UPDATED_NAME);
+    assertThat(testVideo.getWidth()).isEqualTo(UPDATED_WIDTH);
+    assertThat(testVideo.getHeight()).isEqualTo(UPDATED_HEIGHT);
+    assertThat(testVideo.getQualityImage()).isEqualTo(UPDATED_QUALITY_IMAGE);
+    assertThat(testVideo.getQualityAudio()).isEqualTo(UPDATED_QUALITY_AUDIO);
+    assertThat(testVideo.getQuality()).isEqualTo(UPDATED_QUALITY);
+    assertThat(testVideo.getPixelSize()).isEqualTo(UPDATED_PIXEL_SIZE);
+    assertThat(testVideo.getPriorityIndex()).isEqualTo(UPDATED_PRIORITY_INDEX);
+    assertThat(testVideo.getDataSize()).isEqualTo(UPDATED_DATA_SIZE);
   }
 
   @Test
@@ -791,6 +1731,14 @@ class VideoResourceIT {
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
       .andExpect(jsonPath("$.[*].id").value(hasItem(video.getId().intValue())))
       .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
-      .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
+      .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+      .andExpect(jsonPath("$.[*].width").value(hasItem(DEFAULT_WIDTH)))
+      .andExpect(jsonPath("$.[*].height").value(hasItem(DEFAULT_HEIGHT)))
+      .andExpect(jsonPath("$.[*].qualityImage").value(hasItem(DEFAULT_QUALITY_IMAGE.doubleValue())))
+      .andExpect(jsonPath("$.[*].qualityAudio").value(hasItem(DEFAULT_QUALITY_AUDIO.doubleValue())))
+      .andExpect(jsonPath("$.[*].quality").value(hasItem(DEFAULT_QUALITY.doubleValue())))
+      .andExpect(jsonPath("$.[*].pixelSize").value(hasItem(DEFAULT_PIXEL_SIZE)))
+      .andExpect(jsonPath("$.[*].priorityIndex").value(hasItem(DEFAULT_PRIORITY_INDEX.intValue())))
+      .andExpect(jsonPath("$.[*].dataSize").value(hasItem(DEFAULT_DATA_SIZE.intValue())));
   }
 }

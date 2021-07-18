@@ -72,16 +72,14 @@ class BaseInfoGatlingTest extends Simulation {
             .headers(headers_http_authenticated)
             .body(StringBody("""{
                 "processStatus":"NOT_PROCESSED"
-                , "owner":null
-                , "role":null
                 , "modifiedClass":"SAMPLE_TEXT"
                 , "createdDate":"2020-01-01T00:00:00.000Z"
                 , "modifiedDate":"2020-01-01T00:00:00.000Z"
-                , "createdBy":"SAMPLE_TEXT"
-                , "modifiedBy":"SAMPLE_TEXT"
                 , "notes":null
                 , "historyUpdate":null
                 , "deleted":null
+                , "priorityIndex":"0"
+                , "countUse":"0"
                 }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_baseInfo_url"))).exitHereIfFailed

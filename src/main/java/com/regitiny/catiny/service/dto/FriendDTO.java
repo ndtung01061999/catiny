@@ -36,8 +36,6 @@ public class FriendDTO implements Serializable {
 
   private MasterUserDTO friendDetails;
 
-  private MasterUserDTO masterUser;
-
   public Long getId() {
     return id;
   }
@@ -78,14 +76,6 @@ public class FriendDTO implements Serializable {
     this.friendDetails = friendDetails;
   }
 
-  public MasterUserDTO getMasterUser() {
-    return masterUser;
-  }
-
-  public void setMasterUser(MasterUserDTO masterUser) {
-    this.masterUser = masterUser;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -116,7 +106,6 @@ public class FriendDTO implements Serializable {
             ", friendType='" + getFriendType() + "'" +
             ", baseInfo=" + getBaseInfo() +
             ", friendDetails=" + getFriendDetails() +
-            ", masterUser=" + getMasterUser() +
             "}";
     }
 }

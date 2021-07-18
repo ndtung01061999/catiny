@@ -197,6 +197,9 @@ export const Event = (props: RouteComponentProps<{ url: string }>) => {
                   <th className="hand" onClick={sort('title')}>
                     <Translate contentKey="catinyApp.event.title">Title</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
+                  <th className="hand" onClick={sort('avatar')}>
+                    <Translate contentKey="catinyApp.event.avatar">Avatar</Translate> <FontAwesomeIcon icon="sort" />
+                  </th>
                   <th className="hand" onClick={sort('content')}>
                     <Translate contentKey="catinyApp.event.content">Content</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
@@ -215,6 +218,12 @@ export const Event = (props: RouteComponentProps<{ url: string }>) => {
                   <th className="hand" onClick={sort('tagLine')}>
                     <Translate contentKey="catinyApp.event.tagLine">Tag Line</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
+                  <th className="hand" onClick={sort('imageCollection')}>
+                    <Translate contentKey="catinyApp.event.imageCollection">Image Collection</Translate> <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th className="hand" onClick={sort('videoCollection')}>
+                    <Translate contentKey="catinyApp.event.videoCollection">Video Collection</Translate> <FontAwesomeIcon icon="sort" />
+                  </th>
                   <th>
                     <Translate contentKey="catinyApp.event.baseInfo">Base Info</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
@@ -231,6 +240,7 @@ export const Event = (props: RouteComponentProps<{ url: string }>) => {
                     </td>
                     <td>{event.uuid}</td>
                     <td>{event.title}</td>
+                    <td>{event.avatar}</td>
                     <td>{event.content}</td>
                     <td>
                       <Translate contentKey={`catinyApp.EventType.${event.type}`} />
@@ -239,6 +249,8 @@ export const Event = (props: RouteComponentProps<{ url: string }>) => {
                     <td>{event.startTime ? <TextFormat type="date" value={event.startTime} format={APP_DATE_FORMAT} /> : null}</td>
                     <td>{event.endTime ? <TextFormat type="date" value={event.endTime} format={APP_DATE_FORMAT} /> : null}</td>
                     <td>{event.tagLine}</td>
+                    <td>{event.imageCollection}</td>
+                    <td>{event.videoCollection}</td>
                     <td>{event.baseInfo ? <Link to={`base-info/${event.baseInfo.id}`}>{event.baseInfo.id}</Link> : ''}</td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">

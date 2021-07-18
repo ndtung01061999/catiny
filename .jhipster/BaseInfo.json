@@ -8,18 +8,6 @@
       "fieldValues": "NOT_PROCESSED,PROCESSING,PROCESSED,NEED_PROCESS,NEED_PROCESS_NOW,NEED_HANDLE,NEED_HANDLE_NOW,ERROR,DONE"
     },
     {
-      "fieldName": "owner",
-      "fieldType": "byte[]",
-      "javadoc": "owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List",
-      "fieldTypeBlobContent": "text"
-    },
-    {
-      "fieldName": "role",
-      "fieldType": "byte[]",
-      "javadoc": "role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa>",
-      "fieldTypeBlobContent": "text"
-    },
-    {
       "fieldName": "modifiedClass",
       "fieldType": "String",
       "javadoc": "modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào"
@@ -33,16 +21,6 @@
       "fieldName": "modifiedDate",
       "fieldType": "Instant",
       "javadoc": "modifiedDate * : thời gian sửa bản ghi này"
-    },
-    {
-      "fieldName": "createdBy",
-      "fieldType": "String",
-      "javadoc": "createdBy *    : người tạo ra bản gi này (lần đầu tiên)"
-    },
-    {
-      "fieldName": "modifiedBy",
-      "fieldType": "String",
-      "javadoc": "modifiedBy *   : người sửa lại bản ghi này"
     },
     {
       "fieldName": "notes",
@@ -60,9 +38,25 @@
       "fieldName": "deleted",
       "fieldType": "Boolean",
       "javadoc": "deleted *      : @defaultValue( false ) -> đánh dấu là đã xóa"
+    },
+    {
+      "fieldName": "priorityIndex",
+      "fieldType": "Long",
+      "javadoc": "priorityIndex *: chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)"
+    },
+    {
+      "fieldName": "countUse",
+      "fieldType": "Long",
+      "javadoc": "countUse *     : đếm số lần truy cập vào bản ghi này để xem sửa xóa"
     }
   ],
   "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "classInfo",
+      "otherEntityRelationshipName": "baseInfo",
+      "relationshipName": "classInfo"
+    },
     {
       "relationshipType": "one-to-one",
       "otherEntityName": "userProfile",
@@ -265,6 +259,30 @@
       "otherEntityRelationshipName": "baseInfo",
       "relationshipName": "event",
       "ownerSide": false
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "masterUser",
+      "otherEntityRelationshipName": "myBaseInfoCreated",
+      "relationshipName": "createdBy"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "masterUser",
+      "otherEntityRelationshipName": "myBaseInfoModified",
+      "relationshipName": "modifiedBy"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "masterUser",
+      "otherEntityRelationshipName": "ownerOf",
+      "relationshipName": "owner"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "permission",
+      "otherEntityRelationshipName": "baseInfo",
+      "relationshipName": "permission"
     }
   ],
   "javadoc": "BaseInfo",

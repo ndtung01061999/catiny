@@ -198,10 +198,10 @@ export const PostLike = (props: RouteComponentProps<{ url: string }>) => {
                     <Translate contentKey="catinyApp.postLike.baseInfo">Base Info</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
                   <th>
-                    <Translate contentKey="catinyApp.postLike.userLike">User Like</Translate> <FontAwesomeIcon icon="sort" />
+                    <Translate contentKey="catinyApp.postLike.post">Post</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
                   <th>
-                    <Translate contentKey="catinyApp.postLike.post">Post</Translate> <FontAwesomeIcon icon="sort" />
+                    <Translate contentKey="catinyApp.postLike.postComment">Post Comment</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
                   <th />
                 </tr>
@@ -216,8 +216,10 @@ export const PostLike = (props: RouteComponentProps<{ url: string }>) => {
                     </td>
                     <td>{postLike.uuid}</td>
                     <td>{postLike.baseInfo ? <Link to={`base-info/${postLike.baseInfo.id}`}>{postLike.baseInfo.id}</Link> : ''}</td>
-                    <td>{postLike.userLike ? <Link to={`master-user/${postLike.userLike.id}`}>{postLike.userLike.id}</Link> : ''}</td>
                     <td>{postLike.post ? <Link to={`post/${postLike.post.id}`}>{postLike.post.id}</Link> : ''}</td>
+                    <td>
+                      {postLike.postComment ? <Link to={`post-comment/${postLike.postComment.id}`}>{postLike.postComment.id}</Link> : ''}
+                    </td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${postLike.id}`} color="info" size="sm" data-cy="entityDetailsButton">

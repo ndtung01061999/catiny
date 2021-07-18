@@ -197,6 +197,9 @@ export const PagePost = (props: RouteComponentProps<{ url: string }>) => {
                   <th className="hand" onClick={sort('name')}>
                     <Translate contentKey="catinyApp.pagePost.name">Name</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
+                  <th className="hand" onClick={sort('avatar')}>
+                    <Translate contentKey="catinyApp.pagePost.avatar">Avatar</Translate> <FontAwesomeIcon icon="sort" />
+                  </th>
                   <th className="hand" onClick={sort('quickInfo')}>
                     <Translate contentKey="catinyApp.pagePost.quickInfo">Quick Info</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
@@ -205,9 +208,6 @@ export const PagePost = (props: RouteComponentProps<{ url: string }>) => {
                   </th>
                   <th>
                     <Translate contentKey="catinyApp.pagePost.baseInfo">Base Info</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th>
-                    <Translate contentKey="catinyApp.pagePost.masterUser">Master User</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
                   <th />
                 </tr>
@@ -222,10 +222,10 @@ export const PagePost = (props: RouteComponentProps<{ url: string }>) => {
                     </td>
                     <td>{pagePost.uuid}</td>
                     <td>{pagePost.name}</td>
+                    <td>{pagePost.avatar}</td>
                     <td>{pagePost.quickInfo}</td>
                     <td>{pagePost.profile ? <Link to={`page-profile/${pagePost.profile.id}`}>{pagePost.profile.id}</Link> : ''}</td>
                     <td>{pagePost.baseInfo ? <Link to={`base-info/${pagePost.baseInfo.id}`}>{pagePost.baseInfo.id}</Link> : ''}</td>
-                    <td>{pagePost.masterUser ? <Link to={`master-user/${pagePost.masterUser.id}`}>{pagePost.masterUser.id}</Link> : ''}</td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${pagePost.id}`} color="info" size="sm" data-cy="entityDetailsButton">

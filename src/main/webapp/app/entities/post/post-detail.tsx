@@ -87,10 +87,6 @@ export const PostDetail = (props: RouteComponentProps<{ id: string }>) => {
             <Translate contentKey="catinyApp.post.postShareParent">Post Share Parent</Translate>
           </dt>
           <dd>{postEntity.postShareParent ? postEntity.postShareParent.id : ''}</dd>
-          <dt>
-            <Translate contentKey="catinyApp.post.poster">Poster</Translate>
-          </dt>
-          <dd>{postEntity.poster ? postEntity.poster.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/post" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

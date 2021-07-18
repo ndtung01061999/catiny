@@ -108,12 +108,6 @@ public class TodoListQueryService extends QueryService<TodoList> {
             buildSpecification(criteria.getBaseInfoId(), root -> root.join(TodoList_.baseInfo, JoinType.LEFT).get(BaseInfo_.id))
           );
       }
-      if (criteria.getMasterUserId() != null) {
-        specification =
-          specification.and(
-            buildSpecification(criteria.getMasterUserId(), root -> root.join(TodoList_.masterUser, JoinType.LEFT).get(MasterUser_.id))
-          );
-      }
     }
     return specification;
   }

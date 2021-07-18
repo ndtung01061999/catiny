@@ -104,13 +104,27 @@ describe('Video e2e test', () => {
 
     cy.get(`[data-cy="name"]`).type('eyeballs SAS').should('have.value', 'eyeballs SAS');
 
+    cy.get(`[data-cy="width"]`).type('52000').should('have.value', '52000');
+
+    cy.get(`[data-cy="height"]`).type('54500').should('have.value', '54500');
+
+    cy.get(`[data-cy="qualityImage"]`).type('0').should('have.value', '0');
+
+    cy.get(`[data-cy="qualityAudio"]`).type('0').should('have.value', '0');
+
+    cy.get(`[data-cy="quality"]`).type('1').should('have.value', '1');
+
+    cy.get(`[data-cy="pixelSize"]`).type('4390').should('have.value', '4390');
+
+    cy.get(`[data-cy="priorityIndex"]`).type('38632').should('have.value', '38632');
+
+    cy.get(`[data-cy="dataSize"]`).type('52715').should('have.value', '52715');
+
     cy.setFieldSelectToLastOfEntity('fileInfo');
 
     cy.setFieldSelectToLastOfEntity('baseInfo');
 
     cy.setFieldSelectToLastOfEntity('videoOriginal');
-
-    cy.setFieldSelectToLastOfEntity('event');
 
     cy.get(entityCreateSaveButtonSelector).click({ force: true });
     cy.scrollTo('top', { ensureScrollable: false });

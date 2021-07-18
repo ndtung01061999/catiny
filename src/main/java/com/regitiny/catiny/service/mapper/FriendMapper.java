@@ -13,6 +13,5 @@ import org.mapstruct.*;
 public interface FriendMapper extends EntityMapper<FriendDTO, Friend> {
   @Mapping(target = "baseInfo", source = "baseInfo", qualifiedByName = "id")
   @Mapping(target = "friendDetails", source = "friendDetails", qualifiedByName = "id")
-  @Mapping(target = "masterUser", source = "masterUser", qualifiedByName = "id")
   FriendDTO toDto(Friend s);
 }

@@ -43,6 +43,7 @@ public class Friend implements Serializable {
 
   @JsonIgnoreProperties(
     value = {
+      "classInfo",
       "userProfile",
       "accountStatus",
       "deviceStatus",
@@ -72,6 +73,10 @@ public class Friend implements Serializable {
       "topicInterest",
       "todoList",
       "event",
+      "createdBy",
+      "modifiedBy",
+      "owner",
+      "permissions",
     },
     allowSetters = true
   )
@@ -81,61 +86,10 @@ public class Friend implements Serializable {
 
   @ManyToOne
   @JsonIgnoreProperties(
-    value = {
-      "user",
-      "myProfile",
-      "myAccountStatus",
-      "myRank",
-      "avatar",
-      "baseInfo",
-      "myPages",
-      "myFiles",
-      "myNotifications",
-      "myFriends",
-      "myFollowUsers",
-      "myFollowGroups",
-      "myFollowPages",
-      "myNewsFeeds",
-      "myTodoLists",
-      "myPosts",
-      "myGroupPosts",
-      "messageGroups",
-      "topicInterests",
-      "myLikes",
-      "myComments",
-    },
+    value = { "user", "myRank", "baseInfo", "myBaseInfoCreateds", "myBaseInfoModifieds", "ownerOfs", "permissions", "topicInterests" },
     allowSetters = true
   )
   private MasterUser friendDetails;
-
-  @ManyToOne
-  @JsonIgnoreProperties(
-    value = {
-      "user",
-      "myProfile",
-      "myAccountStatus",
-      "myRank",
-      "avatar",
-      "baseInfo",
-      "myPages",
-      "myFiles",
-      "myNotifications",
-      "myFriends",
-      "myFollowUsers",
-      "myFollowGroups",
-      "myFollowPages",
-      "myNewsFeeds",
-      "myTodoLists",
-      "myPosts",
-      "myGroupPosts",
-      "messageGroups",
-      "topicInterests",
-      "myLikes",
-      "myComments",
-    },
-    allowSetters = true
-  )
-  private MasterUser masterUser;
 
   // jhipster-needle-entity-add-field - JHipster will add fields here
   public Long getId() {
@@ -201,19 +155,6 @@ public class Friend implements Serializable {
 
   public void setFriendDetails(MasterUser masterUser) {
     this.friendDetails = masterUser;
-  }
-
-  public MasterUser getMasterUser() {
-    return this.masterUser;
-  }
-
-  public Friend masterUser(MasterUser masterUser) {
-    this.setMasterUser(masterUser);
-    return this;
-  }
-
-  public void setMasterUser(MasterUser masterUser) {
-    this.masterUser = masterUser;
   }
 
   // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

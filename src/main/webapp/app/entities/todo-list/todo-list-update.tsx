@@ -6,8 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IBaseInfo } from 'app/shared/model/base-info.model';
 import { getEntities as getBaseInfos } from 'app/entities/base-info/base-info.reducer';
-import { IMasterUser } from 'app/shared/model/master-user.model';
-import { getEntities as getMasterUsers } from 'app/entities/master-user/master-user.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './todo-list.reducer';
 import { ITodoList } from 'app/shared/model/todo-list.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -20,7 +18,6 @@ export const TodoListUpdate = (props: RouteComponentProps<{ id: string }>) => {
   const [isNew] = useState(!props.match.params || !props.match.params.id);
 
   const baseInfos = useAppSelector(state => state.baseInfo.entities);
-  const masterUsers = useAppSelector(state => state.masterUser.entities);
   const todoListEntity = useAppSelector(state => state.todoList.entity);
   const loading = useAppSelector(state => state.todoList.loading);
   const updating = useAppSelector(state => state.todoList.updating);
@@ -36,7 +33,6 @@ export const TodoListUpdate = (props: RouteComponentProps<{ id: string }>) => {
     }
 
     dispatch(getBaseInfos({}));
-    dispatch(getMasterUsers({}));
   }, []);
 
   useEffect(() => {
@@ -50,7 +46,6 @@ export const TodoListUpdate = (props: RouteComponentProps<{ id: string }>) => {
       ...todoListEntity,
       ...values,
       baseInfo: baseInfos.find(it => it.id.toString() === values.baseInfoId.toString()),
-      masterUser: masterUsers.find(it => it.id.toString() === values.masterUserId.toString()),
     };
 
     if (isNew) {
@@ -66,7 +61,6 @@ export const TodoListUpdate = (props: RouteComponentProps<{ id: string }>) => {
       : {
           ...todoListEntity,
           baseInfoId: todoListEntity?.baseInfo?.id,
-          masterUserId: todoListEntity?.masterUser?.id,
         };
 
   return (
@@ -125,22 +119,6 @@ export const TodoListUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 <option value="" key="0" />
                 {baseInfos
                   ? baseInfos.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField
-                id="todo-list-masterUser"
-                name="masterUserId"
-                data-cy="masterUser"
-                label={translate('catinyApp.todoList.masterUser')}
-                type="select"
-              >
-                <option value="" key="0" />
-                {masterUsers
-                  ? masterUsers.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

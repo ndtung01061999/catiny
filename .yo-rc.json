@@ -74,9 +74,11 @@
       "TopicInterest",
       "TodoList",
       "Event",
-      "BaseInfo"
+      "BaseInfo",
+      "Permission",
+      "ClassInfo"
     ],
-    "lastLiquibaseTimestamp": 1625927974000,
+    "lastLiquibaseTimestamp": 1626602033000,
     "withGeneratedFlag": true,
     "devServerPort": 9060
   }

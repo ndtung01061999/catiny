@@ -13,6 +13,5 @@ import org.mapstruct.*;
 public interface FollowUserMapper extends EntityMapper<FollowUserDTO, FollowUser> {
   @Mapping(target = "baseInfo", source = "baseInfo", qualifiedByName = "id")
   @Mapping(target = "followUserDetails", source = "followUserDetails", qualifiedByName = "id")
-  @Mapping(target = "masterUser", source = "masterUser", qualifiedByName = "id")
   FollowUserDTO toDto(FollowUser s);
 }

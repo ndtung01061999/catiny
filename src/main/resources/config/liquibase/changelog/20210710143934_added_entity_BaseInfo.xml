@@ -17,12 +17,6 @@
             <column name="process_status" type="varchar(255)" remarks="processStatus *: @defaultValue( DONE ) -&gt; tình trạng xử lý sử dụng trong phê duyệt">
                 <constraints nullable="true" />
             </column>
-            <column name="owner" type="${clobType}" remarks="owner *        : @type Json -&gt; chủ sở hữu bản ghi này --&gt; nhớ sử dụng Set thay cho List">
-                <constraints nullable="true" />
-            </column>
-            <column name="role" type="${clobType}" remarks="role *         : @type Json -&gt; những role được phép thực hiện &lt;xem,sửa,xóa&gt;">
-                <constraints nullable="true" />
-            </column>
             <column name="modified_class" type="varchar(255)" remarks="modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào">
                 <constraints nullable="true" />
             </column>
@@ -32,12 +26,6 @@
             <column name="modified_date" type="${datetimeType}" remarks="modifiedDate * : thời gian sửa bản ghi này">
                 <constraints nullable="true" />
             </column>
-            <column name="created_by" type="varchar(255)" remarks="createdBy *    : người tạo ra bản gi này (lần đầu tiên)">
-                <constraints nullable="true" />
-            </column>
-            <column name="modified_by" type="varchar(255)" remarks="modifiedBy *   : người sửa lại bản ghi này">
-                <constraints nullable="true" />
-            </column>
             <column name="notes" type="${clobType}" remarks="notes *        : @type Json -&gt; chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json&quot;">
                 <constraints nullable="true" />
             </column>
@@ -45,6 +33,24 @@
                 <constraints nullable="true" />
             </column>
             <column name="deleted" type="boolean" remarks="deleted *      : @defaultValue( false ) -&gt; đánh dấu là đã xóa">
+                <constraints nullable="true" />
+            </column>
+            <column name="priority_index" type="bigint" remarks="priorityIndex *: chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)">
+                <constraints nullable="true" />
+            </column>
+            <column name="count_use" type="bigint" remarks="countUse *     : đếm số lần truy cập vào bản ghi này để xem sửa xóa">
+                <constraints nullable="true" />
+            </column>
+            <column name="class_info_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="created_by_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="modified_by_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="owner_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
@@ -70,16 +76,14 @@
                   tableName="base_info">
             <column name="id" type="numeric"/>
             <column name="process_status" type="string"/>
-            <column name="owner" type="clob"/>
-            <column name="role" type="clob"/>
             <column name="modified_class" type="string"/>
             <column name="created_date" type="${datetimeType}"/>
             <column name="modified_date" type="${datetimeType}"/>
-            <column name="created_by" type="string"/>
-            <column name="modified_by" type="string"/>
             <column name="notes" type="clob"/>
             <column name="history_update" type="clob"/>
             <column name="deleted" type="boolean"/>
+            <column name="priority_index" type="numeric"/>
+            <column name="count_use" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

@@ -8,8 +8,6 @@ import { IBaseInfo } from 'app/shared/model/base-info.model';
 import { getEntities as getBaseInfos } from 'app/entities/base-info/base-info.reducer';
 import { IPost } from 'app/shared/model/post.model';
 import { getEntities as getPosts } from 'app/entities/post/post.reducer';
-import { IMasterUser } from 'app/shared/model/master-user.model';
-import { getEntities as getMasterUsers } from 'app/entities/master-user/master-user.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './news-feed.reducer';
 import { INewsFeed } from 'app/shared/model/news-feed.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -23,7 +21,6 @@ export const NewsFeedUpdate = (props: RouteComponentProps<{ id: string }>) => {
 
   const baseInfos = useAppSelector(state => state.baseInfo.entities);
   const posts = useAppSelector(state => state.post.entities);
-  const masterUsers = useAppSelector(state => state.masterUser.entities);
   const newsFeedEntity = useAppSelector(state => state.newsFeed.entity);
   const loading = useAppSelector(state => state.newsFeed.loading);
   const updating = useAppSelector(state => state.newsFeed.updating);
@@ -40,7 +37,6 @@ export const NewsFeedUpdate = (props: RouteComponentProps<{ id: string }>) => {
 
     dispatch(getBaseInfos({}));
     dispatch(getPosts({}));
-    dispatch(getMasterUsers({}));
   }, []);
 
   useEffect(() => {
@@ -55,7 +51,6 @@ export const NewsFeedUpdate = (props: RouteComponentProps<{ id: string }>) => {
       ...values,
       baseInfo: baseInfos.find(it => it.id.toString() === values.baseInfoId.toString()),
       post: posts.find(it => it.id.toString() === values.postId.toString()),
-      masterUser: masterUsers.find(it => it.id.toString() === values.masterUserId.toString()),
     };
 
     if (isNew) {
@@ -72,7 +67,6 @@ export const NewsFeedUpdate = (props: RouteComponentProps<{ id: string }>) => {
           ...newsFeedEntity,
           baseInfoId: newsFeedEntity?.baseInfo?.id,
           postId: newsFeedEntity?.post?.id,
-          masterUserId: newsFeedEntity?.masterUser?.id,
         };
 
   return (
@@ -113,7 +107,16 @@ export const NewsFeedUpdate = (props: RouteComponentProps<{ id: string }>) => {
               <UncontrolledTooltip target="uuidLabel">
                 <Translate contentKey="catinyApp.newsFeed.help.uuid" />
               </UncontrolledTooltip>
-              <ValidatedField label={translate('catinyApp.newsFeed.score')} id="news-feed-score" name="score" data-cy="score" type="text" />
+              <ValidatedField
+                label={translate('catinyApp.newsFeed.priorityIndex')}
+                id="news-feed-priorityIndex"
+                name="priorityIndex"
+                data-cy="priorityIndex"
+                type="text"
+              />
+              <UncontrolledTooltip target="priorityIndexLabel">
+                <Translate contentKey="catinyApp.newsFeed.help.priorityIndex" />
+              </UncontrolledTooltip>
               <ValidatedField
                 id="news-feed-baseInfo"
                 name="baseInfoId"
@@ -134,22 +137,6 @@ export const NewsFeedUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 <option value="" key="0" />
                 {posts
                   ? posts.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField
-                id="news-feed-masterUser"
-                name="masterUserId"
-                data-cy="masterUser"
-                label={translate('catinyApp.newsFeed.masterUser')}
-                type="select"
-              >
-                <option value="" key="0" />
-                {masterUsers
-                  ? masterUsers.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

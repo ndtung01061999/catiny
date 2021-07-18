@@ -197,6 +197,30 @@ export const Video = (props: RouteComponentProps<{ url: string }>) => {
                   <th className="hand" onClick={sort('name')}>
                     <Translate contentKey="catinyApp.video.name">Name</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
+                  <th className="hand" onClick={sort('width')}>
+                    <Translate contentKey="catinyApp.video.width">Width</Translate> <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th className="hand" onClick={sort('height')}>
+                    <Translate contentKey="catinyApp.video.height">Height</Translate> <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th className="hand" onClick={sort('qualityImage')}>
+                    <Translate contentKey="catinyApp.video.qualityImage">Quality Image</Translate> <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th className="hand" onClick={sort('qualityAudio')}>
+                    <Translate contentKey="catinyApp.video.qualityAudio">Quality Audio</Translate> <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th className="hand" onClick={sort('quality')}>
+                    <Translate contentKey="catinyApp.video.quality">Quality</Translate> <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th className="hand" onClick={sort('pixelSize')}>
+                    <Translate contentKey="catinyApp.video.pixelSize">Pixel Size</Translate> <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th className="hand" onClick={sort('priorityIndex')}>
+                    <Translate contentKey="catinyApp.video.priorityIndex">Priority Index</Translate> <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th className="hand" onClick={sort('dataSize')}>
+                    <Translate contentKey="catinyApp.video.dataSize">Data Size</Translate> <FontAwesomeIcon icon="sort" />
+                  </th>
                   <th>
                     <Translate contentKey="catinyApp.video.fileInfo">File Info</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
@@ -205,9 +229,6 @@ export const Video = (props: RouteComponentProps<{ url: string }>) => {
                   </th>
                   <th>
                     <Translate contentKey="catinyApp.video.videoOriginal">Video Original</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th>
-                    <Translate contentKey="catinyApp.video.event">Event</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
                   <th />
                 </tr>
@@ -222,10 +243,17 @@ export const Video = (props: RouteComponentProps<{ url: string }>) => {
                     </td>
                     <td>{video.uuid}</td>
                     <td>{video.name}</td>
+                    <td>{video.width}</td>
+                    <td>{video.height}</td>
+                    <td>{video.qualityImage}</td>
+                    <td>{video.qualityAudio}</td>
+                    <td>{video.quality}</td>
+                    <td>{video.pixelSize}</td>
+                    <td>{video.priorityIndex}</td>
+                    <td>{video.dataSize}</td>
                     <td>{video.fileInfo ? <Link to={`file-info/${video.fileInfo.id}`}>{video.fileInfo.id}</Link> : ''}</td>
                     <td>{video.baseInfo ? <Link to={`base-info/${video.baseInfo.id}`}>{video.baseInfo.id}</Link> : ''}</td>
                     <td>{video.videoOriginal ? <Link to={`video/${video.videoOriginal.id}`}>{video.videoOriginal.id}</Link> : ''}</td>
-                    <td>{video.event ? <Link to={`event/${video.event.id}`}>{video.event.id}</Link> : ''}</td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${video.id}`} color="info" size="sm" data-cy="entityDetailsButton">

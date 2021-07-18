@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.regitiny.catiny.GeneratedByJHipster;
 import com.regitiny.catiny.IntegrationTest;
 import com.regitiny.catiny.domain.BaseInfo;
-import com.regitiny.catiny.domain.MasterUser;
 import com.regitiny.catiny.domain.PagePost;
 import com.regitiny.catiny.domain.PageProfile;
 import com.regitiny.catiny.domain.Post;
@@ -57,6 +56,9 @@ class PagePostResourceIT {
   private static final String DEFAULT_NAME = "AAAAAAAAAA";
   private static final String UPDATED_NAME = "BBBBBBBBBB";
 
+  private static final String DEFAULT_AVATAR = "AAAAAAAAAA";
+  private static final String UPDATED_AVATAR = "BBBBBBBBBB";
+
   private static final String DEFAULT_QUICK_INFO = "AAAAAAAAAA";
   private static final String UPDATED_QUICK_INFO = "BBBBBBBBBB";
 
@@ -96,7 +98,7 @@ class PagePostResourceIT {
    * if they test an entity which requires the current entity.
    */
   public static PagePost createEntity(EntityManager em) {
-    PagePost pagePost = new PagePost().uuid(DEFAULT_UUID).name(DEFAULT_NAME).quickInfo(DEFAULT_QUICK_INFO);
+    PagePost pagePost = new PagePost().uuid(DEFAULT_UUID).name(DEFAULT_NAME).avatar(DEFAULT_AVATAR).quickInfo(DEFAULT_QUICK_INFO);
     return pagePost;
   }
 
@@ -107,7 +109,7 @@ class PagePostResourceIT {
    * if they test an entity which requires the current entity.
    */
   public static PagePost createUpdatedEntity(EntityManager em) {
-    PagePost pagePost = new PagePost().uuid(UPDATED_UUID).name(UPDATED_NAME).quickInfo(UPDATED_QUICK_INFO);
+    PagePost pagePost = new PagePost().uuid(UPDATED_UUID).name(UPDATED_NAME).avatar(UPDATED_AVATAR).quickInfo(UPDATED_QUICK_INFO);
     return pagePost;
   }
 
@@ -132,6 +134,7 @@ class PagePostResourceIT {
     PagePost testPagePost = pagePostList.get(pagePostList.size() - 1);
     assertThat(testPagePost.getUuid()).isEqualTo(DEFAULT_UUID);
     assertThat(testPagePost.getName()).isEqualTo(DEFAULT_NAME);
+    assertThat(testPagePost.getAvatar()).isEqualTo(DEFAULT_AVATAR);
     assertThat(testPagePost.getQuickInfo()).isEqualTo(DEFAULT_QUICK_INFO);
 
     // Validate the PagePost in Elasticsearch
@@ -210,6 +213,7 @@ class PagePostResourceIT {
       .andExpect(jsonPath("$.[*].id").value(hasItem(pagePost.getId().intValue())))
       .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
       .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+      .andExpect(jsonPath("$.[*].avatar").value(hasItem(DEFAULT_AVATAR.toString())))
       .andExpect(jsonPath("$.[*].quickInfo").value(hasItem(DEFAULT_QUICK_INFO.toString())));
   }
 
@@ -227,6 +231,7 @@ class PagePostResourceIT {
       .andExpect(jsonPath("$.id").value(pagePost.getId().intValue()))
       .andExpect(jsonPath("$.uuid").value(DEFAULT_UUID.toString()))
       .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
+      .andExpect(jsonPath("$.avatar").value(DEFAULT_AVATAR.toString()))
       .andExpect(jsonPath("$.quickInfo").value(DEFAULT_QUICK_INFO.toString()));
   }
 
@@ -437,25 +442,6 @@ class PagePostResourceIT {
 
   @Test
   @Transactional
-  void getAllPagePostsByMasterUserIsEqualToSomething() throws Exception {
-    // Initialize the database
-    pagePostRepository.saveAndFlush(pagePost);
-    MasterUser masterUser = MasterUserResourceIT.createEntity(em);
-    em.persist(masterUser);
-    em.flush();
-    pagePost.setMasterUser(masterUser);
-    pagePostRepository.saveAndFlush(pagePost);
-    Long masterUserId = masterUser.getId();
-
-    // Get all the pagePostList where masterUser equals to masterUserId
-    defaultPagePostShouldBeFound("masterUserId.equals=" + masterUserId);
-
-    // Get all the pagePostList where masterUser equals to (masterUserId + 1)
-    defaultPagePostShouldNotBeFound("masterUserId.equals=" + (masterUserId + 1));
-  }
-
-  @Test
-  @Transactional
   void getAllPagePostsByTopicInterestIsEqualToSomething() throws Exception {
     // Initialize the database
     pagePostRepository.saveAndFlush(pagePost);
@@ -484,6 +470,7 @@ class PagePostResourceIT {
       .andExpect(jsonPath("$.[*].id").value(hasItem(pagePost.getId().intValue())))
       .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
       .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+      .andExpect(jsonPath("$.[*].avatar").value(hasItem(DEFAULT_AVATAR.toString())))
       .andExpect(jsonPath("$.[*].quickInfo").value(hasItem(DEFAULT_QUICK_INFO.toString())));
 
     // Check, that the count call also returns 1
@@ -532,7 +519,7 @@ class PagePostResourceIT {
     PagePost updatedPagePost = pagePostRepository.findById(pagePost.getId()).get();
     // Disconnect from session so that the updates on updatedPagePost are not directly saved in db
     em.detach(updatedPagePost);
-    updatedPagePost.uuid(UPDATED_UUID).name(UPDATED_NAME).quickInfo(UPDATED_QUICK_INFO);
+    updatedPagePost.uuid(UPDATED_UUID).name(UPDATED_NAME).avatar(UPDATED_AVATAR).quickInfo(UPDATED_QUICK_INFO);
     PagePostDTO pagePostDTO = pagePostMapper.toDto(updatedPagePost);
 
     restPagePostMockMvc
@@ -549,6 +536,7 @@ class PagePostResourceIT {
     PagePost testPagePost = pagePostList.get(pagePostList.size() - 1);
     assertThat(testPagePost.getUuid()).isEqualTo(UPDATED_UUID);
     assertThat(testPagePost.getName()).isEqualTo(UPDATED_NAME);
+    assertThat(testPagePost.getAvatar()).isEqualTo(UPDATED_AVATAR);
     assertThat(testPagePost.getQuickInfo()).isEqualTo(UPDATED_QUICK_INFO);
 
     // Validate the PagePost in Elasticsearch
@@ -641,7 +629,7 @@ class PagePostResourceIT {
     PagePost partialUpdatedPagePost = new PagePost();
     partialUpdatedPagePost.setId(pagePost.getId());
 
-    partialUpdatedPagePost.uuid(UPDATED_UUID).name(UPDATED_NAME).quickInfo(UPDATED_QUICK_INFO);
+    partialUpdatedPagePost.uuid(UPDATED_UUID).name(UPDATED_NAME).avatar(UPDATED_AVATAR).quickInfo(UPDATED_QUICK_INFO);
 
     restPagePostMockMvc
       .perform(
@@ -657,6 +645,7 @@ class PagePostResourceIT {
     PagePost testPagePost = pagePostList.get(pagePostList.size() - 1);
     assertThat(testPagePost.getUuid()).isEqualTo(UPDATED_UUID);
     assertThat(testPagePost.getName()).isEqualTo(UPDATED_NAME);
+    assertThat(testPagePost.getAvatar()).isEqualTo(UPDATED_AVATAR);
     assertThat(testPagePost.getQuickInfo()).isEqualTo(UPDATED_QUICK_INFO);
   }
 
@@ -672,7 +661,7 @@ class PagePostResourceIT {
     PagePost partialUpdatedPagePost = new PagePost();
     partialUpdatedPagePost.setId(pagePost.getId());
 
-    partialUpdatedPagePost.uuid(UPDATED_UUID).name(UPDATED_NAME).quickInfo(UPDATED_QUICK_INFO);
+    partialUpdatedPagePost.uuid(UPDATED_UUID).name(UPDATED_NAME).avatar(UPDATED_AVATAR).quickInfo(UPDATED_QUICK_INFO);
 
     restPagePostMockMvc
       .perform(
@@ -688,6 +677,7 @@ class PagePostResourceIT {
     PagePost testPagePost = pagePostList.get(pagePostList.size() - 1);
     assertThat(testPagePost.getUuid()).isEqualTo(UPDATED_UUID);
     assertThat(testPagePost.getName()).isEqualTo(UPDATED_NAME);
+    assertThat(testPagePost.getAvatar()).isEqualTo(UPDATED_AVATAR);
     assertThat(testPagePost.getQuickInfo()).isEqualTo(UPDATED_QUICK_INFO);
   }
 
@@ -803,6 +793,7 @@ class PagePostResourceIT {
       .andExpect(jsonPath("$.[*].id").value(hasItem(pagePost.getId().intValue())))
       .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
       .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+      .andExpect(jsonPath("$.[*].avatar").value(hasItem(DEFAULT_AVATAR.toString())))
       .andExpect(jsonPath("$.[*].quickInfo").value(hasItem(DEFAULT_QUICK_INFO.toString())));
   }
 }

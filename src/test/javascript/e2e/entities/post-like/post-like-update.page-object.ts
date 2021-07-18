@@ -9,8 +9,8 @@ export default class PostLikeUpdatePage {
   cancelButton: ElementFinder = element(by.id('cancel-save'));
   uuidInput: ElementFinder = element(by.css('input#post-like-uuid'));
   baseInfoSelect: ElementFinder = element(by.css('select#post-like-baseInfo'));
-  userLikeSelect: ElementFinder = element(by.css('select#post-like-userLike'));
   postSelect: ElementFinder = element(by.css('select#post-like-post'));
+  postCommentSelect: ElementFinder = element(by.css('select#post-like-postComment'));
 
   getPageTitle() {
     return this.pageTitle;
@@ -40,22 +40,6 @@ export default class PostLikeUpdatePage {
     return this.baseInfoSelect.element(by.css('option:checked')).getText();
   }
 
-  async userLikeSelectLastOption() {
-    await this.userLikeSelect.all(by.tagName('option')).last().click();
-  }
-
-  async userLikeSelectOption(option) {
-    await this.userLikeSelect.sendKeys(option);
-  }
-
-  getUserLikeSelect() {
-    return this.userLikeSelect;
-  }
-
-  async getUserLikeSelectedOption() {
-    return this.userLikeSelect.element(by.css('option:checked')).getText();
-  }
-
   async postSelectLastOption() {
     await this.postSelect.all(by.tagName('option')).last().click();
   }
@@ -70,6 +54,22 @@ export default class PostLikeUpdatePage {
 
   async getPostSelectedOption() {
     return this.postSelect.element(by.css('option:checked')).getText();
+  }
+
+  async postCommentSelectLastOption() {
+    await this.postCommentSelect.all(by.tagName('option')).last().click();
+  }
+
+  async postCommentSelectOption(option) {
+    await this.postCommentSelect.sendKeys(option);
+  }
+
+  getPostCommentSelect() {
+    return this.postCommentSelect;
+  }
+
+  async getPostCommentSelectedOption() {
+    return this.postCommentSelect.element(by.css('option:checked')).getText();
   }
 
   async save() {
@@ -88,8 +88,8 @@ export default class PostLikeUpdatePage {
     await waitUntilDisplayed(this.saveButton);
     await this.setUuidInput('64c99148-3908-465d-8c4a-e510e3ade974');
     await this.baseInfoSelectLastOption();
-    await this.userLikeSelectLastOption();
     await this.postSelectLastOption();
+    await this.postCommentSelectLastOption();
     await this.save();
     await waitUntilHidden(this.saveButton);
   }

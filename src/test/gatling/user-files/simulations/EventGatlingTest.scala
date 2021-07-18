@@ -73,12 +73,15 @@ class EventGatlingTest extends Simulation {
             .body(StringBody("""{
                 "uuid":null
                 , "title":"SAMPLE_TEXT"
+                , "avatar":null
                 , "content":null
                 , "type":"DAY"
                 , "description":null
                 , "startTime":"2020-01-01T00:00:00.000Z"
                 , "endTime":"2020-01-01T00:00:00.000Z"
                 , "tagLine":"SAMPLE_TEXT"
+                , "imageCollection":null
+                , "videoCollection":null
                 }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_event_url"))).exitHereIfFailed

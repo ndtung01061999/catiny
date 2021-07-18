@@ -4,6 +4,8 @@ import { Button, Row, Col, FormText, UncontrolledTooltip } from 'reactstrap';
 import { isNumber, Translate, translate, ValidatedField, ValidatedForm } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { IClassInfo } from 'app/shared/model/class-info.model';
+import { getEntities as getClassInfos } from 'app/entities/class-info/class-info.reducer';
 import { IUserProfile } from 'app/shared/model/user-profile.model';
 import { getEntities as getUserProfiles } from 'app/entities/user-profile/user-profile.reducer';
 import { IAccountStatus } from 'app/shared/model/account-status.model';
@@ -62,6 +64,8 @@ import { ITodoList } from 'app/shared/model/todo-list.model';
 import { getEntities as getTodoLists } from 'app/entities/todo-list/todo-list.reducer';
 import { IEvent } from 'app/shared/model/event.model';
 import { getEntities as getEvents } from 'app/entities/event/event.reducer';
+import { IMasterUser } from 'app/shared/model/master-user.model';
+import { getEntities as getMasterUsers } from 'app/entities/master-user/master-user.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './base-info.reducer';
 import { IBaseInfo } from 'app/shared/model/base-info.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -73,6 +77,7 @@ export const BaseInfoUpdate = (props: RouteComponentProps<{ id: string }>) => {
 
   const [isNew] = useState(!props.match.params || !props.match.params.id);
 
+  const classInfos = useAppSelector(state => state.classInfo.entities);
   const userProfiles = useAppSelector(state => state.userProfile.entities);
   const accountStatuses = useAppSelector(state => state.accountStatus.entities);
   const deviceStatuses = useAppSelector(state => state.deviceStatus.entities);
@@ -102,6 +107,7 @@ export const BaseInfoUpdate = (props: RouteComponentProps<{ id: string }>) => {
   const topicInterests = useAppSelector(state => state.topicInterest.entities);
   const todoLists = useAppSelector(state => state.todoList.entities);
   const events = useAppSelector(state => state.event.entities);
+  const masterUsers = useAppSelector(state => state.masterUser.entities);
   const baseInfoEntity = useAppSelector(state => state.baseInfo.entity);
   const loading = useAppSelector(state => state.baseInfo.loading);
   const updating = useAppSelector(state => state.baseInfo.updating);
@@ -116,6 +122,7 @@ export const BaseInfoUpdate = (props: RouteComponentProps<{ id: string }>) => {
       dispatch(getEntity(props.match.params.id));
     }
 
+    dispatch(getClassInfos({}));
     dispatch(getUserProfiles({}));
     dispatch(getAccountStatuses({}));
     dispatch(getDeviceStatuses({}));
@@ -145,6 +152,7 @@ export const BaseInfoUpdate = (props: RouteComponentProps<{ id: string }>) => {
     dispatch(getTopicInterests({}));
     dispatch(getTodoLists({}));
     dispatch(getEvents({}));
+    dispatch(getMasterUsers({}));
   }, []);
 
   useEffect(() => {
@@ -160,6 +168,10 @@ export const BaseInfoUpdate = (props: RouteComponentProps<{ id: string }>) => {
     const entity = {
       ...baseInfoEntity,
       ...values,
+      classInfo: classInfos.find(it => it.id.toString() === values.classInfoId.toString()),
+      createdBy: masterUsers.find(it => it.id.toString() === values.createdById.toString()),
+      modifiedBy: masterUsers.find(it => it.id.toString() === values.modifiedById.toString()),
+      owner: masterUsers.find(it => it.id.toString() === values.ownerId.toString()),
     };
 
     if (isNew) {
@@ -180,6 +192,10 @@ export const BaseInfoUpdate = (props: RouteComponentProps<{ id: string }>) => {
           processStatus: 'NOT_PROCESSED',
           createdDate: convertDateTimeFromServer(baseInfoEntity.createdDate),
           modifiedDate: convertDateTimeFromServer(baseInfoEntity.modifiedDate),
+          classInfoId: baseInfoEntity?.classInfo?.id,
+          createdById: baseInfoEntity?.createdBy?.id,
+          modifiedById: baseInfoEntity?.modifiedBy?.id,
+          ownerId: baseInfoEntity?.owner?.id,
         };
 
   return (
@@ -228,20 +244,6 @@ export const BaseInfoUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 <Translate contentKey="catinyApp.baseInfo.help.processStatus" />
               </UncontrolledTooltip>
               <ValidatedField
-                label={translate('catinyApp.baseInfo.owner')}
-                id="base-info-owner"
-                name="owner"
-                data-cy="owner"
-                type="textarea"
-              />
-              <UncontrolledTooltip target="ownerLabel">
-                <Translate contentKey="catinyApp.baseInfo.help.owner" />
-              </UncontrolledTooltip>
-              <ValidatedField label={translate('catinyApp.baseInfo.role')} id="base-info-role" name="role" data-cy="role" type="textarea" />
-              <UncontrolledTooltip target="roleLabel">
-                <Translate contentKey="catinyApp.baseInfo.help.role" />
-              </UncontrolledTooltip>
-              <ValidatedField
                 label={translate('catinyApp.baseInfo.modifiedClass')}
                 id="base-info-modifiedClass"
                 name="modifiedClass"
@@ -274,26 +276,6 @@ export const BaseInfoUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 <Translate contentKey="catinyApp.baseInfo.help.modifiedDate" />
               </UncontrolledTooltip>
               <ValidatedField
-                label={translate('catinyApp.baseInfo.createdBy')}
-                id="base-info-createdBy"
-                name="createdBy"
-                data-cy="createdBy"
-                type="text"
-              />
-              <UncontrolledTooltip target="createdByLabel">
-                <Translate contentKey="catinyApp.baseInfo.help.createdBy" />
-              </UncontrolledTooltip>
-              <ValidatedField
-                label={translate('catinyApp.baseInfo.modifiedBy')}
-                id="base-info-modifiedBy"
-                name="modifiedBy"
-                data-cy="modifiedBy"
-                type="text"
-              />
-              <UncontrolledTooltip target="modifiedByLabel">
-                <Translate contentKey="catinyApp.baseInfo.help.modifiedBy" />
-              </UncontrolledTooltip>
-              <ValidatedField
                 label={translate('catinyApp.baseInfo.notes')}
                 id="base-info-notes"
                 name="notes"
@@ -324,6 +306,90 @@ export const BaseInfoUpdate = (props: RouteComponentProps<{ id: string }>) => {
               <UncontrolledTooltip target="deletedLabel">
                 <Translate contentKey="catinyApp.baseInfo.help.deleted" />
               </UncontrolledTooltip>
+              <ValidatedField
+                label={translate('catinyApp.baseInfo.priorityIndex')}
+                id="base-info-priorityIndex"
+                name="priorityIndex"
+                data-cy="priorityIndex"
+                type="text"
+              />
+              <UncontrolledTooltip target="priorityIndexLabel">
+                <Translate contentKey="catinyApp.baseInfo.help.priorityIndex" />
+              </UncontrolledTooltip>
+              <ValidatedField
+                label={translate('catinyApp.baseInfo.countUse')}
+                id="base-info-countUse"
+                name="countUse"
+                data-cy="countUse"
+                type="text"
+              />
+              <UncontrolledTooltip target="countUseLabel">
+                <Translate contentKey="catinyApp.baseInfo.help.countUse" />
+              </UncontrolledTooltip>
+              <ValidatedField
+                id="base-info-classInfo"
+                name="classInfoId"
+                data-cy="classInfo"
+                label={translate('catinyApp.baseInfo.classInfo')}
+                type="select"
+              >
+                <option value="" key="0" />
+                {classInfos
+                  ? classInfos.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField
+                id="base-info-createdBy"
+                name="createdById"
+                data-cy="createdBy"
+                label={translate('catinyApp.baseInfo.createdBy')}
+                type="select"
+              >
+                <option value="" key="0" />
+                {masterUsers
+                  ? masterUsers.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField
+                id="base-info-modifiedBy"
+                name="modifiedById"
+                data-cy="modifiedBy"
+                label={translate('catinyApp.baseInfo.modifiedBy')}
+                type="select"
+              >
+                <option value="" key="0" />
+                {masterUsers
+                  ? masterUsers.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField
+                id="base-info-owner"
+                name="ownerId"
+                data-cy="owner"
+                label={translate('catinyApp.baseInfo.owner')}
+                type="select"
+              >
+                <option value="" key="0" />
+                {masterUsers
+                  ? masterUsers.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/base-info" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

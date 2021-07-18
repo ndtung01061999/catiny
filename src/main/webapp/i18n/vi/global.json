@@ -39,6 +39,8 @@
         "todoList": "Todo List",
         "event": "Event",
         "baseInfo": "Base Info",
+        "permission": "Permission",
+        "classInfo": "Class Info",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

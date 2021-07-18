@@ -194,12 +194,6 @@ export const BaseInfo = (props: RouteComponentProps<{ url: string }>) => {
                   <th className="hand" onClick={sort('processStatus')}>
                     <Translate contentKey="catinyApp.baseInfo.processStatus">Process Status</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
-                  <th className="hand" onClick={sort('owner')}>
-                    <Translate contentKey="catinyApp.baseInfo.owner">Owner</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={sort('role')}>
-                    <Translate contentKey="catinyApp.baseInfo.role">Role</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
                   <th className="hand" onClick={sort('modifiedClass')}>
                     <Translate contentKey="catinyApp.baseInfo.modifiedClass">Modified Class</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
@@ -209,12 +203,6 @@ export const BaseInfo = (props: RouteComponentProps<{ url: string }>) => {
                   <th className="hand" onClick={sort('modifiedDate')}>
                     <Translate contentKey="catinyApp.baseInfo.modifiedDate">Modified Date</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
-                  <th className="hand" onClick={sort('createdBy')}>
-                    <Translate contentKey="catinyApp.baseInfo.createdBy">Created By</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={sort('modifiedBy')}>
-                    <Translate contentKey="catinyApp.baseInfo.modifiedBy">Modified By</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
                   <th className="hand" onClick={sort('notes')}>
                     <Translate contentKey="catinyApp.baseInfo.notes">Notes</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
@@ -223,6 +211,24 @@ export const BaseInfo = (props: RouteComponentProps<{ url: string }>) => {
                   </th>
                   <th className="hand" onClick={sort('deleted')}>
                     <Translate contentKey="catinyApp.baseInfo.deleted">Deleted</Translate> <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th className="hand" onClick={sort('priorityIndex')}>
+                    <Translate contentKey="catinyApp.baseInfo.priorityIndex">Priority Index</Translate> <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th className="hand" onClick={sort('countUse')}>
+                    <Translate contentKey="catinyApp.baseInfo.countUse">Count Use</Translate> <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th>
+                    <Translate contentKey="catinyApp.baseInfo.classInfo">Class Info</Translate> <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th>
+                    <Translate contentKey="catinyApp.baseInfo.createdBy">Created By</Translate> <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th>
+                    <Translate contentKey="catinyApp.baseInfo.modifiedBy">Modified By</Translate> <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th>
+                    <Translate contentKey="catinyApp.baseInfo.owner">Owner</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
                   <th />
                 </tr>
@@ -238,8 +244,6 @@ export const BaseInfo = (props: RouteComponentProps<{ url: string }>) => {
                     <td>
                       <Translate contentKey={`catinyApp.ProcessStatus.${baseInfo.processStatus}`} />
                     </td>
-                    <td>{baseInfo.owner}</td>
-                    <td>{baseInfo.role}</td>
                     <td>{baseInfo.modifiedClass}</td>
                     <td>
                       {baseInfo.createdDate ? <TextFormat type="date" value={baseInfo.createdDate} format={APP_DATE_FORMAT} /> : null}
@@ -247,11 +251,15 @@ export const BaseInfo = (props: RouteComponentProps<{ url: string }>) => {
                     <td>
                       {baseInfo.modifiedDate ? <TextFormat type="date" value={baseInfo.modifiedDate} format={APP_DATE_FORMAT} /> : null}
                     </td>
-                    <td>{baseInfo.createdBy}</td>
-                    <td>{baseInfo.modifiedBy}</td>
                     <td>{baseInfo.notes}</td>
                     <td>{baseInfo.historyUpdate}</td>
                     <td>{baseInfo.deleted ? 'true' : 'false'}</td>
+                    <td>{baseInfo.priorityIndex}</td>
+                    <td>{baseInfo.countUse}</td>
+                    <td>{baseInfo.classInfo ? <Link to={`class-info/${baseInfo.classInfo.id}`}>{baseInfo.classInfo.id}</Link> : ''}</td>
+                    <td>{baseInfo.createdBy ? <Link to={`master-user/${baseInfo.createdBy.id}`}>{baseInfo.createdBy.id}</Link> : ''}</td>
+                    <td>{baseInfo.modifiedBy ? <Link to={`master-user/${baseInfo.modifiedBy.id}`}>{baseInfo.modifiedBy.id}</Link> : ''}</td>
+                    <td>{baseInfo.owner ? <Link to={`master-user/${baseInfo.owner.id}`}>{baseInfo.owner.id}</Link> : ''}</td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${baseInfo.id}`} color="info" size="sm" data-cy="entityDetailsButton">
