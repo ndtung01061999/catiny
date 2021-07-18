@@ -1,5 +1,6 @@
 package com.regitiny.catiny.advance.repository.base;
 
+import com.regitiny.catiny.advance.repository.CommonRepository;
 import com.regitiny.catiny.repository.VideoStreamRepository;
 
 /**
@@ -9,6 +10,6 @@ import com.regitiny.catiny.repository.VideoStreamRepository;
  * if you want to write complex query pure (SQL or HQL) then you should write to :
  * {@link com.regitiny.catiny.advance.repository.VideoStreamAdvanceRepository}
  */
-public interface VideoStreamBaseRepository extends VideoStreamRepository
+public interface VideoStreamBaseRepository extends BaseRepository, CommonRepository, VideoStreamRepository
 {
 }

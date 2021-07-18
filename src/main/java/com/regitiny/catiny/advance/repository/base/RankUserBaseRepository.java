@@ -1,5 +1,6 @@
 package com.regitiny.catiny.advance.repository.base;
 
+import com.regitiny.catiny.advance.repository.CommonRepository;
 import com.regitiny.catiny.repository.RankUserRepository;
 
 /**
@@ -9,6 +10,6 @@ import com.regitiny.catiny.repository.RankUserRepository;
  * if you want to write complex query pure (SQL or HQL) then you should write to :
  * {@link com.regitiny.catiny.advance.repository.RankUserAdvanceRepository}
  */
-public interface RankUserBaseRepository extends RankUserRepository
+public interface RankUserBaseRepository extends BaseRepository, CommonRepository, RankUserRepository
 {
 }

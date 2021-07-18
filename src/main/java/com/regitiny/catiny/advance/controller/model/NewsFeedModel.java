@@ -1,7 +1,6 @@
 package com.regitiny.catiny.advance.controller.model;
 
 import com.regitiny.catiny.service.dto.BaseInfoDTO;
-import com.regitiny.catiny.service.dto.MasterUserDTO;
 import com.regitiny.catiny.service.dto.PostDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -28,13 +27,12 @@ public class NewsFeedModel implements Serializable
   )
   private UUID uuid;
 
-  private Double score;
+  @ApiModelProperty("priorityIndex  : chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)")
+  private Long priorityIndex;
 
   private BaseInfoDTO baseInfo;
 
   private PostDTO post;
-
-  private MasterUserDTO masterUser;
 
   @Data
   @Builder
@@ -51,13 +49,12 @@ public class NewsFeedModel implements Serializable
     )
     private UUID uuid;
 
-    private Double score;
+    @ApiModelProperty("priorityIndex  : chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)")
+    private Long priorityIndex;
 
     private BaseInfoDTO baseInfo;
 
     private PostDTO post;
-
-    private MasterUserDTO masterUser;
   }
 
   @Data
@@ -75,12 +72,11 @@ public class NewsFeedModel implements Serializable
     )
     private UUID uuid;
 
-    private Double score;
+    @ApiModelProperty("priorityIndex  : chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)")
+    private Long priorityIndex;
 
     private BaseInfoDTO baseInfo;
 
     private PostDTO post;
-
-    private MasterUserDTO masterUser;
   }
 }

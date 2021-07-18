@@ -34,8 +34,6 @@ public class FriendModel implements Serializable
 
   private MasterUserDTO friendDetails;
 
-  private MasterUserDTO masterUser;
-
   @Data
   @Builder
   @NoArgsConstructor
@@ -56,8 +54,6 @@ public class FriendModel implements Serializable
     private BaseInfoDTO baseInfo;
 
     private MasterUserDTO friendDetails;
-
-    private MasterUserDTO masterUser;
   }
 
   @Data
@@ -80,7 +76,5 @@ public class FriendModel implements Serializable
     private BaseInfoDTO baseInfo;
 
     private MasterUserDTO friendDetails;
-
-    private MasterUserDTO masterUser;
   }
 }

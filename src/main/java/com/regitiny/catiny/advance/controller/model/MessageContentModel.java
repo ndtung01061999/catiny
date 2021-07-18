@@ -1,7 +1,6 @@
 package com.regitiny.catiny.advance.controller.model;
 
 import com.regitiny.catiny.service.dto.BaseInfoDTO;
-import com.regitiny.catiny.service.dto.MasterUserDTO;
 import com.regitiny.catiny.service.dto.MessageGroupDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -29,21 +28,26 @@ public class MessageContentModel implements Serializable
   )
   private UUID uuid;
 
+  @ApiModelProperty("senderName     : tên người gửi")
+  private String senderName;
+
+  @ApiModelProperty("attachInfo     : đính kèm tệp ảnh video ...")
+  @Lob
+  private String attach;
+
+  @ApiModelProperty("content        : nội dung tin nhắn")
   @Lob
   private String content;
 
-  @ApiModelProperty("status : trạng thái của tin nhắn này, đã gửi chưa , ai đã nhận được , đã xem chưa đã thu hồi hay đã xóa...\n"
-    + "@type           : Json")
+  @ApiModelProperty("status         : trạng thái của tin nhắn này, đã gửi chưa , ai đã nhận được , đã xem chưa đã thu hồi hay đã xóa...")
   @Lob
   private String status;
 
-  @ApiModelProperty("searchField : lưu content tin nhắn lọc dấu ... để sau này search")
+  @ApiModelProperty("searchField    : lưu content tin nhắn lọc dấu ... để sau này search")
   @Lob
   private String searchField;
 
   private BaseInfoDTO baseInfo;
-
-  private MasterUserDTO sender;
 
   private MessageGroupDTO messageGroup;
 
@@ -62,21 +66,26 @@ public class MessageContentModel implements Serializable
     )
     private UUID uuid;
 
+    @ApiModelProperty("senderName     : tên người gửi")
+    private String senderName;
+
+    @ApiModelProperty("attachInfo     : đính kèm tệp ảnh video ...")
+    @Lob
+    private String attach;
+
+    @ApiModelProperty("content        : nội dung tin nhắn")
     @Lob
     private String content;
 
-    @ApiModelProperty("status : trạng thái của tin nhắn này, đã gửi chưa , ai đã nhận được , đã xem chưa đã thu hồi hay đã xóa...\n"
-      + "@type           : Json")
+    @ApiModelProperty("status         : trạng thái của tin nhắn này, đã gửi chưa , ai đã nhận được , đã xem chưa đã thu hồi hay đã xóa...")
     @Lob
     private String status;
 
-    @ApiModelProperty("searchField : lưu content tin nhắn lọc dấu ... để sau này search")
+    @ApiModelProperty("searchField    : lưu content tin nhắn lọc dấu ... để sau này search")
     @Lob
     private String searchField;
 
     private BaseInfoDTO baseInfo;
-
-    private MasterUserDTO sender;
 
     private MessageGroupDTO messageGroup;
   }
@@ -96,21 +105,26 @@ public class MessageContentModel implements Serializable
     )
     private UUID uuid;
 
+    @ApiModelProperty("senderName     : tên người gửi")
+    private String senderName;
+
+    @ApiModelProperty("attachInfo     : đính kèm tệp ảnh video ...")
+    @Lob
+    private String attach;
+
+    @ApiModelProperty("content        : nội dung tin nhắn")
     @Lob
     private String content;
 
-    @ApiModelProperty("status : trạng thái của tin nhắn này, đã gửi chưa , ai đã nhận được , đã xem chưa đã thu hồi hay đã xóa...\n"
-      + "@type           : Json")
+    @ApiModelProperty("status         : trạng thái của tin nhắn này, đã gửi chưa , ai đã nhận được , đã xem chưa đã thu hồi hay đã xóa...")
     @Lob
     private String status;
 
-    @ApiModelProperty("searchField : lưu content tin nhắn lọc dấu ... để sau này search")
+    @ApiModelProperty("searchField    : lưu content tin nhắn lọc dấu ... để sau này search")
     @Lob
     private String searchField;
 
     private BaseInfoDTO baseInfo;
-
-    private MasterUserDTO sender;
 
     private MessageGroupDTO messageGroup;
   }

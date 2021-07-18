@@ -31,8 +31,6 @@ public class FollowUserModel implements Serializable
 
   private MasterUserDTO followUserDetails;
 
-  private MasterUserDTO masterUser;
-
   @Data
   @Builder
   @NoArgsConstructor
@@ -51,8 +49,6 @@ public class FollowUserModel implements Serializable
     private BaseInfoDTO baseInfo;
 
     private MasterUserDTO followUserDetails;
-
-    private MasterUserDTO masterUser;
   }
 
   @Data
@@ -73,7 +69,5 @@ public class FollowUserModel implements Serializable
     private BaseInfoDTO baseInfo;
 
     private MasterUserDTO followUserDetails;
-
-    private MasterUserDTO masterUser;
   }
 }

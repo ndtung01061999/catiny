@@ -1,6 +1,9 @@
 package com.regitiny.catiny.advance.controller.model;
 
-import com.regitiny.catiny.service.dto.*;
+import com.regitiny.catiny.service.dto.BaseInfoDTO;
+import com.regitiny.catiny.service.dto.RankUserDTO;
+import com.regitiny.catiny.service.dto.TopicInterestDTO;
+import com.regitiny.catiny.service.dto.UserDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,25 +41,19 @@ public class MasterUserModel implements Serializable
   @ApiModelProperty("nickname : biệt danh của người dùng")
   private String nickname;
 
+  @ApiModelProperty("avatar : @type Json -> ảnh đại diện của người dùng")
+  @Lob
+  private String avatar;
+
   @ApiModelProperty("quickInfo      : @type Json -> thông tin nhanh về người dùng này dùng trong giới thiệu sơ khi chỉ chuột vào người dùng")
   @Lob
   private String quickInfo;
 
   private UserDTO user;
 
-  private UserProfileDTO myProfile;
-
-  private AccountStatusDTO myAccountStatus;
-
   private RankUserDTO myRank;
 
-  private ImageDTO avatar;
-
   private BaseInfoDTO baseInfo;
-
-  private Set<GroupPostDTO> myGroupPosts;
-
-  private Set<MessageGroupDTO> messageGroups;
 
   private Set<TopicInterestDTO> topicInterests;
 
@@ -85,25 +82,19 @@ public class MasterUserModel implements Serializable
     @ApiModelProperty("nickname : biệt danh của người dùng")
     private String nickname;
 
+    @ApiModelProperty("avatar : @type Json -> ảnh đại diện của người dùng")
+    @Lob
+    private String avatar;
+
     @ApiModelProperty("quickInfo      : @type Json -> thông tin nhanh về người dùng này dùng trong giới thiệu sơ khi chỉ chuột vào người dùng")
     @Lob
     private String quickInfo;
 
     private UserDTO user;
 
-    private UserProfileDTO myProfile;
-
-    private AccountStatusDTO myAccountStatus;
-
     private RankUserDTO myRank;
 
-    private ImageDTO avatar;
-
     private BaseInfoDTO baseInfo;
-
-    private Set<GroupPostDTO> myGroupPosts;
-
-    private Set<MessageGroupDTO> messageGroups;
 
     private Set<TopicInterestDTO> topicInterests;
   }
@@ -133,25 +124,19 @@ public class MasterUserModel implements Serializable
     @ApiModelProperty("nickname : biệt danh của người dùng")
     private String nickname;
 
+    @ApiModelProperty("avatar : @type Json -> ảnh đại diện của người dùng")
+    @Lob
+    private String avatar;
+
     @ApiModelProperty("quickInfo      : @type Json -> thông tin nhanh về người dùng này dùng trong giới thiệu sơ khi chỉ chuột vào người dùng")
     @Lob
     private String quickInfo;
 
     private UserDTO user;
 
-    private UserProfileDTO myProfile;
-
-    private AccountStatusDTO myAccountStatus;
-
     private RankUserDTO myRank;
 
-    private ImageDTO avatar;
-
     private BaseInfoDTO baseInfo;
-
-    private Set<GroupPostDTO> myGroupPosts;
-
-    private Set<MessageGroupDTO> messageGroups;
 
     private Set<TopicInterestDTO> topicInterests;
   }

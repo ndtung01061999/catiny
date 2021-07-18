@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Lob;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Set;
@@ -29,7 +30,18 @@ public class AlbumModel implements Serializable
   private UUID uuid;
 
   @NotNull
+  @ApiModelProperty(
+    required = true,
+    value = "name           : tên của album"
+  )
   private String name;
+
+  @ApiModelProperty("note           : trú thích của album (ví dụ album đại học)")
+  private String note;
+
+  @ApiModelProperty("avatar         : @type Json -> ảnh đại diện của Album")
+  @Lob
+  private String avatar;
 
   private BaseInfoDTO baseInfo;
 
@@ -51,7 +63,18 @@ public class AlbumModel implements Serializable
     private UUID uuid;
 
     @NotNull
+    @ApiModelProperty(
+      required = true,
+      value = "name           : tên của album"
+    )
     private String name;
+
+    @ApiModelProperty("note           : trú thích của album (ví dụ album đại học)")
+    private String note;
+
+    @ApiModelProperty("avatar         : @type Json -> ảnh đại diện của Album")
+    @Lob
+    private String avatar;
 
     private BaseInfoDTO baseInfo;
 
@@ -74,7 +97,18 @@ public class AlbumModel implements Serializable
     private UUID uuid;
 
     @NotNull
+    @ApiModelProperty(
+      required = true,
+      value = "name           : tên của album"
+    )
     private String name;
+
+    @ApiModelProperty("note           : trú thích của album (ví dụ album đại học)")
+    private String note;
+
+    @ApiModelProperty("avatar         : @type Json -> ảnh đại diện của Album")
+    @Lob
+    private String avatar;
 
     private BaseInfoDTO baseInfo;
 

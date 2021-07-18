@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Lob;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.UUID;
@@ -28,6 +29,10 @@ public class MessageGroupModel implements Serializable
 
   @ApiModelProperty("groupName")
   private String groupName;
+
+  @ApiModelProperty("avatar : @type Json -> ảnh đại diện của MessageGroup")
+  @Lob
+  private String avatar;
 
   @ApiModelProperty("addBy")
   private String addBy;
@@ -52,6 +57,10 @@ public class MessageGroupModel implements Serializable
     @ApiModelProperty("groupName")
     private String groupName;
 
+    @ApiModelProperty("avatar : @type Json -> ảnh đại diện của MessageGroup")
+    @Lob
+    private String avatar;
+
     @ApiModelProperty("addBy")
     private String addBy;
 
@@ -75,6 +84,10 @@ public class MessageGroupModel implements Serializable
 
     @ApiModelProperty("groupName")
     private String groupName;
+
+    @ApiModelProperty("avatar : @type Json -> ảnh đại diện của MessageGroup")
+    @Lob
+    private String avatar;
 
     @ApiModelProperty("addBy")
     private String addBy;

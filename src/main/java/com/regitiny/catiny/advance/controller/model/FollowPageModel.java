@@ -1,7 +1,6 @@
 package com.regitiny.catiny.advance.controller.model;
 
 import com.regitiny.catiny.service.dto.BaseInfoDTO;
-import com.regitiny.catiny.service.dto.MasterUserDTO;
 import com.regitiny.catiny.service.dto.PagePostDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -32,8 +31,6 @@ public class FollowPageModel implements Serializable
 
   private PagePostDTO followPageDetails;
 
-  private MasterUserDTO masterUser;
-
   @Data
   @Builder
   @NoArgsConstructor
@@ -52,8 +49,6 @@ public class FollowPageModel implements Serializable
     private BaseInfoDTO baseInfo;
 
     private PagePostDTO followPageDetails;
-
-    private MasterUserDTO masterUser;
   }
 
   @Data
@@ -74,7 +69,5 @@ public class FollowPageModel implements Serializable
     private BaseInfoDTO baseInfo;
 
     private PagePostDTO followPageDetails;
-
-    private MasterUserDTO masterUser;
   }
 }

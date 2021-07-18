@@ -1,7 +1,6 @@
 package com.regitiny.catiny.advance.controller.model;
 
 import com.regitiny.catiny.service.dto.BaseInfoDTO;
-import com.regitiny.catiny.service.dto.MasterUserDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,15 +36,13 @@ public class FileInfoModel implements Serializable
   @Size(
     max = 1024
   )
-  @ApiModelProperty("path           : đường dẫn file nguyên gốc")
+  @ApiModelProperty("path           : đường dẫn file trên server")
   private String path;
 
   @ApiModelProperty("dataSize       : kích thước file theo byte")
   private Long dataSize;
 
   private BaseInfoDTO baseInfo;
-
-  private MasterUserDTO masterUser;
 
   @Data
   @Builder
@@ -71,15 +68,13 @@ public class FileInfoModel implements Serializable
     @Size(
       max = 1024
     )
-    @ApiModelProperty("path           : đường dẫn file nguyên gốc")
+    @ApiModelProperty("path           : đường dẫn file trên server")
     private String path;
 
     @ApiModelProperty("dataSize       : kích thước file theo byte")
     private Long dataSize;
 
     private BaseInfoDTO baseInfo;
-
-    private MasterUserDTO masterUser;
   }
 
   @Data
@@ -106,14 +101,12 @@ public class FileInfoModel implements Serializable
     @Size(
       max = 1024
     )
-    @ApiModelProperty("path           : đường dẫn file nguyên gốc")
+    @ApiModelProperty("path           : đường dẫn file trên server")
     private String path;
 
     @ApiModelProperty("dataSize       : kích thước file theo byte")
     private Long dataSize;
 
     private BaseInfoDTO baseInfo;
-
-    private MasterUserDTO masterUser;
   }
 }

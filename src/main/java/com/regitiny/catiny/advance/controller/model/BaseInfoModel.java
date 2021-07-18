@@ -1,6 +1,8 @@
 package com.regitiny.catiny.advance.controller.model;
 
 import com.regitiny.catiny.domain.enumeration.ProcessStatus;
+import com.regitiny.catiny.service.dto.ClassInfoDTO;
+import com.regitiny.catiny.service.dto.MasterUserDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,14 +24,6 @@ public class BaseInfoModel implements Serializable
   @ApiModelProperty("processStatus *: @defaultValue( DONE ) -> tình trạng xử lý sử dụng trong phê duyệt")
   private ProcessStatus processStatus;
 
-  @ApiModelProperty("owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List")
-  @Lob
-  private String owner;
-
-  @ApiModelProperty("role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa>")
-  @Lob
-  private String role;
-
   @ApiModelProperty("modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào")
   private String modifiedClass;
 
@@ -38,12 +32,6 @@ public class BaseInfoModel implements Serializable
 
   @ApiModelProperty("modifiedDate * : thời gian sửa bản ghi này")
   private Instant modifiedDate;
-
-  @ApiModelProperty("createdBy *    : người tạo ra bản gi này (lần đầu tiên)")
-  private String createdBy;
-
-  @ApiModelProperty("modifiedBy *   : người sửa lại bản ghi này")
-  private String modifiedBy;
 
   @ApiModelProperty("notes *        : @type Json -> chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json\"")
   @Lob
@@ -56,6 +44,20 @@ public class BaseInfoModel implements Serializable
   @ApiModelProperty("deleted *      : @defaultValue( false ) -> đánh dấu là đã xóa")
   private Boolean deleted;
 
+  @ApiModelProperty("priorityIndex *: chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)")
+  private Long priorityIndex;
+
+  @ApiModelProperty("countUse *     : đếm số lần truy cập vào bản ghi này để xem sửa xóa")
+  private Long countUse;
+
+  private ClassInfoDTO classInfo;
+
+  private MasterUserDTO createdBy;
+
+  private MasterUserDTO modifiedBy;
+
+  private MasterUserDTO owner;
+
   @Data
   @Builder
   @NoArgsConstructor
@@ -67,14 +69,6 @@ public class BaseInfoModel implements Serializable
     @ApiModelProperty("processStatus *: @defaultValue( DONE ) -> tình trạng xử lý sử dụng trong phê duyệt")
     private ProcessStatus processStatus;
 
-    @ApiModelProperty("owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List")
-    @Lob
-    private String owner;
-
-    @ApiModelProperty("role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa>")
-    @Lob
-    private String role;
-
     @ApiModelProperty("modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào")
     private String modifiedClass;
 
@@ -83,12 +77,6 @@ public class BaseInfoModel implements Serializable
 
     @ApiModelProperty("modifiedDate * : thời gian sửa bản ghi này")
     private Instant modifiedDate;
-
-    @ApiModelProperty("createdBy *    : người tạo ra bản gi này (lần đầu tiên)")
-    private String createdBy;
-
-    @ApiModelProperty("modifiedBy *   : người sửa lại bản ghi này")
-    private String modifiedBy;
 
     @ApiModelProperty("notes *        : @type Json -> chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json\"")
     @Lob
@@ -100,6 +88,20 @@ public class BaseInfoModel implements Serializable
 
     @ApiModelProperty("deleted *      : @defaultValue( false ) -> đánh dấu là đã xóa")
     private Boolean deleted;
+
+    @ApiModelProperty("priorityIndex *: chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)")
+    private Long priorityIndex;
+
+    @ApiModelProperty("countUse *     : đếm số lần truy cập vào bản ghi này để xem sửa xóa")
+    private Long countUse;
+
+    private ClassInfoDTO classInfo;
+
+    private MasterUserDTO createdBy;
+
+    private MasterUserDTO modifiedBy;
+
+    private MasterUserDTO owner;
   }
 
   @Data
@@ -113,14 +115,6 @@ public class BaseInfoModel implements Serializable
     @ApiModelProperty("processStatus *: @defaultValue( DONE ) -> tình trạng xử lý sử dụng trong phê duyệt")
     private ProcessStatus processStatus;
 
-    @ApiModelProperty("owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List")
-    @Lob
-    private String owner;
-
-    @ApiModelProperty("role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa>")
-    @Lob
-    private String role;
-
     @ApiModelProperty("modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào")
     private String modifiedClass;
 
@@ -129,12 +123,6 @@ public class BaseInfoModel implements Serializable
 
     @ApiModelProperty("modifiedDate * : thời gian sửa bản ghi này")
     private Instant modifiedDate;
-
-    @ApiModelProperty("createdBy *    : người tạo ra bản gi này (lần đầu tiên)")
-    private String createdBy;
-
-    @ApiModelProperty("modifiedBy *   : người sửa lại bản ghi này")
-    private String modifiedBy;
 
     @ApiModelProperty("notes *        : @type Json -> chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json\"")
     @Lob
@@ -146,5 +134,19 @@ public class BaseInfoModel implements Serializable
 
     @ApiModelProperty("deleted *      : @defaultValue( false ) -> đánh dấu là đã xóa")
     private Boolean deleted;
+
+    @ApiModelProperty("priorityIndex *: chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)")
+    private Long priorityIndex;
+
+    @ApiModelProperty("countUse *     : đếm số lần truy cập vào bản ghi này để xem sửa xóa")
+    private Long countUse;
+
+    private ClassInfoDTO classInfo;
+
+    private MasterUserDTO createdBy;
+
+    private MasterUserDTO modifiedBy;
+
+    private MasterUserDTO owner;
   }
 }

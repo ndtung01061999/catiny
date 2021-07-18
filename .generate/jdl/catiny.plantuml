@@ -53,7 +53,7 @@
 		YEAR, 
 		ONLY_ONE 
 	}
-	class HanhChinhVN <<Option {Paginate,Search,Filter,Dto,Service}>> {
+	class HanhChinhVN <<Option {Filter,Paginate,Search,Service,Dto}>> {
 		String name
 		String slug
 		String type
@@ -63,14 +63,14 @@
 		String path
 		String pathWithType
 	}
-	class MasterUser <<Option {Paginate,Search,Filter,Dto,Service}>> {
+	class MasterUser <<Option {Filter,Paginate,Search,Service,Dto}>> {
 		UUID uuid
 		String fullName
 		String nickname
 		TextBlob avatar
 		TextBlob quickInfo
 	}
-	class UserProfile <<Option {Paginate,Search,Filter,Dto,Service}>> {
+	class UserProfile <<Option {Filter,Paginate,Search,Service,Dto}>> {
 		UUID uuid
 		TextBlob work
 		TextBlob education
@@ -85,20 +85,20 @@
 		TextBlob hobbies
 		TextBlob featured
 	}
-	class AccountStatus <<Option {Paginate,Search,Filter,Dto,Service}>> {
+	class AccountStatus <<Option {Filter,Paginate,Search,Service,Dto}>> {
 		UUID uuid
 		StatusName accountStatus
 		Instant lastVisited
 		String statusComment
 	}
 	AccountStatus ..> StatusName
-	class Album <<Option {Paginate,Search,Filter,Dto,Service}>> {
+	class Album <<Option {Filter,Paginate,Search,Service,Dto}>> {
 		UUID uuid
 		String name
 		String note
 		TextBlob avatar
 	}
-	class DeviceStatus <<Option {Paginate,Search,Filter,Dto,Service}>> {
+	class DeviceStatus <<Option {Filter,Paginate,Search,Service,Dto}>> {
 		UUID uuid
 		String deviceName
 		DeviceType deviceType
@@ -108,7 +108,7 @@
 	}
 	DeviceStatus ..> DeviceType
 	DeviceStatus ..> StatusName
-	class Event <<Option {Paginate,Search,Filter,Dto,Service}>> {
+	class Event <<Option {Filter,Paginate,Search,Service,Dto}>> {
 		UUID uuid
 		String title
 		TextBlob avatar
@@ -122,64 +122,64 @@
 		TextBlob videoCollection
 	}
 	Event ..> EventType
-	class Friend <<Option {Paginate,Search,Filter,Dto,Service}>> {
+	class Friend <<Option {Filter,Paginate,Search,Service,Dto}>> {
 		UUID uuid
 		FriendType friendType
 	}
 	Friend ..> FriendType
-	class FollowUser <<Option {Paginate,Search,Filter,Dto,Service}>> {
+	class FollowUser <<Option {Filter,Paginate,Search,Service,Dto}>> {
 		UUID uuid
 	}
-	class FollowGroup <<Option {Paginate,Search,Filter,Dto,Service}>> {
+	class FollowGroup <<Option {Filter,Paginate,Search,Service,Dto}>> {
 		UUID uuid
 	}
-	class FollowPage <<Option {Paginate,Search,Filter,Dto,Service}>> {
+	class FollowPage <<Option {Filter,Paginate,Search,Service,Dto}>> {
 		UUID uuid
 	}
-	class FileInfo <<Option {Paginate,Search,Filter,Dto,Service}>> {
+	class FileInfo <<Option {Filter,Paginate,Search,Service,Dto}>> {
 		UUID uuid
 		String nameFile
 		String typeFile
 		String path
 		Long dataSize
 	}
-	class GroupPost <<Option {Paginate,Search,Filter,Dto,Service}>> {
+	class GroupPost <<Option {Filter,Paginate,Search,Service,Dto}>> {
 		UUID uuid
 		String name
 		TextBlob avatar
 		TextBlob quickInfo
 	}
-	class GroupProfile <<Option {Paginate,Search,Filter,Dto,Service}>> {
+	class GroupProfile <<Option {Filter,Paginate,Search,Service,Dto}>> {
 		UUID uuid
 	}
-	class Image <<Option {Paginate,Search,Filter,Dto,Service}>> {
+	class Image <<Option {Filter,Paginate,Search,Service,Dto}>> {
 		UUID uuid
 		String name
 		Integer width
 		Integer height
 		Float quality
-		Integer size
+		Integer pixelSize
 		Long priorityIndex
 		Long dataSize
 	}
-	class NewsFeed <<Option {Paginate,Search,Filter,Dto,Service}>> {
+	class NewsFeed <<Option {Filter,Paginate,Search,Service,Dto}>> {
 		UUID uuid
 		Long priorityIndex
 	}
-	class Notification <<Option {Paginate,Search,Filter,Dto,Service}>> {
+	class Notification <<Option {Filter,Paginate,Search,Service,Dto}>> {
 		UUID uuid
 		NotifyType notifyType
 		String title
 		TextBlob content
 	}
 	Notification ..> NotifyType
-	class MessageGroup <<Option {Paginate,Search,Filter,Dto,Service}>> {
+	class MessageGroup <<Option {Filter,Paginate,Search,Service,Dto}>> {
 		UUID uuid
 		String groupName
 		TextBlob avatar
 		String addBy
 	}
-	class MessageContent <<Option {Paginate,Search,Filter,Dto,Service}>> {
+	class MessageContent <<Option {Filter,Paginate,Search,Service,Dto}>> {
 		UUID uuid
 		String senderName
 		TextBlob attach
@@ -187,16 +187,16 @@
 		TextBlob status
 		TextBlob searchField
 	}
-	class PagePost <<Option {Paginate,Search,Filter,Dto,Service}>> {
+	class PagePost <<Option {Filter,Paginate,Search,Service,Dto}>> {
 		UUID uuid
 		String name
 		TextBlob avatar
 		TextBlob quickInfo
 	}
-	class PageProfile <<Option {Paginate,Search,Filter,Dto,Service}>> {
+	class PageProfile <<Option {Filter,Paginate,Search,Service,Dto}>> {
 		UUID uuid
 	}
-	class Post <<Option {Paginate,Search,Filter,Dto,Service}>> {
+	class Post <<Option {Filter,Paginate,Search,Service,Dto}>> {
 		UUID uuid
 		PostInType postInType
 		PostType postType
@@ -205,21 +205,21 @@
 	}
 	Post ..> PostInType
 	Post ..> PostType
-	class PostComment <<Option {Paginate,Search,Filter,Dto,Service}>> {
+	class PostComment <<Option {Filter,Paginate,Search,Service,Dto}>> {
 		UUID uuid
 		TextBlob content
 	}
-	class PostLike <<Option {Paginate,Search,Filter,Dto,Service}>> {
+	class PostLike <<Option {Filter,Paginate,Search,Service,Dto}>> {
 		UUID uuid
 	}
-	class RankUser <<Option {Paginate,Search,Filter,Dto,Service}>> {
+	class RankUser <<Option {Filter,Paginate,Search,Service,Dto}>> {
 		UUID uuid
 		Float ratingPoints
 	}
-	class RankGroup <<Option {Paginate,Search,Filter,Dto,Service}>> {
+	class RankGroup <<Option {Filter,Paginate,Search,Service,Dto}>> {
 		UUID uuid
 	}
-	class Video <<Option {Paginate,Search,Filter,Dto,Service}>> {
+	class Video <<Option {Filter,Paginate,Search,Service,Dto}>> {
 		UUID uuid
 		String name
 		Integer width
@@ -227,23 +227,23 @@
 		Float qualityImage
 		Float qualityAudio
 		Float quality
-		Integer size
+		Integer pixelSize
 		Long priorityIndex
 		Long dataSize
 	}
-	class VideoStream <<Option {Paginate,Search,Filter,Dto,Service}>> {
+	class VideoStream <<Option {Filter,Paginate,Search,Service,Dto}>> {
 		UUID uuid
 	}
-	class VideoLiveStreamBuffer <<Option {Paginate,Search,Filter,Dto,Service}>> {
+	class VideoLiveStreamBuffer <<Option {Filter,Paginate,Search,Service,Dto}>> {
 		UUID uuid
 		AnyBlob bufferData
 	}
-	class TopicInterest <<Option {Paginate,Search,Filter,Dto,Service}>> {
+	class TopicInterest <<Option {Filter,Paginate,Search,Service,Dto}>> {
 		UUID uuid
 		String title
 		TextBlob content
 	}
-	class TodoList <<Option {Paginate,Search,Filter,Dto,Service}>> {
+	class TodoList <<Option {Filter,Paginate,Search,Service,Dto}>> {
 		UUID uuid
 		String title
 		TextBlob content
@@ -282,7 +282,7 @@
 	Friend  "friendDetails 0..* " o-- "0..1 "  MasterUser
 	FollowUser  "followUserDetails 0..* " o-- "0..1 "  MasterUser
 	MasterUser  "0..* " o--o "0..* "  TopicInterest
-	class Permission <<Option {Paginate,Search,Filter,Dto,Service}>> {
+	class Permission <<Option {Filter,Paginate,Search,Service,Dto}>> {
 		Boolean read
 		Boolean write
 		Boolean share
@@ -290,7 +290,7 @@
 		Boolean add
 		Integer level
 	}
-	class BaseInfo <<Option {Paginate,Search,Filter,Dto,Service}>> {
+	class BaseInfo <<Option {Filter,Paginate,Search,Service,Dto}>> {
 		ProcessStatus processStatus
 		String modifiedClass
 		Instant createdDate
@@ -302,11 +302,8 @@
 		Long countUse
 	}
 	BaseInfo ..> ProcessStatus
-	class ClassInfo <<Option {Paginate,Search,Filter,Dto,Service}>> {
+	class ClassInfo <<Option {Filter,Paginate,Search,Service,Dto}>> {
 		UUID uuid
-		String package
-		String name
-		String simpleName
 	}
 	MasterUser  "baseInfo 0..1 " -- "0..1 "  BaseInfo
 	UserProfile  "0..1 " -- "0..1 "  BaseInfo
@@ -340,7 +337,7 @@
 	Event  "0..1 " -- "0..1 "  BaseInfo
 	Permission  "0..* " o-- "0..1 "  BaseInfo
 	BaseInfo  "0..* " o-- "0..1 "  ClassInfo
-	class User <<Option {Paginate,Search,Filter,Dto,Service}>> {
+	class User <<Option {Filter,Paginate,Search,Service,Dto}>> {
 		String firstName
 		String lastName
 		String login

@@ -29,21 +29,40 @@ public class EventModel implements Serializable
   )
   private UUID uuid;
 
+  @ApiModelProperty("title          : tiêu đề event")
   private String title;
 
+  @ApiModelProperty("avatar         : @type Json -> ảnh đại diện event")
+  @Lob
+  private String avatar;
+
+  @ApiModelProperty("content        : nội dung event")
   @Lob
   private String content;
 
+  @ApiModelProperty("type           :loại event")
   private EventType type;
 
+  @ApiModelProperty("description    : mô tả chi tết về event")
   @Lob
   private String description;
 
+  @ApiModelProperty("startTime      : thời gian bắt đầu")
   private Instant startTime;
 
+  @ApiModelProperty("endTime        : thời gian kết thúc")
   private Instant endTime;
 
+  @ApiModelProperty("tagLine        : thẻ cho event")
   private String tagLine;
+
+  @ApiModelProperty("imageCollection: @type Json -> tập ảnh của event")
+  @Lob
+  private String imageCollection;
+
+  @ApiModelProperty("videoCollection: @type Json -> tập video của event")
+  @Lob
+  private String videoCollection;
 
   private BaseInfoDTO baseInfo;
 
@@ -62,21 +81,40 @@ public class EventModel implements Serializable
     )
     private UUID uuid;
 
+    @ApiModelProperty("title          : tiêu đề event")
     private String title;
 
+    @ApiModelProperty("avatar         : @type Json -> ảnh đại diện event")
+    @Lob
+    private String avatar;
+
+    @ApiModelProperty("content        : nội dung event")
     @Lob
     private String content;
 
+    @ApiModelProperty("type           :loại event")
     private EventType type;
 
+    @ApiModelProperty("description    : mô tả chi tết về event")
     @Lob
     private String description;
 
+    @ApiModelProperty("startTime      : thời gian bắt đầu")
     private Instant startTime;
 
+    @ApiModelProperty("endTime        : thời gian kết thúc")
     private Instant endTime;
 
+    @ApiModelProperty("tagLine        : thẻ cho event")
     private String tagLine;
+
+    @ApiModelProperty("imageCollection: @type Json -> tập ảnh của event")
+    @Lob
+    private String imageCollection;
+
+    @ApiModelProperty("videoCollection: @type Json -> tập video của event")
+    @Lob
+    private String videoCollection;
 
     private BaseInfoDTO baseInfo;
   }
@@ -96,21 +134,40 @@ public class EventModel implements Serializable
     )
     private UUID uuid;
 
+    @ApiModelProperty("title          : tiêu đề event")
     private String title;
 
+    @ApiModelProperty("avatar         : @type Json -> ảnh đại diện event")
+    @Lob
+    private String avatar;
+
+    @ApiModelProperty("content        : nội dung event")
     @Lob
     private String content;
 
+    @ApiModelProperty("type           :loại event")
     private EventType type;
 
+    @ApiModelProperty("description    : mô tả chi tết về event")
     @Lob
     private String description;
 
+    @ApiModelProperty("startTime      : thời gian bắt đầu")
     private Instant startTime;
 
+    @ApiModelProperty("endTime        : thời gian kết thúc")
     private Instant endTime;
 
+    @ApiModelProperty("tagLine        : thẻ cho event")
     private String tagLine;
+
+    @ApiModelProperty("imageCollection: @type Json -> tập ảnh của event")
+    @Lob
+    private String imageCollection;
+
+    @ApiModelProperty("videoCollection: @type Json -> tập video của event")
+    @Lob
+    private String videoCollection;
 
     private BaseInfoDTO baseInfo;
   }
