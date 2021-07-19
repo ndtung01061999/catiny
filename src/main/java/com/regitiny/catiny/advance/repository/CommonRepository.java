@@ -1,5 +1,10 @@
 package com.regitiny.catiny.advance.repository;
 
-public interface CommonRepository
+import io.vavr.control.Option;
+
+import java.util.UUID;
+
+public interface CommonRepository<E>
 {
+  Option<E> findOneByUuid(UUID uuid);
 }

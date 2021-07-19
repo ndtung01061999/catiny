@@ -38,6 +38,7 @@ import java.util.stream.Collectors;
 public class GenerateEntityAdvanceUtils
 {
   private static final String BASE_PACKAGE = "com.regitiny.catiny";
+  private static final String DOMAIN_PACKAGE = BASE_PACKAGE + ".domain";
   private static final String ENTITY_NAME = "${entityName}";
 
   private static String entityName(String entityName)
@@ -113,8 +114,8 @@ public class GenerateEntityAdvanceUtils
     var interfaceBaseRepository = TypeSpec.interfaceBuilder(entityName + "BaseRepository")
       .addModifiers(Modifier.PUBLIC)
       .addJavadoc(javadoc)
-      .addSuperinterface(ClassName.get(BaseRepository.class))
-      .addSuperinterface(ClassName.get(CommonRepository.class))
+      .addSuperinterface(ParameterizedTypeName.get(ClassName.get(BaseRepository.class), ClassName.get(DOMAIN_PACKAGE, entityName)))
+      .addSuperinterface(ParameterizedTypeName.get(ClassName.get(CommonRepository.class), ClassName.get(DOMAIN_PACKAGE, entityName)))
       .addSuperinterface(ClassName.get(packageRepository, entityRepository))
       .build();
 
@@ -168,8 +169,8 @@ public class GenerateEntityAdvanceUtils
     var interfaceBaseSearch = TypeSpec.interfaceBuilder(entityBaseSearch)
       .addModifiers(Modifier.PUBLIC)
       .addJavadoc(javadoc)
-      .addSuperinterface(ClassName.get(BaseSearch.class))
-      .addSuperinterface(ClassName.get(CommonRepository.class))
+      .addSuperinterface(ParameterizedTypeName.get(ClassName.get(BaseSearch.class), ClassName.get(DOMAIN_PACKAGE, entityName)))
+      .addSuperinterface(ParameterizedTypeName.get(ClassName.get(CommonRepository.class), ClassName.get(DOMAIN_PACKAGE, entityName)))
       .addSuperinterface(ParameterizedTypeName.get(ClassName.get(ElasticsearchRepository.class),
         ClassName.get(BASE_PACKAGE + ".domain", entityName),
         ClassName.get(Long.class)))
