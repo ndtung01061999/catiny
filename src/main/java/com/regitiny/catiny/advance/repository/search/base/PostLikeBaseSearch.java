@@ -10,6 +10,6 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
  * here contains simple queries same as JPA syntax.
  * if you want to write simple query then you should write to {@link com.regitiny.catiny.advance.repository.search.PostLikeAdvanceSearch}
  */
-public interface PostLikeBaseSearch extends BaseSearch, CommonRepository, ElasticsearchRepository<PostLike, Long>
+public interface PostLikeBaseSearch extends BaseSearch<PostLike>, CommonRepository<PostLike>, ElasticsearchRepository<PostLike, Long>
 {
 }

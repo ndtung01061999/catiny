@@ -1,5 +1,5 @@
 package com.regitiny.catiny.advance.repository.search.base;
 
-public interface BaseSearch
+public interface BaseSearch<E>
 {
 }

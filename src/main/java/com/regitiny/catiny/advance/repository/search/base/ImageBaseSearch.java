@@ -10,6 +10,6 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
  * here contains simple queries same as JPA syntax.
  * if you want to write simple query then you should write to {@link com.regitiny.catiny.advance.repository.search.ImageAdvanceSearch}
  */
-public interface ImageBaseSearch extends BaseSearch, CommonRepository, ElasticsearchRepository<Image, Long>
+public interface ImageBaseSearch extends BaseSearch<Image>, CommonRepository<Image>, ElasticsearchRepository<Image, Long>
 {
 }
