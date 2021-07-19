@@ -1,6 +1,5 @@
 package com.regitiny.catiny.advance.service;
 
-import com.regitiny.catiny.domain.HistoryUpdate;
 import com.regitiny.catiny.service.HistoryUpdateQueryService;
 import com.regitiny.catiny.service.HistoryUpdateService;
 
@@ -11,5 +10,4 @@ import com.regitiny.catiny.service.HistoryUpdateService;
  */
 public interface HistoryUpdateAdvanceService extends LocalService<HistoryUpdateService, HistoryUpdateQueryService>
 {
-  HistoryUpdate createHistoryUpdate();
 }

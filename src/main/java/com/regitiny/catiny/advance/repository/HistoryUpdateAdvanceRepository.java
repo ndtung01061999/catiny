@@ -1,6 +1,9 @@
 package com.regitiny.catiny.advance.repository;
 
 import com.regitiny.catiny.advance.repository.base.HistoryUpdateBaseRepository;
+import com.regitiny.catiny.domain.BaseInfo;
+import io.vavr.control.Option;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -14,4 +17,6 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 public interface HistoryUpdateAdvanceRepository extends HistoryUpdateBaseRepository
 {
+  @Query("select max(version) from HistoryUpdate where baseInfo = :baseInfo")
+  Option<Integer> lastVersion(BaseInfo baseInfo);
 }

@@ -1,7 +1,11 @@
 package com.regitiny.catiny.advance.repository.base;
 
 import com.regitiny.catiny.advance.repository.CommonRepository;
+import com.regitiny.catiny.domain.BaseInfo;
+import com.regitiny.catiny.domain.HistoryUpdate;
 import com.regitiny.catiny.repository.HistoryUpdateRepository;
+import io.vavr.collection.List;
+import io.vavr.control.Option;
 
 /**
  * Spring Data SQL repository for the {@link com.regitiny.catiny.domain.HistoryUpdate} entity.
@@ -12,4 +16,8 @@ import com.regitiny.catiny.repository.HistoryUpdateRepository;
  */
 public interface HistoryUpdateBaseRepository extends BaseRepository, CommonRepository, HistoryUpdateRepository
 {
+  List<HistoryUpdate> findAllByBaseInfo(BaseInfo baseInfo);
+
+
+  Option<Integer> countAllByBaseInfo(BaseInfo baseInfo);
 }
