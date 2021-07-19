@@ -3,14 +3,14 @@ package com.regitiny.catiny.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.regitiny.catiny.GeneratedByJHipster;
 import com.regitiny.catiny.domain.enumeration.FriendType;
-import java.io.Serializable;
-import java.util.UUID;
-import javax.persistence.*;
-import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
-import org.springframework.data.elasticsearch.annotations.FieldType;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.UUID;
 
 /**
  * @what?            -> The Friend entity.\n@why?             ->\n@use-to           -> Quản lý phần kết bạn, các mối liên hệ bạn bè ...\n@commonly-used-in -> Bạn bè và các liên kết bạn bè ...\n\n@describe         ->
@@ -43,6 +43,7 @@ public class Friend implements Serializable {
 
   @JsonIgnoreProperties(
     value = {
+      "historyUpdates",
       "classInfo",
       "userProfile",
       "accountStatus",

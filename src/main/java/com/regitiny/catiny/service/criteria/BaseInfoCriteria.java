@@ -2,17 +2,11 @@ package com.regitiny.catiny.service.criteria;
 
 import com.regitiny.catiny.GeneratedByJHipster;
 import com.regitiny.catiny.domain.enumeration.ProcessStatus;
+import tech.jhipster.service.Criteria;
+import tech.jhipster.service.filter.*;
+
 import java.io.Serializable;
 import java.util.Objects;
-import tech.jhipster.service.Criteria;
-import tech.jhipster.service.filter.BooleanFilter;
-import tech.jhipster.service.filter.DoubleFilter;
-import tech.jhipster.service.filter.Filter;
-import tech.jhipster.service.filter.FloatFilter;
-import tech.jhipster.service.filter.InstantFilter;
-import tech.jhipster.service.filter.IntegerFilter;
-import tech.jhipster.service.filter.LongFilter;
-import tech.jhipster.service.filter.StringFilter;
 
 /**
  * Criteria class for the {@link com.regitiny.catiny.domain.BaseInfo} entity. This class is used
@@ -39,7 +33,8 @@ public class BaseInfoCriteria implements Serializable, Criteria {
     }
 
     @Override
-    public ProcessStatusFilter copy() {
+    public ProcessStatusFilter copy()
+    {
       return new ProcessStatusFilter(this);
     }
   }
@@ -47,6 +42,8 @@ public class BaseInfoCriteria implements Serializable, Criteria {
   private static final long serialVersionUID = 1L;
 
   private LongFilter id;
+
+  private UUIDFilter uuid;
 
   private ProcessStatusFilter processStatus;
 
@@ -61,6 +58,8 @@ public class BaseInfoCriteria implements Serializable, Criteria {
   private LongFilter priorityIndex;
 
   private LongFilter countUse;
+
+  private LongFilter historyUpdateId;
 
   private LongFilter classInfoId;
 
@@ -134,6 +133,7 @@ public class BaseInfoCriteria implements Serializable, Criteria {
 
   public BaseInfoCriteria(BaseInfoCriteria other) {
     this.id = other.id == null ? null : other.id.copy();
+    this.uuid = other.uuid == null ? null : other.uuid.copy();
     this.processStatus = other.processStatus == null ? null : other.processStatus.copy();
     this.modifiedClass = other.modifiedClass == null ? null : other.modifiedClass.copy();
     this.createdDate = other.createdDate == null ? null : other.createdDate.copy();
@@ -141,6 +141,7 @@ public class BaseInfoCriteria implements Serializable, Criteria {
     this.deleted = other.deleted == null ? null : other.deleted.copy();
     this.priorityIndex = other.priorityIndex == null ? null : other.priorityIndex.copy();
     this.countUse = other.countUse == null ? null : other.countUse.copy();
+    this.historyUpdateId = other.historyUpdateId == null ? null : other.historyUpdateId.copy();
     this.classInfoId = other.classInfoId == null ? null : other.classInfoId.copy();
     this.userProfileId = other.userProfileId == null ? null : other.userProfileId.copy();
     this.accountStatusId = other.accountStatusId == null ? null : other.accountStatusId.copy();
@@ -187,22 +188,46 @@ public class BaseInfoCriteria implements Serializable, Criteria {
   }
 
   public LongFilter id() {
-    if (id == null) {
+    if (id == null)
+    {
       id = new LongFilter();
     }
     return id;
   }
 
-  public void setId(LongFilter id) {
+  public void setId(LongFilter id)
+  {
     this.id = id;
   }
 
-  public ProcessStatusFilter getProcessStatus() {
+  public UUIDFilter getUuid()
+  {
+    return uuid;
+  }
+
+  public void setUuid(UUIDFilter uuid)
+  {
+    this.uuid = uuid;
+  }
+
+  public UUIDFilter uuid()
+  {
+    if (uuid == null)
+    {
+      uuid = new UUIDFilter();
+    }
+    return uuid;
+  }
+
+  public ProcessStatusFilter getProcessStatus()
+  {
     return processStatus;
   }
 
-  public ProcessStatusFilter processStatus() {
-    if (processStatus == null) {
+  public ProcessStatusFilter processStatus()
+  {
+    if (processStatus == null)
+    {
       processStatus = new ProcessStatusFilter();
     }
     return processStatus;
@@ -292,22 +317,46 @@ public class BaseInfoCriteria implements Serializable, Criteria {
   }
 
   public LongFilter countUse() {
-    if (countUse == null) {
+    if (countUse == null)
+    {
       countUse = new LongFilter();
     }
     return countUse;
   }
 
-  public void setCountUse(LongFilter countUse) {
+  public void setCountUse(LongFilter countUse)
+  {
     this.countUse = countUse;
   }
 
-  public LongFilter getClassInfoId() {
+  public LongFilter getHistoryUpdateId()
+  {
+    return historyUpdateId;
+  }
+
+  public void setHistoryUpdateId(LongFilter historyUpdateId)
+  {
+    this.historyUpdateId = historyUpdateId;
+  }
+
+  public LongFilter historyUpdateId()
+  {
+    if (historyUpdateId == null)
+    {
+      historyUpdateId = new LongFilter();
+    }
+    return historyUpdateId;
+  }
+
+  public LongFilter getClassInfoId()
+  {
     return classInfoId;
   }
 
-  public LongFilter classInfoId() {
-    if (classInfoId == null) {
+  public LongFilter classInfoId()
+  {
+    if (classInfoId == null)
+    {
       classInfoId = new LongFilter();
     }
     return classInfoId;
@@ -823,23 +872,25 @@ public class BaseInfoCriteria implements Serializable, Criteria {
     final BaseInfoCriteria that = (BaseInfoCriteria) o;
     return (
       Objects.equals(id, that.id) &&
-      Objects.equals(processStatus, that.processStatus) &&
-      Objects.equals(modifiedClass, that.modifiedClass) &&
-      Objects.equals(createdDate, that.createdDate) &&
-      Objects.equals(modifiedDate, that.modifiedDate) &&
-      Objects.equals(deleted, that.deleted) &&
-      Objects.equals(priorityIndex, that.priorityIndex) &&
-      Objects.equals(countUse, that.countUse) &&
-      Objects.equals(classInfoId, that.classInfoId) &&
-      Objects.equals(userProfileId, that.userProfileId) &&
-      Objects.equals(accountStatusId, that.accountStatusId) &&
-      Objects.equals(deviceStatusId, that.deviceStatusId) &&
-      Objects.equals(friendId, that.friendId) &&
-      Objects.equals(followUserId, that.followUserId) &&
-      Objects.equals(followGroupId, that.followGroupId) &&
-      Objects.equals(followPageId, that.followPageId) &&
-      Objects.equals(fileInfoId, that.fileInfoId) &&
-      Objects.equals(pagePostId, that.pagePostId) &&
+        Objects.equals(uuid, that.uuid) &&
+        Objects.equals(processStatus, that.processStatus) &&
+        Objects.equals(modifiedClass, that.modifiedClass) &&
+        Objects.equals(createdDate, that.createdDate) &&
+        Objects.equals(modifiedDate, that.modifiedDate) &&
+        Objects.equals(deleted, that.deleted) &&
+        Objects.equals(priorityIndex, that.priorityIndex) &&
+        Objects.equals(countUse, that.countUse) &&
+        Objects.equals(historyUpdateId, that.historyUpdateId) &&
+        Objects.equals(classInfoId, that.classInfoId) &&
+        Objects.equals(userProfileId, that.userProfileId) &&
+        Objects.equals(accountStatusId, that.accountStatusId) &&
+        Objects.equals(deviceStatusId, that.deviceStatusId) &&
+        Objects.equals(friendId, that.friendId) &&
+        Objects.equals(followUserId, that.followUserId) &&
+        Objects.equals(followGroupId, that.followGroupId) &&
+        Objects.equals(followPageId, that.followPageId) &&
+        Objects.equals(fileInfoId, that.fileInfoId) &&
+        Objects.equals(pagePostId, that.pagePostId) &&
       Objects.equals(pageProfileId, that.pageProfileId) &&
       Objects.equals(groupPostId, that.groupPostId) &&
       Objects.equals(postId, that.postId) &&
@@ -871,6 +922,7 @@ public class BaseInfoCriteria implements Serializable, Criteria {
   public int hashCode() {
     return Objects.hash(
       id,
+      uuid,
       processStatus,
       modifiedClass,
       createdDate,
@@ -878,6 +930,7 @@ public class BaseInfoCriteria implements Serializable, Criteria {
       deleted,
       priorityIndex,
       countUse,
+      historyUpdateId,
       classInfoId,
       userProfileId,
       accountStatusId,
@@ -919,24 +972,26 @@ public class BaseInfoCriteria implements Serializable, Criteria {
     @Override
     public String toString() {
         return "BaseInfoCriteria{" +
-            (id != null ? "id=" + id + ", " : "") +
-            (processStatus != null ? "processStatus=" + processStatus + ", " : "") +
-            (modifiedClass != null ? "modifiedClass=" + modifiedClass + ", " : "") +
-            (createdDate != null ? "createdDate=" + createdDate + ", " : "") +
-            (modifiedDate != null ? "modifiedDate=" + modifiedDate + ", " : "") +
-            (deleted != null ? "deleted=" + deleted + ", " : "") +
-            (priorityIndex != null ? "priorityIndex=" + priorityIndex + ", " : "") +
-            (countUse != null ? "countUse=" + countUse + ", " : "") +
-            (classInfoId != null ? "classInfoId=" + classInfoId + ", " : "") +
-            (userProfileId != null ? "userProfileId=" + userProfileId + ", " : "") +
-            (accountStatusId != null ? "accountStatusId=" + accountStatusId + ", " : "") +
-            (deviceStatusId != null ? "deviceStatusId=" + deviceStatusId + ", " : "") +
-            (friendId != null ? "friendId=" + friendId + ", " : "") +
-            (followUserId != null ? "followUserId=" + followUserId + ", " : "") +
-            (followGroupId != null ? "followGroupId=" + followGroupId + ", " : "") +
-            (followPageId != null ? "followPageId=" + followPageId + ", " : "") +
-            (fileInfoId != null ? "fileInfoId=" + fileInfoId + ", " : "") +
-            (pagePostId != null ? "pagePostId=" + pagePostId + ", " : "") +
+          (id != null ? "id=" + id + ", " : "") +
+          (uuid != null ? "uuid=" + uuid + ", " : "") +
+          (processStatus != null ? "processStatus=" + processStatus + ", " : "") +
+          (modifiedClass != null ? "modifiedClass=" + modifiedClass + ", " : "") +
+          (createdDate != null ? "createdDate=" + createdDate + ", " : "") +
+          (modifiedDate != null ? "modifiedDate=" + modifiedDate + ", " : "") +
+          (deleted != null ? "deleted=" + deleted + ", " : "") +
+          (priorityIndex != null ? "priorityIndex=" + priorityIndex + ", " : "") +
+          (countUse != null ? "countUse=" + countUse + ", " : "") +
+          (historyUpdateId != null ? "historyUpdateId=" + historyUpdateId + ", " : "") +
+          (classInfoId != null ? "classInfoId=" + classInfoId + ", " : "") +
+          (userProfileId != null ? "userProfileId=" + userProfileId + ", " : "") +
+          (accountStatusId != null ? "accountStatusId=" + accountStatusId + ", " : "") +
+          (deviceStatusId != null ? "deviceStatusId=" + deviceStatusId + ", " : "") +
+          (friendId != null ? "friendId=" + friendId + ", " : "") +
+          (followUserId != null ? "followUserId=" + followUserId + ", " : "") +
+          (followGroupId != null ? "followGroupId=" + followGroupId + ", " : "") +
+          (followPageId != null ? "followPageId=" + followPageId + ", " : "") +
+          (fileInfoId != null ? "fileInfoId=" + fileInfoId + ", " : "") +
+          (pagePostId != null ? "pagePostId=" + pagePostId + ", " : "") +
             (pageProfileId != null ? "pageProfileId=" + pageProfileId + ", " : "") +
             (groupPostId != null ? "groupPostId=" + groupPostId + ", " : "") +
             (postId != null ? "postId=" + postId + ", " : "") +

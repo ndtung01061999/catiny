@@ -1,18 +1,19 @@
-import { element, by, ElementFinder, protractor } from 'protractor';
-import { waitUntilDisplayed, waitUntilHidden, isVisible } from '../../util/utils';
+import {by, element, ElementFinder, protractor} from 'protractor';
+import {waitUntilDisplayed, waitUntilHidden} from '../../util/utils';
 
 const expect = chai.expect;
 
-export default class BaseInfoUpdatePage {
+export default class BaseInfoUpdatePage
+{
   pageTitle: ElementFinder = element(by.id('catinyApp.baseInfo.home.createOrEditLabel'));
   saveButton: ElementFinder = element(by.id('save-entity'));
   cancelButton: ElementFinder = element(by.id('cancel-save'));
+  uuidInput: ElementFinder = element(by.css('input#base-info-uuid'));
   processStatusSelect: ElementFinder = element(by.css('select#base-info-processStatus'));
   modifiedClassInput: ElementFinder = element(by.css('input#base-info-modifiedClass'));
   createdDateInput: ElementFinder = element(by.css('input#base-info-createdDate'));
   modifiedDateInput: ElementFinder = element(by.css('input#base-info-modifiedDate'));
   notesInput: ElementFinder = element(by.css('textarea#base-info-notes'));
-  historyUpdateInput: ElementFinder = element(by.css('textarea#base-info-historyUpdate'));
   deletedInput: ElementFinder = element(by.css('input#base-info-deleted'));
   priorityIndexInput: ElementFinder = element(by.css('input#base-info-priorityIndex'));
   countUseInput: ElementFinder = element(by.css('input#base-info-countUse'));
@@ -21,19 +22,33 @@ export default class BaseInfoUpdatePage {
   modifiedBySelect: ElementFinder = element(by.css('select#base-info-modifiedBy'));
   ownerSelect: ElementFinder = element(by.css('select#base-info-owner'));
 
-  getPageTitle() {
+  getPageTitle()
+  {
     return this.pageTitle;
   }
 
-  async setProcessStatusSelect(processStatus) {
+  async setUuidInput(uuid)
+  {
+    await this.uuidInput.sendKeys(uuid);
+  }
+
+  async getUuidInput()
+  {
+    return this.uuidInput.getAttribute('value');
+  }
+
+  async setProcessStatusSelect(processStatus)
+  {
     await this.processStatusSelect.sendKeys(processStatus);
   }
 
-  async getProcessStatusSelect() {
+  async getProcessStatusSelect()
+  {
     return this.processStatusSelect.element(by.css('option:checked')).getText();
   }
 
-  async processStatusSelectLastOption() {
+  async processStatusSelectLastOption()
+  {
     await this.processStatusSelect.all(by.tagName('option')).last().click();
   }
   async setModifiedClassInput(modifiedClass) {
@@ -66,14 +81,6 @@ export default class BaseInfoUpdatePage {
 
   async getNotesInput() {
     return this.notesInput.getAttribute('value');
-  }
-
-  async setHistoryUpdateInput(historyUpdate) {
-    await this.historyUpdateInput.sendKeys(historyUpdate);
-  }
-
-  async getHistoryUpdateInput() {
-    return this.historyUpdateInput.getAttribute('value');
   }
 
   getDeletedInput() {
@@ -171,7 +178,10 @@ export default class BaseInfoUpdatePage {
     return this.saveButton;
   }
 
-  async enterData() {
+  async enterData()
+  {
+    await waitUntilDisplayed(this.saveButton);
+    await this.setUuidInput('64c99148-3908-465d-8c4a-e510e3ade974');
     await waitUntilDisplayed(this.saveButton);
     await this.processStatusSelectLastOption();
     await waitUntilDisplayed(this.saveButton);
@@ -182,8 +192,6 @@ export default class BaseInfoUpdatePage {
     await this.setModifiedDateInput('01/01/2001' + protractor.Key.TAB + '02:30AM');
     await waitUntilDisplayed(this.saveButton);
     await this.setNotesInput('notes');
-    await waitUntilDisplayed(this.saveButton);
-    await this.setHistoryUpdateInput('historyUpdate');
     await waitUntilDisplayed(this.saveButton);
     const selectedDeleted = await this.getDeletedInput().isSelected();
     if (selectedDeleted) {

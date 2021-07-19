@@ -1,64 +1,16 @@
 package com.regitiny.catiny.web.rest;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 import com.regitiny.catiny.GeneratedByJHipster;
 import com.regitiny.catiny.IntegrationTest;
-import com.regitiny.catiny.domain.AccountStatus;
-import com.regitiny.catiny.domain.Album;
-import com.regitiny.catiny.domain.BaseInfo;
-import com.regitiny.catiny.domain.ClassInfo;
-import com.regitiny.catiny.domain.DeviceStatus;
-import com.regitiny.catiny.domain.Event;
-import com.regitiny.catiny.domain.FileInfo;
-import com.regitiny.catiny.domain.FollowGroup;
-import com.regitiny.catiny.domain.FollowPage;
-import com.regitiny.catiny.domain.FollowUser;
-import com.regitiny.catiny.domain.Friend;
-import com.regitiny.catiny.domain.GroupPost;
-import com.regitiny.catiny.domain.GroupProfile;
-import com.regitiny.catiny.domain.Image;
-import com.regitiny.catiny.domain.MasterUser;
-import com.regitiny.catiny.domain.MessageContent;
-import com.regitiny.catiny.domain.MessageGroup;
-import com.regitiny.catiny.domain.NewsFeed;
-import com.regitiny.catiny.domain.Notification;
-import com.regitiny.catiny.domain.PagePost;
-import com.regitiny.catiny.domain.PageProfile;
-import com.regitiny.catiny.domain.Permission;
-import com.regitiny.catiny.domain.Post;
-import com.regitiny.catiny.domain.PostComment;
-import com.regitiny.catiny.domain.PostLike;
-import com.regitiny.catiny.domain.RankGroup;
-import com.regitiny.catiny.domain.RankUser;
-import com.regitiny.catiny.domain.TodoList;
-import com.regitiny.catiny.domain.TopicInterest;
-import com.regitiny.catiny.domain.UserProfile;
-import com.regitiny.catiny.domain.Video;
-import com.regitiny.catiny.domain.VideoLiveStreamBuffer;
-import com.regitiny.catiny.domain.VideoStream;
+import com.regitiny.catiny.domain.*;
 import com.regitiny.catiny.domain.enumeration.ProcessStatus;
 import com.regitiny.catiny.repository.BaseInfoRepository;
 import com.regitiny.catiny.repository.search.BaseInfoSearchRepository;
-import com.regitiny.catiny.service.criteria.BaseInfoCriteria;
 import com.regitiny.catiny.service.dto.BaseInfoDTO;
 import com.regitiny.catiny.service.mapper.BaseInfoMapper;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.atomic.AtomicLong;
-import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -68,7 +20,22 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Base64Utils;
+
+import javax.persistence.EntityManager;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicLong;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
+import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Integration tests for the {@link BaseInfoResource} REST controller.
@@ -78,7 +45,11 @@ import org.springframework.util.Base64Utils;
 @AutoConfigureMockMvc
 @WithMockUser
 @GeneratedByJHipster
-class BaseInfoResourceIT {
+class BaseInfoResourceIT
+{
+
+  private static final UUID DEFAULT_UUID = UUID.randomUUID();
+  private static final UUID UPDATED_UUID = UUID.randomUUID();
 
   private static final ProcessStatus DEFAULT_PROCESS_STATUS = ProcessStatus.NOT_PROCESSED;
   private static final ProcessStatus UPDATED_PROCESS_STATUS = ProcessStatus.PROCESSING;
@@ -95,9 +66,6 @@ class BaseInfoResourceIT {
   private static final String DEFAULT_NOTES = "AAAAAAAAAA";
   private static final String UPDATED_NOTES = "BBBBBBBBBB";
 
-  private static final String DEFAULT_HISTORY_UPDATE = "AAAAAAAAAA";
-  private static final String UPDATED_HISTORY_UPDATE = "BBBBBBBBBB";
-
   private static final Boolean DEFAULT_DELETED = false;
   private static final Boolean UPDATED_DELETED = true;
 
@@ -113,8 +81,8 @@ class BaseInfoResourceIT {
   private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
   private static final String ENTITY_SEARCH_API_URL = "/api/_search/base-infos";
 
-  private static Random random = new Random();
-  private static AtomicLong count = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
+  private static final Random random = new Random();
+  private static final AtomicLong count = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
 
   @Autowired
   private BaseInfoRepository baseInfoRepository;
@@ -146,12 +114,12 @@ class BaseInfoResourceIT {
    */
   public static BaseInfo createEntity(EntityManager em) {
     BaseInfo baseInfo = new BaseInfo()
+      .uuid(DEFAULT_UUID)
       .processStatus(DEFAULT_PROCESS_STATUS)
       .modifiedClass(DEFAULT_MODIFIED_CLASS)
       .createdDate(DEFAULT_CREATED_DATE)
       .modifiedDate(DEFAULT_MODIFIED_DATE)
       .notes(DEFAULT_NOTES)
-      .historyUpdate(DEFAULT_HISTORY_UPDATE)
       .deleted(DEFAULT_DELETED)
       .priorityIndex(DEFAULT_PRIORITY_INDEX)
       .countUse(DEFAULT_COUNT_USE);
@@ -166,12 +134,12 @@ class BaseInfoResourceIT {
    */
   public static BaseInfo createUpdatedEntity(EntityManager em) {
     BaseInfo baseInfo = new BaseInfo()
+      .uuid(UPDATED_UUID)
       .processStatus(UPDATED_PROCESS_STATUS)
       .modifiedClass(UPDATED_MODIFIED_CLASS)
       .createdDate(UPDATED_CREATED_DATE)
       .modifiedDate(UPDATED_MODIFIED_DATE)
       .notes(UPDATED_NOTES)
-      .historyUpdate(UPDATED_HISTORY_UPDATE)
       .deleted(UPDATED_DELETED)
       .priorityIndex(UPDATED_PRIORITY_INDEX)
       .countUse(UPDATED_COUNT_USE);
@@ -197,12 +165,12 @@ class BaseInfoResourceIT {
     List<BaseInfo> baseInfoList = baseInfoRepository.findAll();
     assertThat(baseInfoList).hasSize(databaseSizeBeforeCreate + 1);
     BaseInfo testBaseInfo = baseInfoList.get(baseInfoList.size() - 1);
+    assertThat(testBaseInfo.getUuid()).isEqualTo(DEFAULT_UUID);
     assertThat(testBaseInfo.getProcessStatus()).isEqualTo(DEFAULT_PROCESS_STATUS);
     assertThat(testBaseInfo.getModifiedClass()).isEqualTo(DEFAULT_MODIFIED_CLASS);
     assertThat(testBaseInfo.getCreatedDate()).isEqualTo(DEFAULT_CREATED_DATE);
     assertThat(testBaseInfo.getModifiedDate()).isEqualTo(DEFAULT_MODIFIED_DATE);
     assertThat(testBaseInfo.getNotes()).isEqualTo(DEFAULT_NOTES);
-    assertThat(testBaseInfo.getHistoryUpdate()).isEqualTo(DEFAULT_HISTORY_UPDATE);
     assertThat(testBaseInfo.getDeleted()).isEqualTo(DEFAULT_DELETED);
     assertThat(testBaseInfo.getPriorityIndex()).isEqualTo(DEFAULT_PRIORITY_INDEX);
     assertThat(testBaseInfo.getCountUse()).isEqualTo(DEFAULT_COUNT_USE);
@@ -235,7 +203,27 @@ class BaseInfoResourceIT {
 
   @Test
   @Transactional
-  void getAllBaseInfos() throws Exception {
+  void checkUuidIsRequired() throws Exception
+  {
+    int databaseSizeBeforeTest = baseInfoRepository.findAll().size();
+    // set the field null
+    baseInfo.setUuid(null);
+
+    // Create the BaseInfo, which fails.
+    BaseInfoDTO baseInfoDTO = baseInfoMapper.toDto(baseInfo);
+
+    restBaseInfoMockMvc
+      .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(baseInfoDTO)))
+      .andExpect(status().isBadRequest());
+
+    List<BaseInfo> baseInfoList = baseInfoRepository.findAll();
+    assertThat(baseInfoList).hasSize(databaseSizeBeforeTest);
+  }
+
+  @Test
+  @Transactional
+  void getAllBaseInfos() throws Exception
+  {
     // Initialize the database
     baseInfoRepository.saveAndFlush(baseInfo);
 
@@ -245,12 +233,12 @@ class BaseInfoResourceIT {
       .andExpect(status().isOk())
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
       .andExpect(jsonPath("$.[*].id").value(hasItem(baseInfo.getId().intValue())))
+      .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
       .andExpect(jsonPath("$.[*].processStatus").value(hasItem(DEFAULT_PROCESS_STATUS.toString())))
       .andExpect(jsonPath("$.[*].modifiedClass").value(hasItem(DEFAULT_MODIFIED_CLASS)))
       .andExpect(jsonPath("$.[*].createdDate").value(hasItem(DEFAULT_CREATED_DATE.toString())))
       .andExpect(jsonPath("$.[*].modifiedDate").value(hasItem(DEFAULT_MODIFIED_DATE.toString())))
-      .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES.toString())))
-      .andExpect(jsonPath("$.[*].historyUpdate").value(hasItem(DEFAULT_HISTORY_UPDATE.toString())))
+      .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)))
       .andExpect(jsonPath("$.[*].deleted").value(hasItem(DEFAULT_DELETED.booleanValue())))
       .andExpect(jsonPath("$.[*].priorityIndex").value(hasItem(DEFAULT_PRIORITY_INDEX.intValue())))
       .andExpect(jsonPath("$.[*].countUse").value(hasItem(DEFAULT_COUNT_USE.intValue())));
@@ -268,12 +256,12 @@ class BaseInfoResourceIT {
       .andExpect(status().isOk())
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
       .andExpect(jsonPath("$.id").value(baseInfo.getId().intValue()))
+      .andExpect(jsonPath("$.uuid").value(DEFAULT_UUID.toString()))
       .andExpect(jsonPath("$.processStatus").value(DEFAULT_PROCESS_STATUS.toString()))
       .andExpect(jsonPath("$.modifiedClass").value(DEFAULT_MODIFIED_CLASS))
       .andExpect(jsonPath("$.createdDate").value(DEFAULT_CREATED_DATE.toString()))
       .andExpect(jsonPath("$.modifiedDate").value(DEFAULT_MODIFIED_DATE.toString()))
-      .andExpect(jsonPath("$.notes").value(DEFAULT_NOTES.toString()))
-      .andExpect(jsonPath("$.historyUpdate").value(DEFAULT_HISTORY_UPDATE.toString()))
+      .andExpect(jsonPath("$.notes").value(DEFAULT_NOTES))
       .andExpect(jsonPath("$.deleted").value(DEFAULT_DELETED.booleanValue()))
       .andExpect(jsonPath("$.priorityIndex").value(DEFAULT_PRIORITY_INDEX.intValue()))
       .andExpect(jsonPath("$.countUse").value(DEFAULT_COUNT_USE.intValue()));
@@ -299,7 +287,64 @@ class BaseInfoResourceIT {
 
   @Test
   @Transactional
-  void getAllBaseInfosByProcessStatusIsEqualToSomething() throws Exception {
+  void getAllBaseInfosByUuidIsEqualToSomething() throws Exception
+  {
+    // Initialize the database
+    baseInfoRepository.saveAndFlush(baseInfo);
+
+    // Get all the baseInfoList where uuid equals to DEFAULT_UUID
+    defaultBaseInfoShouldBeFound("uuid.equals=" + DEFAULT_UUID);
+
+    // Get all the baseInfoList where uuid equals to UPDATED_UUID
+    defaultBaseInfoShouldNotBeFound("uuid.equals=" + UPDATED_UUID);
+  }
+
+  @Test
+  @Transactional
+  void getAllBaseInfosByUuidIsNotEqualToSomething() throws Exception
+  {
+    // Initialize the database
+    baseInfoRepository.saveAndFlush(baseInfo);
+
+    // Get all the baseInfoList where uuid not equals to DEFAULT_UUID
+    defaultBaseInfoShouldNotBeFound("uuid.notEquals=" + DEFAULT_UUID);
+
+    // Get all the baseInfoList where uuid not equals to UPDATED_UUID
+    defaultBaseInfoShouldBeFound("uuid.notEquals=" + UPDATED_UUID);
+  }
+
+  @Test
+  @Transactional
+  void getAllBaseInfosByUuidIsInShouldWork() throws Exception
+  {
+    // Initialize the database
+    baseInfoRepository.saveAndFlush(baseInfo);
+
+    // Get all the baseInfoList where uuid in DEFAULT_UUID or UPDATED_UUID
+    defaultBaseInfoShouldBeFound("uuid.in=" + DEFAULT_UUID + "," + UPDATED_UUID);
+
+    // Get all the baseInfoList where uuid equals to UPDATED_UUID
+    defaultBaseInfoShouldNotBeFound("uuid.in=" + UPDATED_UUID);
+  }
+
+  @Test
+  @Transactional
+  void getAllBaseInfosByUuidIsNullOrNotNull() throws Exception
+  {
+    // Initialize the database
+    baseInfoRepository.saveAndFlush(baseInfo);
+
+    // Get all the baseInfoList where uuid is not null
+    defaultBaseInfoShouldBeFound("uuid.specified=true");
+
+    // Get all the baseInfoList where uuid is null
+    defaultBaseInfoShouldNotBeFound("uuid.specified=false");
+  }
+
+  @Test
+  @Transactional
+  void getAllBaseInfosByProcessStatusIsEqualToSomething() throws Exception
+  {
     // Initialize the database
     baseInfoRepository.saveAndFlush(baseInfo);
 
@@ -793,7 +838,28 @@ class BaseInfoResourceIT {
 
   @Test
   @Transactional
-  void getAllBaseInfosByClassInfoIsEqualToSomething() throws Exception {
+  void getAllBaseInfosByHistoryUpdateIsEqualToSomething() throws Exception
+  {
+    // Initialize the database
+    baseInfoRepository.saveAndFlush(baseInfo);
+    HistoryUpdate historyUpdate = HistoryUpdateResourceIT.createEntity(em);
+    em.persist(historyUpdate);
+    em.flush();
+    baseInfo.addHistoryUpdate(historyUpdate);
+    baseInfoRepository.saveAndFlush(baseInfo);
+    Long historyUpdateId = historyUpdate.getId();
+
+    // Get all the baseInfoList where historyUpdate equals to historyUpdateId
+    defaultBaseInfoShouldBeFound("historyUpdateId.equals=" + historyUpdateId);
+
+    // Get all the baseInfoList where historyUpdate equals to (historyUpdateId + 1)
+    defaultBaseInfoShouldNotBeFound("historyUpdateId.equals=" + (historyUpdateId + 1));
+  }
+
+  @Test
+  @Transactional
+  void getAllBaseInfosByClassInfoIsEqualToSomething() throws Exception
+  {
     // Initialize the database
     baseInfoRepository.saveAndFlush(baseInfo);
     ClassInfo classInfo = ClassInfoResourceIT.createEntity(em);
@@ -1475,12 +1541,12 @@ class BaseInfoResourceIT {
       .andExpect(status().isOk())
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
       .andExpect(jsonPath("$.[*].id").value(hasItem(baseInfo.getId().intValue())))
+      .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
       .andExpect(jsonPath("$.[*].processStatus").value(hasItem(DEFAULT_PROCESS_STATUS.toString())))
       .andExpect(jsonPath("$.[*].modifiedClass").value(hasItem(DEFAULT_MODIFIED_CLASS)))
       .andExpect(jsonPath("$.[*].createdDate").value(hasItem(DEFAULT_CREATED_DATE.toString())))
       .andExpect(jsonPath("$.[*].modifiedDate").value(hasItem(DEFAULT_MODIFIED_DATE.toString())))
-      .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES.toString())))
-      .andExpect(jsonPath("$.[*].historyUpdate").value(hasItem(DEFAULT_HISTORY_UPDATE.toString())))
+      .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)))
       .andExpect(jsonPath("$.[*].deleted").value(hasItem(DEFAULT_DELETED.booleanValue())))
       .andExpect(jsonPath("$.[*].priorityIndex").value(hasItem(DEFAULT_PRIORITY_INDEX.intValue())))
       .andExpect(jsonPath("$.[*].countUse").value(hasItem(DEFAULT_COUNT_USE.intValue())));
@@ -1532,12 +1598,12 @@ class BaseInfoResourceIT {
     // Disconnect from session so that the updates on updatedBaseInfo are not directly saved in db
     em.detach(updatedBaseInfo);
     updatedBaseInfo
+      .uuid(UPDATED_UUID)
       .processStatus(UPDATED_PROCESS_STATUS)
       .modifiedClass(UPDATED_MODIFIED_CLASS)
       .createdDate(UPDATED_CREATED_DATE)
       .modifiedDate(UPDATED_MODIFIED_DATE)
       .notes(UPDATED_NOTES)
-      .historyUpdate(UPDATED_HISTORY_UPDATE)
       .deleted(UPDATED_DELETED)
       .priorityIndex(UPDATED_PRIORITY_INDEX)
       .countUse(UPDATED_COUNT_USE);
@@ -1555,12 +1621,12 @@ class BaseInfoResourceIT {
     List<BaseInfo> baseInfoList = baseInfoRepository.findAll();
     assertThat(baseInfoList).hasSize(databaseSizeBeforeUpdate);
     BaseInfo testBaseInfo = baseInfoList.get(baseInfoList.size() - 1);
+    assertThat(testBaseInfo.getUuid()).isEqualTo(UPDATED_UUID);
     assertThat(testBaseInfo.getProcessStatus()).isEqualTo(UPDATED_PROCESS_STATUS);
     assertThat(testBaseInfo.getModifiedClass()).isEqualTo(UPDATED_MODIFIED_CLASS);
     assertThat(testBaseInfo.getCreatedDate()).isEqualTo(UPDATED_CREATED_DATE);
     assertThat(testBaseInfo.getModifiedDate()).isEqualTo(UPDATED_MODIFIED_DATE);
     assertThat(testBaseInfo.getNotes()).isEqualTo(UPDATED_NOTES);
-    assertThat(testBaseInfo.getHistoryUpdate()).isEqualTo(UPDATED_HISTORY_UPDATE);
     assertThat(testBaseInfo.getDeleted()).isEqualTo(UPDATED_DELETED);
     assertThat(testBaseInfo.getPriorityIndex()).isEqualTo(UPDATED_PRIORITY_INDEX);
     assertThat(testBaseInfo.getCountUse()).isEqualTo(UPDATED_COUNT_USE);
@@ -1656,10 +1722,10 @@ class BaseInfoResourceIT {
     partialUpdatedBaseInfo.setId(baseInfo.getId());
 
     partialUpdatedBaseInfo
+      .modifiedClass(UPDATED_MODIFIED_CLASS)
       .createdDate(UPDATED_CREATED_DATE)
       .modifiedDate(UPDATED_MODIFIED_DATE)
       .notes(UPDATED_NOTES)
-      .historyUpdate(UPDATED_HISTORY_UPDATE)
       .priorityIndex(UPDATED_PRIORITY_INDEX)
       .countUse(UPDATED_COUNT_USE);
 
@@ -1675,12 +1741,12 @@ class BaseInfoResourceIT {
     List<BaseInfo> baseInfoList = baseInfoRepository.findAll();
     assertThat(baseInfoList).hasSize(databaseSizeBeforeUpdate);
     BaseInfo testBaseInfo = baseInfoList.get(baseInfoList.size() - 1);
+    assertThat(testBaseInfo.getUuid()).isEqualTo(DEFAULT_UUID);
     assertThat(testBaseInfo.getProcessStatus()).isEqualTo(DEFAULT_PROCESS_STATUS);
-    assertThat(testBaseInfo.getModifiedClass()).isEqualTo(DEFAULT_MODIFIED_CLASS);
+    assertThat(testBaseInfo.getModifiedClass()).isEqualTo(UPDATED_MODIFIED_CLASS);
     assertThat(testBaseInfo.getCreatedDate()).isEqualTo(UPDATED_CREATED_DATE);
     assertThat(testBaseInfo.getModifiedDate()).isEqualTo(UPDATED_MODIFIED_DATE);
     assertThat(testBaseInfo.getNotes()).isEqualTo(UPDATED_NOTES);
-    assertThat(testBaseInfo.getHistoryUpdate()).isEqualTo(UPDATED_HISTORY_UPDATE);
     assertThat(testBaseInfo.getDeleted()).isEqualTo(DEFAULT_DELETED);
     assertThat(testBaseInfo.getPriorityIndex()).isEqualTo(UPDATED_PRIORITY_INDEX);
     assertThat(testBaseInfo.getCountUse()).isEqualTo(UPDATED_COUNT_USE);
@@ -1699,12 +1765,12 @@ class BaseInfoResourceIT {
     partialUpdatedBaseInfo.setId(baseInfo.getId());
 
     partialUpdatedBaseInfo
+      .uuid(UPDATED_UUID)
       .processStatus(UPDATED_PROCESS_STATUS)
       .modifiedClass(UPDATED_MODIFIED_CLASS)
       .createdDate(UPDATED_CREATED_DATE)
       .modifiedDate(UPDATED_MODIFIED_DATE)
       .notes(UPDATED_NOTES)
-      .historyUpdate(UPDATED_HISTORY_UPDATE)
       .deleted(UPDATED_DELETED)
       .priorityIndex(UPDATED_PRIORITY_INDEX)
       .countUse(UPDATED_COUNT_USE);
@@ -1721,12 +1787,12 @@ class BaseInfoResourceIT {
     List<BaseInfo> baseInfoList = baseInfoRepository.findAll();
     assertThat(baseInfoList).hasSize(databaseSizeBeforeUpdate);
     BaseInfo testBaseInfo = baseInfoList.get(baseInfoList.size() - 1);
+    assertThat(testBaseInfo.getUuid()).isEqualTo(UPDATED_UUID);
     assertThat(testBaseInfo.getProcessStatus()).isEqualTo(UPDATED_PROCESS_STATUS);
     assertThat(testBaseInfo.getModifiedClass()).isEqualTo(UPDATED_MODIFIED_CLASS);
     assertThat(testBaseInfo.getCreatedDate()).isEqualTo(UPDATED_CREATED_DATE);
     assertThat(testBaseInfo.getModifiedDate()).isEqualTo(UPDATED_MODIFIED_DATE);
     assertThat(testBaseInfo.getNotes()).isEqualTo(UPDATED_NOTES);
-    assertThat(testBaseInfo.getHistoryUpdate()).isEqualTo(UPDATED_HISTORY_UPDATE);
     assertThat(testBaseInfo.getDeleted()).isEqualTo(UPDATED_DELETED);
     assertThat(testBaseInfo.getPriorityIndex()).isEqualTo(UPDATED_PRIORITY_INDEX);
     assertThat(testBaseInfo.getCountUse()).isEqualTo(UPDATED_COUNT_USE);
@@ -1842,12 +1908,12 @@ class BaseInfoResourceIT {
       .andExpect(status().isOk())
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
       .andExpect(jsonPath("$.[*].id").value(hasItem(baseInfo.getId().intValue())))
+      .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
       .andExpect(jsonPath("$.[*].processStatus").value(hasItem(DEFAULT_PROCESS_STATUS.toString())))
       .andExpect(jsonPath("$.[*].modifiedClass").value(hasItem(DEFAULT_MODIFIED_CLASS)))
       .andExpect(jsonPath("$.[*].createdDate").value(hasItem(DEFAULT_CREATED_DATE.toString())))
       .andExpect(jsonPath("$.[*].modifiedDate").value(hasItem(DEFAULT_MODIFIED_DATE.toString())))
-      .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES.toString())))
-      .andExpect(jsonPath("$.[*].historyUpdate").value(hasItem(DEFAULT_HISTORY_UPDATE.toString())))
+      .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)))
       .andExpect(jsonPath("$.[*].deleted").value(hasItem(DEFAULT_DELETED.booleanValue())))
       .andExpect(jsonPath("$.[*].priorityIndex").value(hasItem(DEFAULT_PRIORITY_INDEX.intValue())))
       .andExpect(jsonPath("$.[*].countUse").value(hasItem(DEFAULT_COUNT_USE.intValue())));

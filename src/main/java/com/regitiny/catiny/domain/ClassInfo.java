@@ -2,16 +2,16 @@ package com.regitiny.catiny.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.regitiny.catiny.GeneratedByJHipster;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
-import javax.persistence.*;
-import javax.validation.constraints.*;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Type;
-import org.springframework.data.elasticsearch.annotations.FieldType;
 
 /**
  * A ClassInfo.
@@ -41,8 +41,8 @@ public class ClassInfo implements Serializable {
   /**
    * packageName *  : tên package
    */
-  @Column(name = "package_name")
-  private String packageName;
+  @Column(name = "name_package")
+  private String namePackage;
 
   /**
    * fullName *     : tên đầy đủ của class . package+ClassName
@@ -61,6 +61,7 @@ public class ClassInfo implements Serializable {
   @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
   @JsonIgnoreProperties(
     value = {
+      "historyUpdates",
       "classInfo",
       "userProfile",
       "accountStatus",
@@ -118,33 +119,40 @@ public class ClassInfo implements Serializable {
     return this.uuid;
   }
 
-  public ClassInfo uuid(UUID uuid) {
+  public ClassInfo uuid(UUID uuid)
+  {
     this.uuid = uuid;
     return this;
   }
 
-  public void setUuid(UUID uuid) {
+  public void setUuid(UUID uuid)
+  {
     this.uuid = uuid;
   }
 
-  public String getPackageName() {
-    return this.packageName;
+  public String getNamePackage()
+  {
+    return this.namePackage;
   }
 
-  public ClassInfo packageName(String packageName) {
-    this.packageName = packageName;
+  public void setNamePackage(String namePackage)
+  {
+    this.namePackage = namePackage;
+  }
+
+  public ClassInfo namePackage(String namePackage)
+  {
+    this.namePackage = namePackage;
     return this;
   }
 
-  public void setPackageName(String packageName) {
-    this.packageName = packageName;
-  }
-
-  public String getFullName() {
+  public String getFullName()
+  {
     return this.fullName;
   }
 
-  public ClassInfo fullName(String fullName) {
+  public ClassInfo fullName(String fullName)
+  {
     this.fullName = fullName;
     return this;
   }
@@ -220,11 +228,11 @@ public class ClassInfo implements Serializable {
     @Override
     public String toString() {
         return "ClassInfo{" +
-            "id=" + getId() +
-            ", uuid='" + getUuid() + "'" +
-            ", packageName='" + getPackageName() + "'" +
-            ", fullName='" + getFullName() + "'" +
-            ", className='" + getClassName() + "'" +
-            "}";
+          "id=" + getId() +
+          ", uuid='" + getUuid() + "'" +
+          ", namePackage='" + getNamePackage() + "'" +
+          ", fullName='" + getFullName() + "'" +
+          ", className='" + getClassName() + "'" +
+          "}";
     }
 }

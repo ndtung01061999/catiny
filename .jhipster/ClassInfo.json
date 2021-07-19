@@ -8,7 +8,7 @@
       "fieldValidateRules": ["required", "unique"]
     },
     {
-      "fieldName": "packageName",
+      "fieldName": "namePackage",
       "fieldType": "String",
       "javadoc": "packageName *  : tên package"
     },

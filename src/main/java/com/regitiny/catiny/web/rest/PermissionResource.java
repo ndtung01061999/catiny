@@ -1,7 +1,5 @@
 package com.regitiny.catiny.web.rest;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
-
 import com.regitiny.catiny.GeneratedByJHipster;
 import com.regitiny.catiny.repository.PermissionRepository;
 import com.regitiny.catiny.service.PermissionQueryService;
@@ -9,19 +7,12 @@ import com.regitiny.catiny.service.PermissionService;
 import com.regitiny.catiny.service.criteria.PermissionCriteria;
 import com.regitiny.catiny.service.dto.PermissionDTO;
 import com.regitiny.catiny.web.rest.errors.BadRequestAlertException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -29,13 +20,22 @@ import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
 /**
  * REST controller for managing {@link com.regitiny.catiny.domain.Permission}.
  */
 @RestController
 @RequestMapping("/api")
 @GeneratedByJHipster
-public class PermissionResource {
+public class PermissionResource
+{
 
   private final Logger log = LoggerFactory.getLogger(PermissionResource.class);
 
@@ -68,9 +68,11 @@ public class PermissionResource {
    * @throws URISyntaxException if the Location URI syntax is incorrect.
    */
   @PostMapping("/permissions")
-  public ResponseEntity<PermissionDTO> createPermission(@RequestBody PermissionDTO permissionDTO) throws URISyntaxException {
+  public ResponseEntity<PermissionDTO> createPermission(@Valid @RequestBody PermissionDTO permissionDTO) throws URISyntaxException
+  {
     log.debug("REST request to save Permission : {}", permissionDTO);
-    if (permissionDTO.getId() != null) {
+    if (permissionDTO.getId() != null)
+    {
       throw new BadRequestAlertException("A new permission cannot already have an ID", ENTITY_NAME, "idexists");
     }
     PermissionDTO result = permissionService.save(permissionDTO);
@@ -93,7 +95,7 @@ public class PermissionResource {
   @PutMapping("/permissions/{id}")
   public ResponseEntity<PermissionDTO> updatePermission(
     @PathVariable(value = "id", required = false) final Long id,
-    @RequestBody PermissionDTO permissionDTO
+    @Valid @RequestBody PermissionDTO permissionDTO
   ) throws URISyntaxException {
     log.debug("REST request to update Permission : {}, {}", id, permissionDTO);
     if (permissionDTO.getId() == null) {
@@ -128,7 +130,7 @@ public class PermissionResource {
   @PatchMapping(value = "/permissions/{id}", consumes = "application/merge-patch+json")
   public ResponseEntity<PermissionDTO> partialUpdatePermission(
     @PathVariable(value = "id", required = false) final Long id,
-    @RequestBody PermissionDTO permissionDTO
+    @NotNull @RequestBody PermissionDTO permissionDTO
   ) throws URISyntaxException {
     log.debug("REST request to partial update Permission partially : {}, {}", id, permissionDTO);
     if (permissionDTO.getId() == null) {

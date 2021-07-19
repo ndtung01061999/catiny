@@ -71,12 +71,12 @@ class BaseInfoGatlingTest extends Simulation {
             .post("/api/base-infos")
             .headers(headers_http_authenticated)
             .body(StringBody("""{
-                "processStatus":"NOT_PROCESSED"
+                "uuid":null
+                , "processStatus":"NOT_PROCESSED"
                 , "modifiedClass":"SAMPLE_TEXT"
                 , "createdDate":"2020-01-01T00:00:00.000Z"
                 , "modifiedDate":"2020-01-01T00:00:00.000Z"
                 , "notes":null
-                , "historyUpdate":null
                 , "deleted":null
                 , "priorityIndex":"0"
                 , "countUse":"0"

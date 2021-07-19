@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col, FormText, UncontrolledTooltip } from 'reactstrap';
-import { isNumber, Translate, translate, ValidatedField, ValidatedForm } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useEffect, useState} from 'react';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, Row, UncontrolledTooltip} from 'reactstrap';
+import {Translate, translate, ValidatedField, ValidatedForm} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { getEntity, updateEntity, createEntity, reset } from './class-info.reducer';
-import { IClassInfo } from 'app/shared/model/class-info.model';
-import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
-import { useAppDispatch, useAppSelector } from 'app/config/store';
+import {createEntity, getEntity, updateEntity} from './class-info.reducer';
+import {useAppDispatch, useAppSelector} from 'app/config/store';
 
-export const ClassInfoUpdate = (props: RouteComponentProps<{ id: string }>) => {
+export const ClassInfoUpdate = (props: RouteComponentProps<{ id: string }>) =>
+{
   const dispatch = useAppDispatch();
 
   const [isNew] = useState(!props.match.params || !props.match.params.id);
@@ -91,27 +89,27 @@ export const ClassInfoUpdate = (props: RouteComponentProps<{ id: string }>) => {
                   required: { value: true, message: translate('entity.validation.required') },
                 }}
               />
-              <UncontrolledTooltip target="uuidLabel">
-                <Translate contentKey="catinyApp.classInfo.help.uuid" />
+              <UncontrolledTooltip target='uuidLabel'>
+                <Translate contentKey='catinyApp.classInfo.help.uuid' />
               </UncontrolledTooltip>
               <ValidatedField
-                label={translate('catinyApp.classInfo.packageName')}
-                id="class-info-packageName"
-                name="packageName"
-                data-cy="packageName"
-                type="text"
+                label={translate('catinyApp.classInfo.namePackage')}
+                id='class-info-namePackage'
+                name='namePackage'
+                data-cy='namePackage'
+                type='text'
               />
-              <UncontrolledTooltip target="packageNameLabel">
-                <Translate contentKey="catinyApp.classInfo.help.packageName" />
+              <UncontrolledTooltip target='namePackageLabel'>
+                <Translate contentKey='catinyApp.classInfo.help.namePackage' />
               </UncontrolledTooltip>
               <ValidatedField
                 label={translate('catinyApp.classInfo.fullName')}
-                id="class-info-fullName"
-                name="fullName"
-                data-cy="fullName"
-                type="text"
+                id='class-info-fullName'
+                name='fullName'
+                data-cy='fullName'
+                type='text'
                 validate={{
-                  required: { value: true, message: translate('entity.validation.required') },
+                  required: {value: true, message: translate('entity.validation.required')},
                 }}
               />
               <UncontrolledTooltip target="fullNameLabel">

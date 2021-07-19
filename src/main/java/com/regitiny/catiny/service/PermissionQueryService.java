@@ -1,15 +1,15 @@
 package com.regitiny.catiny.service;
 
 import com.regitiny.catiny.GeneratedByJHipster;
-import com.regitiny.catiny.domain.*; // for static metamodels
+import com.regitiny.catiny.domain.BaseInfo_;
+import com.regitiny.catiny.domain.MasterUser_;
 import com.regitiny.catiny.domain.Permission;
+import com.regitiny.catiny.domain.Permission_;
 import com.regitiny.catiny.repository.PermissionRepository;
 import com.regitiny.catiny.repository.search.PermissionSearchRepository;
 import com.regitiny.catiny.service.criteria.PermissionCriteria;
 import com.regitiny.catiny.service.dto.PermissionDTO;
 import com.regitiny.catiny.service.mapper.PermissionMapper;
-import java.util.List;
-import javax.persistence.criteria.JoinType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -18,6 +18,9 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tech.jhipster.service.QueryService;
+
+import javax.persistence.criteria.JoinType;
+import java.util.List;
 
 /**
  * Service for executing complex queries for {@link Permission} entities in the database.
@@ -92,20 +95,30 @@ public class PermissionQueryService extends QueryService<Permission> {
    */
   protected Specification<Permission> createSpecification(PermissionCriteria criteria) {
     Specification<Permission> specification = Specification.where(null);
-    if (criteria != null) {
-      if (criteria.getId() != null) {
+    if (criteria != null)
+    {
+      if (criteria.getId() != null)
+      {
         specification = specification.and(buildRangeSpecification(criteria.getId(), Permission_.id));
       }
-      if (criteria.getRead() != null) {
+      if (criteria.getUuid() != null)
+      {
+        specification = specification.and(buildSpecification(criteria.getUuid(), Permission_.uuid));
+      }
+      if (criteria.getRead() != null)
+      {
         specification = specification.and(buildSpecification(criteria.getRead(), Permission_.read));
       }
-      if (criteria.getWrite() != null) {
+      if (criteria.getWrite() != null)
+      {
         specification = specification.and(buildSpecification(criteria.getWrite(), Permission_.write));
       }
-      if (criteria.getShare() != null) {
+      if (criteria.getShare() != null)
+      {
         specification = specification.and(buildSpecification(criteria.getShare(), Permission_.share));
       }
-      if (criteria.getDelete() != null) {
+      if (criteria.getDelete() != null)
+      {
         specification = specification.and(buildSpecification(criteria.getDelete(), Permission_.delete));
       }
       if (criteria.getAdd() != null) {

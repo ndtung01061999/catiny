@@ -1,14 +1,15 @@
-import { element, by, ElementFinder } from 'protractor';
-import { waitUntilDisplayed, waitUntilHidden, isVisible } from '../../util/utils';
+import {by, element, ElementFinder} from 'protractor';
+import {waitUntilDisplayed, waitUntilHidden} from '../../util/utils';
 
 const expect = chai.expect;
 
-export default class ClassInfoUpdatePage {
+export default class ClassInfoUpdatePage
+{
   pageTitle: ElementFinder = element(by.id('catinyApp.classInfo.home.createOrEditLabel'));
   saveButton: ElementFinder = element(by.id('save-entity'));
   cancelButton: ElementFinder = element(by.id('cancel-save'));
   uuidInput: ElementFinder = element(by.css('input#class-info-uuid'));
-  packageNameInput: ElementFinder = element(by.css('input#class-info-packageName'));
+  namePackageInput: ElementFinder = element(by.css('input#class-info-namePackage'));
   fullNameInput: ElementFinder = element(by.css('input#class-info-fullName'));
   classNameInput: ElementFinder = element(by.css('input#class-info-className'));
 
@@ -16,27 +17,33 @@ export default class ClassInfoUpdatePage {
     return this.pageTitle;
   }
 
-  async setUuidInput(uuid) {
+  async setUuidInput(uuid)
+  {
     await this.uuidInput.sendKeys(uuid);
   }
 
-  async getUuidInput() {
+  async getUuidInput()
+  {
     return this.uuidInput.getAttribute('value');
   }
 
-  async setPackageNameInput(packageName) {
-    await this.packageNameInput.sendKeys(packageName);
+  async setNamePackageInput(namePackage)
+  {
+    await this.namePackageInput.sendKeys(namePackage);
   }
 
-  async getPackageNameInput() {
-    return this.packageNameInput.getAttribute('value');
+  async getNamePackageInput()
+  {
+    return this.namePackageInput.getAttribute('value');
   }
 
-  async setFullNameInput(fullName) {
+  async setFullNameInput(fullName)
+  {
     await this.fullNameInput.sendKeys(fullName);
   }
 
-  async getFullNameInput() {
+  async getFullNameInput()
+  {
     return this.fullNameInput.getAttribute('value');
   }
 
@@ -64,7 +71,7 @@ export default class ClassInfoUpdatePage {
     await waitUntilDisplayed(this.saveButton);
     await this.setUuidInput('64c99148-3908-465d-8c4a-e510e3ade974');
     await waitUntilDisplayed(this.saveButton);
-    await this.setPackageNameInput('packageName');
+    await this.setNamePackageInput('namePackage');
     await waitUntilDisplayed(this.saveButton);
     await this.setFullNameInput('fullName');
     await waitUntilDisplayed(this.saveButton);

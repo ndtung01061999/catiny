@@ -20,13 +20,13 @@
       },
       "id": "ID",
       "uuid": "Uuid",
-      "packageName": "Package Name",
+      "namePackage": "Name Package",
       "fullName": "Full Name",
       "className": "Class Name",
       "baseInfo": "Base Info",
       "help": {
         "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
-        "packageName": "packageName *  : tên package",
+        "namePackage": "packageName *  : tên package",
         "fullName": "fullName *     : tên đầy đủ của class . package+ClassName",
         "className": "classname *    : tên của class"
       }

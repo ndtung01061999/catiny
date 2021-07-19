@@ -1,17 +1,14 @@
 package com.regitiny.catiny.service.criteria;
 
 import com.regitiny.catiny.GeneratedByJHipster;
-import java.io.Serializable;
-import java.util.Objects;
 import tech.jhipster.service.Criteria;
-import tech.jhipster.service.filter.BooleanFilter;
-import tech.jhipster.service.filter.DoubleFilter;
 import tech.jhipster.service.filter.Filter;
-import tech.jhipster.service.filter.FloatFilter;
-import tech.jhipster.service.filter.IntegerFilter;
 import tech.jhipster.service.filter.LongFilter;
 import tech.jhipster.service.filter.StringFilter;
 import tech.jhipster.service.filter.UUIDFilter;
+
+import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Criteria class for the {@link com.regitiny.catiny.domain.ClassInfo} entity. This class is used
@@ -31,7 +28,7 @@ public class ClassInfoCriteria implements Serializable, Criteria {
 
   private UUIDFilter uuid;
 
-  private StringFilter packageName;
+  private StringFilter namePackage;
 
   private StringFilter fullName;
 
@@ -44,7 +41,7 @@ public class ClassInfoCriteria implements Serializable, Criteria {
   public ClassInfoCriteria(ClassInfoCriteria other) {
     this.id = other.id == null ? null : other.id.copy();
     this.uuid = other.uuid == null ? null : other.uuid.copy();
-    this.packageName = other.packageName == null ? null : other.packageName.copy();
+    this.namePackage = other.namePackage == null ? null : other.namePackage.copy();
     this.fullName = other.fullName == null ? null : other.fullName.copy();
     this.className = other.className == null ? null : other.className.copy();
     this.baseInfoId = other.baseInfoId == null ? null : other.baseInfoId.copy();
@@ -75,37 +72,46 @@ public class ClassInfoCriteria implements Serializable, Criteria {
   }
 
   public UUIDFilter uuid() {
-    if (uuid == null) {
+    if (uuid == null)
+    {
       uuid = new UUIDFilter();
     }
     return uuid;
   }
 
-  public void setUuid(UUIDFilter uuid) {
+  public void setUuid(UUIDFilter uuid)
+  {
     this.uuid = uuid;
   }
 
-  public StringFilter getPackageName() {
-    return packageName;
+  public StringFilter getNamePackage()
+  {
+    return namePackage;
   }
 
-  public StringFilter packageName() {
-    if (packageName == null) {
-      packageName = new StringFilter();
+  public void setNamePackage(StringFilter namePackage)
+  {
+    this.namePackage = namePackage;
+  }
+
+  public StringFilter namePackage()
+  {
+    if (namePackage == null)
+    {
+      namePackage = new StringFilter();
     }
-    return packageName;
+    return namePackage;
   }
 
-  public void setPackageName(StringFilter packageName) {
-    this.packageName = packageName;
-  }
-
-  public StringFilter getFullName() {
+  public StringFilter getFullName()
+  {
     return fullName;
   }
 
-  public StringFilter fullName() {
-    if (fullName == null) {
+  public StringFilter fullName()
+  {
+    if (fullName == null)
+    {
       fullName = new StringFilter();
     }
     return fullName;
@@ -156,29 +162,29 @@ public class ClassInfoCriteria implements Serializable, Criteria {
     final ClassInfoCriteria that = (ClassInfoCriteria) o;
     return (
       Objects.equals(id, that.id) &&
-      Objects.equals(uuid, that.uuid) &&
-      Objects.equals(packageName, that.packageName) &&
-      Objects.equals(fullName, that.fullName) &&
-      Objects.equals(className, that.className) &&
-      Objects.equals(baseInfoId, that.baseInfoId)
+        Objects.equals(uuid, that.uuid) &&
+        Objects.equals(namePackage, that.namePackage) &&
+        Objects.equals(fullName, that.fullName) &&
+        Objects.equals(className, that.className) &&
+        Objects.equals(baseInfoId, that.baseInfoId)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, uuid, packageName, fullName, className, baseInfoId);
+    return Objects.hash(id, uuid, namePackage, fullName, className, baseInfoId);
   }
 
   // prettier-ignore
     @Override
     public String toString() {
         return "ClassInfoCriteria{" +
-            (id != null ? "id=" + id + ", " : "") +
-            (uuid != null ? "uuid=" + uuid + ", " : "") +
-            (packageName != null ? "packageName=" + packageName + ", " : "") +
-            (fullName != null ? "fullName=" + fullName + ", " : "") +
-            (className != null ? "className=" + className + ", " : "") +
-            (baseInfoId != null ? "baseInfoId=" + baseInfoId + ", " : "") +
-            "}";
+          (id != null ? "id=" + id + ", " : "") +
+          (uuid != null ? "uuid=" + uuid + ", " : "") +
+          (namePackage != null ? "namePackage=" + namePackage + ", " : "") +
+          (fullName != null ? "fullName=" + fullName + ", " : "") +
+          (className != null ? "className=" + className + ", " : "") +
+          (baseInfoId != null ? "baseInfoId=" + baseInfoId + ", " : "") +
+          "}";
     }
 }

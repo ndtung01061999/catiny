@@ -808,8 +808,44 @@ relationship ManyToMany
 //    MasterUser to MessageGroup
     MasterUser to TopicInterest
 }
+
+/** BaseInfo */
+entity BaseInfo
+{
+	  /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
+    uuid UUID required unique
+    /** processStatus *: @defaultValue( DONE ) -> tình trạng xử lý sử dụng trong phê duyệt */
+    processStatus ProcessStatus
+    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
+    modifiedClass String
+    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
+    createdDate  Instant
+    /** modifiedDate * : thời gian sửa bản ghi này */
+    modifiedDate  Instant
+    /** notes *        : @type Json -> chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json" */
+    notes TextBlob
+    /** deleted *      : @defaultValue( false ) -> đánh dấu là đã xóa */
+    deleted Boolean
+    /** priorityIndex *: chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao) */
+    priorityIndex Long
+    /** countUse *     : đếm số lần truy cập vào bản ghi này để xem sửa xóa **/
+    countUse Long
+}
+entity ClassInfo
+{
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
+    uuid UUID required unique
+    /** packageName *  : tên package */
+    namePackage String
+    /** fullName *     : tên đầy đủ của class . package+ClassName */
+    fullName String required unique
+    /** classname *    : tên của class */
+    className String
+}
 entity Permission
 {
+	 /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
+    uuid UUID required unique
     /** quyền đọc */
     read Boolean
     /** quyền ghi và sửa*/
@@ -823,38 +859,14 @@ entity Permission
     /** cấp độ 0->* số nhỏ hơn sẽ có quyền lớn hơn */
     level Integer
 }
-/** BaseInfo */
-entity BaseInfo
+entity HistoryUpdate
 {
-    /** processStatus *: @defaultValue( DONE ) -> tình trạng xử lý sử dụng trong phê duyệt */
-    processStatus ProcessStatus
-    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
-    modifiedClass String
-    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
-    createdDate  Instant
-    /** modifiedDate * : thời gian sửa bản ghi này */
-    modifiedDate  Instant
-    /** notes *        : @type Json -> chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json" */
-    notes TextBlob
-    /** historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
-    historyUpdate TextBlob
-    /** deleted *      : @defaultValue( false ) -> đánh dấu là đã xóa */
-    deleted Boolean
-    /** priorityIndex *: chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao) */
-    priorityIndex Long
-    /** countUse *     : đếm số lần truy cập vào bản ghi này để xem sửa xóa **/
-    countUse Long
-}
-entity ClassInfo
-{
-    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
+	  /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
-    /** packageName *  : tên package */
-    packageName String
-    /** fullName *     : tên đầy đủ của class . package+ClassName */
-    fullName String required unique
-    /** classname *    : tên của class */
-    className String
+    /** version        : phiên bản (bắt đầu từ 0)*/
+    version Integer
+    /** content        : @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
+    content TextBlob
 }
 relationship OneToOne
 {
@@ -897,4 +909,8 @@ relationship ManyToOne
 {
     Permission to BaseInfo
     BaseInfo to ClassInfo
+}
+relationship OneToMany
+{
+    BaseInfo to HistoryUpdate
 }

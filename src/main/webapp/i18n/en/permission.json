@@ -19,6 +19,7 @@
         "title": "Permission"
       },
       "id": "ID",
+      "uuid": "Uuid",
       "read": "Read",
       "write": "Write",
       "share": "Share",
@@ -28,6 +29,7 @@
       "baseInfo": "Base Info",
       "masterUser": "Master User",
       "help": {
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
         "read": "quyền đọc",
         "write": "quyền ghi và sửa",
         "share": "quyền chia sẻ",

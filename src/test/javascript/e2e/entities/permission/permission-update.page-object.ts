@@ -1,12 +1,14 @@
-import { element, by, ElementFinder } from 'protractor';
-import { waitUntilDisplayed, waitUntilHidden, isVisible } from '../../util/utils';
+import {by, element, ElementFinder} from 'protractor';
+import {waitUntilDisplayed, waitUntilHidden} from '../../util/utils';
 
 const expect = chai.expect;
 
-export default class PermissionUpdatePage {
+export default class PermissionUpdatePage
+{
   pageTitle: ElementFinder = element(by.id('catinyApp.permission.home.createOrEditLabel'));
   saveButton: ElementFinder = element(by.id('save-entity'));
   cancelButton: ElementFinder = element(by.id('cancel-save'));
+  uuidInput: ElementFinder = element(by.css('input#permission-uuid'));
   readInput: ElementFinder = element(by.css('input#permission-read'));
   writeInput: ElementFinder = element(by.css('input#permission-write'));
   shareInput: ElementFinder = element(by.css('input#permission-share'));
@@ -16,17 +18,33 @@ export default class PermissionUpdatePage {
   baseInfoSelect: ElementFinder = element(by.css('select#permission-baseInfo'));
   masterUserSelect: ElementFinder = element(by.css('select#permission-masterUser'));
 
-  getPageTitle() {
+  getPageTitle()
+  {
     return this.pageTitle;
   }
 
-  getReadInput() {
+  async setUuidInput(uuid)
+  {
+    await this.uuidInput.sendKeys(uuid);
+  }
+
+  async getUuidInput()
+  {
+    return this.uuidInput.getAttribute('value');
+  }
+
+  getReadInput()
+  {
     return this.readInput;
   }
-  getWriteInput() {
+
+  getWriteInput()
+  {
     return this.writeInput;
   }
-  getShareInput() {
+
+  getShareInput()
+  {
     return this.shareInput;
   }
   getDeleteInput() {
@@ -87,17 +105,24 @@ export default class PermissionUpdatePage {
     return this.saveButton;
   }
 
-  async enterData() {
+  async enterData()
+  {
+    await waitUntilDisplayed(this.saveButton);
+    await this.setUuidInput('64c99148-3908-465d-8c4a-e510e3ade974');
     await waitUntilDisplayed(this.saveButton);
     const selectedRead = await this.getReadInput().isSelected();
-    if (selectedRead) {
+    if (selectedRead)
+    {
       await this.getReadInput().click();
-    } else {
+    }
+    else
+    {
       await this.getReadInput().click();
     }
     await waitUntilDisplayed(this.saveButton);
     const selectedWrite = await this.getWriteInput().isSelected();
-    if (selectedWrite) {
+    if (selectedWrite)
+    {
       await this.getWriteInput().click();
     } else {
       await this.getWriteInput().click();

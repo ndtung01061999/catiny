@@ -2,14 +2,14 @@ package com.regitiny.catiny.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.regitiny.catiny.GeneratedByJHipster;
-import java.io.Serializable;
-import java.util.UUID;
-import javax.persistence.*;
-import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
-import org.springframework.data.elasticsearch.annotations.FieldType;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.UUID;
 
 /**
  * @what?         	  -> The UserProfile entity .\n@why?          	  ->\n@use-to:       	  -> Lưu thông tin mở rộng của người dùng (trường học cơ quan làm việc ...)\n@commonly-used-in -> Trang cá nhân (trang giới thiệu)\n\n@describe      	  -> Đây là bảng NoSQL một số trường ở dưới dạng JSON ,NoSQL vì dữ liệu mỗi trường học , cơ quan ,nới sống ... đôi khikhông giống nhau
@@ -122,6 +122,7 @@ public class UserProfile implements Serializable {
 
   @JsonIgnoreProperties(
     value = {
+      "historyUpdates",
       "classInfo",
       "userProfile",
       "accountStatus",

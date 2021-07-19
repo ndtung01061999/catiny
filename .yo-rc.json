@@ -76,9 +76,10 @@
       "Event",
       "BaseInfo",
       "Permission",
-      "ClassInfo"
+      "ClassInfo",
+      "HistoryUpdate"
     ],
-    "lastLiquibaseTimestamp": 1626602033000,
+    "lastLiquibaseTimestamp": 1626624224000,
     "withGeneratedFlag": true,
     "devServerPort": 9060
   }

@@ -1,14 +1,14 @@
-import { entityItemSelector } from '../../support/commands';
+import {entityItemSelector} from '../../support/commands';
 import {
-  entityTableSelector,
-  entityDetailsButtonSelector,
-  entityDetailsBackButtonSelector,
-  entityCreateButtonSelector,
-  entityCreateSaveButtonSelector,
-  entityCreateCancelButtonSelector,
-  entityEditButtonSelector,
-  entityDeleteButtonSelector,
   entityConfirmDeleteButtonSelector,
+  entityCreateButtonSelector,
+  entityCreateCancelButtonSelector,
+  entityCreateSaveButtonSelector,
+  entityDeleteButtonSelector,
+  entityDetailsBackButtonSelector,
+  entityDetailsButtonSelector,
+  entityEditButtonSelector,
+  entityTableSelector,
 } from '../../support/entity';
 
 describe('ClassInfo e2e test', () => {
@@ -102,7 +102,7 @@ describe('ClassInfo e2e test', () => {
       .invoke('val')
       .should('match', new RegExp('eb9aff99-7742-4cd0-9942-e07c86bdbf4b'));
 
-    cy.get(`[data-cy="packageName"]`).type('object-oriented mindshare Garden').should('have.value', 'object-oriented mindshare Garden');
+    cy.get(`[data-cy="namePackage"]`).type('object-oriented mindshare Garden').should('have.value', 'object-oriented mindshare Garden');
 
     cy.get(`[data-cy="fullName"]`).type('Checking redundant Incredible').should('have.value', 'Checking redundant Incredible');
 

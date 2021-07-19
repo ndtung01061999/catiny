@@ -1,14 +1,14 @@
-import { entityItemSelector } from '../../support/commands';
+import {entityItemSelector} from '../../support/commands';
 import {
-  entityTableSelector,
-  entityDetailsButtonSelector,
-  entityDetailsBackButtonSelector,
-  entityCreateButtonSelector,
-  entityCreateSaveButtonSelector,
-  entityCreateCancelButtonSelector,
-  entityEditButtonSelector,
-  entityDeleteButtonSelector,
   entityConfirmDeleteButtonSelector,
+  entityCreateButtonSelector,
+  entityCreateCancelButtonSelector,
+  entityCreateSaveButtonSelector,
+  entityDeleteButtonSelector,
+  entityDetailsBackButtonSelector,
+  entityDetailsButtonSelector,
+  entityEditButtonSelector,
+  entityTableSelector,
 } from '../../support/entity';
 
 describe('Permission e2e test', () => {
@@ -92,10 +92,16 @@ describe('Permission e2e test', () => {
     cy.url().should('match', permissionPageUrlPattern);
   });
 
-  it('should create an instance of Permission', () => {
+  it('should create an instance of Permission', () =>
+  {
     cy.visit(permissionPageUrl);
-    cy.get(entityCreateButtonSelector).click({ force: true });
+    cy.get(entityCreateButtonSelector).click({force: true});
     cy.getEntityCreateUpdateHeading('Permission');
+
+    cy.get(`[data-cy="uuid"]`)
+      .type('ad9cceda-8fb0-4937-bd6b-0ea946cb2558')
+      .invoke('val')
+      .should('match', new RegExp('ad9cceda-8fb0-4937-bd6b-0ea946cb2558'));
 
     cy.get(`[data-cy="read"]`).should('not.be.checked');
     cy.get(`[data-cy="read"]`).click().should('be.checked');
@@ -112,7 +118,7 @@ describe('Permission e2e test', () => {
     cy.get(`[data-cy="add"]`).should('not.be.checked');
     cy.get(`[data-cy="add"]`).click().should('be.checked');
 
-    cy.get(`[data-cy="level"]`).type('88468').should('have.value', '88468');
+    cy.get(`[data-cy="level"]`).type('76413').should('have.value', '76413');
 
     cy.setFieldSelectToLastOfEntity('baseInfo');
 

@@ -1,18 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Input, InputGroup, FormGroup, Form, Col, Row, Table } from 'reactstrap';
-import { Translate, translate, getSortState } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, Form, FormGroup, Input, InputGroup, Row, Table} from 'reactstrap';
+import {getSortState, translate, Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { searchEntities, getEntities, reset } from './class-info.reducer';
-import { IClassInfo } from 'app/shared/model/class-info.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
-import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/shared/util/pagination.constants';
-import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
-import { useAppDispatch, useAppSelector } from 'app/config/store';
+import {getEntities, reset, searchEntities} from './class-info.reducer';
+import {ASC, DESC, ITEMS_PER_PAGE} from 'app/shared/util/pagination.constants';
+import {overridePaginationStateWithQueryParams} from 'app/shared/util/entity-utils';
+import {useAppDispatch, useAppSelector} from 'app/config/store';
 
-export const ClassInfo = (props: RouteComponentProps<{ url: string }>) => {
+export const ClassInfo = (props: RouteComponentProps<{ url: string }>) =>
+{
   const dispatch = useAppDispatch();
 
   const [search, setSearch] = useState('');
@@ -187,24 +186,24 @@ export const ClassInfo = (props: RouteComponentProps<{ url: string }>) => {
           {classInfoList && classInfoList.length > 0 ? (
             <Table responsive>
               <thead>
-                <tr>
-                  <th className="hand" onClick={sort('id')}>
-                    <Translate contentKey="catinyApp.classInfo.id">ID</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={sort('uuid')}>
-                    <Translate contentKey="catinyApp.classInfo.uuid">Uuid</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={sort('packageName')}>
-                    <Translate contentKey="catinyApp.classInfo.packageName">Package Name</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={sort('fullName')}>
-                    <Translate contentKey="catinyApp.classInfo.fullName">Full Name</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={sort('className')}>
-                    <Translate contentKey="catinyApp.classInfo.className">Class Name</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th />
-                </tr>
+              <tr>
+                <th className='hand' onClick={sort('id')}>
+                  <Translate contentKey='catinyApp.classInfo.id'>ID</Translate> <FontAwesomeIcon icon='sort' />
+                </th>
+                <th className='hand' onClick={sort('uuid')}>
+                  <Translate contentKey='catinyApp.classInfo.uuid'>Uuid</Translate> <FontAwesomeIcon icon='sort' />
+                </th>
+                <th className='hand' onClick={sort('namePackage')}>
+                  <Translate contentKey='catinyApp.classInfo.namePackage'>Name Package</Translate> <FontAwesomeIcon icon='sort' />
+                </th>
+                <th className='hand' onClick={sort('fullName')}>
+                  <Translate contentKey='catinyApp.classInfo.fullName'>Full Name</Translate> <FontAwesomeIcon icon='sort' />
+                </th>
+                <th className='hand' onClick={sort('className')}>
+                  <Translate contentKey='catinyApp.classInfo.className'>Class Name</Translate> <FontAwesomeIcon icon='sort' />
+                </th>
+                <th />
+              </tr>
               </thead>
               <tbody>
                 {classInfoList.map((classInfo, i) => (
@@ -215,7 +214,7 @@ export const ClassInfo = (props: RouteComponentProps<{ url: string }>) => {
                       </Button>
                     </td>
                     <td>{classInfo.uuid}</td>
-                    <td>{classInfo.packageName}</td>
+                    <td>{classInfo.namePackage}</td>
                     <td>{classInfo.fullName}</td>
                     <td>{classInfo.className}</td>
                     <td className="text-right">

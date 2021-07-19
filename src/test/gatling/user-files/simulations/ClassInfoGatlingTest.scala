@@ -72,7 +72,7 @@ class ClassInfoGatlingTest extends Simulation {
             .headers(headers_http_authenticated)
             .body(StringBody("""{
                 "uuid":null
-                , "packageName":"SAMPLE_TEXT"
+                , "namePackage":"SAMPLE_TEXT"
                 , "fullName":"SAMPLE_TEXT"
                 , "className":"SAMPLE_TEXT"
                 }""")).asJson

@@ -1,7 +1,9 @@
 package com.regitiny.catiny.advance.repository.base;
 
 import com.regitiny.catiny.advance.repository.CommonRepository;
+import com.regitiny.catiny.domain.MasterUser;
 import com.regitiny.catiny.repository.MasterUserRepository;
+import io.vavr.control.Option;
 
 /**
  * Spring Data SQL repository for the {@link com.regitiny.catiny.domain.MasterUser} entity.
@@ -12,4 +14,5 @@ import com.regitiny.catiny.repository.MasterUserRepository;
  */
 public interface MasterUserBaseRepository extends BaseRepository, CommonRepository, MasterUserRepository
 {
+  Option<MasterUser> findOneByUserLogin(String login);
 }

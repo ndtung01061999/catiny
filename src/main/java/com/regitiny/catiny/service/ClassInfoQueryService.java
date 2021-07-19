@@ -1,15 +1,14 @@
 package com.regitiny.catiny.service;
 
 import com.regitiny.catiny.GeneratedByJHipster;
-import com.regitiny.catiny.domain.*; // for static metamodels
+import com.regitiny.catiny.domain.BaseInfo_;
 import com.regitiny.catiny.domain.ClassInfo;
+import com.regitiny.catiny.domain.ClassInfo_;
 import com.regitiny.catiny.repository.ClassInfoRepository;
 import com.regitiny.catiny.repository.search.ClassInfoSearchRepository;
 import com.regitiny.catiny.service.criteria.ClassInfoCriteria;
 import com.regitiny.catiny.service.dto.ClassInfoDTO;
 import com.regitiny.catiny.service.mapper.ClassInfoMapper;
-import java.util.List;
-import javax.persistence.criteria.JoinType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -18,6 +17,9 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tech.jhipster.service.QueryService;
+
+import javax.persistence.criteria.JoinType;
+import java.util.List;
 
 /**
  * Service for executing complex queries for {@link ClassInfo} entities in the database.
@@ -92,23 +94,30 @@ public class ClassInfoQueryService extends QueryService<ClassInfo> {
    */
   protected Specification<ClassInfo> createSpecification(ClassInfoCriteria criteria) {
     Specification<ClassInfo> specification = Specification.where(null);
-    if (criteria != null) {
-      if (criteria.getId() != null) {
+    if (criteria != null)
+    {
+      if (criteria.getId() != null)
+      {
         specification = specification.and(buildRangeSpecification(criteria.getId(), ClassInfo_.id));
       }
-      if (criteria.getUuid() != null) {
+      if (criteria.getUuid() != null)
+      {
         specification = specification.and(buildSpecification(criteria.getUuid(), ClassInfo_.uuid));
       }
-      if (criteria.getPackageName() != null) {
-        specification = specification.and(buildStringSpecification(criteria.getPackageName(), ClassInfo_.packageName));
+      if (criteria.getNamePackage() != null)
+      {
+        specification = specification.and(buildStringSpecification(criteria.getNamePackage(), ClassInfo_.namePackage));
       }
-      if (criteria.getFullName() != null) {
+      if (criteria.getFullName() != null)
+      {
         specification = specification.and(buildStringSpecification(criteria.getFullName(), ClassInfo_.fullName));
       }
-      if (criteria.getClassName() != null) {
+      if (criteria.getClassName() != null)
+      {
         specification = specification.and(buildStringSpecification(criteria.getClassName(), ClassInfo_.className));
       }
-      if (criteria.getBaseInfoId() != null) {
+      if (criteria.getBaseInfoId() != null)
+      {
         specification =
           specification.and(
             buildSpecification(criteria.getBaseInfoId(), root -> root.join(ClassInfo_.baseInfos, JoinType.LEFT).get(BaseInfo_.id))

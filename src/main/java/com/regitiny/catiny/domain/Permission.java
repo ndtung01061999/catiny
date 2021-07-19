@@ -2,11 +2,14 @@ package com.regitiny.catiny.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.regitiny.catiny.GeneratedByJHipster;
-import java.io.Serializable;
-import javax.persistence.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.UUID;
 
 /**
  * A Permission.
@@ -16,7 +19,8 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @org.springframework.data.elasticsearch.annotations.Document(indexName = "permission")
 @GeneratedByJHipster
-public class Permission implements Serializable {
+public class Permission implements Serializable
+{
 
   private static final long serialVersionUID = 1L;
 
@@ -24,6 +28,14 @@ public class Permission implements Serializable {
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
   @SequenceGenerator(name = "sequenceGenerator")
   private Long id;
+
+  /**
+   * uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
+   */
+  @NotNull
+  @Type(type = "uuid-char")
+  @Column(name = "uuid", length = 36, nullable = false, unique = true)
+  private UUID uuid;
 
   /**
    * quyền đọc
@@ -64,6 +76,7 @@ public class Permission implements Serializable {
   @ManyToOne
   @JsonIgnoreProperties(
     value = {
+      "historyUpdates",
       "classInfo",
       "userProfile",
       "accountStatus",
@@ -115,20 +128,40 @@ public class Permission implements Serializable {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(Long id)
+  {
     this.id = id;
   }
 
-  public Permission id(Long id) {
+  public Permission id(Long id)
+  {
     this.id = id;
     return this;
   }
 
-  public Boolean getRead() {
+  public UUID getUuid()
+  {
+    return this.uuid;
+  }
+
+  public void setUuid(UUID uuid)
+  {
+    this.uuid = uuid;
+  }
+
+  public Permission uuid(UUID uuid)
+  {
+    this.uuid = uuid;
+    return this;
+  }
+
+  public Boolean getRead()
+  {
     return this.read;
   }
 
-  public Permission read(Boolean read) {
+  public Permission read(Boolean read)
+  {
     this.read = read;
     return this;
   }
@@ -251,13 +284,14 @@ public class Permission implements Serializable {
     @Override
     public String toString() {
         return "Permission{" +
-            "id=" + getId() +
-            ", read='" + getRead() + "'" +
-            ", write='" + getWrite() + "'" +
-            ", share='" + getShare() + "'" +
-            ", delete='" + getDelete() + "'" +
-            ", add='" + getAdd() + "'" +
-            ", level=" + getLevel() +
-            "}";
+          "id=" + getId() +
+          ", uuid='" + getUuid() + "'" +
+          ", read='" + getRead() + "'" +
+          ", write='" + getWrite() + "'" +
+          ", share='" + getShare() + "'" +
+          ", delete='" + getDelete() + "'" +
+          ", add='" + getAdd() + "'" +
+          ", level=" + getLevel() +
+          "}";
     }
 }

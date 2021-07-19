@@ -1,9 +1,10 @@
-import { IBaseInfo } from 'app/shared/model/base-info.model';
+import {IBaseInfo} from 'app/shared/model/base-info.model';
 
-export interface IClassInfo {
+export interface IClassInfo
+{
   id?: number;
   uuid?: string;
-  packageName?: string | null;
+  namePackage?: string | null;
   fullName?: string;
   className?: string | null;
   baseInfos?: IBaseInfo[] | null;

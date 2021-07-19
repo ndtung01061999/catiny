@@ -41,6 +41,7 @@
         "baseInfo": "Base Info",
         "permission": "Permission",
         "classInfo": "Class Info",
+        "historyUpdate": "History Update",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

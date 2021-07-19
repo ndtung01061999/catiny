@@ -1,29 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <databaseChangeLog
-    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd
-                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
 
-    <!--
-        Added the entity Permission.
-    -->
-    <changeSet id="20210718095352-1" author="jhipster">
-        <createTable tableName="permission">
-            <column name="id" type="bigint">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="jhi_read" type="boolean" remarks="quyền đọc">
-                <constraints nullable="true" />
-            </column>
-            <column name="jhi_write" type="boolean" remarks="quyền ghi và sửa">
-                <constraints nullable="true" />
-            </column>
-            <column name="share" type="boolean" remarks="quyền chia sẻ">
-                <constraints nullable="true" />
-            </column>
-            <column name="jhi_delete" type="boolean" remarks="quyền xóa">
+  <!--
+      Added the entity Permission.
+  -->
+  <changeSet id="20210718095352-1" author="jhipster">
+    <createTable tableName="permission">
+      <column name="id" type="bigint">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="uuid" type="${uuidType}"
+              remarks="uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)">
+        <constraints nullable="false" unique="true" uniqueConstraintName="ux_permission__uuid"/>
+      </column>
+      <column name="jhi_read" type="boolean" remarks="quyền đọc">
+        <constraints nullable="true"/>
+      </column>
+      <column name="jhi_write" type="boolean" remarks="quyền ghi và sửa">
+        <constraints nullable="true"/>
+      </column>
+      <column name="share" type="boolean" remarks="quyền chia sẻ">
+        <constraints nullable="true"/>
+      </column>
+      <column name="jhi_delete" type="boolean" remarks="quyền xóa">
                 <constraints nullable="true" />
             </column>
             <column name="jhi_add" type="boolean" remarks="quyền trao quyền cho user khác">
@@ -58,6 +60,7 @@
                   separator=";"
                   tableName="permission">
             <column name="id" type="numeric"/>
+          <column name="uuid" type="string"/>
             <column name="jhi_read" type="boolean"/>
             <column name="jhi_write" type="boolean"/>
             <column name="share" type="boolean"/>

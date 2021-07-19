@@ -1,18 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Input, InputGroup, FormGroup, Form, Col, Row, Table } from 'reactstrap';
-import { Translate, translate, getSortState } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, Form, FormGroup, Input, InputGroup, Row, Table} from 'reactstrap';
+import {getSortState, translate, Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { searchEntities, getEntities, reset } from './permission.reducer';
-import { IPermission } from 'app/shared/model/permission.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
-import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/shared/util/pagination.constants';
-import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
-import { useAppDispatch, useAppSelector } from 'app/config/store';
+import {getEntities, reset, searchEntities} from './permission.reducer';
+import {ASC, DESC, ITEMS_PER_PAGE} from 'app/shared/util/pagination.constants';
+import {overridePaginationStateWithQueryParams} from 'app/shared/util/entity-utils';
+import {useAppDispatch, useAppSelector} from 'app/config/store';
 
-export const Permission = (props: RouteComponentProps<{ url: string }>) => {
+export const Permission = (props: RouteComponentProps<{ url: string }>) =>
+{
   const dispatch = useAppDispatch();
 
   const [search, setSearch] = useState('');
@@ -187,20 +186,23 @@ export const Permission = (props: RouteComponentProps<{ url: string }>) => {
           {permissionList && permissionList.length > 0 ? (
             <Table responsive>
               <thead>
-                <tr>
-                  <th className="hand" onClick={sort('id')}>
-                    <Translate contentKey="catinyApp.permission.id">ID</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={sort('read')}>
-                    <Translate contentKey="catinyApp.permission.read">Read</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={sort('write')}>
-                    <Translate contentKey="catinyApp.permission.write">Write</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={sort('share')}>
-                    <Translate contentKey="catinyApp.permission.share">Share</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={sort('delete')}>
+              <tr>
+                <th className='hand' onClick={sort('id')}>
+                  <Translate contentKey='catinyApp.permission.id'>ID</Translate> <FontAwesomeIcon icon='sort' />
+                </th>
+                <th className='hand' onClick={sort('uuid')}>
+                  <Translate contentKey='catinyApp.permission.uuid'>Uuid</Translate> <FontAwesomeIcon icon='sort' />
+                </th>
+                <th className='hand' onClick={sort('read')}>
+                  <Translate contentKey='catinyApp.permission.read'>Read</Translate> <FontAwesomeIcon icon='sort' />
+                </th>
+                <th className='hand' onClick={sort('write')}>
+                  <Translate contentKey='catinyApp.permission.write'>Write</Translate> <FontAwesomeIcon icon='sort' />
+                </th>
+                <th className='hand' onClick={sort('share')}>
+                  <Translate contentKey='catinyApp.permission.share'>Share</Translate> <FontAwesomeIcon icon='sort' />
+                </th>
+                <th className='hand' onClick={sort('delete')}>
                     <Translate contentKey="catinyApp.permission.delete">Delete</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={sort('add')}>
@@ -222,10 +224,11 @@ export const Permission = (props: RouteComponentProps<{ url: string }>) => {
                 {permissionList.map((permission, i) => (
                   <tr key={`entity-${i}`} data-cy="entityTable">
                     <td>
-                      <Button tag={Link} to={`${match.url}/${permission.id}`} color="link" size="sm">
+                      <Button tag={Link} to={`${match.url}/${permission.id}`} color='link' size='sm'>
                         {permission.id}
                       </Button>
                     </td>
+                    <td>{permission.uuid}</td>
                     <td>{permission.read ? 'true' : 'false'}</td>
                     <td>{permission.write ? 'true' : 'false'}</td>
                     <td>{permission.share ? 'true' : 'false'}</td>

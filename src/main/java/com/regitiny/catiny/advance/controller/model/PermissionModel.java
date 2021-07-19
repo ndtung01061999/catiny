@@ -8,7 +8,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -17,6 +19,13 @@ import java.io.Serializable;
 public class PermissionModel implements Serializable
 {
   private Long id;
+
+  @NotNull
+  @ApiModelProperty(
+    required = true,
+    value = "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)"
+  )
+  private UUID uuid;
 
   @ApiModelProperty("quyền đọc")
   private Boolean read;
@@ -48,6 +57,13 @@ public class PermissionModel implements Serializable
   {
     private Long id;
 
+    @NotNull
+    @ApiModelProperty(
+      required = true,
+      value = "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)"
+    )
+    private UUID uuid;
+
     @ApiModelProperty("quyền đọc")
     private Boolean read;
 
@@ -78,6 +94,13 @@ public class PermissionModel implements Serializable
   public static class Response implements Serializable
   {
     private Long id;
+
+    @NotNull
+    @ApiModelProperty(
+      required = true,
+      value = "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)"
+    )
+    private UUID uuid;
 
     @ApiModelProperty("quyền đọc")
     private Boolean read;

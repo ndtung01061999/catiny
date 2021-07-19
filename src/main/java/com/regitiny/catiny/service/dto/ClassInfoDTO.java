@@ -2,10 +2,11 @@ package com.regitiny.catiny.service.dto;
 
 import com.regitiny.catiny.GeneratedByJHipster;
 import io.swagger.annotations.ApiModelProperty;
+
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
-import javax.validation.constraints.*;
 
 /**
  * A DTO for the {@link com.regitiny.catiny.domain.ClassInfo} entity.
@@ -29,7 +30,7 @@ public class ClassInfoDTO implements Serializable {
    * packageName *  : tên package
    */
   @ApiModelProperty(value = "packageName *  : tên package")
-  private String packageName;
+  private String namePackage;
 
   /**
    * fullName *     : tên đầy đủ của class . package+ClassName
@@ -52,27 +53,33 @@ public class ClassInfoDTO implements Serializable {
     this.id = id;
   }
 
-  public UUID getUuid() {
+  public UUID getUuid()
+  {
     return uuid;
   }
 
-  public void setUuid(UUID uuid) {
+  public void setUuid(UUID uuid)
+  {
     this.uuid = uuid;
   }
 
-  public String getPackageName() {
-    return packageName;
+  public String getNamePackage()
+  {
+    return namePackage;
   }
 
-  public void setPackageName(String packageName) {
-    this.packageName = packageName;
+  public void setNamePackage(String namePackage)
+  {
+    this.namePackage = namePackage;
   }
 
-  public String getFullName() {
+  public String getFullName()
+  {
     return fullName;
   }
 
-  public void setFullName(String fullName) {
+  public void setFullName(String fullName)
+  {
     this.fullName = fullName;
   }
 
@@ -109,11 +116,11 @@ public class ClassInfoDTO implements Serializable {
     @Override
     public String toString() {
         return "ClassInfoDTO{" +
-            "id=" + getId() +
-            ", uuid='" + getUuid() + "'" +
-            ", packageName='" + getPackageName() + "'" +
-            ", fullName='" + getFullName() + "'" +
-            ", className='" + getClassName() + "'" +
-            "}";
+          "id=" + getId() +
+          ", uuid='" + getUuid() + "'" +
+          ", namePackage='" + getNamePackage() + "'" +
+          ", fullName='" + getFullName() + "'" +
+          ", className='" + getClassName() + "'" +
+          "}";
     }
 }

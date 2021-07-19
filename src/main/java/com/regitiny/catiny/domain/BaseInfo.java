@@ -3,14 +3,17 @@ package com.regitiny.catiny.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.regitiny.catiny.GeneratedByJHipster;
 import com.regitiny.catiny.domain.enumeration.ProcessStatus;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.*;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.springframework.data.elasticsearch.annotations.FieldType;
+import java.util.UUID;
 
 /**
  * BaseInfo
@@ -20,7 +23,8 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @org.springframework.data.elasticsearch.annotations.Document(indexName = "baseinfo")
 @GeneratedByJHipster
-public class BaseInfo implements Serializable {
+public class BaseInfo implements Serializable
+{
 
   private static final long serialVersionUID = 1L;
 
@@ -28,6 +32,14 @@ public class BaseInfo implements Serializable {
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
   @SequenceGenerator(name = "sequenceGenerator")
   private Long id;
+
+  /**
+   * uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
+   */
+  @NotNull
+  @Type(type = "uuid-char")
+  @Column(name = "uuid", length = 36, nullable = false, unique = true)
+  private UUID uuid;
 
   /**
    * processStatus *: @defaultValue( DONE ) -> tình trạng xử lý sử dụng trong phê duyệt
@@ -62,13 +74,6 @@ public class BaseInfo implements Serializable {
   private String notes;
 
   /**
-   * historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json
-   */
-  @Lob
-  @Column(name = "history_update")
-  private String historyUpdate;
-
-  /**
    * deleted *      : @defaultValue( false ) -> đánh dấu là đã xóa
    */
   @Column(name = "deleted")
@@ -86,15 +91,20 @@ public class BaseInfo implements Serializable {
   @Column(name = "count_use")
   private Long countUse;
 
+  @OneToMany(mappedBy = "baseInfo")
+  @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+  @JsonIgnoreProperties(value = {"baseInfo"}, allowSetters = true)
+  private Set<HistoryUpdate> historyUpdates = new HashSet<>();
+
   @ManyToOne
-  @JsonIgnoreProperties(value = { "baseInfos" }, allowSetters = true)
+  @JsonIgnoreProperties(value = {"baseInfos"}, allowSetters = true)
   private ClassInfo classInfo;
 
-  @JsonIgnoreProperties(value = { "baseInfo" }, allowSetters = true)
+  @JsonIgnoreProperties(value = {"baseInfo"}, allowSetters = true)
   @OneToOne(mappedBy = "baseInfo")
   private UserProfile userProfile;
 
-  @JsonIgnoreProperties(value = { "baseInfo", "deviceStatuses" }, allowSetters = true)
+  @JsonIgnoreProperties(value = {"baseInfo", "deviceStatuses"}, allowSetters = true)
   @OneToOne(mappedBy = "baseInfo")
   private AccountStatus accountStatus;
 
@@ -242,20 +252,40 @@ public class BaseInfo implements Serializable {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(Long id)
+  {
     this.id = id;
   }
 
-  public BaseInfo id(Long id) {
+  public BaseInfo id(Long id)
+  {
     this.id = id;
     return this;
   }
 
-  public ProcessStatus getProcessStatus() {
+  public UUID getUuid()
+  {
+    return this.uuid;
+  }
+
+  public void setUuid(UUID uuid)
+  {
+    this.uuid = uuid;
+  }
+
+  public BaseInfo uuid(UUID uuid)
+  {
+    this.uuid = uuid;
+    return this;
+  }
+
+  public ProcessStatus getProcessStatus()
+  {
     return this.processStatus;
   }
 
-  public BaseInfo processStatus(ProcessStatus processStatus) {
+  public BaseInfo processStatus(ProcessStatus processStatus)
+  {
     this.processStatus = processStatus;
     return this;
   }
@@ -316,19 +346,6 @@ public class BaseInfo implements Serializable {
     this.notes = notes;
   }
 
-  public String getHistoryUpdate() {
-    return this.historyUpdate;
-  }
-
-  public BaseInfo historyUpdate(String historyUpdate) {
-    this.historyUpdate = historyUpdate;
-    return this;
-  }
-
-  public void setHistoryUpdate(String historyUpdate) {
-    this.historyUpdate = historyUpdate;
-  }
-
   public Boolean getDeleted() {
     return this.deleted;
   }
@@ -359,20 +376,62 @@ public class BaseInfo implements Serializable {
     return this.countUse;
   }
 
-  public BaseInfo countUse(Long countUse) {
+  public BaseInfo countUse(Long countUse)
+  {
     this.countUse = countUse;
     return this;
   }
 
-  public void setCountUse(Long countUse) {
+  public void setCountUse(Long countUse)
+  {
     this.countUse = countUse;
   }
 
-  public ClassInfo getClassInfo() {
+  public Set<HistoryUpdate> getHistoryUpdates()
+  {
+    return this.historyUpdates;
+  }
+
+  public void setHistoryUpdates(Set<HistoryUpdate> historyUpdates)
+  {
+    if (this.historyUpdates != null)
+    {
+      this.historyUpdates.forEach(i -> i.setBaseInfo(null));
+    }
+    if (historyUpdates != null)
+    {
+      historyUpdates.forEach(i -> i.setBaseInfo(this));
+    }
+    this.historyUpdates = historyUpdates;
+  }
+
+  public BaseInfo historyUpdates(Set<HistoryUpdate> historyUpdates)
+  {
+    this.setHistoryUpdates(historyUpdates);
+    return this;
+  }
+
+  public BaseInfo addHistoryUpdate(HistoryUpdate historyUpdate)
+  {
+    this.historyUpdates.add(historyUpdate);
+    historyUpdate.setBaseInfo(this);
+    return this;
+  }
+
+  public BaseInfo removeHistoryUpdate(HistoryUpdate historyUpdate)
+  {
+    this.historyUpdates.remove(historyUpdate);
+    historyUpdate.setBaseInfo(null);
+    return this;
+  }
+
+  public ClassInfo getClassInfo()
+  {
     return this.classInfo;
   }
 
-  public BaseInfo classInfo(ClassInfo classInfo) {
+  public BaseInfo classInfo(ClassInfo classInfo)
+  {
     this.setClassInfo(classInfo);
     return this;
   }
@@ -1025,16 +1084,16 @@ public class BaseInfo implements Serializable {
     @Override
     public String toString() {
         return "BaseInfo{" +
-            "id=" + getId() +
-            ", processStatus='" + getProcessStatus() + "'" +
-            ", modifiedClass='" + getModifiedClass() + "'" +
-            ", createdDate='" + getCreatedDate() + "'" +
-            ", modifiedDate='" + getModifiedDate() + "'" +
-            ", notes='" + getNotes() + "'" +
-            ", historyUpdate='" + getHistoryUpdate() + "'" +
-            ", deleted='" + getDeleted() + "'" +
-            ", priorityIndex=" + getPriorityIndex() +
-            ", countUse=" + getCountUse() +
-            "}";
+          "id=" + getId() +
+          ", uuid='" + getUuid() + "'" +
+          ", processStatus='" + getProcessStatus() + "'" +
+          ", modifiedClass='" + getModifiedClass() + "'" +
+          ", createdDate='" + getCreatedDate() + "'" +
+          ", modifiedDate='" + getModifiedDate() + "'" +
+          ", notes='" + getNotes() + "'" +
+          ", deleted='" + getDeleted() + "'" +
+          ", priorityIndex=" + getPriorityIndex() +
+          ", countUse=" + getCountUse() +
+          "}";
     }
 }

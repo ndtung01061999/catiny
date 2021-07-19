@@ -1,1 +1,424 @@
-{"entities":{"MessageContent":{"generated":{"com/regitiny/catiny/advance/service/impl/MessageContentAdvanceServiceImpl.java":true,"com/regitiny/catiny/advance/repository/base/MessageContentBaseRepository.java":true,"com/regitiny/catiny/advance/repository/search/base/MessageContentBaseSearch.java":true,"com/regitiny/catiny/advance/repository/search/MessageContentAdvanceSearch.java":true,"com/regitiny/catiny/advance/repository/MessageContentAdvanceRepository.java":true,"com/regitiny/catiny/advance/service/MessageContentAdvanceService.java":true,"com/regitiny/catiny/advance/controller/model/MessageContentModel.java":true,"com/regitiny/catiny/advance/service/mapper/MessageContentAdvanceMapper.java":true}},"PostLike":{"generated":{"com/regitiny/catiny/advance/repository/PostLikeAdvanceRepository.java":true,"com/regitiny/catiny/advance/controller/model/PostLikeModel.java":true,"com/regitiny/catiny/advance/repository/search/PostLikeAdvanceSearch.java":true,"com/regitiny/catiny/advance/service/mapper/PostLikeAdvanceMapper.java":true,"com/regitiny/catiny/advance/repository/base/PostLikeBaseRepository.java":true,"com/regitiny/catiny/advance/repository/search/base/PostLikeBaseSearch.java":true,"com/regitiny/catiny/advance/service/PostLikeAdvanceService.java":true,"com/regitiny/catiny/advance/service/impl/PostLikeAdvanceServiceImpl.java":true}},"UserProfile":{"generated":{"com/regitiny/catiny/advance/service/UserProfileAdvanceService.java":true,"com/regitiny/catiny/advance/service/impl/UserProfileAdvanceServiceImpl.java":true,"com/regitiny/catiny/advance/repository/base/UserProfileBaseRepository.java":true,"com/regitiny/catiny/advance/controller/model/UserProfileModel.java":true,"com/regitiny/catiny/advance/service/mapper/UserProfileAdvanceMapper.java":true,"com/regitiny/catiny/advance/repository/search/UserProfileAdvanceSearch.java":true,"com/regitiny/catiny/advance/repository/search/base/UserProfileBaseSearch.java":true,"com/regitiny/catiny/advance/repository/UserProfileAdvanceRepository.java":true}},"NewsFeed":{"generated":{"com/regitiny/catiny/advance/service/mapper/NewsFeedAdvanceMapper.java":true,"com/regitiny/catiny/advance/repository/search/base/NewsFeedBaseSearch.java":true,"com/regitiny/catiny/advance/controller/model/NewsFeedModel.java":true,"com/regitiny/catiny/advance/service/impl/NewsFeedAdvanceServiceImpl.java":true,"com/regitiny/catiny/advance/repository/base/NewsFeedBaseRepository.java":true,"com/regitiny/catiny/advance/service/NewsFeedAdvanceService.java":true,"com/regitiny/catiny/advance/repository/NewsFeedAdvanceRepository.java":true,"com/regitiny/catiny/advance/repository/search/NewsFeedAdvanceSearch.java":true}},"BaseInfo":{"generated":{"com/regitiny/catiny/advance/service/impl/BaseInfoAdvanceServiceImpl.java":true,"com/regitiny/catiny/advance/repository/base/BaseInfoBaseRepository.java":true,"com/regitiny/catiny/advance/service/mapper/BaseInfoAdvanceMapper.java":true,"com/regitiny/catiny/advance/repository/search/BaseInfoAdvanceSearch.java":true,"com/regitiny/catiny/advance/repository/BaseInfoAdvanceRepository.java":true,"com/regitiny/catiny/advance/service/BaseInfoAdvanceService.java":true,"com/regitiny/catiny/advance/repository/search/base/BaseInfoBaseSearch.java":true,"com/regitiny/catiny/advance/controller/model/BaseInfoModel.java":true}},"MessageGroup":{"generated":{"com/regitiny/catiny/advance/repository/search/base/MessageGroupBaseSearch.java":true,"com/regitiny/catiny/advance/repository/base/MessageGroupBaseRepository.java":true,"com/regitiny/catiny/advance/service/MessageGroupAdvanceService.java":true,"com/regitiny/catiny/advance/repository/MessageGroupAdvanceRepository.java":true,"com/regitiny/catiny/advance/controller/model/MessageGroupModel.java":true,"com/regitiny/catiny/advance/service/impl/MessageGroupAdvanceServiceImpl.java":true,"com/regitiny/catiny/advance/repository/search/MessageGroupAdvanceSearch.java":true,"com/regitiny/catiny/advance/service/mapper/MessageGroupAdvanceMapper.java":true}},"PageProfile":{"generated":{"com/regitiny/catiny/advance/service/PageProfileAdvanceService.java":true,"com/regitiny/catiny/advance/service/mapper/PageProfileAdvanceMapper.java":true,"com/regitiny/catiny/advance/repository/PageProfileAdvanceRepository.java":true,"com/regitiny/catiny/advance/repository/base/PageProfileBaseRepository.java":true,"com/regitiny/catiny/advance/service/impl/PageProfileAdvanceServiceImpl.java":true,"com/regitiny/catiny/advance/repository/search/PageProfileAdvanceSearch.java":true,"com/regitiny/catiny/advance/controller/model/PageProfileModel.java":true,"com/regitiny/catiny/advance/repository/search/base/PageProfileBaseSearch.java":true}},"Album":{"generated":{"com/regitiny/catiny/advance/controller/model/AlbumModel.java":true,"com/regitiny/catiny/advance/repository/search/base/AlbumBaseSearch.java":true,"com/regitiny/catiny/advance/service/AlbumAdvanceService.java":true,"com/regitiny/catiny/advance/repository/AlbumAdvanceRepository.java":true,"com/regitiny/catiny/advance/service/mapper/AlbumAdvanceMapper.java":true,"com/regitiny/catiny/advance/service/impl/AlbumAdvanceServiceImpl.java":true,"com/regitiny/catiny/advance/repository/base/AlbumBaseRepository.java":true,"com/regitiny/catiny/advance/repository/search/AlbumAdvanceSearch.java":true}},"PostComment":{"generated":{"com/regitiny/catiny/advance/service/impl/PostCommentAdvanceServiceImpl.java":true,"com/regitiny/catiny/advance/repository/search/PostCommentAdvanceSearch.java":true,"com/regitiny/catiny/advance/service/PostCommentAdvanceService.java":true,"com/regitiny/catiny/advance/repository/PostCommentAdvanceRepository.java":true,"com/regitiny/catiny/advance/controller/model/PostCommentModel.java":true,"com/regitiny/catiny/advance/service/mapper/PostCommentAdvanceMapper.java":true,"com/regitiny/catiny/advance/repository/base/PostCommentBaseRepository.java":true,"com/regitiny/catiny/advance/repository/search/base/PostCommentBaseSearch.java":true}},"GroupProfile":{"generated":{"com/regitiny/catiny/advance/service/mapper/GroupProfileAdvanceMapper.java":true,"com/regitiny/catiny/advance/repository/search/GroupProfileAdvanceSearch.java":true,"com/regitiny/catiny/advance/repository/base/GroupProfileBaseRepository.java":true,"com/regitiny/catiny/advance/repository/search/base/GroupProfileBaseSearch.java":true,"com/regitiny/catiny/advance/repository/GroupProfileAdvanceRepository.java":true,"com/regitiny/catiny/advance/service/GroupProfileAdvanceService.java":true,"com/regitiny/catiny/advance/controller/model/GroupProfileModel.java":true,"com/regitiny/catiny/advance/service/impl/GroupProfileAdvanceServiceImpl.java":true}},"RankGroup":{"generated":{"com/regitiny/catiny/advance/service/mapper/RankGroupAdvanceMapper.java":true,"com/regitiny/catiny/advance/repository/search/base/RankGroupBaseSearch.java":true,"com/regitiny/catiny/advance/service/impl/RankGroupAdvanceServiceImpl.java":true,"com/regitiny/catiny/advance/repository/base/RankGroupBaseRepository.java":true,"com/regitiny/catiny/advance/repository/RankGroupAdvanceRepository.java":true,"com/regitiny/catiny/advance/repository/search/RankGroupAdvanceSearch.java":true,"com/regitiny/catiny/advance/service/RankGroupAdvanceService.java":true,"com/regitiny/catiny/advance/controller/model/RankGroupModel.java":true}},"Image":{"generated":{"com/regitiny/catiny/advance/repository/search/base/ImageBaseSearch.java":true,"com/regitiny/catiny/advance/service/ImageAdvanceService.java":true,"com/regitiny/catiny/advance/repository/search/ImageAdvanceSearch.java":true,"com/regitiny/catiny/advance/repository/ImageAdvanceRepository.java":true,"com/regitiny/catiny/advance/service/impl/ImageAdvanceServiceImpl.java":true,"com/regitiny/catiny/advance/repository/base/ImageBaseRepository.java":true,"com/regitiny/catiny/advance/controller/model/ImageModel.java":true,"com/regitiny/catiny/advance/service/mapper/ImageAdvanceMapper.java":true}},"Notification":{"generated":{"com/regitiny/catiny/advance/service/mapper/NotificationAdvanceMapper.java":true,"com/regitiny/catiny/advance/service/NotificationAdvanceService.java":true,"com/regitiny/catiny/advance/service/impl/NotificationAdvanceServiceImpl.java":true,"com/regitiny/catiny/advance/repository/base/NotificationBaseRepository.java":true,"com/regitiny/catiny/advance/repository/search/base/NotificationBaseSearch.java":true,"com/regitiny/catiny/advance/repository/search/NotificationAdvanceSearch.java":true,"com/regitiny/catiny/advance/controller/model/NotificationModel.java":true,"com/regitiny/catiny/advance/repository/NotificationAdvanceRepository.java":true}},"AccountStatus":{"generated":{"com/regitiny/catiny/advance/repository/search/base/AccountStatusBaseSearch.java":true,"com/regitiny/catiny/advance/service/mapper/AccountStatusAdvanceMapper.java":true,"com/regitiny/catiny/advance/repository/base/AccountStatusBaseRepository.java":true,"com/regitiny/catiny/advance/controller/model/AccountStatusModel.java":true,"com/regitiny/catiny/advance/service/impl/AccountStatusAdvanceServiceImpl.java":true,"com/regitiny/catiny/advance/repository/AccountStatusAdvanceRepository.java":true,"com/regitiny/catiny/advance/repository/search/AccountStatusAdvanceSearch.java":true,"com/regitiny/catiny/advance/service/AccountStatusAdvanceService.java":true}},"Friend":{"generated":{"com/regitiny/catiny/advance/repository/search/FriendAdvanceSearch.java":true,"com/regitiny/catiny/advance/controller/model/FriendModel.java":true,"com/regitiny/catiny/advance/repository/base/FriendBaseRepository.java":true,"com/regitiny/catiny/advance/repository/search/base/FriendBaseSearch.java":true,"com/regitiny/catiny/advance/service/FriendAdvanceService.java":true,"com/regitiny/catiny/advance/service/impl/FriendAdvanceServiceImpl.java":true,"com/regitiny/catiny/advance/repository/FriendAdvanceRepository.java":true,"com/regitiny/catiny/advance/service/mapper/FriendAdvanceMapper.java":true}},"FileInfo":{"generated":{"com/regitiny/catiny/advance/service/FileInfoAdvanceService.java":true,"com/regitiny/catiny/advance/controller/model/FileInfoModel.java":true,"com/regitiny/catiny/advance/service/impl/FileInfoAdvanceServiceImpl.java":true,"com/regitiny/catiny/advance/repository/FileInfoAdvanceRepository.java":true,"com/regitiny/catiny/advance/repository/search/base/FileInfoBaseSearch.java":true,"com/regitiny/catiny/advance/repository/base/FileInfoBaseRepository.java":true,"com/regitiny/catiny/advance/repository/search/FileInfoAdvanceSearch.java":true,"com/regitiny/catiny/advance/service/mapper/FileInfoAdvanceMapper.java":true}},"GroupPost":{"generated":{"com/regitiny/catiny/advance/repository/GroupPostAdvanceRepository.java":true,"com/regitiny/catiny/advance/repository/search/base/GroupPostBaseSearch.java":true,"com/regitiny/catiny/advance/service/impl/GroupPostAdvanceServiceImpl.java":true,"com/regitiny/catiny/advance/service/GroupPostAdvanceService.java":true,"com/regitiny/catiny/advance/repository/search/GroupPostAdvanceSearch.java":true,"com/regitiny/catiny/advance/service/mapper/GroupPostAdvanceMapper.java":true,"com/regitiny/catiny/advance/repository/base/GroupPostBaseRepository.java":true,"com/regitiny/catiny/advance/controller/model/GroupPostModel.java":true}},"Permission":{"generated":{"com/regitiny/catiny/advance/repository/search/base/PermissionBaseSearch.java":true,"com/regitiny/catiny/advance/repository/PermissionAdvanceRepository.java":true,"com/regitiny/catiny/advance/service/impl/PermissionAdvanceServiceImpl.java":true,"com/regitiny/catiny/advance/repository/search/PermissionAdvanceSearch.java":true,"com/regitiny/catiny/advance/service/PermissionAdvanceService.java":true,"com/regitiny/catiny/advance/repository/base/PermissionBaseRepository.java":true,"com/regitiny/catiny/advance/controller/model/PermissionModel.java":true,"com/regitiny/catiny/advance/service/mapper/PermissionAdvanceMapper.java":true}},"TopicInterest":{"generated":{"com/regitiny/catiny/advance/controller/model/TopicInterestModel.java":true,"com/regitiny/catiny/advance/repository/TopicInterestAdvanceRepository.java":true,"com/regitiny/catiny/advance/service/impl/TopicInterestAdvanceServiceImpl.java":true,"com/regitiny/catiny/advance/repository/search/base/TopicInterestBaseSearch.java":true,"com/regitiny/catiny/advance/repository/search/TopicInterestAdvanceSearch.java":true,"com/regitiny/catiny/advance/service/mapper/TopicInterestAdvanceMapper.java":true,"com/regitiny/catiny/advance/repository/base/TopicInterestBaseRepository.java":true,"com/regitiny/catiny/advance/service/TopicInterestAdvanceService.java":true}},"VideoLiveStreamBuffer":{"generated":{"com/regitiny/catiny/advance/repository/search/VideoLiveStreamBufferAdvanceSearch.java":true,"com/regitiny/catiny/advance/service/mapper/VideoLiveStreamBufferAdvanceMapper.java":true,"com/regitiny/catiny/advance/repository/search/base/VideoLiveStreamBufferBaseSearch.java":true,"com/regitiny/catiny/advance/service/VideoLiveStreamBufferAdvanceService.java":true,"com/regitiny/catiny/advance/service/impl/VideoLiveStreamBufferAdvanceServiceImpl.java":true,"com/regitiny/catiny/advance/repository/VideoLiveStreamBufferAdvanceRepository.java":true,"com/regitiny/catiny/advance/repository/base/VideoLiveStreamBufferBaseRepository.java":true,"com/regitiny/catiny/advance/controller/model/VideoLiveStreamBufferModel.java":true}},"Post":{"generated":{"com/regitiny/catiny/advance/repository/PostAdvanceRepository.java":true,"com/regitiny/catiny/advance/repository/base/PostBaseRepository.java":true,"com/regitiny/catiny/advance/controller/model/PostModel.java":true,"com/regitiny/catiny/advance/service/impl/PostAdvanceServiceImpl.java":true,"com/regitiny/catiny/advance/repository/search/base/PostBaseSearch.java":true,"com/regitiny/catiny/advance/repository/search/PostAdvanceSearch.java":true,"com/regitiny/catiny/advance/service/mapper/PostAdvanceMapper.java":true,"com/regitiny/catiny/advance/service/PostAdvanceService.java":true}},"VideoStream":{"generated":{"com/regitiny/catiny/advance/service/VideoStreamAdvanceService.java":true,"com/regitiny/catiny/advance/repository/base/VideoStreamBaseRepository.java":true,"com/regitiny/catiny/advance/repository/VideoStreamAdvanceRepository.java":true,"com/regitiny/catiny/advance/service/mapper/VideoStreamAdvanceMapper.java":true,"com/regitiny/catiny/advance/repository/search/VideoStreamAdvanceSearch.java":true,"com/regitiny/catiny/advance/controller/model/VideoStreamModel.java":true,"com/regitiny/catiny/advance/repository/search/base/VideoStreamBaseSearch.java":true,"com/regitiny/catiny/advance/service/impl/VideoStreamAdvanceServiceImpl.java":true}},"RankUser":{"generated":{"com/regitiny/catiny/advance/repository/RankUserAdvanceRepository.java":true,"com/regitiny/catiny/advance/service/RankUserAdvanceService.java":true,"com/regitiny/catiny/advance/repository/search/RankUserAdvanceSearch.java":true,"com/regitiny/catiny/advance/repository/base/RankUserBaseRepository.java":true,"com/regitiny/catiny/advance/repository/search/base/RankUserBaseSearch.java":true,"com/regitiny/catiny/advance/service/mapper/RankUserAdvanceMapper.java":true,"com/regitiny/catiny/advance/service/impl/RankUserAdvanceServiceImpl.java":true,"com/regitiny/catiny/advance/controller/model/RankUserModel.java":true}},"MasterUser":{"generated":{"com/regitiny/catiny/advance/controller/model/MasterUserModel.java":true,"com/regitiny/catiny/advance/repository/search/MasterUserAdvanceSearch.java":true,"com/regitiny/catiny/advance/service/MasterUserAdvanceService.java":true,"com/regitiny/catiny/advance/service/impl/MasterUserAdvanceServiceImpl.java":true,"com/regitiny/catiny/advance/repository/search/base/MasterUserBaseSearch.java":true,"com/regitiny/catiny/advance/repository/base/MasterUserBaseRepository.java":true,"com/regitiny/catiny/advance/repository/MasterUserAdvanceRepository.java":true,"com/regitiny/catiny/advance/service/mapper/MasterUserAdvanceMapper.java":true}},"FollowGroup":{"generated":{"com/regitiny/catiny/advance/service/FollowGroupAdvanceService.java":true,"com/regitiny/catiny/advance/service/mapper/FollowGroupAdvanceMapper.java":true,"com/regitiny/catiny/advance/repository/base/FollowGroupBaseRepository.java":true,"com/regitiny/catiny/advance/repository/search/FollowGroupAdvanceSearch.java":true,"com/regitiny/catiny/advance/repository/FollowGroupAdvanceRepository.java":true,"com/regitiny/catiny/advance/controller/model/FollowGroupModel.java":true,"com/regitiny/catiny/advance/service/impl/FollowGroupAdvanceServiceImpl.java":true,"com/regitiny/catiny/advance/repository/search/base/FollowGroupBaseSearch.java":true}},"Video":{"generated":{"com/regitiny/catiny/advance/service/mapper/VideoAdvanceMapper.java":true,"com/regitiny/catiny/advance/repository/search/base/VideoBaseSearch.java":true,"com/regitiny/catiny/advance/controller/model/VideoModel.java":true,"com/regitiny/catiny/advance/service/impl/VideoAdvanceServiceImpl.java":true,"com/regitiny/catiny/advance/service/VideoAdvanceService.java":true,"com/regitiny/catiny/advance/repository/VideoAdvanceRepository.java":true,"com/regitiny/catiny/advance/repository/search/VideoAdvanceSearch.java":true,"com/regitiny/catiny/advance/repository/base/VideoBaseRepository.java":true}},"Event":{"generated":{"com/regitiny/catiny/advance/repository/EventAdvanceRepository.java":true,"com/regitiny/catiny/advance/repository/base/EventBaseRepository.java":true,"com/regitiny/catiny/advance/repository/search/base/EventBaseSearch.java":true,"com/regitiny/catiny/advance/service/mapper/EventAdvanceMapper.java":true,"com/regitiny/catiny/advance/service/impl/EventAdvanceServiceImpl.java":true,"com/regitiny/catiny/advance/controller/model/EventModel.java":true,"com/regitiny/catiny/advance/service/EventAdvanceService.java":true,"com/regitiny/catiny/advance/repository/search/EventAdvanceSearch.java":true}},"DeviceStatus":{"generated":{"com/regitiny/catiny/advance/service/DeviceStatusAdvanceService.java":true,"com/regitiny/catiny/advance/repository/search/base/DeviceStatusBaseSearch.java":true,"com/regitiny/catiny/advance/service/impl/DeviceStatusAdvanceServiceImpl.java":true,"com/regitiny/catiny/advance/controller/model/DeviceStatusModel.java":true,"com/regitiny/catiny/advance/repository/DeviceStatusAdvanceRepository.java":true,"com/regitiny/catiny/advance/repository/search/DeviceStatusAdvanceSearch.java":true,"com/regitiny/catiny/advance/repository/base/DeviceStatusBaseRepository.java":true,"com/regitiny/catiny/advance/service/mapper/DeviceStatusAdvanceMapper.java":true}},"FollowUser":{"generated":{"com/regitiny/catiny/advance/service/FollowUserAdvanceService.java":true,"com/regitiny/catiny/advance/repository/base/FollowUserBaseRepository.java":true,"com/regitiny/catiny/advance/service/mapper/FollowUserAdvanceMapper.java":true,"com/regitiny/catiny/advance/controller/model/FollowUserModel.java":true,"com/regitiny/catiny/advance/repository/FollowUserAdvanceRepository.java":true,"com/regitiny/catiny/advance/repository/search/base/FollowUserBaseSearch.java":true,"com/regitiny/catiny/advance/repository/search/FollowUserAdvanceSearch.java":true,"com/regitiny/catiny/advance/service/impl/FollowUserAdvanceServiceImpl.java":true}},"FollowPage":{"generated":{"com/regitiny/catiny/advance/service/FollowPageAdvanceService.java":true,"com/regitiny/catiny/advance/repository/FollowPageAdvanceRepository.java":true,"com/regitiny/catiny/advance/repository/search/base/FollowPageBaseSearch.java":true,"com/regitiny/catiny/advance/service/mapper/FollowPageAdvanceMapper.java":true,"com/regitiny/catiny/advance/repository/search/FollowPageAdvanceSearch.java":true,"com/regitiny/catiny/advance/controller/model/FollowPageModel.java":true,"com/regitiny/catiny/advance/repository/base/FollowPageBaseRepository.java":true,"com/regitiny/catiny/advance/service/impl/FollowPageAdvanceServiceImpl.java":true}},"PagePost":{"generated":{"com/regitiny/catiny/advance/service/PagePostAdvanceService.java":true,"com/regitiny/catiny/advance/repository/base/PagePostBaseRepository.java":true,"com/regitiny/catiny/advance/repository/search/PagePostAdvanceSearch.java":true,"com/regitiny/catiny/advance/service/mapper/PagePostAdvanceMapper.java":true,"com/regitiny/catiny/advance/controller/model/PagePostModel.java":true,"com/regitiny/catiny/advance/repository/PagePostAdvanceRepository.java":true,"com/regitiny/catiny/advance/repository/search/base/PagePostBaseSearch.java":true,"com/regitiny/catiny/advance/service/impl/PagePostAdvanceServiceImpl.java":true}},"HanhChinhVN":{"generated":{"com/regitiny/catiny/advance/repository/search/HanhChinhVNAdvanceSearch.java":true,"com/regitiny/catiny/advance/service/HanhChinhVNAdvanceService.java":true,"com/regitiny/catiny/advance/repository/search/base/HanhChinhVNBaseSearch.java":true,"com/regitiny/catiny/advance/service/mapper/HanhChinhVNAdvanceMapper.java":true,"com/regitiny/catiny/advance/repository/HanhChinhVNAdvanceRepository.java":true,"com/regitiny/catiny/advance/controller/model/HanhChinhVNModel.java":true,"com/regitiny/catiny/advance/repository/base/HanhChinhVNBaseRepository.java":true,"com/regitiny/catiny/advance/service/impl/HanhChinhVNAdvanceServiceImpl.java":true}},"TodoList":{"generated":{"com/regitiny/catiny/advance/repository/base/TodoListBaseRepository.java":true,"com/regitiny/catiny/advance/service/impl/TodoListAdvanceServiceImpl.java":true,"com/regitiny/catiny/advance/service/TodoListAdvanceService.java":true,"com/regitiny/catiny/advance/repository/search/base/TodoListBaseSearch.java":true,"com/regitiny/catiny/advance/controller/model/TodoListModel.java":true,"com/regitiny/catiny/advance/repository/TodoListAdvanceRepository.java":true,"com/regitiny/catiny/advance/repository/search/TodoListAdvanceSearch.java":true,"com/regitiny/catiny/advance/service/mapper/TodoListAdvanceMapper.java":true}},"ClassInfo":{"generated":{"com/regitiny/catiny/advance/repository/ClassInfoAdvanceRepository.java":true,"com/regitiny/catiny/advance/repository/search/ClassInfoAdvanceSearch.java":true,"com/regitiny/catiny/advance/controller/model/ClassInfoModel.java":true,"com/regitiny/catiny/advance/service/impl/ClassInfoAdvanceServiceImpl.java":true,"com/regitiny/catiny/advance/repository/search/base/ClassInfoBaseSearch.java":true,"com/regitiny/catiny/advance/service/mapper/ClassInfoAdvanceMapper.java":true,"com/regitiny/catiny/advance/service/ClassInfoAdvanceService.java":true,"com/regitiny/catiny/advance/repository/base/ClassInfoBaseRepository.java":true}}}}
+{
+  "entities": {
+    "MessageContent": {
+      "generated": {
+        "com/regitiny/catiny/advance/service/impl/MessageContentAdvanceServiceImpl.java": true,
+        "com/regitiny/catiny/advance/repository/base/MessageContentBaseRepository.java": true,
+        "com/regitiny/catiny/advance/repository/search/base/MessageContentBaseSearch.java": true,
+        "com/regitiny/catiny/advance/repository/search/MessageContentAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/repository/MessageContentAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/service/MessageContentAdvanceService.java": true,
+        "com/regitiny/catiny/advance/controller/model/MessageContentModel.java": true,
+        "com/regitiny/catiny/advance/service/mapper/MessageContentAdvanceMapper.java": true
+      }
+    },
+    "PostLike": {
+      "generated": {
+        "com/regitiny/catiny/advance/repository/PostLikeAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/controller/model/PostLikeModel.java": true,
+        "com/regitiny/catiny/advance/repository/search/PostLikeAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/service/mapper/PostLikeAdvanceMapper.java": true,
+        "com/regitiny/catiny/advance/repository/base/PostLikeBaseRepository.java": true,
+        "com/regitiny/catiny/advance/repository/search/base/PostLikeBaseSearch.java": true,
+        "com/regitiny/catiny/advance/service/PostLikeAdvanceService.java": true,
+        "com/regitiny/catiny/advance/service/impl/PostLikeAdvanceServiceImpl.java": true
+      }
+    },
+    "UserProfile": {
+      "generated": {
+        "com/regitiny/catiny/advance/service/UserProfileAdvanceService.java": true,
+        "com/regitiny/catiny/advance/service/impl/UserProfileAdvanceServiceImpl.java": true,
+        "com/regitiny/catiny/advance/repository/base/UserProfileBaseRepository.java": true,
+        "com/regitiny/catiny/advance/controller/model/UserProfileModel.java": true,
+        "com/regitiny/catiny/advance/service/mapper/UserProfileAdvanceMapper.java": true,
+        "com/regitiny/catiny/advance/repository/search/UserProfileAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/repository/search/base/UserProfileBaseSearch.java": true,
+        "com/regitiny/catiny/advance/repository/UserProfileAdvanceRepository.java": true
+      }
+    },
+    "NewsFeed": {
+      "generated": {
+        "com/regitiny/catiny/advance/service/mapper/NewsFeedAdvanceMapper.java": true,
+        "com/regitiny/catiny/advance/repository/search/base/NewsFeedBaseSearch.java": true,
+        "com/regitiny/catiny/advance/controller/model/NewsFeedModel.java": true,
+        "com/regitiny/catiny/advance/service/impl/NewsFeedAdvanceServiceImpl.java": true,
+        "com/regitiny/catiny/advance/repository/base/NewsFeedBaseRepository.java": true,
+        "com/regitiny/catiny/advance/service/NewsFeedAdvanceService.java": true,
+        "com/regitiny/catiny/advance/repository/NewsFeedAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/repository/search/NewsFeedAdvanceSearch.java": true
+      }
+    },
+    "BaseInfo": {
+      "generated": {
+        "com/regitiny/catiny/advance/service/impl/BaseInfoAdvanceServiceImpl.java": true,
+        "com/regitiny/catiny/advance/repository/base/BaseInfoBaseRepository.java": true,
+        "com/regitiny/catiny/advance/service/mapper/BaseInfoAdvanceMapper.java": true,
+        "com/regitiny/catiny/advance/repository/search/BaseInfoAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/repository/BaseInfoAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/service/BaseInfoAdvanceService.java": true,
+        "com/regitiny/catiny/advance/repository/search/base/BaseInfoBaseSearch.java": true,
+        "com/regitiny/catiny/advance/controller/model/BaseInfoModel.java": true
+      }
+    },
+    "MessageGroup": {
+      "generated": {
+        "com/regitiny/catiny/advance/repository/search/base/MessageGroupBaseSearch.java": true,
+        "com/regitiny/catiny/advance/repository/base/MessageGroupBaseRepository.java": true,
+        "com/regitiny/catiny/advance/service/MessageGroupAdvanceService.java": true,
+        "com/regitiny/catiny/advance/repository/MessageGroupAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/controller/model/MessageGroupModel.java": true,
+        "com/regitiny/catiny/advance/service/impl/MessageGroupAdvanceServiceImpl.java": true,
+        "com/regitiny/catiny/advance/repository/search/MessageGroupAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/service/mapper/MessageGroupAdvanceMapper.java": true
+      }
+    },
+    "PageProfile": {
+      "generated": {
+        "com/regitiny/catiny/advance/service/PageProfileAdvanceService.java": true,
+        "com/regitiny/catiny/advance/service/mapper/PageProfileAdvanceMapper.java": true,
+        "com/regitiny/catiny/advance/repository/PageProfileAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/repository/base/PageProfileBaseRepository.java": true,
+        "com/regitiny/catiny/advance/service/impl/PageProfileAdvanceServiceImpl.java": true,
+        "com/regitiny/catiny/advance/repository/search/PageProfileAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/controller/model/PageProfileModel.java": true,
+        "com/regitiny/catiny/advance/repository/search/base/PageProfileBaseSearch.java": true
+      }
+    },
+    "Album": {
+      "generated": {
+        "com/regitiny/catiny/advance/controller/model/AlbumModel.java": true,
+        "com/regitiny/catiny/advance/repository/search/base/AlbumBaseSearch.java": true,
+        "com/regitiny/catiny/advance/service/AlbumAdvanceService.java": true,
+        "com/regitiny/catiny/advance/repository/AlbumAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/service/mapper/AlbumAdvanceMapper.java": true,
+        "com/regitiny/catiny/advance/service/impl/AlbumAdvanceServiceImpl.java": true,
+        "com/regitiny/catiny/advance/repository/base/AlbumBaseRepository.java": true,
+        "com/regitiny/catiny/advance/repository/search/AlbumAdvanceSearch.java": true
+      }
+    },
+    "PostComment": {
+      "generated": {
+        "com/regitiny/catiny/advance/service/impl/PostCommentAdvanceServiceImpl.java": true,
+        "com/regitiny/catiny/advance/repository/search/PostCommentAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/service/PostCommentAdvanceService.java": true,
+        "com/regitiny/catiny/advance/repository/PostCommentAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/controller/model/PostCommentModel.java": true,
+        "com/regitiny/catiny/advance/service/mapper/PostCommentAdvanceMapper.java": true,
+        "com/regitiny/catiny/advance/repository/base/PostCommentBaseRepository.java": true,
+        "com/regitiny/catiny/advance/repository/search/base/PostCommentBaseSearch.java": true
+      }
+    },
+    "GroupProfile": {
+      "generated": {
+        "com/regitiny/catiny/advance/service/mapper/GroupProfileAdvanceMapper.java": true,
+        "com/regitiny/catiny/advance/repository/search/GroupProfileAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/repository/base/GroupProfileBaseRepository.java": true,
+        "com/regitiny/catiny/advance/repository/search/base/GroupProfileBaseSearch.java": true,
+        "com/regitiny/catiny/advance/repository/GroupProfileAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/service/GroupProfileAdvanceService.java": true,
+        "com/regitiny/catiny/advance/controller/model/GroupProfileModel.java": true,
+        "com/regitiny/catiny/advance/service/impl/GroupProfileAdvanceServiceImpl.java": true
+      }
+    },
+    "RankGroup": {
+      "generated": {
+        "com/regitiny/catiny/advance/service/mapper/RankGroupAdvanceMapper.java": true,
+        "com/regitiny/catiny/advance/repository/search/base/RankGroupBaseSearch.java": true,
+        "com/regitiny/catiny/advance/service/impl/RankGroupAdvanceServiceImpl.java": true,
+        "com/regitiny/catiny/advance/repository/base/RankGroupBaseRepository.java": true,
+        "com/regitiny/catiny/advance/repository/RankGroupAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/repository/search/RankGroupAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/service/RankGroupAdvanceService.java": true,
+        "com/regitiny/catiny/advance/controller/model/RankGroupModel.java": true
+      }
+    },
+    "Image": {
+      "generated": {
+        "com/regitiny/catiny/advance/repository/search/base/ImageBaseSearch.java": true,
+        "com/regitiny/catiny/advance/service/ImageAdvanceService.java": true,
+        "com/regitiny/catiny/advance/repository/search/ImageAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/repository/ImageAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/service/impl/ImageAdvanceServiceImpl.java": true,
+        "com/regitiny/catiny/advance/repository/base/ImageBaseRepository.java": true,
+        "com/regitiny/catiny/advance/controller/model/ImageModel.java": true,
+        "com/regitiny/catiny/advance/service/mapper/ImageAdvanceMapper.java": true
+      }
+    },
+    "Notification": {
+      "generated": {
+        "com/regitiny/catiny/advance/service/mapper/NotificationAdvanceMapper.java": true,
+        "com/regitiny/catiny/advance/service/NotificationAdvanceService.java": true,
+        "com/regitiny/catiny/advance/service/impl/NotificationAdvanceServiceImpl.java": true,
+        "com/regitiny/catiny/advance/repository/base/NotificationBaseRepository.java": true,
+        "com/regitiny/catiny/advance/repository/search/base/NotificationBaseSearch.java": true,
+        "com/regitiny/catiny/advance/repository/search/NotificationAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/controller/model/NotificationModel.java": true,
+        "com/regitiny/catiny/advance/repository/NotificationAdvanceRepository.java": true
+      }
+    },
+    "AccountStatus": {
+      "generated": {
+        "com/regitiny/catiny/advance/repository/search/base/AccountStatusBaseSearch.java": true,
+        "com/regitiny/catiny/advance/service/mapper/AccountStatusAdvanceMapper.java": true,
+        "com/regitiny/catiny/advance/repository/base/AccountStatusBaseRepository.java": true,
+        "com/regitiny/catiny/advance/controller/model/AccountStatusModel.java": true,
+        "com/regitiny/catiny/advance/service/impl/AccountStatusAdvanceServiceImpl.java": true,
+        "com/regitiny/catiny/advance/repository/AccountStatusAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/repository/search/AccountStatusAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/service/AccountStatusAdvanceService.java": true
+      }
+    },
+    "Friend": {
+      "generated": {
+        "com/regitiny/catiny/advance/repository/search/FriendAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/controller/model/FriendModel.java": true,
+        "com/regitiny/catiny/advance/repository/base/FriendBaseRepository.java": true,
+        "com/regitiny/catiny/advance/repository/search/base/FriendBaseSearch.java": true,
+        "com/regitiny/catiny/advance/service/FriendAdvanceService.java": true,
+        "com/regitiny/catiny/advance/service/impl/FriendAdvanceServiceImpl.java": true,
+        "com/regitiny/catiny/advance/repository/FriendAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/service/mapper/FriendAdvanceMapper.java": true
+      }
+    },
+    "FileInfo": {
+      "generated": {
+        "com/regitiny/catiny/advance/service/FileInfoAdvanceService.java": true,
+        "com/regitiny/catiny/advance/controller/model/FileInfoModel.java": true,
+        "com/regitiny/catiny/advance/service/impl/FileInfoAdvanceServiceImpl.java": true,
+        "com/regitiny/catiny/advance/repository/FileInfoAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/repository/search/base/FileInfoBaseSearch.java": true,
+        "com/regitiny/catiny/advance/repository/base/FileInfoBaseRepository.java": true,
+        "com/regitiny/catiny/advance/repository/search/FileInfoAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/service/mapper/FileInfoAdvanceMapper.java": true
+      }
+    },
+    "GroupPost": {
+      "generated": {
+        "com/regitiny/catiny/advance/repository/GroupPostAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/repository/search/base/GroupPostBaseSearch.java": true,
+        "com/regitiny/catiny/advance/service/impl/GroupPostAdvanceServiceImpl.java": true,
+        "com/regitiny/catiny/advance/service/GroupPostAdvanceService.java": true,
+        "com/regitiny/catiny/advance/repository/search/GroupPostAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/service/mapper/GroupPostAdvanceMapper.java": true,
+        "com/regitiny/catiny/advance/repository/base/GroupPostBaseRepository.java": true,
+        "com/regitiny/catiny/advance/controller/model/GroupPostModel.java": true
+      }
+    },
+    "Permission": {
+      "generated": {
+        "com/regitiny/catiny/advance/repository/search/base/PermissionBaseSearch.java": true,
+        "com/regitiny/catiny/advance/repository/PermissionAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/service/impl/PermissionAdvanceServiceImpl.java": true,
+        "com/regitiny/catiny/advance/repository/search/PermissionAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/service/PermissionAdvanceService.java": true,
+        "com/regitiny/catiny/advance/repository/base/PermissionBaseRepository.java": true,
+        "com/regitiny/catiny/advance/controller/model/PermissionModel.java": true,
+        "com/regitiny/catiny/advance/service/mapper/PermissionAdvanceMapper.java": true
+      }
+    },
+    "TopicInterest": {
+      "generated": {
+        "com/regitiny/catiny/advance/controller/model/TopicInterestModel.java": true,
+        "com/regitiny/catiny/advance/repository/TopicInterestAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/service/impl/TopicInterestAdvanceServiceImpl.java": true,
+        "com/regitiny/catiny/advance/repository/search/base/TopicInterestBaseSearch.java": true,
+        "com/regitiny/catiny/advance/repository/search/TopicInterestAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/service/mapper/TopicInterestAdvanceMapper.java": true,
+        "com/regitiny/catiny/advance/repository/base/TopicInterestBaseRepository.java": true,
+        "com/regitiny/catiny/advance/service/TopicInterestAdvanceService.java": true
+      }
+    },
+    "VideoLiveStreamBuffer": {
+      "generated": {
+        "com/regitiny/catiny/advance/repository/search/VideoLiveStreamBufferAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/service/mapper/VideoLiveStreamBufferAdvanceMapper.java": true,
+        "com/regitiny/catiny/advance/repository/search/base/VideoLiveStreamBufferBaseSearch.java": true,
+        "com/regitiny/catiny/advance/service/VideoLiveStreamBufferAdvanceService.java": true,
+        "com/regitiny/catiny/advance/service/impl/VideoLiveStreamBufferAdvanceServiceImpl.java": true,
+        "com/regitiny/catiny/advance/repository/VideoLiveStreamBufferAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/repository/base/VideoLiveStreamBufferBaseRepository.java": true,
+        "com/regitiny/catiny/advance/controller/model/VideoLiveStreamBufferModel.java": true
+      }
+    },
+    "Post": {
+      "generated": {
+        "com/regitiny/catiny/advance/repository/PostAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/repository/base/PostBaseRepository.java": true,
+        "com/regitiny/catiny/advance/controller/model/PostModel.java": true,
+        "com/regitiny/catiny/advance/service/impl/PostAdvanceServiceImpl.java": true,
+        "com/regitiny/catiny/advance/repository/search/base/PostBaseSearch.java": true,
+        "com/regitiny/catiny/advance/repository/search/PostAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/service/mapper/PostAdvanceMapper.java": true,
+        "com/regitiny/catiny/advance/service/PostAdvanceService.java": true
+      }
+    },
+    "VideoStream": {
+      "generated": {
+        "com/regitiny/catiny/advance/service/VideoStreamAdvanceService.java": true,
+        "com/regitiny/catiny/advance/repository/base/VideoStreamBaseRepository.java": true,
+        "com/regitiny/catiny/advance/repository/VideoStreamAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/service/mapper/VideoStreamAdvanceMapper.java": true,
+        "com/regitiny/catiny/advance/repository/search/VideoStreamAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/controller/model/VideoStreamModel.java": true,
+        "com/regitiny/catiny/advance/repository/search/base/VideoStreamBaseSearch.java": true,
+        "com/regitiny/catiny/advance/service/impl/VideoStreamAdvanceServiceImpl.java": true
+      }
+    },
+    "RankUser": {
+      "generated": {
+        "com/regitiny/catiny/advance/repository/RankUserAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/service/RankUserAdvanceService.java": true,
+        "com/regitiny/catiny/advance/repository/search/RankUserAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/repository/base/RankUserBaseRepository.java": true,
+        "com/regitiny/catiny/advance/repository/search/base/RankUserBaseSearch.java": true,
+        "com/regitiny/catiny/advance/service/mapper/RankUserAdvanceMapper.java": true,
+        "com/regitiny/catiny/advance/service/impl/RankUserAdvanceServiceImpl.java": true,
+        "com/regitiny/catiny/advance/controller/model/RankUserModel.java": true
+      }
+    },
+    "MasterUser": {
+      "generated": {
+        "com/regitiny/catiny/advance/controller/model/MasterUserModel.java": true,
+        "com/regitiny/catiny/advance/repository/search/MasterUserAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/service/MasterUserAdvanceService.java": true,
+        "com/regitiny/catiny/advance/service/impl/MasterUserAdvanceServiceImpl.java": true,
+        "com/regitiny/catiny/advance/repository/search/base/MasterUserBaseSearch.java": true,
+        "com/regitiny/catiny/advance/repository/base/MasterUserBaseRepository.java": true,
+        "com/regitiny/catiny/advance/repository/MasterUserAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/service/mapper/MasterUserAdvanceMapper.java": true
+      }
+    },
+    "FollowGroup": {
+      "generated": {
+        "com/regitiny/catiny/advance/service/FollowGroupAdvanceService.java": true,
+        "com/regitiny/catiny/advance/service/mapper/FollowGroupAdvanceMapper.java": true,
+        "com/regitiny/catiny/advance/repository/base/FollowGroupBaseRepository.java": true,
+        "com/regitiny/catiny/advance/repository/search/FollowGroupAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/repository/FollowGroupAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/controller/model/FollowGroupModel.java": true,
+        "com/regitiny/catiny/advance/service/impl/FollowGroupAdvanceServiceImpl.java": true,
+        "com/regitiny/catiny/advance/repository/search/base/FollowGroupBaseSearch.java": true
+      }
+    },
+    "Video": {
+      "generated": {
+        "com/regitiny/catiny/advance/service/mapper/VideoAdvanceMapper.java": true,
+        "com/regitiny/catiny/advance/repository/search/base/VideoBaseSearch.java": true,
+        "com/regitiny/catiny/advance/controller/model/VideoModel.java": true,
+        "com/regitiny/catiny/advance/service/impl/VideoAdvanceServiceImpl.java": true,
+        "com/regitiny/catiny/advance/service/VideoAdvanceService.java": true,
+        "com/regitiny/catiny/advance/repository/VideoAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/repository/search/VideoAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/repository/base/VideoBaseRepository.java": true
+      }
+    },
+    "Event": {
+      "generated": {
+        "com/regitiny/catiny/advance/repository/EventAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/repository/base/EventBaseRepository.java": true,
+        "com/regitiny/catiny/advance/repository/search/base/EventBaseSearch.java": true,
+        "com/regitiny/catiny/advance/service/mapper/EventAdvanceMapper.java": true,
+        "com/regitiny/catiny/advance/service/impl/EventAdvanceServiceImpl.java": true,
+        "com/regitiny/catiny/advance/controller/model/EventModel.java": true,
+        "com/regitiny/catiny/advance/service/EventAdvanceService.java": true,
+        "com/regitiny/catiny/advance/repository/search/EventAdvanceSearch.java": true
+      }
+    },
+    "DeviceStatus": {
+      "generated": {
+        "com/regitiny/catiny/advance/service/DeviceStatusAdvanceService.java": true,
+        "com/regitiny/catiny/advance/repository/search/base/DeviceStatusBaseSearch.java": true,
+        "com/regitiny/catiny/advance/service/impl/DeviceStatusAdvanceServiceImpl.java": true,
+        "com/regitiny/catiny/advance/controller/model/DeviceStatusModel.java": true,
+        "com/regitiny/catiny/advance/repository/DeviceStatusAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/repository/search/DeviceStatusAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/repository/base/DeviceStatusBaseRepository.java": true,
+        "com/regitiny/catiny/advance/service/mapper/DeviceStatusAdvanceMapper.java": true
+      }
+    },
+    "FollowUser": {
+      "generated": {
+        "com/regitiny/catiny/advance/service/FollowUserAdvanceService.java": true,
+        "com/regitiny/catiny/advance/repository/base/FollowUserBaseRepository.java": true,
+        "com/regitiny/catiny/advance/service/mapper/FollowUserAdvanceMapper.java": true,
+        "com/regitiny/catiny/advance/controller/model/FollowUserModel.java": true,
+        "com/regitiny/catiny/advance/repository/FollowUserAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/repository/search/base/FollowUserBaseSearch.java": true,
+        "com/regitiny/catiny/advance/repository/search/FollowUserAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/service/impl/FollowUserAdvanceServiceImpl.java": true
+      }
+    },
+    "FollowPage": {
+      "generated": {
+        "com/regitiny/catiny/advance/service/FollowPageAdvanceService.java": true,
+        "com/regitiny/catiny/advance/repository/FollowPageAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/repository/search/base/FollowPageBaseSearch.java": true,
+        "com/regitiny/catiny/advance/service/mapper/FollowPageAdvanceMapper.java": true,
+        "com/regitiny/catiny/advance/repository/search/FollowPageAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/controller/model/FollowPageModel.java": true,
+        "com/regitiny/catiny/advance/repository/base/FollowPageBaseRepository.java": true,
+        "com/regitiny/catiny/advance/service/impl/FollowPageAdvanceServiceImpl.java": true
+      }
+    },
+    "PagePost": {
+      "generated": {
+        "com/regitiny/catiny/advance/service/PagePostAdvanceService.java": true,
+        "com/regitiny/catiny/advance/repository/base/PagePostBaseRepository.java": true,
+        "com/regitiny/catiny/advance/repository/search/PagePostAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/service/mapper/PagePostAdvanceMapper.java": true,
+        "com/regitiny/catiny/advance/controller/model/PagePostModel.java": true,
+        "com/regitiny/catiny/advance/repository/PagePostAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/repository/search/base/PagePostBaseSearch.java": true,
+        "com/regitiny/catiny/advance/service/impl/PagePostAdvanceServiceImpl.java": true
+      }
+    },
+    "HistoryUpdate": {
+      "generated": {
+        "com/regitiny/catiny/advance/service/impl/HistoryUpdateAdvanceServiceImpl.java": true,
+        "com/regitiny/catiny/advance/repository/HistoryUpdateAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/repository/search/HistoryUpdateAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/repository/search/base/HistoryUpdateBaseSearch.java": true,
+        "com/regitiny/catiny/advance/controller/model/HistoryUpdateModel.java": true,
+        "com/regitiny/catiny/advance/repository/base/HistoryUpdateBaseRepository.java": true,
+        "com/regitiny/catiny/advance/service/mapper/HistoryUpdateAdvanceMapper.java": true,
+        "com/regitiny/catiny/advance/service/HistoryUpdateAdvanceService.java": true
+      }
+    },
+    "HanhChinhVN": {
+      "generated": {
+        "com/regitiny/catiny/advance/repository/search/HanhChinhVNAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/service/HanhChinhVNAdvanceService.java": true,
+        "com/regitiny/catiny/advance/repository/search/base/HanhChinhVNBaseSearch.java": true,
+        "com/regitiny/catiny/advance/service/mapper/HanhChinhVNAdvanceMapper.java": true,
+        "com/regitiny/catiny/advance/repository/HanhChinhVNAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/controller/model/HanhChinhVNModel.java": true,
+        "com/regitiny/catiny/advance/repository/base/HanhChinhVNBaseRepository.java": true,
+        "com/regitiny/catiny/advance/service/impl/HanhChinhVNAdvanceServiceImpl.java": true
+      }
+    },
+    "TodoList": {
+      "generated": {
+        "com/regitiny/catiny/advance/repository/base/TodoListBaseRepository.java": true,
+        "com/regitiny/catiny/advance/service/impl/TodoListAdvanceServiceImpl.java": true,
+        "com/regitiny/catiny/advance/service/TodoListAdvanceService.java": true,
+        "com/regitiny/catiny/advance/repository/search/base/TodoListBaseSearch.java": true,
+        "com/regitiny/catiny/advance/controller/model/TodoListModel.java": true,
+        "com/regitiny/catiny/advance/repository/TodoListAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/repository/search/TodoListAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/service/mapper/TodoListAdvanceMapper.java": true
+      }
+    },
+    "ClassInfo": {
+      "generated": {
+        "com/regitiny/catiny/advance/repository/ClassInfoAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/repository/search/ClassInfoAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/controller/model/ClassInfoModel.java": true,
+        "com/regitiny/catiny/advance/service/impl/ClassInfoAdvanceServiceImpl.java": true,
+        "com/regitiny/catiny/advance/repository/search/base/ClassInfoBaseSearch.java": true,
+        "com/regitiny/catiny/advance/service/mapper/ClassInfoAdvanceMapper.java": true,
+        "com/regitiny/catiny/advance/service/ClassInfoAdvanceService.java": true,
+        "com/regitiny/catiny/advance/repository/base/ClassInfoBaseRepository.java": true
+      }
+    }
+  }
+}

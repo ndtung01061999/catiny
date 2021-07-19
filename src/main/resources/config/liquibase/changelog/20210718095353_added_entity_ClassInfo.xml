@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <databaseChangeLog
-    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd
-                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
 
-    <!--
-        Added the entity ClassInfo.
-    -->
-    <changeSet id="20210718095353-1" author="jhipster">
-        <createTable tableName="class_info">
-            <column name="id" type="bigint">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="uuid" type="${uuidType}" remarks="uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)">
+  <!--
+      Added the entity ClassInfo.
+  -->
+  <changeSet id="20210718095353-1" author="jhipster">
+    <createTable tableName="class_info">
+      <column name="id" type="bigint">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="uuid" type="${uuidType}"
+              remarks="uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)">
                 <constraints nullable="false" unique="true" uniqueConstraintName="ux_class_info__uuid" />
             </column>
-            <column name="package_name" type="varchar(255)" remarks="packageName *  : tên package">
-                <constraints nullable="true" />
-            </column>
+      <column name="name_package" type="varchar(255)" remarks="packageName *  : tên package">
+        <constraints nullable="true"/>
+      </column>
             <column name="full_name" type="varchar(255)" remarks="fullName *     : tên đầy đủ của class . package+ClassName">
                 <constraints nullable="false" unique="true" uniqueConstraintName="ux_class_info__full_name" />
             </column>
@@ -47,7 +46,7 @@
                   tableName="class_info">
             <column name="id" type="numeric"/>
             <column name="uuid" type="string"/>
-            <column name="package_name" type="string"/>
+          <column name="name_package" type="string"/>
             <column name="full_name" type="string"/>
             <column name="class_name" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->

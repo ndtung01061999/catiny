@@ -26,7 +26,7 @@ public class ClassInfoModel implements Serializable
   private UUID uuid;
 
   @ApiModelProperty("packageName *  : tên package")
-  private String packageName;
+  private String namePackage;
 
   @NotNull
   @ApiModelProperty(
@@ -54,7 +54,7 @@ public class ClassInfoModel implements Serializable
     private UUID uuid;
 
     @ApiModelProperty("packageName *  : tên package")
-    private String packageName;
+    private String namePackage;
 
     @NotNull
     @ApiModelProperty(
@@ -83,7 +83,7 @@ public class ClassInfoModel implements Serializable
     private UUID uuid;
 
     @ApiModelProperty("packageName *  : tên package")
-    private String packageName;
+    private String namePackage;
 
     @NotNull
     @ApiModelProperty(

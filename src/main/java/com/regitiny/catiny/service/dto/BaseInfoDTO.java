@@ -4,19 +4,33 @@ import com.regitiny.catiny.GeneratedByJHipster;
 import com.regitiny.catiny.domain.enumeration.ProcessStatus;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
+import javax.persistence.Lob;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
-import javax.persistence.Lob;
+import java.util.UUID;
 
 /**
  * A DTO for the {@link com.regitiny.catiny.domain.BaseInfo} entity.
  */
 @ApiModel(description = "BaseInfo")
 @GeneratedByJHipster
-public class BaseInfoDTO implements Serializable {
+public class BaseInfoDTO implements Serializable
+{
 
   private Long id;
+
+  /**
+   * uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
+   */
+  @NotNull
+  @ApiModelProperty(
+    value = "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
+    required = true
+  )
+  private UUID uuid;
 
   /**
    * processStatus *: @defaultValue( DONE ) -> tình trạng xử lý sử dụng trong phê duyệt
@@ -50,15 +64,6 @@ public class BaseInfoDTO implements Serializable {
   private String notes;
 
   /**
-   * historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json
-   */
-  @ApiModelProperty(
-    value = "historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json"
-  )
-  @Lob
-  private String historyUpdate;
-
-  /**
    * deleted *      : @defaultValue( false ) -> đánh dấu là đã xóa
    */
   @ApiModelProperty(value = "deleted *      : @defaultValue( false ) -> đánh dấu là đã xóa")
@@ -84,23 +89,38 @@ public class BaseInfoDTO implements Serializable {
 
   private MasterUserDTO owner;
 
-  public Long getId() {
+  public Long getId()
+  {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(Long id)
+  {
     this.id = id;
   }
 
-  public ProcessStatus getProcessStatus() {
+  public UUID getUuid()
+  {
+    return uuid;
+  }
+
+  public void setUuid(UUID uuid)
+  {
+    this.uuid = uuid;
+  }
+
+  public ProcessStatus getProcessStatus()
+  {
     return processStatus;
   }
 
-  public void setProcessStatus(ProcessStatus processStatus) {
+  public void setProcessStatus(ProcessStatus processStatus)
+  {
     this.processStatus = processStatus;
   }
 
-  public String getModifiedClass() {
+  public String getModifiedClass()
+  {
     return modifiedClass;
   }
 
@@ -130,14 +150,6 @@ public class BaseInfoDTO implements Serializable {
 
   public void setNotes(String notes) {
     this.notes = notes;
-  }
-
-  public String getHistoryUpdate() {
-    return historyUpdate;
-  }
-
-  public void setHistoryUpdate(String historyUpdate) {
-    this.historyUpdate = historyUpdate;
   }
 
   public Boolean getDeleted() {
@@ -221,18 +233,18 @@ public class BaseInfoDTO implements Serializable {
     @Override
     public String toString() {
         return "BaseInfoDTO{" +
-            "id=" + getId() +
-            ", processStatus='" + getProcessStatus() + "'" +
-            ", modifiedClass='" + getModifiedClass() + "'" +
-            ", createdDate='" + getCreatedDate() + "'" +
-            ", modifiedDate='" + getModifiedDate() + "'" +
-            ", notes='" + getNotes() + "'" +
-            ", historyUpdate='" + getHistoryUpdate() + "'" +
-            ", deleted='" + getDeleted() + "'" +
-            ", priorityIndex=" + getPriorityIndex() +
-            ", countUse=" + getCountUse() +
-            ", classInfo=" + getClassInfo() +
-            ", createdBy=" + getCreatedBy() +
+          "id=" + getId() +
+          ", uuid='" + getUuid() + "'" +
+          ", processStatus='" + getProcessStatus() + "'" +
+          ", modifiedClass='" + getModifiedClass() + "'" +
+          ", createdDate='" + getCreatedDate() + "'" +
+          ", modifiedDate='" + getModifiedDate() + "'" +
+          ", notes='" + getNotes() + "'" +
+          ", deleted='" + getDeleted() + "'" +
+          ", priorityIndex=" + getPriorityIndex() +
+          ", countUse=" + getCountUse() +
+          ", classInfo=" + getClassInfo() +
+          ", createdBy=" + getCreatedBy() +
             ", modifiedBy=" + getModifiedBy() +
             ", owner=" + getOwner() +
             "}";

@@ -1,14 +1,14 @@
-import { entityItemSelector } from '../../support/commands';
+import {entityItemSelector} from '../../support/commands';
 import {
-  entityTableSelector,
-  entityDetailsButtonSelector,
-  entityDetailsBackButtonSelector,
-  entityCreateButtonSelector,
-  entityCreateSaveButtonSelector,
-  entityCreateCancelButtonSelector,
-  entityEditButtonSelector,
-  entityDeleteButtonSelector,
   entityConfirmDeleteButtonSelector,
+  entityCreateButtonSelector,
+  entityCreateCancelButtonSelector,
+  entityCreateSaveButtonSelector,
+  entityDeleteButtonSelector,
+  entityDetailsBackButtonSelector,
+  entityDetailsButtonSelector,
+  entityEditButtonSelector,
+  entityTableSelector,
 } from '../../support/entity';
 
 describe('BaseInfo e2e test', () => {
@@ -92,25 +92,26 @@ describe('BaseInfo e2e test', () => {
     cy.url().should('match', baseInfoPageUrlPattern);
   });
 
-  it('should create an instance of BaseInfo', () => {
+  it('should create an instance of BaseInfo', () =>
+  {
     cy.visit(baseInfoPageUrl);
-    cy.get(entityCreateButtonSelector).click({ force: true });
+    cy.get(entityCreateButtonSelector).click({force: true});
     cy.getEntityCreateUpdateHeading('BaseInfo');
 
-    cy.get(`[data-cy="processStatus"]`).select('NEED_PROCESS_NOW');
+    cy.get(`[data-cy="uuid"]`)
+      .type('810296ec-d72c-446f-95f2-435e8b3e3e9d')
+      .invoke('val')
+      .should('match', new RegExp('810296ec-d72c-446f-95f2-435e8b3e3e9d'));
 
-    cy.get(`[data-cy="modifiedClass"]`).type('Games').should('have.value', 'Games');
+    cy.get(`[data-cy="processStatus"]`).select('NEED_HANDLE');
 
-    cy.get(`[data-cy="createdDate"]`).type('2021-07-10T04:22').should('have.value', '2021-07-10T04:22');
+    cy.get(`[data-cy="modifiedClass"]`).type('B2C Table').should('have.value', 'B2C Table');
 
-    cy.get(`[data-cy="modifiedDate"]`).type('2021-07-09T17:29').should('have.value', '2021-07-09T17:29');
+    cy.get(`[data-cy="createdDate"]`).type('2021-07-10T06:44').should('have.value', '2021-07-10T06:44');
+
+    cy.get(`[data-cy="modifiedDate"]`).type('2021-07-09T23:25').should('have.value', '2021-07-09T23:25');
 
     cy.get(`[data-cy="notes"]`)
-      .type('../fake-data/blob/hipster.txt')
-      .invoke('val')
-      .should('match', new RegExp('../fake-data/blob/hipster.txt'));
-
-    cy.get(`[data-cy="historyUpdate"]`)
       .type('../fake-data/blob/hipster.txt')
       .invoke('val')
       .should('match', new RegExp('../fake-data/blob/hipster.txt'));
@@ -118,9 +119,9 @@ describe('BaseInfo e2e test', () => {
     cy.get(`[data-cy="deleted"]`).should('not.be.checked');
     cy.get(`[data-cy="deleted"]`).click().should('be.checked');
 
-    cy.get(`[data-cy="priorityIndex"]`).type('84433').should('have.value', '84433');
+    cy.get(`[data-cy="priorityIndex"]`).type('54156').should('have.value', '54156');
 
-    cy.get(`[data-cy="countUse"]`).type('48392').should('have.value', '48392');
+    cy.get(`[data-cy="countUse"]`).type('53156').should('have.value', '53156');
 
     cy.setFieldSelectToLastOfEntity('classInfo');
 

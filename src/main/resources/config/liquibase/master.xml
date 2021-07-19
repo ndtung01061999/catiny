@@ -49,6 +49,7 @@
     <include file="config/liquibase/changelog/20210710143934_added_entity_BaseInfo.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210718095352_added_entity_Permission.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210718095353_added_entity_ClassInfo.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210718160344_added_entity_HistoryUpdate.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20210523062729_added_entity_constraints_MessageGroup.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210523062730_added_entity_constraints_MessageContent.xml" relativeToChangelogFile="false"/>
@@ -82,6 +83,7 @@
     <include file="config/liquibase/changelog/20210710143933_added_entity_constraints_Event.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210710143934_added_entity_constraints_BaseInfo.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210718095352_added_entity_constraints_Permission.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/20210718160344_added_entity_constraints_HistoryUpdate.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

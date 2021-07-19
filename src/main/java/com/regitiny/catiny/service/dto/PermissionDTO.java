@@ -2,16 +2,30 @@ package com.regitiny.catiny.service.dto;
 
 import com.regitiny.catiny.GeneratedByJHipster;
 import io.swagger.annotations.ApiModelProperty;
+
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * A DTO for the {@link com.regitiny.catiny.domain.Permission} entity.
  */
 @GeneratedByJHipster
-public class PermissionDTO implements Serializable {
+public class PermissionDTO implements Serializable
+{
 
   private Long id;
+
+  /**
+   * uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
+   */
+  @NotNull
+  @ApiModelProperty(
+    value = "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
+    required = true
+  )
+  private UUID uuid;
 
   /**
    * quyền đọc
@@ -53,23 +67,38 @@ public class PermissionDTO implements Serializable {
 
   private MasterUserDTO masterUser;
 
-  public Long getId() {
+  public Long getId()
+  {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(Long id)
+  {
     this.id = id;
   }
 
-  public Boolean getRead() {
+  public UUID getUuid()
+  {
+    return uuid;
+  }
+
+  public void setUuid(UUID uuid)
+  {
+    this.uuid = uuid;
+  }
+
+  public Boolean getRead()
+  {
     return read;
   }
 
-  public void setRead(Boolean read) {
+  public void setRead(Boolean read)
+  {
     this.read = read;
   }
 
-  public Boolean getWrite() {
+  public Boolean getWrite()
+  {
     return write;
   }
 
@@ -150,15 +179,16 @@ public class PermissionDTO implements Serializable {
     @Override
     public String toString() {
         return "PermissionDTO{" +
-            "id=" + getId() +
-            ", read='" + getRead() + "'" +
-            ", write='" + getWrite() + "'" +
-            ", share='" + getShare() + "'" +
-            ", delete='" + getDelete() + "'" +
-            ", add='" + getAdd() + "'" +
-            ", level=" + getLevel() +
-            ", baseInfo=" + getBaseInfo() +
-            ", masterUser=" + getMasterUser() +
-            "}";
+          "id=" + getId() +
+          ", uuid='" + getUuid() + "'" +
+          ", read='" + getRead() + "'" +
+          ", write='" + getWrite() + "'" +
+          ", share='" + getShare() + "'" +
+          ", delete='" + getDelete() + "'" +
+          ", add='" + getAdd() + "'" +
+          ", level=" + getLevel() +
+          ", baseInfo=" + getBaseInfo() +
+          ", masterUser=" + getMasterUser() +
+          "}";
     }
 }

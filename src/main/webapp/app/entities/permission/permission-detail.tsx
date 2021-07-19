@@ -1,17 +1,18 @@
-import React, { useEffect } from 'react';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, UncontrolledTooltip, Row, Col } from 'reactstrap';
-import { Translate } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useEffect} from 'react';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, Row, UncontrolledTooltip} from 'reactstrap';
+import {Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { getEntity } from './permission.reducer';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
-import { useAppDispatch, useAppSelector } from 'app/config/store';
+import {getEntity} from './permission.reducer';
+import {useAppDispatch, useAppSelector} from 'app/config/store';
 
-export const PermissionDetail = (props: RouteComponentProps<{ id: string }>) => {
+export const PermissionDetail = (props: RouteComponentProps<{ id: string }>) =>
+{
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
+  useEffect(() =>
+  {
     dispatch(getEntity(props.match.params.id));
   }, []);
 
@@ -19,22 +20,31 @@ export const PermissionDetail = (props: RouteComponentProps<{ id: string }>) => 
   return (
     <Row>
       <Col md="8">
-        <h2 data-cy="permissionDetailsHeading">
-          <Translate contentKey="catinyApp.permission.detail.title">Permission</Translate>
+        <h2 data-cy='permissionDetailsHeading'>
+          <Translate contentKey='catinyApp.permission.detail.title'>Permission</Translate>
         </h2>
-        <dl className="jh-entity-details">
+        <dl className='jh-entity-details'>
           <dt>
-            <span id="id">
-              <Translate contentKey="global.field.id">ID</Translate>
+            <span id='id'>
+              <Translate contentKey='global.field.id'>ID</Translate>
             </span>
           </dt>
           <dd>{permissionEntity.id}</dd>
           <dt>
-            <span id="read">
-              <Translate contentKey="catinyApp.permission.read">Read</Translate>
+            <span id='uuid'>
+              <Translate contentKey='catinyApp.permission.uuid'>Uuid</Translate>
             </span>
-            <UncontrolledTooltip target="read">
-              <Translate contentKey="catinyApp.permission.help.read" />
+            <UncontrolledTooltip target='uuid'>
+              <Translate contentKey='catinyApp.permission.help.uuid' />
+            </UncontrolledTooltip>
+          </dt>
+          <dd>{permissionEntity.uuid}</dd>
+          <dt>
+            <span id='read'>
+              <Translate contentKey='catinyApp.permission.read'>Read</Translate>
+            </span>
+            <UncontrolledTooltip target='read'>
+              <Translate contentKey='catinyApp.permission.help.read' />
             </UncontrolledTooltip>
           </dt>
           <dd>{permissionEntity.read ? 'true' : 'false'}</dd>

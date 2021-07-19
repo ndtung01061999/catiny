@@ -2,6 +2,15 @@
   "name": "Permission",
   "fields": [
     {
+      "fieldName": "uuid",
+      "fieldType": "UUID",
+      "javadoc": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
+      "fieldValidateRules": [
+        "required",
+        "unique"
+      ]
+    },
+    {
       "fieldName": "read",
       "fieldType": "Boolean",
       "javadoc": "quyền đọc"

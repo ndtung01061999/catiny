@@ -1,31 +1,16 @@
 package com.regitiny.catiny.web.rest;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 import com.regitiny.catiny.GeneratedByJHipster;
 import com.regitiny.catiny.IntegrationTest;
 import com.regitiny.catiny.domain.BaseInfo;
 import com.regitiny.catiny.domain.ClassInfo;
 import com.regitiny.catiny.repository.ClassInfoRepository;
 import com.regitiny.catiny.repository.search.ClassInfoSearchRepository;
-import com.regitiny.catiny.service.criteria.ClassInfoCriteria;
 import com.regitiny.catiny.service.dto.ClassInfoDTO;
 import com.regitiny.catiny.service.mapper.ClassInfoMapper;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
-import java.util.concurrent.atomic.AtomicLong;
-import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -36,6 +21,20 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicLong;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
+import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 /**
  * Integration tests for the {@link ClassInfoResource} REST controller.
  */
@@ -44,13 +43,14 @@ import org.springframework.transaction.annotation.Transactional;
 @AutoConfigureMockMvc
 @WithMockUser
 @GeneratedByJHipster
-class ClassInfoResourceIT {
+class ClassInfoResourceIT
+{
 
   private static final UUID DEFAULT_UUID = UUID.randomUUID();
   private static final UUID UPDATED_UUID = UUID.randomUUID();
 
-  private static final String DEFAULT_PACKAGE_NAME = "AAAAAAAAAA";
-  private static final String UPDATED_PACKAGE_NAME = "BBBBBBBBBB";
+  private static final String DEFAULT_NAME_PACKAGE = "AAAAAAAAAA";
+  private static final String UPDATED_NAME_PACKAGE = "BBBBBBBBBB";
 
   private static final String DEFAULT_FULL_NAME = "AAAAAAAAAA";
   private static final String UPDATED_FULL_NAME = "BBBBBBBBBB";
@@ -62,8 +62,8 @@ class ClassInfoResourceIT {
   private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
   private static final String ENTITY_SEARCH_API_URL = "/api/_search/class-infos";
 
-  private static Random random = new Random();
-  private static AtomicLong count = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
+  private static final Random random = new Random();
+  private static final AtomicLong count = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
 
   @Autowired
   private ClassInfoRepository classInfoRepository;
@@ -96,7 +96,7 @@ class ClassInfoResourceIT {
   public static ClassInfo createEntity(EntityManager em) {
     ClassInfo classInfo = new ClassInfo()
       .uuid(DEFAULT_UUID)
-      .packageName(DEFAULT_PACKAGE_NAME)
+      .namePackage(DEFAULT_NAME_PACKAGE)
       .fullName(DEFAULT_FULL_NAME)
       .className(DEFAULT_CLASS_NAME);
     return classInfo;
@@ -111,7 +111,7 @@ class ClassInfoResourceIT {
   public static ClassInfo createUpdatedEntity(EntityManager em) {
     ClassInfo classInfo = new ClassInfo()
       .uuid(UPDATED_UUID)
-      .packageName(UPDATED_PACKAGE_NAME)
+      .namePackage(UPDATED_NAME_PACKAGE)
       .fullName(UPDATED_FULL_NAME)
       .className(UPDATED_CLASS_NAME);
     return classInfo;
@@ -137,7 +137,7 @@ class ClassInfoResourceIT {
     assertThat(classInfoList).hasSize(databaseSizeBeforeCreate + 1);
     ClassInfo testClassInfo = classInfoList.get(classInfoList.size() - 1);
     assertThat(testClassInfo.getUuid()).isEqualTo(DEFAULT_UUID);
-    assertThat(testClassInfo.getPackageName()).isEqualTo(DEFAULT_PACKAGE_NAME);
+    assertThat(testClassInfo.getNamePackage()).isEqualTo(DEFAULT_NAME_PACKAGE);
     assertThat(testClassInfo.getFullName()).isEqualTo(DEFAULT_FULL_NAME);
     assertThat(testClassInfo.getClassName()).isEqualTo(DEFAULT_CLASS_NAME);
 
@@ -216,7 +216,7 @@ class ClassInfoResourceIT {
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
       .andExpect(jsonPath("$.[*].id").value(hasItem(classInfo.getId().intValue())))
       .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
-      .andExpect(jsonPath("$.[*].packageName").value(hasItem(DEFAULT_PACKAGE_NAME)))
+      .andExpect(jsonPath("$.[*].namePackage").value(hasItem(DEFAULT_NAME_PACKAGE)))
       .andExpect(jsonPath("$.[*].fullName").value(hasItem(DEFAULT_FULL_NAME)))
       .andExpect(jsonPath("$.[*].className").value(hasItem(DEFAULT_CLASS_NAME)));
   }
@@ -234,7 +234,7 @@ class ClassInfoResourceIT {
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
       .andExpect(jsonPath("$.id").value(classInfo.getId().intValue()))
       .andExpect(jsonPath("$.uuid").value(DEFAULT_UUID.toString()))
-      .andExpect(jsonPath("$.packageName").value(DEFAULT_PACKAGE_NAME))
+      .andExpect(jsonPath("$.namePackage").value(DEFAULT_NAME_PACKAGE))
       .andExpect(jsonPath("$.fullName").value(DEFAULT_FULL_NAME))
       .andExpect(jsonPath("$.className").value(DEFAULT_CLASS_NAME));
   }
@@ -311,80 +311,86 @@ class ClassInfoResourceIT {
 
   @Test
   @Transactional
-  void getAllClassInfosByPackageNameIsEqualToSomething() throws Exception {
+  void getAllClassInfosByNamePackageIsEqualToSomething() throws Exception
+  {
     // Initialize the database
     classInfoRepository.saveAndFlush(classInfo);
 
-    // Get all the classInfoList where packageName equals to DEFAULT_PACKAGE_NAME
-    defaultClassInfoShouldBeFound("packageName.equals=" + DEFAULT_PACKAGE_NAME);
+    // Get all the classInfoList where namePackage equals to DEFAULT_NAME_PACKAGE
+    defaultClassInfoShouldBeFound("namePackage.equals=" + DEFAULT_NAME_PACKAGE);
 
-    // Get all the classInfoList where packageName equals to UPDATED_PACKAGE_NAME
-    defaultClassInfoShouldNotBeFound("packageName.equals=" + UPDATED_PACKAGE_NAME);
+    // Get all the classInfoList where namePackage equals to UPDATED_NAME_PACKAGE
+    defaultClassInfoShouldNotBeFound("namePackage.equals=" + UPDATED_NAME_PACKAGE);
   }
 
   @Test
   @Transactional
-  void getAllClassInfosByPackageNameIsNotEqualToSomething() throws Exception {
+  void getAllClassInfosByNamePackageIsNotEqualToSomething() throws Exception
+  {
     // Initialize the database
     classInfoRepository.saveAndFlush(classInfo);
 
-    // Get all the classInfoList where packageName not equals to DEFAULT_PACKAGE_NAME
-    defaultClassInfoShouldNotBeFound("packageName.notEquals=" + DEFAULT_PACKAGE_NAME);
+    // Get all the classInfoList where namePackage not equals to DEFAULT_NAME_PACKAGE
+    defaultClassInfoShouldNotBeFound("namePackage.notEquals=" + DEFAULT_NAME_PACKAGE);
 
-    // Get all the classInfoList where packageName not equals to UPDATED_PACKAGE_NAME
-    defaultClassInfoShouldBeFound("packageName.notEquals=" + UPDATED_PACKAGE_NAME);
+    // Get all the classInfoList where namePackage not equals to UPDATED_NAME_PACKAGE
+    defaultClassInfoShouldBeFound("namePackage.notEquals=" + UPDATED_NAME_PACKAGE);
   }
 
   @Test
   @Transactional
-  void getAllClassInfosByPackageNameIsInShouldWork() throws Exception {
+  void getAllClassInfosByNamePackageIsInShouldWork() throws Exception
+  {
     // Initialize the database
     classInfoRepository.saveAndFlush(classInfo);
 
-    // Get all the classInfoList where packageName in DEFAULT_PACKAGE_NAME or UPDATED_PACKAGE_NAME
-    defaultClassInfoShouldBeFound("packageName.in=" + DEFAULT_PACKAGE_NAME + "," + UPDATED_PACKAGE_NAME);
+    // Get all the classInfoList where namePackage in DEFAULT_NAME_PACKAGE or UPDATED_NAME_PACKAGE
+    defaultClassInfoShouldBeFound("namePackage.in=" + DEFAULT_NAME_PACKAGE + "," + UPDATED_NAME_PACKAGE);
 
-    // Get all the classInfoList where packageName equals to UPDATED_PACKAGE_NAME
-    defaultClassInfoShouldNotBeFound("packageName.in=" + UPDATED_PACKAGE_NAME);
+    // Get all the classInfoList where namePackage equals to UPDATED_NAME_PACKAGE
+    defaultClassInfoShouldNotBeFound("namePackage.in=" + UPDATED_NAME_PACKAGE);
   }
 
   @Test
   @Transactional
-  void getAllClassInfosByPackageNameIsNullOrNotNull() throws Exception {
+  void getAllClassInfosByNamePackageIsNullOrNotNull() throws Exception
+  {
     // Initialize the database
     classInfoRepository.saveAndFlush(classInfo);
 
-    // Get all the classInfoList where packageName is not null
-    defaultClassInfoShouldBeFound("packageName.specified=true");
+    // Get all the classInfoList where namePackage is not null
+    defaultClassInfoShouldBeFound("namePackage.specified=true");
 
-    // Get all the classInfoList where packageName is null
-    defaultClassInfoShouldNotBeFound("packageName.specified=false");
+    // Get all the classInfoList where namePackage is null
+    defaultClassInfoShouldNotBeFound("namePackage.specified=false");
   }
 
   @Test
   @Transactional
-  void getAllClassInfosByPackageNameContainsSomething() throws Exception {
+  void getAllClassInfosByNamePackageContainsSomething() throws Exception
+  {
     // Initialize the database
     classInfoRepository.saveAndFlush(classInfo);
 
-    // Get all the classInfoList where packageName contains DEFAULT_PACKAGE_NAME
-    defaultClassInfoShouldBeFound("packageName.contains=" + DEFAULT_PACKAGE_NAME);
+    // Get all the classInfoList where namePackage contains DEFAULT_NAME_PACKAGE
+    defaultClassInfoShouldBeFound("namePackage.contains=" + DEFAULT_NAME_PACKAGE);
 
-    // Get all the classInfoList where packageName contains UPDATED_PACKAGE_NAME
-    defaultClassInfoShouldNotBeFound("packageName.contains=" + UPDATED_PACKAGE_NAME);
+    // Get all the classInfoList where namePackage contains UPDATED_NAME_PACKAGE
+    defaultClassInfoShouldNotBeFound("namePackage.contains=" + UPDATED_NAME_PACKAGE);
   }
 
   @Test
   @Transactional
-  void getAllClassInfosByPackageNameNotContainsSomething() throws Exception {
+  void getAllClassInfosByNamePackageNotContainsSomething() throws Exception
+  {
     // Initialize the database
     classInfoRepository.saveAndFlush(classInfo);
 
-    // Get all the classInfoList where packageName does not contain DEFAULT_PACKAGE_NAME
-    defaultClassInfoShouldNotBeFound("packageName.doesNotContain=" + DEFAULT_PACKAGE_NAME);
+    // Get all the classInfoList where namePackage does not contain DEFAULT_NAME_PACKAGE
+    defaultClassInfoShouldNotBeFound("namePackage.doesNotContain=" + DEFAULT_NAME_PACKAGE);
 
-    // Get all the classInfoList where packageName does not contain UPDATED_PACKAGE_NAME
-    defaultClassInfoShouldBeFound("packageName.doesNotContain=" + UPDATED_PACKAGE_NAME);
+    // Get all the classInfoList where namePackage does not contain UPDATED_NAME_PACKAGE
+    defaultClassInfoShouldBeFound("namePackage.doesNotContain=" + UPDATED_NAME_PACKAGE);
   }
 
   @Test
@@ -572,7 +578,7 @@ class ClassInfoResourceIT {
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
       .andExpect(jsonPath("$.[*].id").value(hasItem(classInfo.getId().intValue())))
       .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
-      .andExpect(jsonPath("$.[*].packageName").value(hasItem(DEFAULT_PACKAGE_NAME)))
+      .andExpect(jsonPath("$.[*].namePackage").value(hasItem(DEFAULT_NAME_PACKAGE)))
       .andExpect(jsonPath("$.[*].fullName").value(hasItem(DEFAULT_FULL_NAME)))
       .andExpect(jsonPath("$.[*].className").value(hasItem(DEFAULT_CLASS_NAME)));
 
@@ -622,7 +628,7 @@ class ClassInfoResourceIT {
     ClassInfo updatedClassInfo = classInfoRepository.findById(classInfo.getId()).get();
     // Disconnect from session so that the updates on updatedClassInfo are not directly saved in db
     em.detach(updatedClassInfo);
-    updatedClassInfo.uuid(UPDATED_UUID).packageName(UPDATED_PACKAGE_NAME).fullName(UPDATED_FULL_NAME).className(UPDATED_CLASS_NAME);
+    updatedClassInfo.uuid(UPDATED_UUID).namePackage(UPDATED_NAME_PACKAGE).fullName(UPDATED_FULL_NAME).className(UPDATED_CLASS_NAME);
     ClassInfoDTO classInfoDTO = classInfoMapper.toDto(updatedClassInfo);
 
     restClassInfoMockMvc
@@ -638,7 +644,7 @@ class ClassInfoResourceIT {
     assertThat(classInfoList).hasSize(databaseSizeBeforeUpdate);
     ClassInfo testClassInfo = classInfoList.get(classInfoList.size() - 1);
     assertThat(testClassInfo.getUuid()).isEqualTo(UPDATED_UUID);
-    assertThat(testClassInfo.getPackageName()).isEqualTo(UPDATED_PACKAGE_NAME);
+    assertThat(testClassInfo.getNamePackage()).isEqualTo(UPDATED_NAME_PACKAGE);
     assertThat(testClassInfo.getFullName()).isEqualTo(UPDATED_FULL_NAME);
     assertThat(testClassInfo.getClassName()).isEqualTo(UPDATED_CLASS_NAME);
 
@@ -747,7 +753,7 @@ class ClassInfoResourceIT {
     assertThat(classInfoList).hasSize(databaseSizeBeforeUpdate);
     ClassInfo testClassInfo = classInfoList.get(classInfoList.size() - 1);
     assertThat(testClassInfo.getUuid()).isEqualTo(DEFAULT_UUID);
-    assertThat(testClassInfo.getPackageName()).isEqualTo(DEFAULT_PACKAGE_NAME);
+    assertThat(testClassInfo.getNamePackage()).isEqualTo(DEFAULT_NAME_PACKAGE);
     assertThat(testClassInfo.getFullName()).isEqualTo(DEFAULT_FULL_NAME);
     assertThat(testClassInfo.getClassName()).isEqualTo(UPDATED_CLASS_NAME);
   }
@@ -764,7 +770,7 @@ class ClassInfoResourceIT {
     ClassInfo partialUpdatedClassInfo = new ClassInfo();
     partialUpdatedClassInfo.setId(classInfo.getId());
 
-    partialUpdatedClassInfo.uuid(UPDATED_UUID).packageName(UPDATED_PACKAGE_NAME).fullName(UPDATED_FULL_NAME).className(UPDATED_CLASS_NAME);
+    partialUpdatedClassInfo.uuid(UPDATED_UUID).namePackage(UPDATED_NAME_PACKAGE).fullName(UPDATED_FULL_NAME).className(UPDATED_CLASS_NAME);
 
     restClassInfoMockMvc
       .perform(
@@ -779,7 +785,7 @@ class ClassInfoResourceIT {
     assertThat(classInfoList).hasSize(databaseSizeBeforeUpdate);
     ClassInfo testClassInfo = classInfoList.get(classInfoList.size() - 1);
     assertThat(testClassInfo.getUuid()).isEqualTo(UPDATED_UUID);
-    assertThat(testClassInfo.getPackageName()).isEqualTo(UPDATED_PACKAGE_NAME);
+    assertThat(testClassInfo.getNamePackage()).isEqualTo(UPDATED_NAME_PACKAGE);
     assertThat(testClassInfo.getFullName()).isEqualTo(UPDATED_FULL_NAME);
     assertThat(testClassInfo.getClassName()).isEqualTo(UPDATED_CLASS_NAME);
   }
@@ -895,7 +901,7 @@ class ClassInfoResourceIT {
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
       .andExpect(jsonPath("$.[*].id").value(hasItem(classInfo.getId().intValue())))
       .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
-      .andExpect(jsonPath("$.[*].packageName").value(hasItem(DEFAULT_PACKAGE_NAME)))
+      .andExpect(jsonPath("$.[*].namePackage").value(hasItem(DEFAULT_NAME_PACKAGE)))
       .andExpect(jsonPath("$.[*].fullName").value(hasItem(DEFAULT_FULL_NAME)))
       .andExpect(jsonPath("$.[*].className").value(hasItem(DEFAULT_CLASS_NAME)));
   }

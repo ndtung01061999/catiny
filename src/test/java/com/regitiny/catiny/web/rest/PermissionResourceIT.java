@@ -1,12 +1,5 @@
 package com.regitiny.catiny.web.rest;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 import com.regitiny.catiny.GeneratedByJHipster;
 import com.regitiny.catiny.IntegrationTest;
 import com.regitiny.catiny.domain.BaseInfo;
@@ -14,18 +7,11 @@ import com.regitiny.catiny.domain.MasterUser;
 import com.regitiny.catiny.domain.Permission;
 import com.regitiny.catiny.repository.PermissionRepository;
 import com.regitiny.catiny.repository.search.PermissionSearchRepository;
-import com.regitiny.catiny.service.criteria.PermissionCriteria;
 import com.regitiny.catiny.service.dto.PermissionDTO;
 import com.regitiny.catiny.service.mapper.PermissionMapper;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.atomic.AtomicLong;
-import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -36,6 +22,20 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicLong;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
+import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 /**
  * Integration tests for the {@link PermissionResource} REST controller.
  */
@@ -44,7 +44,11 @@ import org.springframework.transaction.annotation.Transactional;
 @AutoConfigureMockMvc
 @WithMockUser
 @GeneratedByJHipster
-class PermissionResourceIT {
+class PermissionResourceIT
+{
+
+  private static final UUID DEFAULT_UUID = UUID.randomUUID();
+  private static final UUID UPDATED_UUID = UUID.randomUUID();
 
   private static final Boolean DEFAULT_READ = false;
   private static final Boolean UPDATED_READ = true;
@@ -69,8 +73,8 @@ class PermissionResourceIT {
   private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
   private static final String ENTITY_SEARCH_API_URL = "/api/_search/permissions";
 
-  private static Random random = new Random();
-  private static AtomicLong count = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
+  private static final Random random = new Random();
+  private static final AtomicLong count = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
 
   @Autowired
   private PermissionRepository permissionRepository;
@@ -102,6 +106,7 @@ class PermissionResourceIT {
    */
   public static Permission createEntity(EntityManager em) {
     Permission permission = new Permission()
+      .uuid(DEFAULT_UUID)
       .read(DEFAULT_READ)
       .write(DEFAULT_WRITE)
       .share(DEFAULT_SHARE)
@@ -119,6 +124,7 @@ class PermissionResourceIT {
    */
   public static Permission createUpdatedEntity(EntityManager em) {
     Permission permission = new Permission()
+      .uuid(UPDATED_UUID)
       .read(UPDATED_READ)
       .write(UPDATED_WRITE)
       .share(UPDATED_SHARE)
@@ -147,6 +153,7 @@ class PermissionResourceIT {
     List<Permission> permissionList = permissionRepository.findAll();
     assertThat(permissionList).hasSize(databaseSizeBeforeCreate + 1);
     Permission testPermission = permissionList.get(permissionList.size() - 1);
+    assertThat(testPermission.getUuid()).isEqualTo(DEFAULT_UUID);
     assertThat(testPermission.getRead()).isEqualTo(DEFAULT_READ);
     assertThat(testPermission.getWrite()).isEqualTo(DEFAULT_WRITE);
     assertThat(testPermission.getShare()).isEqualTo(DEFAULT_SHARE);
@@ -182,7 +189,27 @@ class PermissionResourceIT {
 
   @Test
   @Transactional
-  void getAllPermissions() throws Exception {
+  void checkUuidIsRequired() throws Exception
+  {
+    int databaseSizeBeforeTest = permissionRepository.findAll().size();
+    // set the field null
+    permission.setUuid(null);
+
+    // Create the Permission, which fails.
+    PermissionDTO permissionDTO = permissionMapper.toDto(permission);
+
+    restPermissionMockMvc
+      .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(permissionDTO)))
+      .andExpect(status().isBadRequest());
+
+    List<Permission> permissionList = permissionRepository.findAll();
+    assertThat(permissionList).hasSize(databaseSizeBeforeTest);
+  }
+
+  @Test
+  @Transactional
+  void getAllPermissions() throws Exception
+  {
     // Initialize the database
     permissionRepository.saveAndFlush(permission);
 
@@ -192,6 +219,7 @@ class PermissionResourceIT {
       .andExpect(status().isOk())
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
       .andExpect(jsonPath("$.[*].id").value(hasItem(permission.getId().intValue())))
+      .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
       .andExpect(jsonPath("$.[*].read").value(hasItem(DEFAULT_READ.booleanValue())))
       .andExpect(jsonPath("$.[*].write").value(hasItem(DEFAULT_WRITE.booleanValue())))
       .andExpect(jsonPath("$.[*].share").value(hasItem(DEFAULT_SHARE.booleanValue())))
@@ -212,6 +240,7 @@ class PermissionResourceIT {
       .andExpect(status().isOk())
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
       .andExpect(jsonPath("$.id").value(permission.getId().intValue()))
+      .andExpect(jsonPath("$.uuid").value(DEFAULT_UUID.toString()))
       .andExpect(jsonPath("$.read").value(DEFAULT_READ.booleanValue()))
       .andExpect(jsonPath("$.write").value(DEFAULT_WRITE.booleanValue()))
       .andExpect(jsonPath("$.share").value(DEFAULT_SHARE.booleanValue()))
@@ -240,7 +269,64 @@ class PermissionResourceIT {
 
   @Test
   @Transactional
-  void getAllPermissionsByReadIsEqualToSomething() throws Exception {
+  void getAllPermissionsByUuidIsEqualToSomething() throws Exception
+  {
+    // Initialize the database
+    permissionRepository.saveAndFlush(permission);
+
+    // Get all the permissionList where uuid equals to DEFAULT_UUID
+    defaultPermissionShouldBeFound("uuid.equals=" + DEFAULT_UUID);
+
+    // Get all the permissionList where uuid equals to UPDATED_UUID
+    defaultPermissionShouldNotBeFound("uuid.equals=" + UPDATED_UUID);
+  }
+
+  @Test
+  @Transactional
+  void getAllPermissionsByUuidIsNotEqualToSomething() throws Exception
+  {
+    // Initialize the database
+    permissionRepository.saveAndFlush(permission);
+
+    // Get all the permissionList where uuid not equals to DEFAULT_UUID
+    defaultPermissionShouldNotBeFound("uuid.notEquals=" + DEFAULT_UUID);
+
+    // Get all the permissionList where uuid not equals to UPDATED_UUID
+    defaultPermissionShouldBeFound("uuid.notEquals=" + UPDATED_UUID);
+  }
+
+  @Test
+  @Transactional
+  void getAllPermissionsByUuidIsInShouldWork() throws Exception
+  {
+    // Initialize the database
+    permissionRepository.saveAndFlush(permission);
+
+    // Get all the permissionList where uuid in DEFAULT_UUID or UPDATED_UUID
+    defaultPermissionShouldBeFound("uuid.in=" + DEFAULT_UUID + "," + UPDATED_UUID);
+
+    // Get all the permissionList where uuid equals to UPDATED_UUID
+    defaultPermissionShouldNotBeFound("uuid.in=" + UPDATED_UUID);
+  }
+
+  @Test
+  @Transactional
+  void getAllPermissionsByUuidIsNullOrNotNull() throws Exception
+  {
+    // Initialize the database
+    permissionRepository.saveAndFlush(permission);
+
+    // Get all the permissionList where uuid is not null
+    defaultPermissionShouldBeFound("uuid.specified=true");
+
+    // Get all the permissionList where uuid is null
+    defaultPermissionShouldNotBeFound("uuid.specified=false");
+  }
+
+  @Test
+  @Transactional
+  void getAllPermissionsByReadIsEqualToSomething() throws Exception
+  {
     // Initialize the database
     permissionRepository.saveAndFlush(permission);
 
@@ -649,6 +735,7 @@ class PermissionResourceIT {
       .andExpect(status().isOk())
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
       .andExpect(jsonPath("$.[*].id").value(hasItem(permission.getId().intValue())))
+      .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
       .andExpect(jsonPath("$.[*].read").value(hasItem(DEFAULT_READ.booleanValue())))
       .andExpect(jsonPath("$.[*].write").value(hasItem(DEFAULT_WRITE.booleanValue())))
       .andExpect(jsonPath("$.[*].share").value(hasItem(DEFAULT_SHARE.booleanValue())))
@@ -703,6 +790,7 @@ class PermissionResourceIT {
     // Disconnect from session so that the updates on updatedPermission are not directly saved in db
     em.detach(updatedPermission);
     updatedPermission
+      .uuid(UPDATED_UUID)
       .read(UPDATED_READ)
       .write(UPDATED_WRITE)
       .share(UPDATED_SHARE)
@@ -723,6 +811,7 @@ class PermissionResourceIT {
     List<Permission> permissionList = permissionRepository.findAll();
     assertThat(permissionList).hasSize(databaseSizeBeforeUpdate);
     Permission testPermission = permissionList.get(permissionList.size() - 1);
+    assertThat(testPermission.getUuid()).isEqualTo(UPDATED_UUID);
     assertThat(testPermission.getRead()).isEqualTo(UPDATED_READ);
     assertThat(testPermission.getWrite()).isEqualTo(UPDATED_WRITE);
     assertThat(testPermission.getShare()).isEqualTo(UPDATED_SHARE);
@@ -821,12 +910,12 @@ class PermissionResourceIT {
     partialUpdatedPermission.setId(permission.getId());
 
     partialUpdatedPermission
+      .uuid(UPDATED_UUID)
       .read(UPDATED_READ)
       .write(UPDATED_WRITE)
       .share(UPDATED_SHARE)
       .delete(UPDATED_DELETE)
-      .add(UPDATED_ADD)
-      .level(UPDATED_LEVEL);
+      .add(UPDATED_ADD);
 
     restPermissionMockMvc
       .perform(
@@ -840,12 +929,13 @@ class PermissionResourceIT {
     List<Permission> permissionList = permissionRepository.findAll();
     assertThat(permissionList).hasSize(databaseSizeBeforeUpdate);
     Permission testPermission = permissionList.get(permissionList.size() - 1);
+    assertThat(testPermission.getUuid()).isEqualTo(UPDATED_UUID);
     assertThat(testPermission.getRead()).isEqualTo(UPDATED_READ);
     assertThat(testPermission.getWrite()).isEqualTo(UPDATED_WRITE);
     assertThat(testPermission.getShare()).isEqualTo(UPDATED_SHARE);
     assertThat(testPermission.getDelete()).isEqualTo(UPDATED_DELETE);
     assertThat(testPermission.getAdd()).isEqualTo(UPDATED_ADD);
-    assertThat(testPermission.getLevel()).isEqualTo(UPDATED_LEVEL);
+    assertThat(testPermission.getLevel()).isEqualTo(DEFAULT_LEVEL);
   }
 
   @Test
@@ -861,6 +951,7 @@ class PermissionResourceIT {
     partialUpdatedPermission.setId(permission.getId());
 
     partialUpdatedPermission
+      .uuid(UPDATED_UUID)
       .read(UPDATED_READ)
       .write(UPDATED_WRITE)
       .share(UPDATED_SHARE)
@@ -880,6 +971,7 @@ class PermissionResourceIT {
     List<Permission> permissionList = permissionRepository.findAll();
     assertThat(permissionList).hasSize(databaseSizeBeforeUpdate);
     Permission testPermission = permissionList.get(permissionList.size() - 1);
+    assertThat(testPermission.getUuid()).isEqualTo(UPDATED_UUID);
     assertThat(testPermission.getRead()).isEqualTo(UPDATED_READ);
     assertThat(testPermission.getWrite()).isEqualTo(UPDATED_WRITE);
     assertThat(testPermission.getShare()).isEqualTo(UPDATED_SHARE);
@@ -998,6 +1090,7 @@ class PermissionResourceIT {
       .andExpect(status().isOk())
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
       .andExpect(jsonPath("$.[*].id").value(hasItem(permission.getId().intValue())))
+      .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
       .andExpect(jsonPath("$.[*].read").value(hasItem(DEFAULT_READ.booleanValue())))
       .andExpect(jsonPath("$.[*].write").value(hasItem(DEFAULT_WRITE.booleanValue())))
       .andExpect(jsonPath("$.[*].share").value(hasItem(DEFAULT_SHARE.booleanValue())))

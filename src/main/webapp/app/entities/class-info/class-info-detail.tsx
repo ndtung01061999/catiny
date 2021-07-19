@@ -1,17 +1,18 @@
-import React, { useEffect } from 'react';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, UncontrolledTooltip, Row, Col } from 'reactstrap';
-import { Translate } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useEffect} from 'react';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, Row, UncontrolledTooltip} from 'reactstrap';
+import {Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { getEntity } from './class-info.reducer';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
-import { useAppDispatch, useAppSelector } from 'app/config/store';
+import {getEntity} from './class-info.reducer';
+import {useAppDispatch, useAppSelector} from 'app/config/store';
 
-export const ClassInfoDetail = (props: RouteComponentProps<{ id: string }>) => {
+export const ClassInfoDetail = (props: RouteComponentProps<{ id: string }>) =>
+{
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
+  useEffect(() =>
+  {
     dispatch(getEntity(props.match.params.id));
   }, []);
 
@@ -39,20 +40,20 @@ export const ClassInfoDetail = (props: RouteComponentProps<{ id: string }>) => {
           </dt>
           <dd>{classInfoEntity.uuid}</dd>
           <dt>
-            <span id="packageName">
-              <Translate contentKey="catinyApp.classInfo.packageName">Package Name</Translate>
+            <span id='namePackage'>
+              <Translate contentKey='catinyApp.classInfo.namePackage'>Name Package</Translate>
             </span>
-            <UncontrolledTooltip target="packageName">
-              <Translate contentKey="catinyApp.classInfo.help.packageName" />
+            <UncontrolledTooltip target='namePackage'>
+              <Translate contentKey='catinyApp.classInfo.help.namePackage' />
             </UncontrolledTooltip>
           </dt>
-          <dd>{classInfoEntity.packageName}</dd>
+          <dd>{classInfoEntity.namePackage}</dd>
           <dt>
-            <span id="fullName">
-              <Translate contentKey="catinyApp.classInfo.fullName">Full Name</Translate>
+            <span id='fullName'>
+              <Translate contentKey='catinyApp.classInfo.fullName'>Full Name</Translate>
             </span>
-            <UncontrolledTooltip target="fullName">
-              <Translate contentKey="catinyApp.classInfo.help.fullName" />
+            <UncontrolledTooltip target='fullName'>
+              <Translate contentKey='catinyApp.classInfo.help.fullName' />
             </UncontrolledTooltip>
           </dt>
           <dd>{classInfoEntity.fullName}</dd>

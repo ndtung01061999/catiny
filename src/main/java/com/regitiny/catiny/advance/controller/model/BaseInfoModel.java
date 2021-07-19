@@ -10,8 +10,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Lob;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -20,6 +22,13 @@ import java.time.Instant;
 public class BaseInfoModel implements Serializable
 {
   private Long id;
+
+  @NotNull
+  @ApiModelProperty(
+    required = true,
+    value = "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)"
+  )
+  private UUID uuid;
 
   @ApiModelProperty("processStatus *: @defaultValue( DONE ) -> tình trạng xử lý sử dụng trong phê duyệt")
   private ProcessStatus processStatus;
@@ -36,10 +45,6 @@ public class BaseInfoModel implements Serializable
   @ApiModelProperty("notes *        : @type Json -> chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json\"")
   @Lob
   private String notes;
-
-  @ApiModelProperty("historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json")
-  @Lob
-  private String historyUpdate;
 
   @ApiModelProperty("deleted *      : @defaultValue( false ) -> đánh dấu là đã xóa")
   private Boolean deleted;
@@ -66,6 +71,13 @@ public class BaseInfoModel implements Serializable
   {
     private Long id;
 
+    @NotNull
+    @ApiModelProperty(
+      required = true,
+      value = "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)"
+    )
+    private UUID uuid;
+
     @ApiModelProperty("processStatus *: @defaultValue( DONE ) -> tình trạng xử lý sử dụng trong phê duyệt")
     private ProcessStatus processStatus;
 
@@ -81,10 +93,6 @@ public class BaseInfoModel implements Serializable
     @ApiModelProperty("notes *        : @type Json -> chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json\"")
     @Lob
     private String notes;
-
-    @ApiModelProperty("historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json")
-    @Lob
-    private String historyUpdate;
 
     @ApiModelProperty("deleted *      : @defaultValue( false ) -> đánh dấu là đã xóa")
     private Boolean deleted;
@@ -112,6 +120,13 @@ public class BaseInfoModel implements Serializable
   {
     private Long id;
 
+    @NotNull
+    @ApiModelProperty(
+      required = true,
+      value = "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)"
+    )
+    private UUID uuid;
+
     @ApiModelProperty("processStatus *: @defaultValue( DONE ) -> tình trạng xử lý sử dụng trong phê duyệt")
     private ProcessStatus processStatus;
 
@@ -127,10 +142,6 @@ public class BaseInfoModel implements Serializable
     @ApiModelProperty("notes *        : @type Json -> chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json\"")
     @Lob
     private String notes;
-
-    @ApiModelProperty("historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json")
-    @Lob
-    private String historyUpdate;
 
     @ApiModelProperty("deleted *      : @defaultValue( false ) -> đánh dấu là đã xóa")
     private Boolean deleted;

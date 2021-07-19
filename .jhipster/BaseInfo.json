@@ -2,6 +2,15 @@
   "name": "BaseInfo",
   "fields": [
     {
+      "fieldName": "uuid",
+      "fieldType": "UUID",
+      "javadoc": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
+      "fieldValidateRules": [
+        "required",
+        "unique"
+      ]
+    },
+    {
       "fieldName": "processStatus",
       "fieldType": "ProcessStatus",
       "javadoc": "processStatus *: @defaultValue( DONE ) -> tình trạng xử lý sử dụng trong phê duyệt",
@@ -29,12 +38,6 @@
       "fieldTypeBlobContent": "text"
     },
     {
-      "fieldName": "historyUpdate",
-      "fieldType": "byte[]",
-      "javadoc": "historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json",
-      "fieldTypeBlobContent": "text"
-    },
-    {
       "fieldName": "deleted",
       "fieldType": "Boolean",
       "javadoc": "deleted *      : @defaultValue( false ) -> đánh dấu là đã xóa"
@@ -51,6 +54,12 @@
     }
   ],
   "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "historyUpdate",
+      "otherEntityRelationshipName": "baseInfo",
+      "relationshipName": "historyUpdate"
+    },
     {
       "relationshipType": "many-to-one",
       "otherEntityName": "classInfo",

@@ -71,7 +71,8 @@ class PermissionGatlingTest extends Simulation {
             .post("/api/permissions")
             .headers(headers_http_authenticated)
             .body(StringBody("""{
-                "read":null
+                "uuid":null
+                , "read":null
                 , "write":null
                 , "share":null
                 , "delete":null
