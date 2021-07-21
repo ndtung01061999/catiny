@@ -46,6 +46,13 @@ public class MasterUserDTO implements Serializable {
   private String nickname;
 
   /**
+   * avatar : @type Json -> ảnh đại diện của người dùng
+   */
+  @ApiModelProperty(value = "avatar : @type Json -> ảnh đại diện của người dùng")
+  @Lob
+  private String avatar;
+
+  /**
    * quickInfo      : @type Json -> thông tin nhanh về người dùng này dùng trong giới thiệu sơ khi chỉ chuột vào người dùng
    */
   @ApiModelProperty(
@@ -56,19 +63,9 @@ public class MasterUserDTO implements Serializable {
 
   private UserDTO user;
 
-  private UserProfileDTO myProfile;
-
-  private AccountStatusDTO myAccountStatus;
-
   private RankUserDTO myRank;
 
-  private ImageDTO avatar;
-
   private BaseInfoDTO baseInfo;
-
-  private Set<GroupPostDTO> myGroupPosts = new HashSet<>();
-
-  private Set<MessageGroupDTO> messageGroups = new HashSet<>();
 
   private Set<TopicInterestDTO> topicInterests = new HashSet<>();
 
@@ -104,6 +101,14 @@ public class MasterUserDTO implements Serializable {
     this.nickname = nickname;
   }
 
+  public String getAvatar() {
+    return avatar;
+  }
+
+  public void setAvatar(String avatar) {
+    this.avatar = avatar;
+  }
+
   public String getQuickInfo() {
     return quickInfo;
   }
@@ -120,22 +125,6 @@ public class MasterUserDTO implements Serializable {
     this.user = user;
   }
 
-  public UserProfileDTO getMyProfile() {
-    return myProfile;
-  }
-
-  public void setMyProfile(UserProfileDTO myProfile) {
-    this.myProfile = myProfile;
-  }
-
-  public AccountStatusDTO getMyAccountStatus() {
-    return myAccountStatus;
-  }
-
-  public void setMyAccountStatus(AccountStatusDTO myAccountStatus) {
-    this.myAccountStatus = myAccountStatus;
-  }
-
   public RankUserDTO getMyRank() {
     return myRank;
   }
@@ -144,36 +133,12 @@ public class MasterUserDTO implements Serializable {
     this.myRank = myRank;
   }
 
-  public ImageDTO getAvatar() {
-    return avatar;
-  }
-
-  public void setAvatar(ImageDTO avatar) {
-    this.avatar = avatar;
-  }
-
   public BaseInfoDTO getBaseInfo() {
     return baseInfo;
   }
 
   public void setBaseInfo(BaseInfoDTO baseInfo) {
     this.baseInfo = baseInfo;
-  }
-
-  public Set<GroupPostDTO> getMyGroupPosts() {
-    return myGroupPosts;
-  }
-
-  public void setMyGroupPosts(Set<GroupPostDTO> myGroupPosts) {
-    this.myGroupPosts = myGroupPosts;
-  }
-
-  public Set<MessageGroupDTO> getMessageGroups() {
-    return messageGroups;
-  }
-
-  public void setMessageGroups(Set<MessageGroupDTO> messageGroups) {
-    this.messageGroups = messageGroups;
   }
 
   public Set<TopicInterestDTO> getTopicInterests() {
@@ -213,15 +178,11 @@ public class MasterUserDTO implements Serializable {
             ", uuid='" + getUuid() + "'" +
             ", fullName='" + getFullName() + "'" +
             ", nickname='" + getNickname() + "'" +
+            ", avatar='" + getAvatar() + "'" +
             ", quickInfo='" + getQuickInfo() + "'" +
             ", user=" + getUser() +
-            ", myProfile=" + getMyProfile() +
-            ", myAccountStatus=" + getMyAccountStatus() +
             ", myRank=" + getMyRank() +
-            ", avatar=" + getAvatar() +
             ", baseInfo=" + getBaseInfo() +
-            ", myGroupPosts=" + getMyGroupPosts() +
-            ", messageGroups=" + getMessageGroups() +
             ", topicInterests=" + getTopicInterests() +
             "}";
     }

@@ -201,9 +201,6 @@ export const FollowGroup = (props: RouteComponentProps<{ url: string }>) => {
                     <Translate contentKey="catinyApp.followGroup.followGroupDetails">Follow Group Details</Translate>{' '}
                     <FontAwesomeIcon icon="sort" />
                   </th>
-                  <th>
-                    <Translate contentKey="catinyApp.followGroup.masterUser">Master User</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
                   <th />
                 </tr>
               </thead>
@@ -222,13 +219,6 @@ export const FollowGroup = (props: RouteComponentProps<{ url: string }>) => {
                     <td>
                       {followGroup.followGroupDetails ? (
                         <Link to={`group-post/${followGroup.followGroupDetails.id}`}>{followGroup.followGroupDetails.id}</Link>
-                      ) : (
-                        ''
-                      )}
-                    </td>
-                    <td>
-                      {followGroup.masterUser ? (
-                        <Link to={`master-user/${followGroup.masterUser.id}`}>{followGroup.masterUser.id}</Link>
                       ) : (
                         ''
                       )}

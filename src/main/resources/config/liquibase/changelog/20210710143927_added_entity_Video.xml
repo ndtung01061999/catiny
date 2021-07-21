@@ -20,6 +20,30 @@
             <column name="name" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
+            <column name="width" type="integer" remarks="width          : chiều rộng video">
+                <constraints nullable="true" />
+            </column>
+            <column name="height" type="integer" remarks="height         : chiều cao video">
+                <constraints nullable="true" />
+            </column>
+            <column name="quality_image" type="${floatType}" remarks="qualityImage   : chất lượng ảnh sau khi xử lý">
+                <constraints nullable="true" />
+            </column>
+            <column name="quality_audio" type="${floatType}" remarks="qualityAudio   : chất lượng âm thanh sau khi xử lý">
+                <constraints nullable="true" />
+            </column>
+            <column name="quality" type="${floatType}" remarks="quality        : chất lượng chung sau khi xử lý">
+                <constraints nullable="true" />
+            </column>
+            <column name="pixel_size" type="integer" remarks="pixelSize      : kích thước của ảnh">
+                <constraints nullable="true" />
+            </column>
+            <column name="priority_index" type="bigint" remarks="priorityIndex  : chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)">
+                <constraints nullable="true" />
+            </column>
+            <column name="data_size" type="bigint" remarks="dataSize       : kích thước file theo byte">
+                <constraints nullable="true" />
+            </column>
             <column name="file_info_id" type="bigint">
                 <constraints nullable="true" unique="true" uniqueConstraintName="ux_video__file_info_id" />
             </column>
@@ -27,9 +51,6 @@
                 <constraints nullable="true" unique="true" uniqueConstraintName="ux_video__base_info_id" />
             </column>
             <column name="video_original_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-            <column name="event_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
@@ -54,6 +75,14 @@
             <column name="id" type="numeric"/>
             <column name="uuid" type="string"/>
             <column name="name" type="string"/>
+            <column name="width" type="numeric"/>
+            <column name="height" type="numeric"/>
+            <column name="quality_image" type="numeric"/>
+            <column name="quality_audio" type="numeric"/>
+            <column name="quality" type="numeric"/>
+            <column name="pixel_size" type="numeric"/>
+            <column name="priority_index" type="numeric"/>
+            <column name="data_size" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

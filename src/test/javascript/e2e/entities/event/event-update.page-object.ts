@@ -9,12 +9,15 @@ export default class EventUpdatePage {
   cancelButton: ElementFinder = element(by.id('cancel-save'));
   uuidInput: ElementFinder = element(by.css('input#event-uuid'));
   titleInput: ElementFinder = element(by.css('input#event-title'));
+  avatarInput: ElementFinder = element(by.css('textarea#event-avatar'));
   contentInput: ElementFinder = element(by.css('textarea#event-content'));
   typeSelect: ElementFinder = element(by.css('select#event-type'));
   descriptionInput: ElementFinder = element(by.css('textarea#event-description'));
   startTimeInput: ElementFinder = element(by.css('input#event-startTime'));
   endTimeInput: ElementFinder = element(by.css('input#event-endTime'));
   tagLineInput: ElementFinder = element(by.css('input#event-tagLine'));
+  imageCollectionInput: ElementFinder = element(by.css('textarea#event-imageCollection'));
+  videoCollectionInput: ElementFinder = element(by.css('textarea#event-videoCollection'));
   baseInfoSelect: ElementFinder = element(by.css('select#event-baseInfo'));
 
   getPageTitle() {
@@ -35,6 +38,14 @@ export default class EventUpdatePage {
 
   async getTitleInput() {
     return this.titleInput.getAttribute('value');
+  }
+
+  async setAvatarInput(avatar) {
+    await this.avatarInput.sendKeys(avatar);
+  }
+
+  async getAvatarInput() {
+    return this.avatarInput.getAttribute('value');
   }
 
   async setContentInput(content) {
@@ -88,6 +99,22 @@ export default class EventUpdatePage {
     return this.tagLineInput.getAttribute('value');
   }
 
+  async setImageCollectionInput(imageCollection) {
+    await this.imageCollectionInput.sendKeys(imageCollection);
+  }
+
+  async getImageCollectionInput() {
+    return this.imageCollectionInput.getAttribute('value');
+  }
+
+  async setVideoCollectionInput(videoCollection) {
+    await this.videoCollectionInput.sendKeys(videoCollection);
+  }
+
+  async getVideoCollectionInput() {
+    return this.videoCollectionInput.getAttribute('value');
+  }
+
   async baseInfoSelectLastOption() {
     await this.baseInfoSelect.all(by.tagName('option')).last().click();
   }
@@ -122,6 +149,8 @@ export default class EventUpdatePage {
     await waitUntilDisplayed(this.saveButton);
     await this.setTitleInput('title');
     await waitUntilDisplayed(this.saveButton);
+    await this.setAvatarInput('avatar');
+    await waitUntilDisplayed(this.saveButton);
     await this.setContentInput('content');
     await waitUntilDisplayed(this.saveButton);
     await this.typeSelectLastOption();
@@ -133,6 +162,10 @@ export default class EventUpdatePage {
     await this.setEndTimeInput('01/01/2001' + protractor.Key.TAB + '02:30AM');
     await waitUntilDisplayed(this.saveButton);
     await this.setTagLineInput('tagLine');
+    await waitUntilDisplayed(this.saveButton);
+    await this.setImageCollectionInput('imageCollection');
+    await waitUntilDisplayed(this.saveButton);
+    await this.setVideoCollectionInput('videoCollection');
     await this.baseInfoSelectLastOption();
     await this.save();
     await waitUntilHidden(this.saveButton);

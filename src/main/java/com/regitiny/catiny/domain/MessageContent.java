@@ -2,14 +2,14 @@ package com.regitiny.catiny.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.regitiny.catiny.GeneratedByJHipster;
-import java.io.Serializable;
-import java.util.UUID;
-import javax.persistence.*;
-import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
-import org.springframework.data.elasticsearch.annotations.FieldType;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.UUID;
 
 /**
  * @what?            -> The MessageContent entity.\n@why?             ->\n@use-to           -> Chứa Những tin nhắn trong các nhóm cụ thể\n@commonly-used-in ->\n\n@describe         ->
@@ -36,19 +36,35 @@ public class MessageContent implements Serializable {
   @Column(name = "uuid", length = 36, nullable = false, unique = true)
   private UUID uuid;
 
+  /**
+   * senderName     : tên người gửi
+   */
+  @Column(name = "sender_name")
+  private String senderName;
+
+  /**
+   * attachInfo     : đính kèm tệp ảnh video ...
+   */
+  @Lob
+  @Column(name = "attach")
+  private String attach;
+
+  /**
+   * content        : nội dung tin nhắn
+   */
   @Lob
   @Column(name = "content")
   private String content;
 
   /**
-   * status : trạng thái của tin nhắn này, đã gửi chưa , ai đã nhận được , đã xem chưa đã thu hồi hay đã xóa...\n@type           : Json
+   * status         : trạng thái của tin nhắn này, đã gửi chưa , ai đã nhận được , đã xem chưa đã thu hồi hay đã xóa...
    */
   @Lob
   @Column(name = "status")
   private String status;
 
   /**
-   * searchField : lưu content tin nhắn lọc dấu ... để sau này search
+   * searchField    : lưu content tin nhắn lọc dấu ... để sau này search
    */
   @Lob
   @Column(name = "search_field")
@@ -56,6 +72,8 @@ public class MessageContent implements Serializable {
 
   @JsonIgnoreProperties(
     value = {
+      "historyUpdates",
+      "classInfo",
       "userProfile",
       "accountStatus",
       "deviceStatus",
@@ -85,6 +103,10 @@ public class MessageContent implements Serializable {
       "topicInterest",
       "todoList",
       "event",
+      "createdBy",
+      "modifiedBy",
+      "owner",
+      "permissions",
     },
     allowSetters = true
   )
@@ -93,36 +115,7 @@ public class MessageContent implements Serializable {
   private BaseInfo baseInfo;
 
   @ManyToOne
-  @JsonIgnoreProperties(
-    value = {
-      "user",
-      "myProfile",
-      "myAccountStatus",
-      "myRank",
-      "avatar",
-      "baseInfo",
-      "myPages",
-      "myFiles",
-      "myNotifications",
-      "myFriends",
-      "myFollowUsers",
-      "myFollowGroups",
-      "myFollowPages",
-      "myNewsFeeds",
-      "myTodoLists",
-      "myPosts",
-      "myGroupPosts",
-      "messageGroups",
-      "topicInterests",
-      "myLikes",
-      "myComments",
-    },
-    allowSetters = true
-  )
-  private MasterUser sender;
-
-  @ManyToOne
-  @JsonIgnoreProperties(value = { "baseInfo", "messageContents", "masterUsers" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "baseInfo", "messageContents" }, allowSetters = true)
   private MessageGroup messageGroup;
 
   // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -150,6 +143,32 @@ public class MessageContent implements Serializable {
 
   public void setUuid(UUID uuid) {
     this.uuid = uuid;
+  }
+
+  public String getSenderName() {
+    return this.senderName;
+  }
+
+  public MessageContent senderName(String senderName) {
+    this.senderName = senderName;
+    return this;
+  }
+
+  public void setSenderName(String senderName) {
+    this.senderName = senderName;
+  }
+
+  public String getAttach() {
+    return this.attach;
+  }
+
+  public MessageContent attach(String attach) {
+    this.attach = attach;
+    return this;
+  }
+
+  public void setAttach(String attach) {
+    this.attach = attach;
   }
 
   public String getContent() {
@@ -204,19 +223,6 @@ public class MessageContent implements Serializable {
     this.baseInfo = baseInfo;
   }
 
-  public MasterUser getSender() {
-    return this.sender;
-  }
-
-  public MessageContent sender(MasterUser masterUser) {
-    this.setSender(masterUser);
-    return this;
-  }
-
-  public void setSender(MasterUser masterUser) {
-    this.sender = masterUser;
-  }
-
   public MessageGroup getMessageGroup() {
     return this.messageGroup;
   }
@@ -255,6 +261,8 @@ public class MessageContent implements Serializable {
         return "MessageContent{" +
             "id=" + getId() +
             ", uuid='" + getUuid() + "'" +
+            ", senderName='" + getSenderName() + "'" +
+            ", attach='" + getAttach() + "'" +
             ", content='" + getContent() + "'" +
             ", status='" + getStatus() + "'" +
             ", searchField='" + getSearchField() + "'" +

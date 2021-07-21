@@ -35,8 +35,6 @@ public class FollowUserCriteria implements Serializable, Criteria {
 
   private LongFilter followUserDetailsId;
 
-  private LongFilter masterUserId;
-
   public FollowUserCriteria() {}
 
   public FollowUserCriteria(FollowUserCriteria other) {
@@ -44,7 +42,6 @@ public class FollowUserCriteria implements Serializable, Criteria {
     this.uuid = other.uuid == null ? null : other.uuid.copy();
     this.baseInfoId = other.baseInfoId == null ? null : other.baseInfoId.copy();
     this.followUserDetailsId = other.followUserDetailsId == null ? null : other.followUserDetailsId.copy();
-    this.masterUserId = other.masterUserId == null ? null : other.masterUserId.copy();
   }
 
   @Override
@@ -112,21 +109,6 @@ public class FollowUserCriteria implements Serializable, Criteria {
     this.followUserDetailsId = followUserDetailsId;
   }
 
-  public LongFilter getMasterUserId() {
-    return masterUserId;
-  }
-
-  public LongFilter masterUserId() {
-    if (masterUserId == null) {
-      masterUserId = new LongFilter();
-    }
-    return masterUserId;
-  }
-
-  public void setMasterUserId(LongFilter masterUserId) {
-    this.masterUserId = masterUserId;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -140,14 +122,13 @@ public class FollowUserCriteria implements Serializable, Criteria {
       Objects.equals(id, that.id) &&
       Objects.equals(uuid, that.uuid) &&
       Objects.equals(baseInfoId, that.baseInfoId) &&
-      Objects.equals(followUserDetailsId, that.followUserDetailsId) &&
-      Objects.equals(masterUserId, that.masterUserId)
+      Objects.equals(followUserDetailsId, that.followUserDetailsId)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, uuid, baseInfoId, followUserDetailsId, masterUserId);
+    return Objects.hash(id, uuid, baseInfoId, followUserDetailsId);
   }
 
   // prettier-ignore
@@ -158,7 +139,6 @@ public class FollowUserCriteria implements Serializable, Criteria {
             (uuid != null ? "uuid=" + uuid + ", " : "") +
             (baseInfoId != null ? "baseInfoId=" + baseInfoId + ", " : "") +
             (followUserDetailsId != null ? "followUserDetailsId=" + followUserDetailsId + ", " : "") +
-            (masterUserId != null ? "masterUserId=" + masterUserId + ", " : "") +
             "}";
     }
 }

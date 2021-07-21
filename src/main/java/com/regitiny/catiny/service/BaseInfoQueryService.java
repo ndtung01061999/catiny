@@ -1,15 +1,12 @@
 package com.regitiny.catiny.service;
 
 import com.regitiny.catiny.GeneratedByJHipster;
-import com.regitiny.catiny.domain.*; // for static metamodels
-import com.regitiny.catiny.domain.BaseInfo;
+import com.regitiny.catiny.domain.*;
 import com.regitiny.catiny.repository.BaseInfoRepository;
 import com.regitiny.catiny.repository.search.BaseInfoSearchRepository;
 import com.regitiny.catiny.service.criteria.BaseInfoCriteria;
 import com.regitiny.catiny.service.dto.BaseInfoDTO;
 import com.regitiny.catiny.service.mapper.BaseInfoMapper;
-import java.util.List;
-import javax.persistence.criteria.JoinType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -18,6 +15,9 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tech.jhipster.service.QueryService;
+
+import javax.persistence.criteria.JoinType;
+import java.util.List;
 
 /**
  * Service for executing complex queries for {@link BaseInfo} entities in the database.
@@ -92,32 +92,63 @@ public class BaseInfoQueryService extends QueryService<BaseInfo> {
    */
   protected Specification<BaseInfo> createSpecification(BaseInfoCriteria criteria) {
     Specification<BaseInfo> specification = Specification.where(null);
-    if (criteria != null) {
-      if (criteria.getId() != null) {
+    if (criteria != null)
+    {
+      if (criteria.getId() != null)
+      {
         specification = specification.and(buildRangeSpecification(criteria.getId(), BaseInfo_.id));
       }
-      if (criteria.getProcessStatus() != null) {
+      if (criteria.getUuid() != null)
+      {
+        specification = specification.and(buildSpecification(criteria.getUuid(), BaseInfo_.uuid));
+      }
+      if (criteria.getProcessStatus() != null)
+      {
         specification = specification.and(buildSpecification(criteria.getProcessStatus(), BaseInfo_.processStatus));
       }
-      if (criteria.getModifiedClass() != null) {
+      if (criteria.getModifiedClass() != null)
+      {
         specification = specification.and(buildStringSpecification(criteria.getModifiedClass(), BaseInfo_.modifiedClass));
       }
-      if (criteria.getCreatedDate() != null) {
+      if (criteria.getCreatedDate() != null)
+      {
         specification = specification.and(buildRangeSpecification(criteria.getCreatedDate(), BaseInfo_.createdDate));
       }
-      if (criteria.getModifiedDate() != null) {
+      if (criteria.getModifiedDate() != null)
+      {
         specification = specification.and(buildRangeSpecification(criteria.getModifiedDate(), BaseInfo_.modifiedDate));
       }
-      if (criteria.getCreatedBy() != null) {
-        specification = specification.and(buildStringSpecification(criteria.getCreatedBy(), BaseInfo_.createdBy));
-      }
-      if (criteria.getModifiedBy() != null) {
-        specification = specification.and(buildStringSpecification(criteria.getModifiedBy(), BaseInfo_.modifiedBy));
-      }
-      if (criteria.getDeleted() != null) {
+      if (criteria.getDeleted() != null)
+      {
         specification = specification.and(buildSpecification(criteria.getDeleted(), BaseInfo_.deleted));
       }
-      if (criteria.getUserProfileId() != null) {
+      if (criteria.getPriorityIndex() != null)
+      {
+        specification = specification.and(buildRangeSpecification(criteria.getPriorityIndex(), BaseInfo_.priorityIndex));
+      }
+      if (criteria.getCountUse() != null)
+      {
+        specification = specification.and(buildRangeSpecification(criteria.getCountUse(), BaseInfo_.countUse));
+      }
+      if (criteria.getHistoryUpdateId() != null)
+      {
+        specification =
+          specification.and(
+            buildSpecification(
+              criteria.getHistoryUpdateId(),
+              root -> root.join(BaseInfo_.historyUpdates, JoinType.LEFT).get(HistoryUpdate_.id)
+            )
+          );
+      }
+      if (criteria.getClassInfoId() != null)
+      {
+        specification =
+          specification.and(
+            buildSpecification(criteria.getClassInfoId(), root -> root.join(BaseInfo_.classInfo, JoinType.LEFT).get(ClassInfo_.id))
+          );
+      }
+      if (criteria.getUserProfileId() != null)
+      {
         specification =
           specification.and(
             buildSpecification(criteria.getUserProfileId(), root -> root.join(BaseInfo_.userProfile, JoinType.LEFT).get(UserProfile_.id))
@@ -290,6 +321,30 @@ public class BaseInfoQueryService extends QueryService<BaseInfo> {
       if (criteria.getEventId() != null) {
         specification =
           specification.and(buildSpecification(criteria.getEventId(), root -> root.join(BaseInfo_.event, JoinType.LEFT).get(Event_.id)));
+      }
+      if (criteria.getCreatedById() != null) {
+        specification =
+          specification.and(
+            buildSpecification(criteria.getCreatedById(), root -> root.join(BaseInfo_.createdBy, JoinType.LEFT).get(MasterUser_.id))
+          );
+      }
+      if (criteria.getModifiedById() != null) {
+        specification =
+          specification.and(
+            buildSpecification(criteria.getModifiedById(), root -> root.join(BaseInfo_.modifiedBy, JoinType.LEFT).get(MasterUser_.id))
+          );
+      }
+      if (criteria.getOwnerId() != null) {
+        specification =
+          specification.and(
+            buildSpecification(criteria.getOwnerId(), root -> root.join(BaseInfo_.owner, JoinType.LEFT).get(MasterUser_.id))
+          );
+      }
+      if (criteria.getPermissionId() != null) {
+        specification =
+          specification.and(
+            buildSpecification(criteria.getPermissionId(), root -> root.join(BaseInfo_.permissions, JoinType.LEFT).get(Permission_.id))
+          );
       }
     }
     return specification;

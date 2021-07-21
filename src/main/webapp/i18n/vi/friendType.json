@@ -4,7 +4,8 @@
       "null": "",
       "FRIEND": "FRIEND",
       "BEST_FRIEND": "BEST_FRIEND",
-      "FAMILY": "FAMILY"
+      "FAMILY": "FAMILY",
+      "BLOCK": "BLOCK"
     }
   }
 }

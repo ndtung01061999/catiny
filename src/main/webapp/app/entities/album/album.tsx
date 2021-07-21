@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Input, InputGroup, FormGroup, Form, Col, Row, Table } from 'reactstrap';
-import { Translate, translate, getSortState } from 'react-jhipster';
+import { byteSize, Translate, translate, getSortState } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { searchEntities, getEntities, reset } from './album.reducer';
@@ -197,6 +197,12 @@ export const Album = (props: RouteComponentProps<{ url: string }>) => {
                   <th className="hand" onClick={sort('name')}>
                     <Translate contentKey="catinyApp.album.name">Name</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
+                  <th className="hand" onClick={sort('note')}>
+                    <Translate contentKey="catinyApp.album.note">Note</Translate> <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th className="hand" onClick={sort('avatar')}>
+                    <Translate contentKey="catinyApp.album.avatar">Avatar</Translate> <FontAwesomeIcon icon="sort" />
+                  </th>
                   <th>
                     <Translate contentKey="catinyApp.album.baseInfo">Base Info</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
@@ -213,6 +219,8 @@ export const Album = (props: RouteComponentProps<{ url: string }>) => {
                     </td>
                     <td>{album.uuid}</td>
                     <td>{album.name}</td>
+                    <td>{album.note}</td>
+                    <td>{album.avatar}</td>
                     <td>{album.baseInfo ? <Link to={`base-info/${album.baseInfo.id}`}>{album.baseInfo.id}</Link> : ''}</td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">

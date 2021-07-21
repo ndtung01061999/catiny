@@ -8,20 +8,32 @@
       "fieldValidateRules": ["required", "unique"]
     },
     {
+      "fieldName": "senderName",
+      "fieldType": "String",
+      "javadoc": "senderName     : tên người gửi"
+    },
+    {
+      "fieldName": "attach",
+      "fieldType": "byte[]",
+      "javadoc": "attachInfo     : đính kèm tệp ảnh video ...",
+      "fieldTypeBlobContent": "text"
+    },
+    {
       "fieldName": "content",
       "fieldType": "byte[]",
+      "javadoc": "content        : nội dung tin nhắn",
       "fieldTypeBlobContent": "text"
     },
     {
       "fieldName": "status",
       "fieldType": "byte[]",
-      "javadoc": "status : trạng thái của tin nhắn này, đã gửi chưa , ai đã nhận được , đã xem chưa đã thu hồi hay đã xóa...\\n@type           : Json",
+      "javadoc": "status         : trạng thái của tin nhắn này, đã gửi chưa , ai đã nhận được , đã xem chưa đã thu hồi hay đã xóa...",
       "fieldTypeBlobContent": "text"
     },
     {
       "fieldName": "searchField",
       "fieldType": "byte[]",
-      "javadoc": "searchField : lưu content tin nhắn lọc dấu ... để sau này search",
+      "javadoc": "searchField    : lưu content tin nhắn lọc dấu ... để sau này search",
       "fieldTypeBlobContent": "text"
     }
   ],
@@ -32,12 +44,6 @@
       "otherEntityRelationshipName": "messageContent",
       "relationshipName": "baseInfo",
       "ownerSide": true
-    },
-    {
-      "relationshipType": "many-to-one",
-      "otherEntityName": "masterUser",
-      "otherEntityRelationshipName": "messageContent",
-      "relationshipName": "sender"
     },
     {
       "relationshipType": "many-to-one",

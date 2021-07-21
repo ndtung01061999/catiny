@@ -1,61 +1,16 @@
 package com.regitiny.catiny.web.rest;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 import com.regitiny.catiny.GeneratedByJHipster;
 import com.regitiny.catiny.IntegrationTest;
-import com.regitiny.catiny.domain.AccountStatus;
-import com.regitiny.catiny.domain.Album;
-import com.regitiny.catiny.domain.BaseInfo;
-import com.regitiny.catiny.domain.DeviceStatus;
-import com.regitiny.catiny.domain.Event;
-import com.regitiny.catiny.domain.FileInfo;
-import com.regitiny.catiny.domain.FollowGroup;
-import com.regitiny.catiny.domain.FollowPage;
-import com.regitiny.catiny.domain.FollowUser;
-import com.regitiny.catiny.domain.Friend;
-import com.regitiny.catiny.domain.GroupPost;
-import com.regitiny.catiny.domain.GroupProfile;
-import com.regitiny.catiny.domain.Image;
-import com.regitiny.catiny.domain.MessageContent;
-import com.regitiny.catiny.domain.MessageGroup;
-import com.regitiny.catiny.domain.NewsFeed;
-import com.regitiny.catiny.domain.Notification;
-import com.regitiny.catiny.domain.PagePost;
-import com.regitiny.catiny.domain.PageProfile;
-import com.regitiny.catiny.domain.Post;
-import com.regitiny.catiny.domain.PostComment;
-import com.regitiny.catiny.domain.PostLike;
-import com.regitiny.catiny.domain.RankGroup;
-import com.regitiny.catiny.domain.RankUser;
-import com.regitiny.catiny.domain.TodoList;
-import com.regitiny.catiny.domain.TopicInterest;
-import com.regitiny.catiny.domain.UserProfile;
-import com.regitiny.catiny.domain.Video;
-import com.regitiny.catiny.domain.VideoLiveStreamBuffer;
-import com.regitiny.catiny.domain.VideoStream;
+import com.regitiny.catiny.domain.*;
 import com.regitiny.catiny.domain.enumeration.ProcessStatus;
 import com.regitiny.catiny.repository.BaseInfoRepository;
 import com.regitiny.catiny.repository.search.BaseInfoSearchRepository;
-import com.regitiny.catiny.service.criteria.BaseInfoCriteria;
 import com.regitiny.catiny.service.dto.BaseInfoDTO;
 import com.regitiny.catiny.service.mapper.BaseInfoMapper;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.atomic.AtomicLong;
-import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -65,7 +20,22 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Base64Utils;
+
+import javax.persistence.EntityManager;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicLong;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
+import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Integration tests for the {@link BaseInfoResource} REST controller.
@@ -75,16 +45,14 @@ import org.springframework.util.Base64Utils;
 @AutoConfigureMockMvc
 @WithMockUser
 @GeneratedByJHipster
-class BaseInfoResourceIT {
+class BaseInfoResourceIT
+{
+
+  private static final UUID DEFAULT_UUID = UUID.randomUUID();
+  private static final UUID UPDATED_UUID = UUID.randomUUID();
 
   private static final ProcessStatus DEFAULT_PROCESS_STATUS = ProcessStatus.NOT_PROCESSED;
   private static final ProcessStatus UPDATED_PROCESS_STATUS = ProcessStatus.PROCESSING;
-
-  private static final String DEFAULT_OWNER = "AAAAAAAAAA";
-  private static final String UPDATED_OWNER = "BBBBBBBBBB";
-
-  private static final String DEFAULT_ROLE = "AAAAAAAAAA";
-  private static final String UPDATED_ROLE = "BBBBBBBBBB";
 
   private static final String DEFAULT_MODIFIED_CLASS = "AAAAAAAAAA";
   private static final String UPDATED_MODIFIED_CLASS = "BBBBBBBBBB";
@@ -95,27 +63,26 @@ class BaseInfoResourceIT {
   private static final Instant DEFAULT_MODIFIED_DATE = Instant.ofEpochMilli(0L);
   private static final Instant UPDATED_MODIFIED_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
-  private static final String DEFAULT_CREATED_BY = "AAAAAAAAAA";
-  private static final String UPDATED_CREATED_BY = "BBBBBBBBBB";
-
-  private static final String DEFAULT_MODIFIED_BY = "AAAAAAAAAA";
-  private static final String UPDATED_MODIFIED_BY = "BBBBBBBBBB";
-
   private static final String DEFAULT_NOTES = "AAAAAAAAAA";
   private static final String UPDATED_NOTES = "BBBBBBBBBB";
 
-  private static final String DEFAULT_HISTORY_UPDATE = "AAAAAAAAAA";
-  private static final String UPDATED_HISTORY_UPDATE = "BBBBBBBBBB";
-
   private static final Boolean DEFAULT_DELETED = false;
   private static final Boolean UPDATED_DELETED = true;
+
+  private static final Long DEFAULT_PRIORITY_INDEX = 1L;
+  private static final Long UPDATED_PRIORITY_INDEX = 2L;
+  private static final Long SMALLER_PRIORITY_INDEX = 1L - 1L;
+
+  private static final Long DEFAULT_COUNT_USE = 1L;
+  private static final Long UPDATED_COUNT_USE = 2L;
+  private static final Long SMALLER_COUNT_USE = 1L - 1L;
 
   private static final String ENTITY_API_URL = "/api/base-infos";
   private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
   private static final String ENTITY_SEARCH_API_URL = "/api/_search/base-infos";
 
-  private static Random random = new Random();
-  private static AtomicLong count = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
+  private static final Random random = new Random();
+  private static final AtomicLong count = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
 
   @Autowired
   private BaseInfoRepository baseInfoRepository;
@@ -147,17 +114,15 @@ class BaseInfoResourceIT {
    */
   public static BaseInfo createEntity(EntityManager em) {
     BaseInfo baseInfo = new BaseInfo()
+      .uuid(DEFAULT_UUID)
       .processStatus(DEFAULT_PROCESS_STATUS)
-      .owner(DEFAULT_OWNER)
-      .role(DEFAULT_ROLE)
       .modifiedClass(DEFAULT_MODIFIED_CLASS)
       .createdDate(DEFAULT_CREATED_DATE)
       .modifiedDate(DEFAULT_MODIFIED_DATE)
-      .createdBy(DEFAULT_CREATED_BY)
-      .modifiedBy(DEFAULT_MODIFIED_BY)
       .notes(DEFAULT_NOTES)
-      .historyUpdate(DEFAULT_HISTORY_UPDATE)
-      .deleted(DEFAULT_DELETED);
+      .deleted(DEFAULT_DELETED)
+      .priorityIndex(DEFAULT_PRIORITY_INDEX)
+      .countUse(DEFAULT_COUNT_USE);
     return baseInfo;
   }
 
@@ -169,17 +134,15 @@ class BaseInfoResourceIT {
    */
   public static BaseInfo createUpdatedEntity(EntityManager em) {
     BaseInfo baseInfo = new BaseInfo()
+      .uuid(UPDATED_UUID)
       .processStatus(UPDATED_PROCESS_STATUS)
-      .owner(UPDATED_OWNER)
-      .role(UPDATED_ROLE)
       .modifiedClass(UPDATED_MODIFIED_CLASS)
       .createdDate(UPDATED_CREATED_DATE)
       .modifiedDate(UPDATED_MODIFIED_DATE)
-      .createdBy(UPDATED_CREATED_BY)
-      .modifiedBy(UPDATED_MODIFIED_BY)
       .notes(UPDATED_NOTES)
-      .historyUpdate(UPDATED_HISTORY_UPDATE)
-      .deleted(UPDATED_DELETED);
+      .deleted(UPDATED_DELETED)
+      .priorityIndex(UPDATED_PRIORITY_INDEX)
+      .countUse(UPDATED_COUNT_USE);
     return baseInfo;
   }
 
@@ -202,17 +165,15 @@ class BaseInfoResourceIT {
     List<BaseInfo> baseInfoList = baseInfoRepository.findAll();
     assertThat(baseInfoList).hasSize(databaseSizeBeforeCreate + 1);
     BaseInfo testBaseInfo = baseInfoList.get(baseInfoList.size() - 1);
+    assertThat(testBaseInfo.getUuid()).isEqualTo(DEFAULT_UUID);
     assertThat(testBaseInfo.getProcessStatus()).isEqualTo(DEFAULT_PROCESS_STATUS);
-    assertThat(testBaseInfo.getOwner()).isEqualTo(DEFAULT_OWNER);
-    assertThat(testBaseInfo.getRole()).isEqualTo(DEFAULT_ROLE);
     assertThat(testBaseInfo.getModifiedClass()).isEqualTo(DEFAULT_MODIFIED_CLASS);
     assertThat(testBaseInfo.getCreatedDate()).isEqualTo(DEFAULT_CREATED_DATE);
     assertThat(testBaseInfo.getModifiedDate()).isEqualTo(DEFAULT_MODIFIED_DATE);
-    assertThat(testBaseInfo.getCreatedBy()).isEqualTo(DEFAULT_CREATED_BY);
-    assertThat(testBaseInfo.getModifiedBy()).isEqualTo(DEFAULT_MODIFIED_BY);
     assertThat(testBaseInfo.getNotes()).isEqualTo(DEFAULT_NOTES);
-    assertThat(testBaseInfo.getHistoryUpdate()).isEqualTo(DEFAULT_HISTORY_UPDATE);
     assertThat(testBaseInfo.getDeleted()).isEqualTo(DEFAULT_DELETED);
+    assertThat(testBaseInfo.getPriorityIndex()).isEqualTo(DEFAULT_PRIORITY_INDEX);
+    assertThat(testBaseInfo.getCountUse()).isEqualTo(DEFAULT_COUNT_USE);
 
     // Validate the BaseInfo in Elasticsearch
     verify(mockBaseInfoSearchRepository, times(1)).save(testBaseInfo);
@@ -242,7 +203,27 @@ class BaseInfoResourceIT {
 
   @Test
   @Transactional
-  void getAllBaseInfos() throws Exception {
+  void checkUuidIsRequired() throws Exception
+  {
+    int databaseSizeBeforeTest = baseInfoRepository.findAll().size();
+    // set the field null
+    baseInfo.setUuid(null);
+
+    // Create the BaseInfo, which fails.
+    BaseInfoDTO baseInfoDTO = baseInfoMapper.toDto(baseInfo);
+
+    restBaseInfoMockMvc
+      .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(baseInfoDTO)))
+      .andExpect(status().isBadRequest());
+
+    List<BaseInfo> baseInfoList = baseInfoRepository.findAll();
+    assertThat(baseInfoList).hasSize(databaseSizeBeforeTest);
+  }
+
+  @Test
+  @Transactional
+  void getAllBaseInfos() throws Exception
+  {
     // Initialize the database
     baseInfoRepository.saveAndFlush(baseInfo);
 
@@ -252,17 +233,15 @@ class BaseInfoResourceIT {
       .andExpect(status().isOk())
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
       .andExpect(jsonPath("$.[*].id").value(hasItem(baseInfo.getId().intValue())))
+      .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
       .andExpect(jsonPath("$.[*].processStatus").value(hasItem(DEFAULT_PROCESS_STATUS.toString())))
-      .andExpect(jsonPath("$.[*].owner").value(hasItem(DEFAULT_OWNER.toString())))
-      .andExpect(jsonPath("$.[*].role").value(hasItem(DEFAULT_ROLE.toString())))
       .andExpect(jsonPath("$.[*].modifiedClass").value(hasItem(DEFAULT_MODIFIED_CLASS)))
       .andExpect(jsonPath("$.[*].createdDate").value(hasItem(DEFAULT_CREATED_DATE.toString())))
       .andExpect(jsonPath("$.[*].modifiedDate").value(hasItem(DEFAULT_MODIFIED_DATE.toString())))
-      .andExpect(jsonPath("$.[*].createdBy").value(hasItem(DEFAULT_CREATED_BY)))
-      .andExpect(jsonPath("$.[*].modifiedBy").value(hasItem(DEFAULT_MODIFIED_BY)))
-      .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES.toString())))
-      .andExpect(jsonPath("$.[*].historyUpdate").value(hasItem(DEFAULT_HISTORY_UPDATE.toString())))
-      .andExpect(jsonPath("$.[*].deleted").value(hasItem(DEFAULT_DELETED.booleanValue())));
+      .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)))
+      .andExpect(jsonPath("$.[*].deleted").value(hasItem(DEFAULT_DELETED.booleanValue())))
+      .andExpect(jsonPath("$.[*].priorityIndex").value(hasItem(DEFAULT_PRIORITY_INDEX.intValue())))
+      .andExpect(jsonPath("$.[*].countUse").value(hasItem(DEFAULT_COUNT_USE.intValue())));
   }
 
   @Test
@@ -277,17 +256,15 @@ class BaseInfoResourceIT {
       .andExpect(status().isOk())
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
       .andExpect(jsonPath("$.id").value(baseInfo.getId().intValue()))
+      .andExpect(jsonPath("$.uuid").value(DEFAULT_UUID.toString()))
       .andExpect(jsonPath("$.processStatus").value(DEFAULT_PROCESS_STATUS.toString()))
-      .andExpect(jsonPath("$.owner").value(DEFAULT_OWNER.toString()))
-      .andExpect(jsonPath("$.role").value(DEFAULT_ROLE.toString()))
       .andExpect(jsonPath("$.modifiedClass").value(DEFAULT_MODIFIED_CLASS))
       .andExpect(jsonPath("$.createdDate").value(DEFAULT_CREATED_DATE.toString()))
       .andExpect(jsonPath("$.modifiedDate").value(DEFAULT_MODIFIED_DATE.toString()))
-      .andExpect(jsonPath("$.createdBy").value(DEFAULT_CREATED_BY))
-      .andExpect(jsonPath("$.modifiedBy").value(DEFAULT_MODIFIED_BY))
-      .andExpect(jsonPath("$.notes").value(DEFAULT_NOTES.toString()))
-      .andExpect(jsonPath("$.historyUpdate").value(DEFAULT_HISTORY_UPDATE.toString()))
-      .andExpect(jsonPath("$.deleted").value(DEFAULT_DELETED.booleanValue()));
+      .andExpect(jsonPath("$.notes").value(DEFAULT_NOTES))
+      .andExpect(jsonPath("$.deleted").value(DEFAULT_DELETED.booleanValue()))
+      .andExpect(jsonPath("$.priorityIndex").value(DEFAULT_PRIORITY_INDEX.intValue()))
+      .andExpect(jsonPath("$.countUse").value(DEFAULT_COUNT_USE.intValue()));
   }
 
   @Test
@@ -310,7 +287,64 @@ class BaseInfoResourceIT {
 
   @Test
   @Transactional
-  void getAllBaseInfosByProcessStatusIsEqualToSomething() throws Exception {
+  void getAllBaseInfosByUuidIsEqualToSomething() throws Exception
+  {
+    // Initialize the database
+    baseInfoRepository.saveAndFlush(baseInfo);
+
+    // Get all the baseInfoList where uuid equals to DEFAULT_UUID
+    defaultBaseInfoShouldBeFound("uuid.equals=" + DEFAULT_UUID);
+
+    // Get all the baseInfoList where uuid equals to UPDATED_UUID
+    defaultBaseInfoShouldNotBeFound("uuid.equals=" + UPDATED_UUID);
+  }
+
+  @Test
+  @Transactional
+  void getAllBaseInfosByUuidIsNotEqualToSomething() throws Exception
+  {
+    // Initialize the database
+    baseInfoRepository.saveAndFlush(baseInfo);
+
+    // Get all the baseInfoList where uuid not equals to DEFAULT_UUID
+    defaultBaseInfoShouldNotBeFound("uuid.notEquals=" + DEFAULT_UUID);
+
+    // Get all the baseInfoList where uuid not equals to UPDATED_UUID
+    defaultBaseInfoShouldBeFound("uuid.notEquals=" + UPDATED_UUID);
+  }
+
+  @Test
+  @Transactional
+  void getAllBaseInfosByUuidIsInShouldWork() throws Exception
+  {
+    // Initialize the database
+    baseInfoRepository.saveAndFlush(baseInfo);
+
+    // Get all the baseInfoList where uuid in DEFAULT_UUID or UPDATED_UUID
+    defaultBaseInfoShouldBeFound("uuid.in=" + DEFAULT_UUID + "," + UPDATED_UUID);
+
+    // Get all the baseInfoList where uuid equals to UPDATED_UUID
+    defaultBaseInfoShouldNotBeFound("uuid.in=" + UPDATED_UUID);
+  }
+
+  @Test
+  @Transactional
+  void getAllBaseInfosByUuidIsNullOrNotNull() throws Exception
+  {
+    // Initialize the database
+    baseInfoRepository.saveAndFlush(baseInfo);
+
+    // Get all the baseInfoList where uuid is not null
+    defaultBaseInfoShouldBeFound("uuid.specified=true");
+
+    // Get all the baseInfoList where uuid is null
+    defaultBaseInfoShouldNotBeFound("uuid.specified=false");
+  }
+
+  @Test
+  @Transactional
+  void getAllBaseInfosByProcessStatusIsEqualToSomething() throws Exception
+  {
     // Initialize the database
     baseInfoRepository.saveAndFlush(baseInfo);
 
@@ -544,162 +578,6 @@ class BaseInfoResourceIT {
 
   @Test
   @Transactional
-  void getAllBaseInfosByCreatedByIsEqualToSomething() throws Exception {
-    // Initialize the database
-    baseInfoRepository.saveAndFlush(baseInfo);
-
-    // Get all the baseInfoList where createdBy equals to DEFAULT_CREATED_BY
-    defaultBaseInfoShouldBeFound("createdBy.equals=" + DEFAULT_CREATED_BY);
-
-    // Get all the baseInfoList where createdBy equals to UPDATED_CREATED_BY
-    defaultBaseInfoShouldNotBeFound("createdBy.equals=" + UPDATED_CREATED_BY);
-  }
-
-  @Test
-  @Transactional
-  void getAllBaseInfosByCreatedByIsNotEqualToSomething() throws Exception {
-    // Initialize the database
-    baseInfoRepository.saveAndFlush(baseInfo);
-
-    // Get all the baseInfoList where createdBy not equals to DEFAULT_CREATED_BY
-    defaultBaseInfoShouldNotBeFound("createdBy.notEquals=" + DEFAULT_CREATED_BY);
-
-    // Get all the baseInfoList where createdBy not equals to UPDATED_CREATED_BY
-    defaultBaseInfoShouldBeFound("createdBy.notEquals=" + UPDATED_CREATED_BY);
-  }
-
-  @Test
-  @Transactional
-  void getAllBaseInfosByCreatedByIsInShouldWork() throws Exception {
-    // Initialize the database
-    baseInfoRepository.saveAndFlush(baseInfo);
-
-    // Get all the baseInfoList where createdBy in DEFAULT_CREATED_BY or UPDATED_CREATED_BY
-    defaultBaseInfoShouldBeFound("createdBy.in=" + DEFAULT_CREATED_BY + "," + UPDATED_CREATED_BY);
-
-    // Get all the baseInfoList where createdBy equals to UPDATED_CREATED_BY
-    defaultBaseInfoShouldNotBeFound("createdBy.in=" + UPDATED_CREATED_BY);
-  }
-
-  @Test
-  @Transactional
-  void getAllBaseInfosByCreatedByIsNullOrNotNull() throws Exception {
-    // Initialize the database
-    baseInfoRepository.saveAndFlush(baseInfo);
-
-    // Get all the baseInfoList where createdBy is not null
-    defaultBaseInfoShouldBeFound("createdBy.specified=true");
-
-    // Get all the baseInfoList where createdBy is null
-    defaultBaseInfoShouldNotBeFound("createdBy.specified=false");
-  }
-
-  @Test
-  @Transactional
-  void getAllBaseInfosByCreatedByContainsSomething() throws Exception {
-    // Initialize the database
-    baseInfoRepository.saveAndFlush(baseInfo);
-
-    // Get all the baseInfoList where createdBy contains DEFAULT_CREATED_BY
-    defaultBaseInfoShouldBeFound("createdBy.contains=" + DEFAULT_CREATED_BY);
-
-    // Get all the baseInfoList where createdBy contains UPDATED_CREATED_BY
-    defaultBaseInfoShouldNotBeFound("createdBy.contains=" + UPDATED_CREATED_BY);
-  }
-
-  @Test
-  @Transactional
-  void getAllBaseInfosByCreatedByNotContainsSomething() throws Exception {
-    // Initialize the database
-    baseInfoRepository.saveAndFlush(baseInfo);
-
-    // Get all the baseInfoList where createdBy does not contain DEFAULT_CREATED_BY
-    defaultBaseInfoShouldNotBeFound("createdBy.doesNotContain=" + DEFAULT_CREATED_BY);
-
-    // Get all the baseInfoList where createdBy does not contain UPDATED_CREATED_BY
-    defaultBaseInfoShouldBeFound("createdBy.doesNotContain=" + UPDATED_CREATED_BY);
-  }
-
-  @Test
-  @Transactional
-  void getAllBaseInfosByModifiedByIsEqualToSomething() throws Exception {
-    // Initialize the database
-    baseInfoRepository.saveAndFlush(baseInfo);
-
-    // Get all the baseInfoList where modifiedBy equals to DEFAULT_MODIFIED_BY
-    defaultBaseInfoShouldBeFound("modifiedBy.equals=" + DEFAULT_MODIFIED_BY);
-
-    // Get all the baseInfoList where modifiedBy equals to UPDATED_MODIFIED_BY
-    defaultBaseInfoShouldNotBeFound("modifiedBy.equals=" + UPDATED_MODIFIED_BY);
-  }
-
-  @Test
-  @Transactional
-  void getAllBaseInfosByModifiedByIsNotEqualToSomething() throws Exception {
-    // Initialize the database
-    baseInfoRepository.saveAndFlush(baseInfo);
-
-    // Get all the baseInfoList where modifiedBy not equals to DEFAULT_MODIFIED_BY
-    defaultBaseInfoShouldNotBeFound("modifiedBy.notEquals=" + DEFAULT_MODIFIED_BY);
-
-    // Get all the baseInfoList where modifiedBy not equals to UPDATED_MODIFIED_BY
-    defaultBaseInfoShouldBeFound("modifiedBy.notEquals=" + UPDATED_MODIFIED_BY);
-  }
-
-  @Test
-  @Transactional
-  void getAllBaseInfosByModifiedByIsInShouldWork() throws Exception {
-    // Initialize the database
-    baseInfoRepository.saveAndFlush(baseInfo);
-
-    // Get all the baseInfoList where modifiedBy in DEFAULT_MODIFIED_BY or UPDATED_MODIFIED_BY
-    defaultBaseInfoShouldBeFound("modifiedBy.in=" + DEFAULT_MODIFIED_BY + "," + UPDATED_MODIFIED_BY);
-
-    // Get all the baseInfoList where modifiedBy equals to UPDATED_MODIFIED_BY
-    defaultBaseInfoShouldNotBeFound("modifiedBy.in=" + UPDATED_MODIFIED_BY);
-  }
-
-  @Test
-  @Transactional
-  void getAllBaseInfosByModifiedByIsNullOrNotNull() throws Exception {
-    // Initialize the database
-    baseInfoRepository.saveAndFlush(baseInfo);
-
-    // Get all the baseInfoList where modifiedBy is not null
-    defaultBaseInfoShouldBeFound("modifiedBy.specified=true");
-
-    // Get all the baseInfoList where modifiedBy is null
-    defaultBaseInfoShouldNotBeFound("modifiedBy.specified=false");
-  }
-
-  @Test
-  @Transactional
-  void getAllBaseInfosByModifiedByContainsSomething() throws Exception {
-    // Initialize the database
-    baseInfoRepository.saveAndFlush(baseInfo);
-
-    // Get all the baseInfoList where modifiedBy contains DEFAULT_MODIFIED_BY
-    defaultBaseInfoShouldBeFound("modifiedBy.contains=" + DEFAULT_MODIFIED_BY);
-
-    // Get all the baseInfoList where modifiedBy contains UPDATED_MODIFIED_BY
-    defaultBaseInfoShouldNotBeFound("modifiedBy.contains=" + UPDATED_MODIFIED_BY);
-  }
-
-  @Test
-  @Transactional
-  void getAllBaseInfosByModifiedByNotContainsSomething() throws Exception {
-    // Initialize the database
-    baseInfoRepository.saveAndFlush(baseInfo);
-
-    // Get all the baseInfoList where modifiedBy does not contain DEFAULT_MODIFIED_BY
-    defaultBaseInfoShouldNotBeFound("modifiedBy.doesNotContain=" + DEFAULT_MODIFIED_BY);
-
-    // Get all the baseInfoList where modifiedBy does not contain UPDATED_MODIFIED_BY
-    defaultBaseInfoShouldBeFound("modifiedBy.doesNotContain=" + UPDATED_MODIFIED_BY);
-  }
-
-  @Test
-  @Transactional
   void getAllBaseInfosByDeletedIsEqualToSomething() throws Exception {
     // Initialize the database
     baseInfoRepository.saveAndFlush(baseInfo);
@@ -748,6 +626,254 @@ class BaseInfoResourceIT {
 
     // Get all the baseInfoList where deleted is null
     defaultBaseInfoShouldNotBeFound("deleted.specified=false");
+  }
+
+  @Test
+  @Transactional
+  void getAllBaseInfosByPriorityIndexIsEqualToSomething() throws Exception {
+    // Initialize the database
+    baseInfoRepository.saveAndFlush(baseInfo);
+
+    // Get all the baseInfoList where priorityIndex equals to DEFAULT_PRIORITY_INDEX
+    defaultBaseInfoShouldBeFound("priorityIndex.equals=" + DEFAULT_PRIORITY_INDEX);
+
+    // Get all the baseInfoList where priorityIndex equals to UPDATED_PRIORITY_INDEX
+    defaultBaseInfoShouldNotBeFound("priorityIndex.equals=" + UPDATED_PRIORITY_INDEX);
+  }
+
+  @Test
+  @Transactional
+  void getAllBaseInfosByPriorityIndexIsNotEqualToSomething() throws Exception {
+    // Initialize the database
+    baseInfoRepository.saveAndFlush(baseInfo);
+
+    // Get all the baseInfoList where priorityIndex not equals to DEFAULT_PRIORITY_INDEX
+    defaultBaseInfoShouldNotBeFound("priorityIndex.notEquals=" + DEFAULT_PRIORITY_INDEX);
+
+    // Get all the baseInfoList where priorityIndex not equals to UPDATED_PRIORITY_INDEX
+    defaultBaseInfoShouldBeFound("priorityIndex.notEquals=" + UPDATED_PRIORITY_INDEX);
+  }
+
+  @Test
+  @Transactional
+  void getAllBaseInfosByPriorityIndexIsInShouldWork() throws Exception {
+    // Initialize the database
+    baseInfoRepository.saveAndFlush(baseInfo);
+
+    // Get all the baseInfoList where priorityIndex in DEFAULT_PRIORITY_INDEX or UPDATED_PRIORITY_INDEX
+    defaultBaseInfoShouldBeFound("priorityIndex.in=" + DEFAULT_PRIORITY_INDEX + "," + UPDATED_PRIORITY_INDEX);
+
+    // Get all the baseInfoList where priorityIndex equals to UPDATED_PRIORITY_INDEX
+    defaultBaseInfoShouldNotBeFound("priorityIndex.in=" + UPDATED_PRIORITY_INDEX);
+  }
+
+  @Test
+  @Transactional
+  void getAllBaseInfosByPriorityIndexIsNullOrNotNull() throws Exception {
+    // Initialize the database
+    baseInfoRepository.saveAndFlush(baseInfo);
+
+    // Get all the baseInfoList where priorityIndex is not null
+    defaultBaseInfoShouldBeFound("priorityIndex.specified=true");
+
+    // Get all the baseInfoList where priorityIndex is null
+    defaultBaseInfoShouldNotBeFound("priorityIndex.specified=false");
+  }
+
+  @Test
+  @Transactional
+  void getAllBaseInfosByPriorityIndexIsGreaterThanOrEqualToSomething() throws Exception {
+    // Initialize the database
+    baseInfoRepository.saveAndFlush(baseInfo);
+
+    // Get all the baseInfoList where priorityIndex is greater than or equal to DEFAULT_PRIORITY_INDEX
+    defaultBaseInfoShouldBeFound("priorityIndex.greaterThanOrEqual=" + DEFAULT_PRIORITY_INDEX);
+
+    // Get all the baseInfoList where priorityIndex is greater than or equal to UPDATED_PRIORITY_INDEX
+    defaultBaseInfoShouldNotBeFound("priorityIndex.greaterThanOrEqual=" + UPDATED_PRIORITY_INDEX);
+  }
+
+  @Test
+  @Transactional
+  void getAllBaseInfosByPriorityIndexIsLessThanOrEqualToSomething() throws Exception {
+    // Initialize the database
+    baseInfoRepository.saveAndFlush(baseInfo);
+
+    // Get all the baseInfoList where priorityIndex is less than or equal to DEFAULT_PRIORITY_INDEX
+    defaultBaseInfoShouldBeFound("priorityIndex.lessThanOrEqual=" + DEFAULT_PRIORITY_INDEX);
+
+    // Get all the baseInfoList where priorityIndex is less than or equal to SMALLER_PRIORITY_INDEX
+    defaultBaseInfoShouldNotBeFound("priorityIndex.lessThanOrEqual=" + SMALLER_PRIORITY_INDEX);
+  }
+
+  @Test
+  @Transactional
+  void getAllBaseInfosByPriorityIndexIsLessThanSomething() throws Exception {
+    // Initialize the database
+    baseInfoRepository.saveAndFlush(baseInfo);
+
+    // Get all the baseInfoList where priorityIndex is less than DEFAULT_PRIORITY_INDEX
+    defaultBaseInfoShouldNotBeFound("priorityIndex.lessThan=" + DEFAULT_PRIORITY_INDEX);
+
+    // Get all the baseInfoList where priorityIndex is less than UPDATED_PRIORITY_INDEX
+    defaultBaseInfoShouldBeFound("priorityIndex.lessThan=" + UPDATED_PRIORITY_INDEX);
+  }
+
+  @Test
+  @Transactional
+  void getAllBaseInfosByPriorityIndexIsGreaterThanSomething() throws Exception {
+    // Initialize the database
+    baseInfoRepository.saveAndFlush(baseInfo);
+
+    // Get all the baseInfoList where priorityIndex is greater than DEFAULT_PRIORITY_INDEX
+    defaultBaseInfoShouldNotBeFound("priorityIndex.greaterThan=" + DEFAULT_PRIORITY_INDEX);
+
+    // Get all the baseInfoList where priorityIndex is greater than SMALLER_PRIORITY_INDEX
+    defaultBaseInfoShouldBeFound("priorityIndex.greaterThan=" + SMALLER_PRIORITY_INDEX);
+  }
+
+  @Test
+  @Transactional
+  void getAllBaseInfosByCountUseIsEqualToSomething() throws Exception {
+    // Initialize the database
+    baseInfoRepository.saveAndFlush(baseInfo);
+
+    // Get all the baseInfoList where countUse equals to DEFAULT_COUNT_USE
+    defaultBaseInfoShouldBeFound("countUse.equals=" + DEFAULT_COUNT_USE);
+
+    // Get all the baseInfoList where countUse equals to UPDATED_COUNT_USE
+    defaultBaseInfoShouldNotBeFound("countUse.equals=" + UPDATED_COUNT_USE);
+  }
+
+  @Test
+  @Transactional
+  void getAllBaseInfosByCountUseIsNotEqualToSomething() throws Exception {
+    // Initialize the database
+    baseInfoRepository.saveAndFlush(baseInfo);
+
+    // Get all the baseInfoList where countUse not equals to DEFAULT_COUNT_USE
+    defaultBaseInfoShouldNotBeFound("countUse.notEquals=" + DEFAULT_COUNT_USE);
+
+    // Get all the baseInfoList where countUse not equals to UPDATED_COUNT_USE
+    defaultBaseInfoShouldBeFound("countUse.notEquals=" + UPDATED_COUNT_USE);
+  }
+
+  @Test
+  @Transactional
+  void getAllBaseInfosByCountUseIsInShouldWork() throws Exception {
+    // Initialize the database
+    baseInfoRepository.saveAndFlush(baseInfo);
+
+    // Get all the baseInfoList where countUse in DEFAULT_COUNT_USE or UPDATED_COUNT_USE
+    defaultBaseInfoShouldBeFound("countUse.in=" + DEFAULT_COUNT_USE + "," + UPDATED_COUNT_USE);
+
+    // Get all the baseInfoList where countUse equals to UPDATED_COUNT_USE
+    defaultBaseInfoShouldNotBeFound("countUse.in=" + UPDATED_COUNT_USE);
+  }
+
+  @Test
+  @Transactional
+  void getAllBaseInfosByCountUseIsNullOrNotNull() throws Exception {
+    // Initialize the database
+    baseInfoRepository.saveAndFlush(baseInfo);
+
+    // Get all the baseInfoList where countUse is not null
+    defaultBaseInfoShouldBeFound("countUse.specified=true");
+
+    // Get all the baseInfoList where countUse is null
+    defaultBaseInfoShouldNotBeFound("countUse.specified=false");
+  }
+
+  @Test
+  @Transactional
+  void getAllBaseInfosByCountUseIsGreaterThanOrEqualToSomething() throws Exception {
+    // Initialize the database
+    baseInfoRepository.saveAndFlush(baseInfo);
+
+    // Get all the baseInfoList where countUse is greater than or equal to DEFAULT_COUNT_USE
+    defaultBaseInfoShouldBeFound("countUse.greaterThanOrEqual=" + DEFAULT_COUNT_USE);
+
+    // Get all the baseInfoList where countUse is greater than or equal to UPDATED_COUNT_USE
+    defaultBaseInfoShouldNotBeFound("countUse.greaterThanOrEqual=" + UPDATED_COUNT_USE);
+  }
+
+  @Test
+  @Transactional
+  void getAllBaseInfosByCountUseIsLessThanOrEqualToSomething() throws Exception {
+    // Initialize the database
+    baseInfoRepository.saveAndFlush(baseInfo);
+
+    // Get all the baseInfoList where countUse is less than or equal to DEFAULT_COUNT_USE
+    defaultBaseInfoShouldBeFound("countUse.lessThanOrEqual=" + DEFAULT_COUNT_USE);
+
+    // Get all the baseInfoList where countUse is less than or equal to SMALLER_COUNT_USE
+    defaultBaseInfoShouldNotBeFound("countUse.lessThanOrEqual=" + SMALLER_COUNT_USE);
+  }
+
+  @Test
+  @Transactional
+  void getAllBaseInfosByCountUseIsLessThanSomething() throws Exception {
+    // Initialize the database
+    baseInfoRepository.saveAndFlush(baseInfo);
+
+    // Get all the baseInfoList where countUse is less than DEFAULT_COUNT_USE
+    defaultBaseInfoShouldNotBeFound("countUse.lessThan=" + DEFAULT_COUNT_USE);
+
+    // Get all the baseInfoList where countUse is less than UPDATED_COUNT_USE
+    defaultBaseInfoShouldBeFound("countUse.lessThan=" + UPDATED_COUNT_USE);
+  }
+
+  @Test
+  @Transactional
+  void getAllBaseInfosByCountUseIsGreaterThanSomething() throws Exception {
+    // Initialize the database
+    baseInfoRepository.saveAndFlush(baseInfo);
+
+    // Get all the baseInfoList where countUse is greater than DEFAULT_COUNT_USE
+    defaultBaseInfoShouldNotBeFound("countUse.greaterThan=" + DEFAULT_COUNT_USE);
+
+    // Get all the baseInfoList where countUse is greater than SMALLER_COUNT_USE
+    defaultBaseInfoShouldBeFound("countUse.greaterThan=" + SMALLER_COUNT_USE);
+  }
+
+  @Test
+  @Transactional
+  void getAllBaseInfosByHistoryUpdateIsEqualToSomething() throws Exception
+  {
+    // Initialize the database
+    baseInfoRepository.saveAndFlush(baseInfo);
+    HistoryUpdate historyUpdate = HistoryUpdateResourceIT.createEntity(em);
+    em.persist(historyUpdate);
+    em.flush();
+    baseInfo.addHistoryUpdate(historyUpdate);
+    baseInfoRepository.saveAndFlush(baseInfo);
+    Long historyUpdateId = historyUpdate.getId();
+
+    // Get all the baseInfoList where historyUpdate equals to historyUpdateId
+    defaultBaseInfoShouldBeFound("historyUpdateId.equals=" + historyUpdateId);
+
+    // Get all the baseInfoList where historyUpdate equals to (historyUpdateId + 1)
+    defaultBaseInfoShouldNotBeFound("historyUpdateId.equals=" + (historyUpdateId + 1));
+  }
+
+  @Test
+  @Transactional
+  void getAllBaseInfosByClassInfoIsEqualToSomething() throws Exception
+  {
+    // Initialize the database
+    baseInfoRepository.saveAndFlush(baseInfo);
+    ClassInfo classInfo = ClassInfoResourceIT.createEntity(em);
+    em.persist(classInfo);
+    em.flush();
+    baseInfo.setClassInfo(classInfo);
+    baseInfoRepository.saveAndFlush(baseInfo);
+    Long classInfoId = classInfo.getId();
+
+    // Get all the baseInfoList where classInfo equals to classInfoId
+    defaultBaseInfoShouldBeFound("classInfoId.equals=" + classInfoId);
+
+    // Get all the baseInfoList where classInfo equals to (classInfoId + 1)
+    defaultBaseInfoShouldNotBeFound("classInfoId.equals=" + (classInfoId + 1));
   }
 
   @Test
@@ -1330,6 +1456,82 @@ class BaseInfoResourceIT {
     defaultBaseInfoShouldNotBeFound("eventId.equals=" + (eventId + 1));
   }
 
+  @Test
+  @Transactional
+  void getAllBaseInfosByCreatedByIsEqualToSomething() throws Exception {
+    // Initialize the database
+    baseInfoRepository.saveAndFlush(baseInfo);
+    MasterUser createdBy = MasterUserResourceIT.createEntity(em);
+    em.persist(createdBy);
+    em.flush();
+    baseInfo.setCreatedBy(createdBy);
+    baseInfoRepository.saveAndFlush(baseInfo);
+    Long createdById = createdBy.getId();
+
+    // Get all the baseInfoList where createdBy equals to createdById
+    defaultBaseInfoShouldBeFound("createdById.equals=" + createdById);
+
+    // Get all the baseInfoList where createdBy equals to (createdById + 1)
+    defaultBaseInfoShouldNotBeFound("createdById.equals=" + (createdById + 1));
+  }
+
+  @Test
+  @Transactional
+  void getAllBaseInfosByModifiedByIsEqualToSomething() throws Exception {
+    // Initialize the database
+    baseInfoRepository.saveAndFlush(baseInfo);
+    MasterUser modifiedBy = MasterUserResourceIT.createEntity(em);
+    em.persist(modifiedBy);
+    em.flush();
+    baseInfo.setModifiedBy(modifiedBy);
+    baseInfoRepository.saveAndFlush(baseInfo);
+    Long modifiedById = modifiedBy.getId();
+
+    // Get all the baseInfoList where modifiedBy equals to modifiedById
+    defaultBaseInfoShouldBeFound("modifiedById.equals=" + modifiedById);
+
+    // Get all the baseInfoList where modifiedBy equals to (modifiedById + 1)
+    defaultBaseInfoShouldNotBeFound("modifiedById.equals=" + (modifiedById + 1));
+  }
+
+  @Test
+  @Transactional
+  void getAllBaseInfosByOwnerIsEqualToSomething() throws Exception {
+    // Initialize the database
+    baseInfoRepository.saveAndFlush(baseInfo);
+    MasterUser owner = MasterUserResourceIT.createEntity(em);
+    em.persist(owner);
+    em.flush();
+    baseInfo.setOwner(owner);
+    baseInfoRepository.saveAndFlush(baseInfo);
+    Long ownerId = owner.getId();
+
+    // Get all the baseInfoList where owner equals to ownerId
+    defaultBaseInfoShouldBeFound("ownerId.equals=" + ownerId);
+
+    // Get all the baseInfoList where owner equals to (ownerId + 1)
+    defaultBaseInfoShouldNotBeFound("ownerId.equals=" + (ownerId + 1));
+  }
+
+  @Test
+  @Transactional
+  void getAllBaseInfosByPermissionIsEqualToSomething() throws Exception {
+    // Initialize the database
+    baseInfoRepository.saveAndFlush(baseInfo);
+    Permission permission = PermissionResourceIT.createEntity(em);
+    em.persist(permission);
+    em.flush();
+    baseInfo.addPermission(permission);
+    baseInfoRepository.saveAndFlush(baseInfo);
+    Long permissionId = permission.getId();
+
+    // Get all the baseInfoList where permission equals to permissionId
+    defaultBaseInfoShouldBeFound("permissionId.equals=" + permissionId);
+
+    // Get all the baseInfoList where permission equals to (permissionId + 1)
+    defaultBaseInfoShouldNotBeFound("permissionId.equals=" + (permissionId + 1));
+  }
+
   /**
    * Executes the search, and checks that the default entity is returned.
    */
@@ -1339,17 +1541,15 @@ class BaseInfoResourceIT {
       .andExpect(status().isOk())
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
       .andExpect(jsonPath("$.[*].id").value(hasItem(baseInfo.getId().intValue())))
+      .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
       .andExpect(jsonPath("$.[*].processStatus").value(hasItem(DEFAULT_PROCESS_STATUS.toString())))
-      .andExpect(jsonPath("$.[*].owner").value(hasItem(DEFAULT_OWNER.toString())))
-      .andExpect(jsonPath("$.[*].role").value(hasItem(DEFAULT_ROLE.toString())))
       .andExpect(jsonPath("$.[*].modifiedClass").value(hasItem(DEFAULT_MODIFIED_CLASS)))
       .andExpect(jsonPath("$.[*].createdDate").value(hasItem(DEFAULT_CREATED_DATE.toString())))
       .andExpect(jsonPath("$.[*].modifiedDate").value(hasItem(DEFAULT_MODIFIED_DATE.toString())))
-      .andExpect(jsonPath("$.[*].createdBy").value(hasItem(DEFAULT_CREATED_BY)))
-      .andExpect(jsonPath("$.[*].modifiedBy").value(hasItem(DEFAULT_MODIFIED_BY)))
-      .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES.toString())))
-      .andExpect(jsonPath("$.[*].historyUpdate").value(hasItem(DEFAULT_HISTORY_UPDATE.toString())))
-      .andExpect(jsonPath("$.[*].deleted").value(hasItem(DEFAULT_DELETED.booleanValue())));
+      .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)))
+      .andExpect(jsonPath("$.[*].deleted").value(hasItem(DEFAULT_DELETED.booleanValue())))
+      .andExpect(jsonPath("$.[*].priorityIndex").value(hasItem(DEFAULT_PRIORITY_INDEX.intValue())))
+      .andExpect(jsonPath("$.[*].countUse").value(hasItem(DEFAULT_COUNT_USE.intValue())));
 
     // Check, that the count call also returns 1
     restBaseInfoMockMvc
@@ -1398,17 +1598,15 @@ class BaseInfoResourceIT {
     // Disconnect from session so that the updates on updatedBaseInfo are not directly saved in db
     em.detach(updatedBaseInfo);
     updatedBaseInfo
+      .uuid(UPDATED_UUID)
       .processStatus(UPDATED_PROCESS_STATUS)
-      .owner(UPDATED_OWNER)
-      .role(UPDATED_ROLE)
       .modifiedClass(UPDATED_MODIFIED_CLASS)
       .createdDate(UPDATED_CREATED_DATE)
       .modifiedDate(UPDATED_MODIFIED_DATE)
-      .createdBy(UPDATED_CREATED_BY)
-      .modifiedBy(UPDATED_MODIFIED_BY)
       .notes(UPDATED_NOTES)
-      .historyUpdate(UPDATED_HISTORY_UPDATE)
-      .deleted(UPDATED_DELETED);
+      .deleted(UPDATED_DELETED)
+      .priorityIndex(UPDATED_PRIORITY_INDEX)
+      .countUse(UPDATED_COUNT_USE);
     BaseInfoDTO baseInfoDTO = baseInfoMapper.toDto(updatedBaseInfo);
 
     restBaseInfoMockMvc
@@ -1423,17 +1621,15 @@ class BaseInfoResourceIT {
     List<BaseInfo> baseInfoList = baseInfoRepository.findAll();
     assertThat(baseInfoList).hasSize(databaseSizeBeforeUpdate);
     BaseInfo testBaseInfo = baseInfoList.get(baseInfoList.size() - 1);
+    assertThat(testBaseInfo.getUuid()).isEqualTo(UPDATED_UUID);
     assertThat(testBaseInfo.getProcessStatus()).isEqualTo(UPDATED_PROCESS_STATUS);
-    assertThat(testBaseInfo.getOwner()).isEqualTo(UPDATED_OWNER);
-    assertThat(testBaseInfo.getRole()).isEqualTo(UPDATED_ROLE);
     assertThat(testBaseInfo.getModifiedClass()).isEqualTo(UPDATED_MODIFIED_CLASS);
     assertThat(testBaseInfo.getCreatedDate()).isEqualTo(UPDATED_CREATED_DATE);
     assertThat(testBaseInfo.getModifiedDate()).isEqualTo(UPDATED_MODIFIED_DATE);
-    assertThat(testBaseInfo.getCreatedBy()).isEqualTo(UPDATED_CREATED_BY);
-    assertThat(testBaseInfo.getModifiedBy()).isEqualTo(UPDATED_MODIFIED_BY);
     assertThat(testBaseInfo.getNotes()).isEqualTo(UPDATED_NOTES);
-    assertThat(testBaseInfo.getHistoryUpdate()).isEqualTo(UPDATED_HISTORY_UPDATE);
     assertThat(testBaseInfo.getDeleted()).isEqualTo(UPDATED_DELETED);
+    assertThat(testBaseInfo.getPriorityIndex()).isEqualTo(UPDATED_PRIORITY_INDEX);
+    assertThat(testBaseInfo.getCountUse()).isEqualTo(UPDATED_COUNT_USE);
 
     // Validate the BaseInfo in Elasticsearch
     verify(mockBaseInfoSearchRepository).save(testBaseInfo);
@@ -1526,13 +1722,12 @@ class BaseInfoResourceIT {
     partialUpdatedBaseInfo.setId(baseInfo.getId());
 
     partialUpdatedBaseInfo
-      .role(UPDATED_ROLE)
       .modifiedClass(UPDATED_MODIFIED_CLASS)
       .createdDate(UPDATED_CREATED_DATE)
       .modifiedDate(UPDATED_MODIFIED_DATE)
-      .modifiedBy(UPDATED_MODIFIED_BY)
       .notes(UPDATED_NOTES)
-      .historyUpdate(UPDATED_HISTORY_UPDATE);
+      .priorityIndex(UPDATED_PRIORITY_INDEX)
+      .countUse(UPDATED_COUNT_USE);
 
     restBaseInfoMockMvc
       .perform(
@@ -1546,17 +1741,15 @@ class BaseInfoResourceIT {
     List<BaseInfo> baseInfoList = baseInfoRepository.findAll();
     assertThat(baseInfoList).hasSize(databaseSizeBeforeUpdate);
     BaseInfo testBaseInfo = baseInfoList.get(baseInfoList.size() - 1);
+    assertThat(testBaseInfo.getUuid()).isEqualTo(DEFAULT_UUID);
     assertThat(testBaseInfo.getProcessStatus()).isEqualTo(DEFAULT_PROCESS_STATUS);
-    assertThat(testBaseInfo.getOwner()).isEqualTo(DEFAULT_OWNER);
-    assertThat(testBaseInfo.getRole()).isEqualTo(UPDATED_ROLE);
     assertThat(testBaseInfo.getModifiedClass()).isEqualTo(UPDATED_MODIFIED_CLASS);
     assertThat(testBaseInfo.getCreatedDate()).isEqualTo(UPDATED_CREATED_DATE);
     assertThat(testBaseInfo.getModifiedDate()).isEqualTo(UPDATED_MODIFIED_DATE);
-    assertThat(testBaseInfo.getCreatedBy()).isEqualTo(DEFAULT_CREATED_BY);
-    assertThat(testBaseInfo.getModifiedBy()).isEqualTo(UPDATED_MODIFIED_BY);
     assertThat(testBaseInfo.getNotes()).isEqualTo(UPDATED_NOTES);
-    assertThat(testBaseInfo.getHistoryUpdate()).isEqualTo(UPDATED_HISTORY_UPDATE);
     assertThat(testBaseInfo.getDeleted()).isEqualTo(DEFAULT_DELETED);
+    assertThat(testBaseInfo.getPriorityIndex()).isEqualTo(UPDATED_PRIORITY_INDEX);
+    assertThat(testBaseInfo.getCountUse()).isEqualTo(UPDATED_COUNT_USE);
   }
 
   @Test
@@ -1572,17 +1765,15 @@ class BaseInfoResourceIT {
     partialUpdatedBaseInfo.setId(baseInfo.getId());
 
     partialUpdatedBaseInfo
+      .uuid(UPDATED_UUID)
       .processStatus(UPDATED_PROCESS_STATUS)
-      .owner(UPDATED_OWNER)
-      .role(UPDATED_ROLE)
       .modifiedClass(UPDATED_MODIFIED_CLASS)
       .createdDate(UPDATED_CREATED_DATE)
       .modifiedDate(UPDATED_MODIFIED_DATE)
-      .createdBy(UPDATED_CREATED_BY)
-      .modifiedBy(UPDATED_MODIFIED_BY)
       .notes(UPDATED_NOTES)
-      .historyUpdate(UPDATED_HISTORY_UPDATE)
-      .deleted(UPDATED_DELETED);
+      .deleted(UPDATED_DELETED)
+      .priorityIndex(UPDATED_PRIORITY_INDEX)
+      .countUse(UPDATED_COUNT_USE);
 
     restBaseInfoMockMvc
       .perform(
@@ -1596,17 +1787,15 @@ class BaseInfoResourceIT {
     List<BaseInfo> baseInfoList = baseInfoRepository.findAll();
     assertThat(baseInfoList).hasSize(databaseSizeBeforeUpdate);
     BaseInfo testBaseInfo = baseInfoList.get(baseInfoList.size() - 1);
+    assertThat(testBaseInfo.getUuid()).isEqualTo(UPDATED_UUID);
     assertThat(testBaseInfo.getProcessStatus()).isEqualTo(UPDATED_PROCESS_STATUS);
-    assertThat(testBaseInfo.getOwner()).isEqualTo(UPDATED_OWNER);
-    assertThat(testBaseInfo.getRole()).isEqualTo(UPDATED_ROLE);
     assertThat(testBaseInfo.getModifiedClass()).isEqualTo(UPDATED_MODIFIED_CLASS);
     assertThat(testBaseInfo.getCreatedDate()).isEqualTo(UPDATED_CREATED_DATE);
     assertThat(testBaseInfo.getModifiedDate()).isEqualTo(UPDATED_MODIFIED_DATE);
-    assertThat(testBaseInfo.getCreatedBy()).isEqualTo(UPDATED_CREATED_BY);
-    assertThat(testBaseInfo.getModifiedBy()).isEqualTo(UPDATED_MODIFIED_BY);
     assertThat(testBaseInfo.getNotes()).isEqualTo(UPDATED_NOTES);
-    assertThat(testBaseInfo.getHistoryUpdate()).isEqualTo(UPDATED_HISTORY_UPDATE);
     assertThat(testBaseInfo.getDeleted()).isEqualTo(UPDATED_DELETED);
+    assertThat(testBaseInfo.getPriorityIndex()).isEqualTo(UPDATED_PRIORITY_INDEX);
+    assertThat(testBaseInfo.getCountUse()).isEqualTo(UPDATED_COUNT_USE);
   }
 
   @Test
@@ -1719,16 +1908,14 @@ class BaseInfoResourceIT {
       .andExpect(status().isOk())
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
       .andExpect(jsonPath("$.[*].id").value(hasItem(baseInfo.getId().intValue())))
+      .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
       .andExpect(jsonPath("$.[*].processStatus").value(hasItem(DEFAULT_PROCESS_STATUS.toString())))
-      .andExpect(jsonPath("$.[*].owner").value(hasItem(DEFAULT_OWNER.toString())))
-      .andExpect(jsonPath("$.[*].role").value(hasItem(DEFAULT_ROLE.toString())))
       .andExpect(jsonPath("$.[*].modifiedClass").value(hasItem(DEFAULT_MODIFIED_CLASS)))
       .andExpect(jsonPath("$.[*].createdDate").value(hasItem(DEFAULT_CREATED_DATE.toString())))
       .andExpect(jsonPath("$.[*].modifiedDate").value(hasItem(DEFAULT_MODIFIED_DATE.toString())))
-      .andExpect(jsonPath("$.[*].createdBy").value(hasItem(DEFAULT_CREATED_BY)))
-      .andExpect(jsonPath("$.[*].modifiedBy").value(hasItem(DEFAULT_MODIFIED_BY)))
-      .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES.toString())))
-      .andExpect(jsonPath("$.[*].historyUpdate").value(hasItem(DEFAULT_HISTORY_UPDATE.toString())))
-      .andExpect(jsonPath("$.[*].deleted").value(hasItem(DEFAULT_DELETED.booleanValue())));
+      .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)))
+      .andExpect(jsonPath("$.[*].deleted").value(hasItem(DEFAULT_DELETED.booleanValue())))
+      .andExpect(jsonPath("$.[*].priorityIndex").value(hasItem(DEFAULT_PRIORITY_INDEX.intValue())))
+      .andExpect(jsonPath("$.[*].countUse").value(hasItem(DEFAULT_COUNT_USE.intValue())));
   }
 }

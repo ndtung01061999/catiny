@@ -10,7 +10,6 @@ export default class PostCommentUpdatePage {
   uuidInput: ElementFinder = element(by.css('input#post-comment-uuid'));
   contentInput: ElementFinder = element(by.css('textarea#post-comment-content'));
   baseInfoSelect: ElementFinder = element(by.css('select#post-comment-baseInfo'));
-  userCommentSelect: ElementFinder = element(by.css('select#post-comment-userComment'));
   postSelect: ElementFinder = element(by.css('select#post-comment-post'));
   commentParentSelect: ElementFinder = element(by.css('select#post-comment-commentParent'));
 
@@ -48,22 +47,6 @@ export default class PostCommentUpdatePage {
 
   async getBaseInfoSelectedOption() {
     return this.baseInfoSelect.element(by.css('option:checked')).getText();
-  }
-
-  async userCommentSelectLastOption() {
-    await this.userCommentSelect.all(by.tagName('option')).last().click();
-  }
-
-  async userCommentSelectOption(option) {
-    await this.userCommentSelect.sendKeys(option);
-  }
-
-  getUserCommentSelect() {
-    return this.userCommentSelect;
-  }
-
-  async getUserCommentSelectedOption() {
-    return this.userCommentSelect.element(by.css('option:checked')).getText();
   }
 
   async postSelectLastOption() {
@@ -116,7 +99,6 @@ export default class PostCommentUpdatePage {
     await waitUntilDisplayed(this.saveButton);
     await this.setContentInput('content');
     await this.baseInfoSelectLastOption();
-    await this.userCommentSelectLastOption();
     await this.postSelectLastOption();
     await this.commentParentSelectLastOption();
     await this.save();

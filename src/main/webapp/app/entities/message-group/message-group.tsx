@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Input, InputGroup, FormGroup, Form, Col, Row, Table } from 'reactstrap';
-import { Translate, translate, getSortState } from 'react-jhipster';
+import { byteSize, Translate, translate, getSortState } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { searchEntities, getEntities, reset } from './message-group.reducer';
@@ -197,6 +197,9 @@ export const MessageGroup = (props: RouteComponentProps<{ url: string }>) => {
                   <th className="hand" onClick={sort('groupName')}>
                     <Translate contentKey="catinyApp.messageGroup.groupName">Group Name</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
+                  <th className="hand" onClick={sort('avatar')}>
+                    <Translate contentKey="catinyApp.messageGroup.avatar">Avatar</Translate> <FontAwesomeIcon icon="sort" />
+                  </th>
                   <th className="hand" onClick={sort('addBy')}>
                     <Translate contentKey="catinyApp.messageGroup.addBy">Add By</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
@@ -216,6 +219,7 @@ export const MessageGroup = (props: RouteComponentProps<{ url: string }>) => {
                     </td>
                     <td>{messageGroup.uuid}</td>
                     <td>{messageGroup.groupName}</td>
+                    <td>{messageGroup.avatar}</td>
                     <td>{messageGroup.addBy}</td>
                     <td>
                       {messageGroup.baseInfo ? <Link to={`base-info/${messageGroup.baseInfo.id}`}>{messageGroup.baseInfo.id}</Link> : ''}

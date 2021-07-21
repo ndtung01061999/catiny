@@ -21,15 +21,16 @@
       "id": "ID",
       "uuid": "Uuid",
       "name": "Name",
+      "avatar": "Avatar",
       "quickInfo": "Quick Info",
       "profile": "Profile",
       "baseInfo": "Base Info",
       "myPostInGroup": "My Post In Group",
       "topicInterest": "Topic Interest",
-      "userInGroup": "User In Group",
       "help": {
         "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
         "name": "name           : tên của group này",
+        "avatar": "avatar : @type Json -&gt; ảnh đại diện của Group",
         "quickInfo": "quickInfo      : @type Json -&gt; thông tin giới thiệu sơ qua của group này"
       }
     }

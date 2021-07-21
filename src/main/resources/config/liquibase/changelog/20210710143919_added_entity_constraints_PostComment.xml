@@ -14,12 +14,6 @@
                                  referencedColumnNames="id"
                                  referencedTableName="base_info"/>
 
-        <addForeignKeyConstraint baseColumnNames="user_comment_id"
-                                 baseTableName="post_comment"
-                                 constraintName="fk_post_comment__user_comment_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="master_user"/>
-
         <addForeignKeyConstraint baseColumnNames="post_id"
                                  baseTableName="post_comment"
                                  constraintName="fk_post_comment__post_id"

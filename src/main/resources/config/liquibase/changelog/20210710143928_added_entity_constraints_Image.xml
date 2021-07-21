@@ -25,11 +25,5 @@
                                  constraintName="fk_image__image_original_id"
                                  referencedColumnNames="id"
                                  referencedTableName="image"/>
-
-        <addForeignKeyConstraint baseColumnNames="event_id"
-                                 baseTableName="image"
-                                 constraintName="fk_image__event_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="event"/>
     </changeSet>
 </databaseChangeLog>

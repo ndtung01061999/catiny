@@ -109,8 +109,6 @@ describe('PostComment e2e test', () => {
 
     cy.setFieldSelectToLastOfEntity('baseInfo');
 
-    cy.setFieldSelectToLastOfEntity('userComment');
-
     cy.setFieldSelectToLastOfEntity('post');
 
     cy.setFieldSelectToLastOfEntity('commentParent');

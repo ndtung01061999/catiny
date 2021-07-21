@@ -98,6 +98,24 @@ public class ImageQueryService extends QueryService<Image> {
       if (criteria.getName() != null) {
         specification = specification.and(buildStringSpecification(criteria.getName(), Image_.name));
       }
+      if (criteria.getWidth() != null) {
+        specification = specification.and(buildRangeSpecification(criteria.getWidth(), Image_.width));
+      }
+      if (criteria.getHeight() != null) {
+        specification = specification.and(buildRangeSpecification(criteria.getHeight(), Image_.height));
+      }
+      if (criteria.getQuality() != null) {
+        specification = specification.and(buildRangeSpecification(criteria.getQuality(), Image_.quality));
+      }
+      if (criteria.getPixelSize() != null) {
+        specification = specification.and(buildRangeSpecification(criteria.getPixelSize(), Image_.pixelSize));
+      }
+      if (criteria.getPriorityIndex() != null) {
+        specification = specification.and(buildRangeSpecification(criteria.getPriorityIndex(), Image_.priorityIndex));
+      }
+      if (criteria.getDataSize() != null) {
+        specification = specification.and(buildRangeSpecification(criteria.getDataSize(), Image_.dataSize));
+      }
       if (criteria.getFileInfoId() != null) {
         specification =
           specification.and(
@@ -121,10 +139,6 @@ public class ImageQueryService extends QueryService<Image> {
           specification.and(
             buildSpecification(criteria.getImageOriginalId(), root -> root.join(Image_.imageOriginal, JoinType.LEFT).get(Image_.id))
           );
-      }
-      if (criteria.getEventId() != null) {
-        specification =
-          specification.and(buildSpecification(criteria.getEventId(), root -> root.join(Image_.event, JoinType.LEFT).get(Event_.id)));
       }
       if (criteria.getAlbumId() != null) {
         specification =

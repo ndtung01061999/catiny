@@ -2,7 +2,10 @@ package com.regitiny.catiny.advance.controller.model;
 
 import com.regitiny.catiny.domain.enumeration.PostInType;
 import com.regitiny.catiny.domain.enumeration.PostType;
-import com.regitiny.catiny.service.dto.*;
+import com.regitiny.catiny.service.dto.BaseInfoDTO;
+import com.regitiny.catiny.service.dto.GroupPostDTO;
+import com.regitiny.catiny.service.dto.PagePostDTO;
+import com.regitiny.catiny.service.dto.PostDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -50,8 +53,6 @@ public class PostModel implements Serializable
 
   private PostDTO postShareParent;
 
-  private MasterUserDTO poster;
-
   @Data
   @Builder
   @NoArgsConstructor
@@ -87,8 +88,6 @@ public class PostModel implements Serializable
     private PagePostDTO pagePost;
 
     private PostDTO postShareParent;
-
-    private MasterUserDTO poster;
   }
 
   @Data
@@ -126,7 +125,5 @@ public class PostModel implements Serializable
     private PagePostDTO pagePost;
 
     private PostDTO postShareParent;
-
-    private MasterUserDTO poster;
   }
 }

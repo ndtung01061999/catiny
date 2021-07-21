@@ -10,7 +10,6 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 /**
- *
  * @param <S> EntityService
  * @param <Q> EntityQueryService
  */
@@ -18,11 +17,10 @@ import java.util.regex.Pattern;
 @Component
 public class LocalServiceImpl<S, Q> implements LocalService<S, Q>
 {
-  @Autowired
-  private ApplicationContext applicationContext;
-
   protected S localService;
   protected Q localQueryService;
+  @Autowired
+  private ApplicationContext applicationContext;
 
   @Override
   public S localService()
@@ -51,10 +49,10 @@ public class LocalServiceImpl<S, Q> implements LocalService<S, Q>
   public void setup()
   {
     var thisName = getClass().getSimpleName();
-    var matcher =Pattern.compile("^[A-Z]+").matcher(thisName);
+    var matcher = Pattern.compile("^[A-Z]+").matcher(thisName);
     matcher.find();
-    var firstUpper =  matcher.group(0);
-    thisName=thisName.replaceFirst("^[A-Z]+",firstUpper.toLowerCase() );
+    var firstUpper = matcher.group(0);
+    thisName = thisName.replaceFirst("^[A-Z]+", firstUpper.toLowerCase());
 
     if (Objects.isNull(localService))
     {

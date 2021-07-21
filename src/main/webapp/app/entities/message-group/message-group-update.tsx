@@ -6,8 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IBaseInfo } from 'app/shared/model/base-info.model';
 import { getEntities as getBaseInfos } from 'app/entities/base-info/base-info.reducer';
-import { IMasterUser } from 'app/shared/model/master-user.model';
-import { getEntities as getMasterUsers } from 'app/entities/master-user/master-user.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './message-group.reducer';
 import { IMessageGroup } from 'app/shared/model/message-group.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -20,7 +18,6 @@ export const MessageGroupUpdate = (props: RouteComponentProps<{ id: string }>) =
   const [isNew] = useState(!props.match.params || !props.match.params.id);
 
   const baseInfos = useAppSelector(state => state.baseInfo.entities);
-  const masterUsers = useAppSelector(state => state.masterUser.entities);
   const messageGroupEntity = useAppSelector(state => state.messageGroup.entity);
   const loading = useAppSelector(state => state.messageGroup.loading);
   const updating = useAppSelector(state => state.messageGroup.updating);
@@ -36,7 +33,6 @@ export const MessageGroupUpdate = (props: RouteComponentProps<{ id: string }>) =
     }
 
     dispatch(getBaseInfos({}));
-    dispatch(getMasterUsers({}));
   }, []);
 
   useEffect(() => {
@@ -114,6 +110,16 @@ export const MessageGroupUpdate = (props: RouteComponentProps<{ id: string }>) =
               />
               <UncontrolledTooltip target="groupNameLabel">
                 <Translate contentKey="catinyApp.messageGroup.help.groupName" />
+              </UncontrolledTooltip>
+              <ValidatedField
+                label={translate('catinyApp.messageGroup.avatar')}
+                id="message-group-avatar"
+                name="avatar"
+                data-cy="avatar"
+                type="textarea"
+              />
+              <UncontrolledTooltip target="avatarLabel">
+                <Translate contentKey="catinyApp.messageGroup.help.avatar" />
               </UncontrolledTooltip>
               <ValidatedField
                 label={translate('catinyApp.messageGroup.addBy')}

@@ -20,6 +20,9 @@
             <column name="name" type="varchar(255)" remarks="name           : tên của group này">
                 <constraints nullable="false" />
             </column>
+            <column name="avatar" type="${clobType}" remarks="avatar : @type Json -&gt; ảnh đại diện của Group">
+                <constraints nullable="true" />
+            </column>
             <column name="quick_info" type="${clobType}" remarks="quickInfo      : @type Json -&gt; thông tin giới thiệu sơ qua của group này">
                 <constraints nullable="true" />
             </column>
@@ -51,6 +54,7 @@
             <column name="id" type="numeric"/>
             <column name="uuid" type="string"/>
             <column name="name" type="string"/>
+            <column name="avatar" type="clob"/>
             <column name="quick_info" type="clob"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>

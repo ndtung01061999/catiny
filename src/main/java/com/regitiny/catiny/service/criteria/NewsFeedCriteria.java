@@ -31,23 +31,20 @@ public class NewsFeedCriteria implements Serializable, Criteria {
 
   private UUIDFilter uuid;
 
-  private DoubleFilter score;
+  private LongFilter priorityIndex;
 
   private LongFilter baseInfoId;
 
   private LongFilter postId;
-
-  private LongFilter masterUserId;
 
   public NewsFeedCriteria() {}
 
   public NewsFeedCriteria(NewsFeedCriteria other) {
     this.id = other.id == null ? null : other.id.copy();
     this.uuid = other.uuid == null ? null : other.uuid.copy();
-    this.score = other.score == null ? null : other.score.copy();
+    this.priorityIndex = other.priorityIndex == null ? null : other.priorityIndex.copy();
     this.baseInfoId = other.baseInfoId == null ? null : other.baseInfoId.copy();
     this.postId = other.postId == null ? null : other.postId.copy();
-    this.masterUserId = other.masterUserId == null ? null : other.masterUserId.copy();
   }
 
   @Override
@@ -85,19 +82,19 @@ public class NewsFeedCriteria implements Serializable, Criteria {
     this.uuid = uuid;
   }
 
-  public DoubleFilter getScore() {
-    return score;
+  public LongFilter getPriorityIndex() {
+    return priorityIndex;
   }
 
-  public DoubleFilter score() {
-    if (score == null) {
-      score = new DoubleFilter();
+  public LongFilter priorityIndex() {
+    if (priorityIndex == null) {
+      priorityIndex = new LongFilter();
     }
-    return score;
+    return priorityIndex;
   }
 
-  public void setScore(DoubleFilter score) {
-    this.score = score;
+  public void setPriorityIndex(LongFilter priorityIndex) {
+    this.priorityIndex = priorityIndex;
   }
 
   public LongFilter getBaseInfoId() {
@@ -130,21 +127,6 @@ public class NewsFeedCriteria implements Serializable, Criteria {
     this.postId = postId;
   }
 
-  public LongFilter getMasterUserId() {
-    return masterUserId;
-  }
-
-  public LongFilter masterUserId() {
-    if (masterUserId == null) {
-      masterUserId = new LongFilter();
-    }
-    return masterUserId;
-  }
-
-  public void setMasterUserId(LongFilter masterUserId) {
-    this.masterUserId = masterUserId;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -157,16 +139,15 @@ public class NewsFeedCriteria implements Serializable, Criteria {
     return (
       Objects.equals(id, that.id) &&
       Objects.equals(uuid, that.uuid) &&
-      Objects.equals(score, that.score) &&
+      Objects.equals(priorityIndex, that.priorityIndex) &&
       Objects.equals(baseInfoId, that.baseInfoId) &&
-      Objects.equals(postId, that.postId) &&
-      Objects.equals(masterUserId, that.masterUserId)
+      Objects.equals(postId, that.postId)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, uuid, score, baseInfoId, postId, masterUserId);
+    return Objects.hash(id, uuid, priorityIndex, baseInfoId, postId);
   }
 
   // prettier-ignore
@@ -175,10 +156,9 @@ public class NewsFeedCriteria implements Serializable, Criteria {
         return "NewsFeedCriteria{" +
             (id != null ? "id=" + id + ", " : "") +
             (uuid != null ? "uuid=" + uuid + ", " : "") +
-            (score != null ? "score=" + score + ", " : "") +
+            (priorityIndex != null ? "priorityIndex=" + priorityIndex + ", " : "") +
             (baseInfoId != null ? "baseInfoId=" + baseInfoId + ", " : "") +
             (postId != null ? "postId=" + postId + ", " : "") +
-            (masterUserId != null ? "masterUserId=" + masterUserId + ", " : "") +
             "}";
     }
 }

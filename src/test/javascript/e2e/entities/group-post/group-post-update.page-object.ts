@@ -9,6 +9,7 @@ export default class GroupPostUpdatePage {
   cancelButton: ElementFinder = element(by.id('cancel-save'));
   uuidInput: ElementFinder = element(by.css('input#group-post-uuid'));
   nameInput: ElementFinder = element(by.css('input#group-post-name'));
+  avatarInput: ElementFinder = element(by.css('textarea#group-post-avatar'));
   quickInfoInput: ElementFinder = element(by.css('textarea#group-post-quickInfo'));
   profileSelect: ElementFinder = element(by.css('select#group-post-profile'));
   baseInfoSelect: ElementFinder = element(by.css('select#group-post-baseInfo'));
@@ -31,6 +32,14 @@ export default class GroupPostUpdatePage {
 
   async getNameInput() {
     return this.nameInput.getAttribute('value');
+  }
+
+  async setAvatarInput(avatar) {
+    await this.avatarInput.sendKeys(avatar);
+  }
+
+  async getAvatarInput() {
+    return this.avatarInput.getAttribute('value');
   }
 
   async setQuickInfoInput(quickInfo) {
@@ -90,6 +99,8 @@ export default class GroupPostUpdatePage {
     await this.setUuidInput('64c99148-3908-465d-8c4a-e510e3ade974');
     await waitUntilDisplayed(this.saveButton);
     await this.setNameInput('name');
+    await waitUntilDisplayed(this.saveButton);
+    await this.setAvatarInput('avatar');
     await waitUntilDisplayed(this.saveButton);
     await this.setQuickInfoInput('quickInfo');
     await this.profileSelectLastOption();

@@ -1,0 +1,33 @@
+{
+  "catinyApp": {
+    "historyUpdate": {
+      "home": {
+        "title": "History Updates",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new History Update",
+        "createOrEditLabel": "Create or edit a History Update",
+        "search": "Search for History Update",
+        "notFound": "No History Updates found"
+      },
+      "created": "A new History Update is created with identifier {{ param }}",
+      "updated": "A History Update is updated with identifier {{ param }}",
+      "deleted": "A History Update is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete History Update {{ id }}?"
+      },
+      "detail": {
+        "title": "History Update"
+      },
+      "id": "ID",
+      "uuid": "Uuid",
+      "version": "Version",
+      "content": "Content",
+      "baseInfo": "Base Info",
+      "help": {
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
+        "version": "version        : phiên bản (bắt đầu từ 0)",
+        "content": "content        : @type Json -&gt; lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json"
+      }
+    }
+  }
+}

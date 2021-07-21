@@ -129,12 +129,6 @@ public class GroupPostQueryService extends QueryService<GroupPost> {
             )
           );
       }
-      if (criteria.getUserInGroupId() != null) {
-        specification =
-          specification.and(
-            buildSpecification(criteria.getUserInGroupId(), root -> root.join(GroupPost_.userInGroups, JoinType.LEFT).get(MasterUser_.id))
-          );
-      }
     }
     return specification;
   }

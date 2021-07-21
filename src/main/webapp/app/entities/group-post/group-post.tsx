@@ -197,6 +197,9 @@ export const GroupPost = (props: RouteComponentProps<{ url: string }>) => {
                   <th className="hand" onClick={sort('name')}>
                     <Translate contentKey="catinyApp.groupPost.name">Name</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
+                  <th className="hand" onClick={sort('avatar')}>
+                    <Translate contentKey="catinyApp.groupPost.avatar">Avatar</Translate> <FontAwesomeIcon icon="sort" />
+                  </th>
                   <th className="hand" onClick={sort('quickInfo')}>
                     <Translate contentKey="catinyApp.groupPost.quickInfo">Quick Info</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
@@ -219,6 +222,7 @@ export const GroupPost = (props: RouteComponentProps<{ url: string }>) => {
                     </td>
                     <td>{groupPost.uuid}</td>
                     <td>{groupPost.name}</td>
+                    <td>{groupPost.avatar}</td>
                     <td>{groupPost.quickInfo}</td>
                     <td>{groupPost.profile ? <Link to={`group-profile/${groupPost.profile.id}`}>{groupPost.profile.id}</Link> : ''}</td>
                     <td>{groupPost.baseInfo ? <Link to={`base-info/${groupPost.baseInfo.id}`}>{groupPost.baseInfo.id}</Link> : ''}</td>

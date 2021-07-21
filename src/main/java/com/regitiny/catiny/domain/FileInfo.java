@@ -2,14 +2,15 @@ package com.regitiny.catiny.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.regitiny.catiny.GeneratedByJHipster;
-import java.io.Serializable;
-import java.util.UUID;
-import javax.persistence.*;
-import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
-import org.springframework.data.elasticsearch.annotations.FieldType;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.io.Serializable;
+import java.util.UUID;
 
 /**
  * @what?            -> The FileInfo entity.\n@why?             ->\n@use-to           -> Quản lý thông tin về file, vị trí file ...\n@commonly-used-in -> Những file mà người dùng upload (ảnh video ...)\n\n@describe         ->
@@ -49,7 +50,7 @@ public class FileInfo implements Serializable {
   private String typeFile;
 
   /**
-   * path           : đường dẫn file nguyên gốc
+   * path           : đường dẫn file trên server
    */
   @Size(max = 1024)
   @Column(name = "path", length = 1024)
@@ -63,6 +64,8 @@ public class FileInfo implements Serializable {
 
   @JsonIgnoreProperties(
     value = {
+      "historyUpdates",
+      "classInfo",
       "userProfile",
       "accountStatus",
       "deviceStatus",
@@ -92,41 +95,16 @@ public class FileInfo implements Serializable {
       "topicInterest",
       "todoList",
       "event",
+      "createdBy",
+      "modifiedBy",
+      "owner",
+      "permissions",
     },
     allowSetters = true
   )
   @OneToOne
   @JoinColumn(unique = true)
   private BaseInfo baseInfo;
-
-  @ManyToOne
-  @JsonIgnoreProperties(
-    value = {
-      "user",
-      "myProfile",
-      "myAccountStatus",
-      "myRank",
-      "avatar",
-      "baseInfo",
-      "myPages",
-      "myFiles",
-      "myNotifications",
-      "myFriends",
-      "myFollowUsers",
-      "myFollowGroups",
-      "myFollowPages",
-      "myNewsFeeds",
-      "myTodoLists",
-      "myPosts",
-      "myGroupPosts",
-      "messageGroups",
-      "topicInterests",
-      "myLikes",
-      "myComments",
-    },
-    allowSetters = true
-  )
-  private MasterUser masterUser;
 
   // jhipster-needle-entity-add-field - JHipster will add fields here
   public Long getId() {
@@ -218,19 +196,6 @@ public class FileInfo implements Serializable {
 
   public void setBaseInfo(BaseInfo baseInfo) {
     this.baseInfo = baseInfo;
-  }
-
-  public MasterUser getMasterUser() {
-    return this.masterUser;
-  }
-
-  public FileInfo masterUser(MasterUser masterUser) {
-    this.setMasterUser(masterUser);
-    return this;
-  }
-
-  public void setMasterUser(MasterUser masterUser) {
-    this.masterUser = masterUser;
   }
 
   // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

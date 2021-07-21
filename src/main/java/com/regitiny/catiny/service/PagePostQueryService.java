@@ -120,12 +120,6 @@ public class PagePostQueryService extends QueryService<PagePost> {
             buildSpecification(criteria.getMyPostInPageId(), root -> root.join(PagePost_.myPostInPages, JoinType.LEFT).get(Post_.id))
           );
       }
-      if (criteria.getMasterUserId() != null) {
-        specification =
-          specification.and(
-            buildSpecification(criteria.getMasterUserId(), root -> root.join(PagePost_.masterUser, JoinType.LEFT).get(MasterUser_.id))
-          );
-      }
       if (criteria.getTopicInterestId() != null) {
         specification =
           specification.and(

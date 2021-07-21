@@ -9,6 +9,8 @@ export default class AlbumUpdatePage {
   cancelButton: ElementFinder = element(by.id('cancel-save'));
   uuidInput: ElementFinder = element(by.css('input#album-uuid'));
   nameInput: ElementFinder = element(by.css('input#album-name'));
+  noteInput: ElementFinder = element(by.css('input#album-note'));
+  avatarInput: ElementFinder = element(by.css('textarea#album-avatar'));
   baseInfoSelect: ElementFinder = element(by.css('select#album-baseInfo'));
   imageSelect: ElementFinder = element(by.css('select#album-image'));
 
@@ -30,6 +32,22 @@ export default class AlbumUpdatePage {
 
   async getNameInput() {
     return this.nameInput.getAttribute('value');
+  }
+
+  async setNoteInput(note) {
+    await this.noteInput.sendKeys(note);
+  }
+
+  async getNoteInput() {
+    return this.noteInput.getAttribute('value');
+  }
+
+  async setAvatarInput(avatar) {
+    await this.avatarInput.sendKeys(avatar);
+  }
+
+  async getAvatarInput() {
+    return this.avatarInput.getAttribute('value');
   }
 
   async baseInfoSelectLastOption() {
@@ -81,6 +99,10 @@ export default class AlbumUpdatePage {
     await this.setUuidInput('64c99148-3908-465d-8c4a-e510e3ade974');
     await waitUntilDisplayed(this.saveButton);
     await this.setNameInput('name');
+    await waitUntilDisplayed(this.saveButton);
+    await this.setNoteInput('note');
+    await waitUntilDisplayed(this.saveButton);
+    await this.setAvatarInput('avatar');
     await this.baseInfoSelectLastOption();
     // this.imageSelectLastOption();
     await this.save();

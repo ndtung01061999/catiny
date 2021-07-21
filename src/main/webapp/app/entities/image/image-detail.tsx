@@ -42,8 +42,65 @@ export const ImageDetail = (props: RouteComponentProps<{ id: string }>) => {
             <span id="name">
               <Translate contentKey="catinyApp.image.name">Name</Translate>
             </span>
+            <UncontrolledTooltip target="name">
+              <Translate contentKey="catinyApp.image.help.name" />
+            </UncontrolledTooltip>
           </dt>
           <dd>{imageEntity.name}</dd>
+          <dt>
+            <span id="width">
+              <Translate contentKey="catinyApp.image.width">Width</Translate>
+            </span>
+            <UncontrolledTooltip target="width">
+              <Translate contentKey="catinyApp.image.help.width" />
+            </UncontrolledTooltip>
+          </dt>
+          <dd>{imageEntity.width}</dd>
+          <dt>
+            <span id="height">
+              <Translate contentKey="catinyApp.image.height">Height</Translate>
+            </span>
+            <UncontrolledTooltip target="height">
+              <Translate contentKey="catinyApp.image.help.height" />
+            </UncontrolledTooltip>
+          </dt>
+          <dd>{imageEntity.height}</dd>
+          <dt>
+            <span id="quality">
+              <Translate contentKey="catinyApp.image.quality">Quality</Translate>
+            </span>
+            <UncontrolledTooltip target="quality">
+              <Translate contentKey="catinyApp.image.help.quality" />
+            </UncontrolledTooltip>
+          </dt>
+          <dd>{imageEntity.quality}</dd>
+          <dt>
+            <span id="pixelSize">
+              <Translate contentKey="catinyApp.image.pixelSize">Pixel Size</Translate>
+            </span>
+            <UncontrolledTooltip target="pixelSize">
+              <Translate contentKey="catinyApp.image.help.pixelSize" />
+            </UncontrolledTooltip>
+          </dt>
+          <dd>{imageEntity.pixelSize}</dd>
+          <dt>
+            <span id="priorityIndex">
+              <Translate contentKey="catinyApp.image.priorityIndex">Priority Index</Translate>
+            </span>
+            <UncontrolledTooltip target="priorityIndex">
+              <Translate contentKey="catinyApp.image.help.priorityIndex" />
+            </UncontrolledTooltip>
+          </dt>
+          <dd>{imageEntity.priorityIndex}</dd>
+          <dt>
+            <span id="dataSize">
+              <Translate contentKey="catinyApp.image.dataSize">Data Size</Translate>
+            </span>
+            <UncontrolledTooltip target="dataSize">
+              <Translate contentKey="catinyApp.image.help.dataSize" />
+            </UncontrolledTooltip>
+          </dt>
+          <dd>{imageEntity.dataSize}</dd>
           <dt>
             <Translate contentKey="catinyApp.image.fileInfo">File Info</Translate>
           </dt>
@@ -56,10 +113,6 @@ export const ImageDetail = (props: RouteComponentProps<{ id: string }>) => {
             <Translate contentKey="catinyApp.image.imageOriginal">Image Original</Translate>
           </dt>
           <dd>{imageEntity.imageOriginal ? imageEntity.imageOriginal.id : ''}</dd>
-          <dt>
-            <Translate contentKey="catinyApp.image.event">Event</Translate>
-          </dt>
-          <dd>{imageEntity.event ? imageEntity.event.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/image" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

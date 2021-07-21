@@ -73,6 +73,8 @@ class AlbumGatlingTest extends Simulation {
             .body(StringBody("""{
                 "uuid":null
                 , "name":"SAMPLE_TEXT"
+                , "note":"SAMPLE_TEXT"
+                , "avatar":null
                 }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_album_url"))).exitHereIfFailed

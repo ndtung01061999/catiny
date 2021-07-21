@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.regitiny.catiny.GeneratedByJHipster;
 import com.regitiny.catiny.IntegrationTest;
 import com.regitiny.catiny.domain.BaseInfo;
-import com.regitiny.catiny.domain.MasterUser;
 import com.regitiny.catiny.domain.Notification;
 import com.regitiny.catiny.domain.enumeration.NotifyType;
 import com.regitiny.catiny.repository.NotificationRepository;
@@ -441,25 +440,6 @@ class NotificationResourceIT {
 
     // Get all the notificationList where baseInfo equals to (baseInfoId + 1)
     defaultNotificationShouldNotBeFound("baseInfoId.equals=" + (baseInfoId + 1));
-  }
-
-  @Test
-  @Transactional
-  void getAllNotificationsByMasterUserIsEqualToSomething() throws Exception {
-    // Initialize the database
-    notificationRepository.saveAndFlush(notification);
-    MasterUser masterUser = MasterUserResourceIT.createEntity(em);
-    em.persist(masterUser);
-    em.flush();
-    notification.setMasterUser(masterUser);
-    notificationRepository.saveAndFlush(notification);
-    Long masterUserId = masterUser.getId();
-
-    // Get all the notificationList where masterUser equals to masterUserId
-    defaultNotificationShouldBeFound("masterUserId.equals=" + masterUserId);
-
-    // Get all the notificationList where masterUser equals to (masterUserId + 1)
-    defaultNotificationShouldNotBeFound("masterUserId.equals=" + (masterUserId + 1));
   }
 
   /**

@@ -17,25 +17,34 @@
             <column name="uuid" type="${uuidType}" remarks="uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)">
                 <constraints nullable="false" unique="true" uniqueConstraintName="ux_event__uuid" />
             </column>
-            <column name="title" type="varchar(255)">
+            <column name="title" type="varchar(255)" remarks="title          : tiêu đề event">
                 <constraints nullable="true" />
             </column>
-            <column name="content" type="${clobType}">
+            <column name="avatar" type="${clobType}" remarks="avatar         : @type Json -&gt; ảnh đại diện event">
                 <constraints nullable="true" />
             </column>
-            <column name="type" type="varchar(255)">
+            <column name="content" type="${clobType}" remarks="content        : nội dung event">
                 <constraints nullable="true" />
             </column>
-            <column name="description" type="${clobType}">
+            <column name="type" type="varchar(255)" remarks="type           :loại event">
                 <constraints nullable="true" />
             </column>
-            <column name="start_time" type="${datetimeType}">
+            <column name="description" type="${clobType}" remarks="description    : mô tả chi tết về event">
                 <constraints nullable="true" />
             </column>
-            <column name="end_time" type="${datetimeType}">
+            <column name="start_time" type="${datetimeType}" remarks="startTime      : thời gian bắt đầu">
                 <constraints nullable="true" />
             </column>
-            <column name="tag_line" type="varchar(255)">
+            <column name="end_time" type="${datetimeType}" remarks="endTime        : thời gian kết thúc">
+                <constraints nullable="true" />
+            </column>
+            <column name="tag_line" type="varchar(255)" remarks="tagLine        : thẻ cho event">
+                <constraints nullable="true" />
+            </column>
+            <column name="image_collection" type="${clobType}" remarks="imageCollection: @type Json -&gt; tập ảnh của event">
+                <constraints nullable="true" />
+            </column>
+            <column name="video_collection" type="${clobType}" remarks="videoCollection: @type Json -&gt; tập video của event">
                 <constraints nullable="true" />
             </column>
             <column name="base_info_id" type="bigint">
@@ -65,12 +74,15 @@
             <column name="id" type="numeric"/>
             <column name="uuid" type="string"/>
             <column name="title" type="string"/>
+            <column name="avatar" type="clob"/>
             <column name="content" type="clob"/>
             <column name="type" type="string"/>
             <column name="description" type="clob"/>
             <column name="start_time" type="${datetimeType}"/>
             <column name="end_time" type="${datetimeType}"/>
             <column name="tag_line" type="string"/>
+            <column name="image_collection" type="clob"/>
+            <column name="video_collection" type="clob"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

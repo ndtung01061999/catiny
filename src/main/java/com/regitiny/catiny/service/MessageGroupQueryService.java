@@ -120,12 +120,6 @@ public class MessageGroupQueryService extends QueryService<MessageGroup> {
             )
           );
       }
-      if (criteria.getMasterUserId() != null) {
-        specification =
-          specification.and(
-            buildSpecification(criteria.getMasterUserId(), root -> root.join(MessageGroup_.masterUsers, JoinType.LEFT).get(MasterUser_.id))
-          );
-      }
     }
     return specification;
   }

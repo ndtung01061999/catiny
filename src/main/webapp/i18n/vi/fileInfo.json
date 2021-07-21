@@ -25,12 +25,11 @@
       "path": "Path",
       "dataSize": "Data Size",
       "baseInfo": "Base Info",
-      "masterUser": "Master User",
       "help": {
         "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
         "nameFile": "nameFile       : tên của file nếu có",
         "typeFile": "typeFile       : loại file",
-        "path": "path           : đường dẫn file nguyên gốc",
+        "path": "path           : đường dẫn file trên server",
         "dataSize": "dataSize       : kích thước file theo byte"
       }
     }

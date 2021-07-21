@@ -200,6 +200,9 @@ export const MasterUser = (props: RouteComponentProps<{ url: string }>) => {
                   <th className="hand" onClick={sort('nickname')}>
                     <Translate contentKey="catinyApp.masterUser.nickname">Nickname</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
+                  <th className="hand" onClick={sort('avatar')}>
+                    <Translate contentKey="catinyApp.masterUser.avatar">Avatar</Translate> <FontAwesomeIcon icon="sort" />
+                  </th>
                   <th className="hand" onClick={sort('quickInfo')}>
                     <Translate contentKey="catinyApp.masterUser.quickInfo">Quick Info</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
@@ -207,17 +210,7 @@ export const MasterUser = (props: RouteComponentProps<{ url: string }>) => {
                     <Translate contentKey="catinyApp.masterUser.user">User</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
                   <th>
-                    <Translate contentKey="catinyApp.masterUser.myProfile">My Profile</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th>
-                    <Translate contentKey="catinyApp.masterUser.myAccountStatus">My Account Status</Translate>{' '}
-                    <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th>
                     <Translate contentKey="catinyApp.masterUser.myRank">My Rank</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th>
-                    <Translate contentKey="catinyApp.masterUser.avatar">Avatar</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
                   <th>
                     <Translate contentKey="catinyApp.masterUser.baseInfo">Base Info</Translate> <FontAwesomeIcon icon="sort" />
@@ -236,20 +229,10 @@ export const MasterUser = (props: RouteComponentProps<{ url: string }>) => {
                     <td>{masterUser.uuid}</td>
                     <td>{masterUser.fullName}</td>
                     <td>{masterUser.nickname}</td>
+                    <td>{masterUser.avatar}</td>
                     <td>{masterUser.quickInfo}</td>
                     <td>{masterUser.user ? masterUser.user.id : ''}</td>
-                    <td>
-                      {masterUser.myProfile ? <Link to={`user-profile/${masterUser.myProfile.id}`}>{masterUser.myProfile.id}</Link> : ''}
-                    </td>
-                    <td>
-                      {masterUser.myAccountStatus ? (
-                        <Link to={`account-status/${masterUser.myAccountStatus.id}`}>{masterUser.myAccountStatus.id}</Link>
-                      ) : (
-                        ''
-                      )}
-                    </td>
                     <td>{masterUser.myRank ? <Link to={`rank-user/${masterUser.myRank.id}`}>{masterUser.myRank.id}</Link> : ''}</td>
-                    <td>{masterUser.avatar ? <Link to={`image/${masterUser.avatar.id}`}>{masterUser.avatar.id}</Link> : ''}</td>
                     <td>{masterUser.baseInfo ? <Link to={`base-info/${masterUser.baseInfo.id}`}>{masterUser.baseInfo.id}</Link> : ''}</td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">

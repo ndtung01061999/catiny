@@ -62,8 +62,6 @@ public class PostDTO implements Serializable {
 
   private PostDTO postShareParent;
 
-  private MasterUserDTO poster;
-
   public Long getId() {
     return id;
   }
@@ -144,14 +142,6 @@ public class PostDTO implements Serializable {
     this.postShareParent = postShareParent;
   }
 
-  public MasterUserDTO getPoster() {
-    return poster;
-  }
-
-  public void setPoster(MasterUserDTO poster) {
-    this.poster = poster;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -187,7 +177,6 @@ public class PostDTO implements Serializable {
             ", groupPost=" + getGroupPost() +
             ", pagePost=" + getPagePost() +
             ", postShareParent=" + getPostShareParent() +
-            ", poster=" + getPoster() +
             "}";
     }
 }

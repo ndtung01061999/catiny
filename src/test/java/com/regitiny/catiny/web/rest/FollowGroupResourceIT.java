@@ -12,7 +12,6 @@ import com.regitiny.catiny.IntegrationTest;
 import com.regitiny.catiny.domain.BaseInfo;
 import com.regitiny.catiny.domain.FollowGroup;
 import com.regitiny.catiny.domain.GroupPost;
-import com.regitiny.catiny.domain.MasterUser;
 import com.regitiny.catiny.repository.FollowGroupRepository;
 import com.regitiny.catiny.repository.search.FollowGroupSearchRepository;
 import com.regitiny.catiny.service.criteria.FollowGroupCriteria;
@@ -303,25 +302,6 @@ class FollowGroupResourceIT {
 
     // Get all the followGroupList where followGroupDetails equals to (followGroupDetailsId + 1)
     defaultFollowGroupShouldNotBeFound("followGroupDetailsId.equals=" + (followGroupDetailsId + 1));
-  }
-
-  @Test
-  @Transactional
-  void getAllFollowGroupsByMasterUserIsEqualToSomething() throws Exception {
-    // Initialize the database
-    followGroupRepository.saveAndFlush(followGroup);
-    MasterUser masterUser = MasterUserResourceIT.createEntity(em);
-    em.persist(masterUser);
-    em.flush();
-    followGroup.setMasterUser(masterUser);
-    followGroupRepository.saveAndFlush(followGroup);
-    Long masterUserId = masterUser.getId();
-
-    // Get all the followGroupList where masterUser equals to masterUserId
-    defaultFollowGroupShouldBeFound("masterUserId.equals=" + masterUserId);
-
-    // Get all the followGroupList where masterUser equals to (masterUserId + 1)
-    defaultFollowGroupShouldNotBeFound("masterUserId.equals=" + (masterUserId + 1));
   }
 
   /**

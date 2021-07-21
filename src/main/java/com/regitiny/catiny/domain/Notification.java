@@ -3,14 +3,14 @@ package com.regitiny.catiny.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.regitiny.catiny.GeneratedByJHipster;
 import com.regitiny.catiny.domain.enumeration.NotifyType;
-import java.io.Serializable;
-import java.util.UUID;
-import javax.persistence.*;
-import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
-import org.springframework.data.elasticsearch.annotations.FieldType;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.UUID;
 
 /**
  * @what?            -> The Notification entity.\n@why?             ->\n@use-to           -> Chứa những thông báo đến người dùng\n@commonly-used-in -> Thường xuất hiện trong chức năng thông báo của người dùng\n\n@describe         ->
@@ -53,6 +53,8 @@ public class Notification implements Serializable {
 
   @JsonIgnoreProperties(
     value = {
+      "historyUpdates",
+      "classInfo",
       "userProfile",
       "accountStatus",
       "deviceStatus",
@@ -82,41 +84,16 @@ public class Notification implements Serializable {
       "topicInterest",
       "todoList",
       "event",
+      "createdBy",
+      "modifiedBy",
+      "owner",
+      "permissions",
     },
     allowSetters = true
   )
   @OneToOne
   @JoinColumn(unique = true)
   private BaseInfo baseInfo;
-
-  @ManyToOne
-  @JsonIgnoreProperties(
-    value = {
-      "user",
-      "myProfile",
-      "myAccountStatus",
-      "myRank",
-      "avatar",
-      "baseInfo",
-      "myPages",
-      "myFiles",
-      "myNotifications",
-      "myFriends",
-      "myFollowUsers",
-      "myFollowGroups",
-      "myFollowPages",
-      "myNewsFeeds",
-      "myTodoLists",
-      "myPosts",
-      "myGroupPosts",
-      "messageGroups",
-      "topicInterests",
-      "myLikes",
-      "myComments",
-    },
-    allowSetters = true
-  )
-  private MasterUser masterUser;
 
   // jhipster-needle-entity-add-field - JHipster will add fields here
   public Long getId() {
@@ -195,19 +172,6 @@ public class Notification implements Serializable {
 
   public void setBaseInfo(BaseInfo baseInfo) {
     this.baseInfo = baseInfo;
-  }
-
-  public MasterUser getMasterUser() {
-    return this.masterUser;
-  }
-
-  public Notification masterUser(MasterUser masterUser) {
-    this.setMasterUser(masterUser);
-    return this;
-  }
-
-  public void setMasterUser(MasterUser masterUser) {
-    this.masterUser = masterUser;
   }
 
   // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

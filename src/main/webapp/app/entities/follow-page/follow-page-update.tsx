@@ -8,8 +8,6 @@ import { IBaseInfo } from 'app/shared/model/base-info.model';
 import { getEntities as getBaseInfos } from 'app/entities/base-info/base-info.reducer';
 import { IPagePost } from 'app/shared/model/page-post.model';
 import { getEntities as getPagePosts } from 'app/entities/page-post/page-post.reducer';
-import { IMasterUser } from 'app/shared/model/master-user.model';
-import { getEntities as getMasterUsers } from 'app/entities/master-user/master-user.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './follow-page.reducer';
 import { IFollowPage } from 'app/shared/model/follow-page.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -23,7 +21,6 @@ export const FollowPageUpdate = (props: RouteComponentProps<{ id: string }>) => 
 
   const baseInfos = useAppSelector(state => state.baseInfo.entities);
   const pagePosts = useAppSelector(state => state.pagePost.entities);
-  const masterUsers = useAppSelector(state => state.masterUser.entities);
   const followPageEntity = useAppSelector(state => state.followPage.entity);
   const loading = useAppSelector(state => state.followPage.loading);
   const updating = useAppSelector(state => state.followPage.updating);
@@ -40,7 +37,6 @@ export const FollowPageUpdate = (props: RouteComponentProps<{ id: string }>) => 
 
     dispatch(getBaseInfos({}));
     dispatch(getPagePosts({}));
-    dispatch(getMasterUsers({}));
   }, []);
 
   useEffect(() => {
@@ -55,7 +51,6 @@ export const FollowPageUpdate = (props: RouteComponentProps<{ id: string }>) => 
       ...values,
       baseInfo: baseInfos.find(it => it.id.toString() === values.baseInfoId.toString()),
       followPageDetails: pagePosts.find(it => it.id.toString() === values.followPageDetailsId.toString()),
-      masterUser: masterUsers.find(it => it.id.toString() === values.masterUserId.toString()),
     };
 
     if (isNew) {
@@ -72,7 +67,6 @@ export const FollowPageUpdate = (props: RouteComponentProps<{ id: string }>) => 
           ...followPageEntity,
           baseInfoId: followPageEntity?.baseInfo?.id,
           followPageDetailsId: followPageEntity?.followPageDetails?.id,
-          masterUserId: followPageEntity?.masterUser?.id,
         };
 
   return (
@@ -139,22 +133,6 @@ export const FollowPageUpdate = (props: RouteComponentProps<{ id: string }>) => 
                 <option value="" key="0" />
                 {pagePosts
                   ? pagePosts.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField
-                id="follow-page-masterUser"
-                name="masterUserId"
-                data-cy="masterUser"
-                label={translate('catinyApp.followPage.masterUser')}
-                type="select"
-              >
-                <option value="" key="0" />
-                {masterUsers
-                  ? masterUsers.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

@@ -1,15 +1,15 @@
 import React from 'react';
 import MenuItem from 'app/shared/layout/menus/menu-item';
-import { Translate, translate } from 'react-jhipster';
-import { NavDropdown } from './menu-components';
+import {Translate, translate} from 'react-jhipster';
+import {NavDropdown} from './menu-components';
 
 export const EntitiesMenu = props => (
   <NavDropdown
-    icon="th-list"
+    icon='th-list'
     name={translate('global.menu.entities.main')}
-    id="entity-menu"
-    data-cy="entity"
-    style={{ maxHeight: '80vh', overflow: 'auto' }}
+    id='entity-menu'
+    data-cy='entity'
+    style={{maxHeight: '80vh', overflow: 'auto'}}
   >
     <>{/* to avoid warnings when empty */}</>
     <MenuItem icon="asterisk" to="/message-group">
@@ -105,8 +105,17 @@ export const EntitiesMenu = props => (
     <MenuItem icon="asterisk" to="/event">
       <Translate contentKey="global.menu.entities.event" />
     </MenuItem>
-    <MenuItem icon="asterisk" to="/base-info">
-      <Translate contentKey="global.menu.entities.baseInfo" />
+    <MenuItem icon='asterisk' to='/base-info'>
+      <Translate contentKey='global.menu.entities.baseInfo' />
+    </MenuItem>
+    <MenuItem icon='asterisk' to='/permission'>
+      <Translate contentKey='global.menu.entities.permission' />
+    </MenuItem>
+    <MenuItem icon='asterisk' to='/class-info'>
+      <Translate contentKey='global.menu.entities.classInfo' />
+    </MenuItem>
+    <MenuItem icon='asterisk' to='/history-update'>
+      <Translate contentKey='global.menu.entities.historyUpdate' />
     </MenuItem>
     {/* jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here */}
   </NavDropdown>

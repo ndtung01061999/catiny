@@ -17,18 +17,14 @@ import org.springframework.stereotype.Repository;
 @GeneratedByJHipster
 public interface MasterUserRepository extends JpaRepository<MasterUser, Long>, JpaSpecificationExecutor<MasterUser> {
   @Query(
-    value = "select distinct masterUser from MasterUser masterUser left join fetch masterUser.myGroupPosts left join fetch masterUser.messageGroups left join fetch masterUser.topicInterests",
+    value = "select distinct masterUser from MasterUser masterUser left join fetch masterUser.topicInterests",
     countQuery = "select count(distinct masterUser) from MasterUser masterUser"
   )
   Page<MasterUser> findAllWithEagerRelationships(Pageable pageable);
 
-  @Query(
-    "select distinct masterUser from MasterUser masterUser left join fetch masterUser.myGroupPosts left join fetch masterUser.messageGroups left join fetch masterUser.topicInterests"
-  )
+  @Query("select distinct masterUser from MasterUser masterUser left join fetch masterUser.topicInterests")
   List<MasterUser> findAllWithEagerRelationships();
 
-  @Query(
-    "select masterUser from MasterUser masterUser left join fetch masterUser.myGroupPosts left join fetch masterUser.messageGroups left join fetch masterUser.topicInterests where masterUser.id =:id"
-  )
+  @Query("select masterUser from MasterUser masterUser left join fetch masterUser.topicInterests where masterUser.id =:id")
   Optional<MasterUser> findOneWithEagerRelationships(@Param("id") Long id);
 }

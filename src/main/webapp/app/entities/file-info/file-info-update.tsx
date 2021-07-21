@@ -6,8 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IBaseInfo } from 'app/shared/model/base-info.model';
 import { getEntities as getBaseInfos } from 'app/entities/base-info/base-info.reducer';
-import { IMasterUser } from 'app/shared/model/master-user.model';
-import { getEntities as getMasterUsers } from 'app/entities/master-user/master-user.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './file-info.reducer';
 import { IFileInfo } from 'app/shared/model/file-info.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -20,7 +18,6 @@ export const FileInfoUpdate = (props: RouteComponentProps<{ id: string }>) => {
   const [isNew] = useState(!props.match.params || !props.match.params.id);
 
   const baseInfos = useAppSelector(state => state.baseInfo.entities);
-  const masterUsers = useAppSelector(state => state.masterUser.entities);
   const fileInfoEntity = useAppSelector(state => state.fileInfo.entity);
   const loading = useAppSelector(state => state.fileInfo.loading);
   const updating = useAppSelector(state => state.fileInfo.updating);
@@ -36,7 +33,6 @@ export const FileInfoUpdate = (props: RouteComponentProps<{ id: string }>) => {
     }
 
     dispatch(getBaseInfos({}));
-    dispatch(getMasterUsers({}));
   }, []);
 
   useEffect(() => {
@@ -50,7 +46,6 @@ export const FileInfoUpdate = (props: RouteComponentProps<{ id: string }>) => {
       ...fileInfoEntity,
       ...values,
       baseInfo: baseInfos.find(it => it.id.toString() === values.baseInfoId.toString()),
-      masterUser: masterUsers.find(it => it.id.toString() === values.masterUserId.toString()),
     };
 
     if (isNew) {
@@ -66,7 +61,6 @@ export const FileInfoUpdate = (props: RouteComponentProps<{ id: string }>) => {
       : {
           ...fileInfoEntity,
           baseInfoId: fileInfoEntity?.baseInfo?.id,
-          masterUserId: fileInfoEntity?.masterUser?.id,
         };
 
   return (
@@ -160,22 +154,6 @@ export const FileInfoUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 <option value="" key="0" />
                 {baseInfos
                   ? baseInfos.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField
-                id="file-info-masterUser"
-                name="masterUserId"
-                data-cy="masterUser"
-                label={translate('catinyApp.fileInfo.masterUser')}
-                type="select"
-              >
-                <option value="" key="0" />
-                {masterUsers
-                  ? masterUsers.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

@@ -111,12 +111,6 @@ public class NotificationQueryService extends QueryService<Notification> {
             buildSpecification(criteria.getBaseInfoId(), root -> root.join(Notification_.baseInfo, JoinType.LEFT).get(BaseInfo_.id))
           );
       }
-      if (criteria.getMasterUserId() != null) {
-        specification =
-          specification.and(
-            buildSpecification(criteria.getMasterUserId(), root -> root.join(Notification_.masterUser, JoinType.LEFT).get(MasterUser_.id))
-          );
-      }
     }
     return specification;
   }

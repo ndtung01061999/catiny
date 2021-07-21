@@ -104,9 +104,9 @@ describe('PostLike e2e test', () => {
 
     cy.setFieldSelectToLastOfEntity('baseInfo');
 
-    cy.setFieldSelectToLastOfEntity('userLike');
-
     cy.setFieldSelectToLastOfEntity('post');
+
+    cy.setFieldSelectToLastOfEntity('postComment');
 
     cy.get(entityCreateSaveButtonSelector).click({ force: true });
     cy.scrollTo('top', { ensureScrollable: false });

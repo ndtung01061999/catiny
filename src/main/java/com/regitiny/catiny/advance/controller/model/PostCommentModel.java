@@ -1,7 +1,6 @@
 package com.regitiny.catiny.advance.controller.model;
 
 import com.regitiny.catiny.service.dto.BaseInfoDTO;
-import com.regitiny.catiny.service.dto.MasterUserDTO;
 import com.regitiny.catiny.service.dto.PostCommentDTO;
 import com.regitiny.catiny.service.dto.PostDTO;
 import io.swagger.annotations.ApiModelProperty;
@@ -35,8 +34,6 @@ public class PostCommentModel implements Serializable
 
   private BaseInfoDTO baseInfo;
 
-  private MasterUserDTO userComment;
-
   private PostDTO post;
 
   private PostCommentDTO commentParent;
@@ -60,8 +57,6 @@ public class PostCommentModel implements Serializable
     private String content;
 
     private BaseInfoDTO baseInfo;
-
-    private MasterUserDTO userComment;
 
     private PostDTO post;
 
@@ -87,8 +82,6 @@ public class PostCommentModel implements Serializable
     private String content;
 
     private BaseInfoDTO baseInfo;
-
-    private MasterUserDTO userComment;
 
     private PostDTO post;
 

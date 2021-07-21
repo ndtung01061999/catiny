@@ -1,11 +1,11 @@
-id;uuid;content;status;search_field
-1;4f8791d7-8b83-4231-959c-0cfdff634b4e;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
-2;bf20e37b-0498-4431-bb1a-460eccf6a376;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
-3;a609991a-f4df-45e7-a27b-1a19600473ad;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
-4;cd621cfb-8348-4a21-81b0-18a3e0e9f239;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
-5;6633a5c0-d321-4f51-a370-5defe7015d07;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
-6;46a8de67-9bd5-49a3-90bb-3fac81b3c568;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
-7;810761a5-4ceb-42b8-8148-694f11ea6ae1;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
-8;7034a444-43f5-482d-8611-d544e011a02c;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
-9;b5112107-4cdd-48e4-aa85-b94673a4a2cf;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
-10;76f66785-f185-4f34-93ae-53820c92c3a8;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+id;uuid;sender_name;attach;content;status;search_field
+1;4f8791d7-8b83-4231-959c-0cfdff634b4e;Marketing Integration back;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+2;98431bb1-a460-4ecc-b6a3-76a609991af4;Specialist Turnpike Run;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+3;a1960047-3adc-4d62-9cfb-8348a2141b01;deposit Outdoors;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+4;f2396633-a5c0-4d32-9f51-a3705defe701;HTTP;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+5;46a8de67-9bd5-49a3-90bb-3fac81b3c568;Steel partnerships;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+6;54ceb2b8-4148-4694-b11e-a6ae17034a44;context-sensitive;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+7;582d4611-d544-4e01-9a02-cb51121074cd;Trinidad Dynamic out-of-the-box;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+8;4673a4a2-cf76-4f66-b85f-185f34d3ae53;Steel Delaware;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+9;3a82f2e2-c391-4e56-ae2c-5abaed00be07;functionalities Movies deposit;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+10;e71b63e7-32c1-4b14-a47a-ea9dbfa7a2c9;secondary PCI;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt

@@ -23,9 +23,6 @@
             <column name="follow_page_details_id" type="bigint">
                 <constraints nullable="true" />
             </column>
-            <column name="master_user_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
     </changeSet>

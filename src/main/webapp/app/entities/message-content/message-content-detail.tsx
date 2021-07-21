@@ -39,9 +39,30 @@ export const MessageContentDetail = (props: RouteComponentProps<{ id: string }>)
           </dt>
           <dd>{messageContentEntity.uuid}</dd>
           <dt>
+            <span id="senderName">
+              <Translate contentKey="catinyApp.messageContent.senderName">Sender Name</Translate>
+            </span>
+            <UncontrolledTooltip target="senderName">
+              <Translate contentKey="catinyApp.messageContent.help.senderName" />
+            </UncontrolledTooltip>
+          </dt>
+          <dd>{messageContentEntity.senderName}</dd>
+          <dt>
+            <span id="attach">
+              <Translate contentKey="catinyApp.messageContent.attach">Attach</Translate>
+            </span>
+            <UncontrolledTooltip target="attach">
+              <Translate contentKey="catinyApp.messageContent.help.attach" />
+            </UncontrolledTooltip>
+          </dt>
+          <dd>{messageContentEntity.attach}</dd>
+          <dt>
             <span id="content">
               <Translate contentKey="catinyApp.messageContent.content">Content</Translate>
             </span>
+            <UncontrolledTooltip target="content">
+              <Translate contentKey="catinyApp.messageContent.help.content" />
+            </UncontrolledTooltip>
           </dt>
           <dd>{messageContentEntity.content}</dd>
           <dt>
@@ -66,10 +87,6 @@ export const MessageContentDetail = (props: RouteComponentProps<{ id: string }>)
             <Translate contentKey="catinyApp.messageContent.baseInfo">Base Info</Translate>
           </dt>
           <dd>{messageContentEntity.baseInfo ? messageContentEntity.baseInfo.id : ''}</dd>
-          <dt>
-            <Translate contentKey="catinyApp.messageContent.sender">Sender</Translate>
-          </dt>
-          <dd>{messageContentEntity.sender ? messageContentEntity.sender.id : ''}</dd>
           <dt>
             <Translate contentKey="catinyApp.messageContent.messageGroup">Message Group</Translate>
           </dt>

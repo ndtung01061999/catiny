@@ -4,39 +4,39 @@ import com.regitiny.catiny.GeneratedByJHipster;
 import com.regitiny.catiny.domain.enumeration.ProcessStatus;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
+import javax.persistence.Lob;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
-import javax.persistence.Lob;
+import java.util.UUID;
 
 /**
  * A DTO for the {@link com.regitiny.catiny.domain.BaseInfo} entity.
  */
 @ApiModel(description = "BaseInfo")
 @GeneratedByJHipster
-public class BaseInfoDTO implements Serializable {
+public class BaseInfoDTO implements Serializable
+{
 
   private Long id;
+
+  /**
+   * uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)
+   */
+  @NotNull
+  @ApiModelProperty(
+    value = "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
+    required = true
+  )
+  private UUID uuid;
 
   /**
    * processStatus *: @defaultValue( DONE ) -> tình trạng xử lý sử dụng trong phê duyệt
    */
   @ApiModelProperty(value = "processStatus *: @defaultValue( DONE ) -> tình trạng xử lý sử dụng trong phê duyệt")
   private ProcessStatus processStatus;
-
-  /**
-   * owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List
-   */
-  @ApiModelProperty(value = "owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List")
-  @Lob
-  private String owner;
-
-  /**
-   * role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa>
-   */
-  @ApiModelProperty(value = "role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa>")
-  @Lob
-  private String role;
 
   /**
    * modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào
@@ -57,18 +57,6 @@ public class BaseInfoDTO implements Serializable {
   private Instant modifiedDate;
 
   /**
-   * createdBy *    : người tạo ra bản gi này (lần đầu tiên)
-   */
-  @ApiModelProperty(value = "createdBy *    : người tạo ra bản gi này (lần đầu tiên)")
-  private String createdBy;
-
-  /**
-   * modifiedBy *   : người sửa lại bản ghi này
-   */
-  @ApiModelProperty(value = "modifiedBy *   : người sửa lại bản ghi này")
-  private String modifiedBy;
-
-  /**
    * notes *        : @type Json -> chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json\"
    */
   @ApiModelProperty(value = "notes *        : @type Json -> chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json\"")
@@ -76,53 +64,63 @@ public class BaseInfoDTO implements Serializable {
   private String notes;
 
   /**
-   * historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json
-   */
-  @ApiModelProperty(
-    value = "historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json"
-  )
-  @Lob
-  private String historyUpdate;
-
-  /**
    * deleted *      : @defaultValue( false ) -> đánh dấu là đã xóa
    */
   @ApiModelProperty(value = "deleted *      : @defaultValue( false ) -> đánh dấu là đã xóa")
   private Boolean deleted;
 
-  public Long getId() {
+  /**
+   * priorityIndex *: chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)
+   */
+  @ApiModelProperty(value = "priorityIndex *: chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)")
+  private Long priorityIndex;
+
+  /**
+   * countUse *     : đếm số lần truy cập vào bản ghi này để xem sửa xóa
+   */
+  @ApiModelProperty(value = "countUse *     : đếm số lần truy cập vào bản ghi này để xem sửa xóa")
+  private Long countUse;
+
+  private ClassInfoDTO classInfo;
+
+  private MasterUserDTO createdBy;
+
+  private MasterUserDTO modifiedBy;
+
+  private MasterUserDTO owner;
+
+  public Long getId()
+  {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(Long id)
+  {
     this.id = id;
   }
 
-  public ProcessStatus getProcessStatus() {
+  public UUID getUuid()
+  {
+    return uuid;
+  }
+
+  public void setUuid(UUID uuid)
+  {
+    this.uuid = uuid;
+  }
+
+  public ProcessStatus getProcessStatus()
+  {
     return processStatus;
   }
 
-  public void setProcessStatus(ProcessStatus processStatus) {
+  public void setProcessStatus(ProcessStatus processStatus)
+  {
     this.processStatus = processStatus;
   }
 
-  public String getOwner() {
-    return owner;
-  }
-
-  public void setOwner(String owner) {
-    this.owner = owner;
-  }
-
-  public String getRole() {
-    return role;
-  }
-
-  public void setRole(String role) {
-    this.role = role;
-  }
-
-  public String getModifiedClass() {
+  public String getModifiedClass()
+  {
     return modifiedClass;
   }
 
@@ -146,22 +144,6 @@ public class BaseInfoDTO implements Serializable {
     this.modifiedDate = modifiedDate;
   }
 
-  public String getCreatedBy() {
-    return createdBy;
-  }
-
-  public void setCreatedBy(String createdBy) {
-    this.createdBy = createdBy;
-  }
-
-  public String getModifiedBy() {
-    return modifiedBy;
-  }
-
-  public void setModifiedBy(String modifiedBy) {
-    this.modifiedBy = modifiedBy;
-  }
-
   public String getNotes() {
     return notes;
   }
@@ -170,20 +152,60 @@ public class BaseInfoDTO implements Serializable {
     this.notes = notes;
   }
 
-  public String getHistoryUpdate() {
-    return historyUpdate;
-  }
-
-  public void setHistoryUpdate(String historyUpdate) {
-    this.historyUpdate = historyUpdate;
-  }
-
   public Boolean getDeleted() {
     return deleted;
   }
 
   public void setDeleted(Boolean deleted) {
     this.deleted = deleted;
+  }
+
+  public Long getPriorityIndex() {
+    return priorityIndex;
+  }
+
+  public void setPriorityIndex(Long priorityIndex) {
+    this.priorityIndex = priorityIndex;
+  }
+
+  public Long getCountUse() {
+    return countUse;
+  }
+
+  public void setCountUse(Long countUse) {
+    this.countUse = countUse;
+  }
+
+  public ClassInfoDTO getClassInfo() {
+    return classInfo;
+  }
+
+  public void setClassInfo(ClassInfoDTO classInfo) {
+    this.classInfo = classInfo;
+  }
+
+  public MasterUserDTO getCreatedBy() {
+    return createdBy;
+  }
+
+  public void setCreatedBy(MasterUserDTO createdBy) {
+    this.createdBy = createdBy;
+  }
+
+  public MasterUserDTO getModifiedBy() {
+    return modifiedBy;
+  }
+
+  public void setModifiedBy(MasterUserDTO modifiedBy) {
+    this.modifiedBy = modifiedBy;
+  }
+
+  public MasterUserDTO getOwner() {
+    return owner;
+  }
+
+  public void setOwner(MasterUserDTO owner) {
+    this.owner = owner;
   }
 
   @Override
@@ -211,18 +233,20 @@ public class BaseInfoDTO implements Serializable {
     @Override
     public String toString() {
         return "BaseInfoDTO{" +
-            "id=" + getId() +
-            ", processStatus='" + getProcessStatus() + "'" +
-            ", owner='" + getOwner() + "'" +
-            ", role='" + getRole() + "'" +
-            ", modifiedClass='" + getModifiedClass() + "'" +
-            ", createdDate='" + getCreatedDate() + "'" +
-            ", modifiedDate='" + getModifiedDate() + "'" +
-            ", createdBy='" + getCreatedBy() + "'" +
-            ", modifiedBy='" + getModifiedBy() + "'" +
-            ", notes='" + getNotes() + "'" +
-            ", historyUpdate='" + getHistoryUpdate() + "'" +
-            ", deleted='" + getDeleted() + "'" +
+          "id=" + getId() +
+          ", uuid='" + getUuid() + "'" +
+          ", processStatus='" + getProcessStatus() + "'" +
+          ", modifiedClass='" + getModifiedClass() + "'" +
+          ", createdDate='" + getCreatedDate() + "'" +
+          ", modifiedDate='" + getModifiedDate() + "'" +
+          ", notes='" + getNotes() + "'" +
+          ", deleted='" + getDeleted() + "'" +
+          ", priorityIndex=" + getPriorityIndex() +
+          ", countUse=" + getCountUse() +
+          ", classInfo=" + getClassInfo() +
+          ", createdBy=" + getCreatedBy() +
+            ", modifiedBy=" + getModifiedBy() +
+            ", owner=" + getOwner() +
             "}";
     }
 }

@@ -124,8 +124,6 @@ describe('Post e2e test', () => {
 
     cy.setFieldSelectToLastOfEntity('postShareParent');
 
-    cy.setFieldSelectToLastOfEntity('poster');
-
     cy.get(entityCreateSaveButtonSelector).click({ force: true });
     cy.scrollTo('top', { ensureScrollable: false });
     cy.get(entityCreateSaveButtonSelector).should('not.exist');

@@ -32,21 +32,70 @@ public class EventDTO implements Serializable {
   )
   private UUID uuid;
 
+  /**
+   * title          : tiêu đề event
+   */
+  @ApiModelProperty(value = "title          : tiêu đề event")
   private String title;
 
+  /**
+   * avatar         : @type Json -> ảnh đại diện event
+   */
+  @ApiModelProperty(value = "avatar         : @type Json -> ảnh đại diện event")
+  @Lob
+  private String avatar;
+
+  /**
+   * content        : nội dung event
+   */
+  @ApiModelProperty(value = "content        : nội dung event")
   @Lob
   private String content;
 
+  /**
+   * type           :loại event
+   */
+  @ApiModelProperty(value = "type           :loại event")
   private EventType type;
 
+  /**
+   * description    : mô tả chi tết về event
+   */
+  @ApiModelProperty(value = "description    : mô tả chi tết về event")
   @Lob
   private String description;
 
+  /**
+   * startTime      : thời gian bắt đầu
+   */
+  @ApiModelProperty(value = "startTime      : thời gian bắt đầu")
   private Instant startTime;
 
+  /**
+   * endTime        : thời gian kết thúc
+   */
+  @ApiModelProperty(value = "endTime        : thời gian kết thúc")
   private Instant endTime;
 
+  /**
+   * tagLine        : thẻ cho event
+   */
+  @ApiModelProperty(value = "tagLine        : thẻ cho event")
   private String tagLine;
+
+  /**
+   * imageCollection: @type Json -> tập ảnh của event
+   */
+  @ApiModelProperty(value = "imageCollection: @type Json -> tập ảnh của event")
+  @Lob
+  private String imageCollection;
+
+  /**
+   * videoCollection: @type Json -> tập video của event
+   */
+  @ApiModelProperty(value = "videoCollection: @type Json -> tập video của event")
+  @Lob
+  private String videoCollection;
 
   private BaseInfoDTO baseInfo;
 
@@ -72,6 +121,14 @@ public class EventDTO implements Serializable {
 
   public void setTitle(String title) {
     this.title = title;
+  }
+
+  public String getAvatar() {
+    return avatar;
+  }
+
+  public void setAvatar(String avatar) {
+    this.avatar = avatar;
   }
 
   public String getContent() {
@@ -122,6 +179,22 @@ public class EventDTO implements Serializable {
     this.tagLine = tagLine;
   }
 
+  public String getImageCollection() {
+    return imageCollection;
+  }
+
+  public void setImageCollection(String imageCollection) {
+    this.imageCollection = imageCollection;
+  }
+
+  public String getVideoCollection() {
+    return videoCollection;
+  }
+
+  public void setVideoCollection(String videoCollection) {
+    this.videoCollection = videoCollection;
+  }
+
   public BaseInfoDTO getBaseInfo() {
     return baseInfo;
   }
@@ -158,12 +231,15 @@ public class EventDTO implements Serializable {
             "id=" + getId() +
             ", uuid='" + getUuid() + "'" +
             ", title='" + getTitle() + "'" +
+            ", avatar='" + getAvatar() + "'" +
             ", content='" + getContent() + "'" +
             ", type='" + getType() + "'" +
             ", description='" + getDescription() + "'" +
             ", startTime='" + getStartTime() + "'" +
             ", endTime='" + getEndTime() + "'" +
             ", tagLine='" + getTagLine() + "'" +
+            ", imageCollection='" + getImageCollection() + "'" +
+            ", videoCollection='" + getVideoCollection() + "'" +
             ", baseInfo=" + getBaseInfo() +
             "}";
     }

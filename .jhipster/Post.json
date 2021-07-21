@@ -43,13 +43,13 @@
       "relationshipType": "one-to-many",
       "otherEntityName": "postComment",
       "otherEntityRelationshipName": "post",
-      "relationshipName": "postComment"
+      "relationshipName": "comment"
     },
     {
       "relationshipType": "one-to-many",
       "otherEntityName": "postLike",
       "otherEntityRelationshipName": "post",
-      "relationshipName": "postLike"
+      "relationshipName": "like"
     },
     {
       "relationshipType": "one-to-many",
@@ -74,12 +74,6 @@
       "otherEntityName": "post",
       "otherEntityRelationshipName": "postShareChildren",
       "relationshipName": "postShareParent"
-    },
-    {
-      "relationshipType": "many-to-one",
-      "otherEntityName": "masterUser",
-      "otherEntityRelationshipName": "myPost",
-      "relationshipName": "poster"
     },
     {
       "relationshipType": "one-to-many",

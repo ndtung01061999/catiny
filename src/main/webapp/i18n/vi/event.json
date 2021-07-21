@@ -21,17 +21,28 @@
       "id": "ID",
       "uuid": "Uuid",
       "title": "Title",
+      "avatar": "Avatar",
       "content": "Content",
       "type": "Type",
       "description": "Description",
       "startTime": "Start Time",
       "endTime": "End Time",
       "tagLine": "Tag Line",
+      "imageCollection": "Image Collection",
+      "videoCollection": "Video Collection",
       "baseInfo": "Base Info",
-      "otherImage": "Other Image",
-      "otherVideo": "Other Video",
       "help": {
-        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)"
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
+        "title": "title          : tiêu đề event",
+        "avatar": "avatar         : @type Json -&gt; ảnh đại diện event",
+        "content": "content        : nội dung event",
+        "type": "type           :loại event",
+        "description": "description    : mô tả chi tết về event",
+        "startTime": "startTime      : thời gian bắt đầu",
+        "endTime": "endTime        : thời gian kết thúc",
+        "tagLine": "tagLine        : thẻ cho event",
+        "imageCollection": "imageCollection: @type Json -&gt; tập ảnh của event",
+        "videoCollection": "videoCollection: @type Json -&gt; tập video của event"
       }
     }
   }

@@ -44,8 +44,6 @@ public class NotificationDTO implements Serializable {
 
   private BaseInfoDTO baseInfo;
 
-  private MasterUserDTO masterUser;
-
   public Long getId() {
     return id;
   }
@@ -94,14 +92,6 @@ public class NotificationDTO implements Serializable {
     this.baseInfo = baseInfo;
   }
 
-  public MasterUserDTO getMasterUser() {
-    return masterUser;
-  }
-
-  public void setMasterUser(MasterUserDTO masterUser) {
-    this.masterUser = masterUser;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -133,7 +123,6 @@ public class NotificationDTO implements Serializable {
             ", title='" + getTitle() + "'" +
             ", content='" + getContent() + "'" +
             ", baseInfo=" + getBaseInfo() +
-            ", masterUser=" + getMasterUser() +
             "}";
     }
 }

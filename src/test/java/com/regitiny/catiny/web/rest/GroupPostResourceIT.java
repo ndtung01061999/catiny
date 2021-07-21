@@ -12,7 +12,6 @@ import com.regitiny.catiny.IntegrationTest;
 import com.regitiny.catiny.domain.BaseInfo;
 import com.regitiny.catiny.domain.GroupPost;
 import com.regitiny.catiny.domain.GroupProfile;
-import com.regitiny.catiny.domain.MasterUser;
 import com.regitiny.catiny.domain.Post;
 import com.regitiny.catiny.domain.TopicInterest;
 import com.regitiny.catiny.repository.GroupPostRepository;
@@ -57,6 +56,9 @@ class GroupPostResourceIT {
   private static final String DEFAULT_NAME = "AAAAAAAAAA";
   private static final String UPDATED_NAME = "BBBBBBBBBB";
 
+  private static final String DEFAULT_AVATAR = "AAAAAAAAAA";
+  private static final String UPDATED_AVATAR = "BBBBBBBBBB";
+
   private static final String DEFAULT_QUICK_INFO = "AAAAAAAAAA";
   private static final String UPDATED_QUICK_INFO = "BBBBBBBBBB";
 
@@ -96,7 +98,7 @@ class GroupPostResourceIT {
    * if they test an entity which requires the current entity.
    */
   public static GroupPost createEntity(EntityManager em) {
-    GroupPost groupPost = new GroupPost().uuid(DEFAULT_UUID).name(DEFAULT_NAME).quickInfo(DEFAULT_QUICK_INFO);
+    GroupPost groupPost = new GroupPost().uuid(DEFAULT_UUID).name(DEFAULT_NAME).avatar(DEFAULT_AVATAR).quickInfo(DEFAULT_QUICK_INFO);
     return groupPost;
   }
 
@@ -107,7 +109,7 @@ class GroupPostResourceIT {
    * if they test an entity which requires the current entity.
    */
   public static GroupPost createUpdatedEntity(EntityManager em) {
-    GroupPost groupPost = new GroupPost().uuid(UPDATED_UUID).name(UPDATED_NAME).quickInfo(UPDATED_QUICK_INFO);
+    GroupPost groupPost = new GroupPost().uuid(UPDATED_UUID).name(UPDATED_NAME).avatar(UPDATED_AVATAR).quickInfo(UPDATED_QUICK_INFO);
     return groupPost;
   }
 
@@ -132,6 +134,7 @@ class GroupPostResourceIT {
     GroupPost testGroupPost = groupPostList.get(groupPostList.size() - 1);
     assertThat(testGroupPost.getUuid()).isEqualTo(DEFAULT_UUID);
     assertThat(testGroupPost.getName()).isEqualTo(DEFAULT_NAME);
+    assertThat(testGroupPost.getAvatar()).isEqualTo(DEFAULT_AVATAR);
     assertThat(testGroupPost.getQuickInfo()).isEqualTo(DEFAULT_QUICK_INFO);
 
     // Validate the GroupPost in Elasticsearch
@@ -210,6 +213,7 @@ class GroupPostResourceIT {
       .andExpect(jsonPath("$.[*].id").value(hasItem(groupPost.getId().intValue())))
       .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
       .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+      .andExpect(jsonPath("$.[*].avatar").value(hasItem(DEFAULT_AVATAR.toString())))
       .andExpect(jsonPath("$.[*].quickInfo").value(hasItem(DEFAULT_QUICK_INFO.toString())));
   }
 
@@ -227,6 +231,7 @@ class GroupPostResourceIT {
       .andExpect(jsonPath("$.id").value(groupPost.getId().intValue()))
       .andExpect(jsonPath("$.uuid").value(DEFAULT_UUID.toString()))
       .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
+      .andExpect(jsonPath("$.avatar").value(DEFAULT_AVATAR.toString()))
       .andExpect(jsonPath("$.quickInfo").value(DEFAULT_QUICK_INFO.toString()));
   }
 
@@ -454,25 +459,6 @@ class GroupPostResourceIT {
     defaultGroupPostShouldNotBeFound("topicInterestId.equals=" + (topicInterestId + 1));
   }
 
-  @Test
-  @Transactional
-  void getAllGroupPostsByUserInGroupIsEqualToSomething() throws Exception {
-    // Initialize the database
-    groupPostRepository.saveAndFlush(groupPost);
-    MasterUser userInGroup = MasterUserResourceIT.createEntity(em);
-    em.persist(userInGroup);
-    em.flush();
-    groupPost.addUserInGroup(userInGroup);
-    groupPostRepository.saveAndFlush(groupPost);
-    Long userInGroupId = userInGroup.getId();
-
-    // Get all the groupPostList where userInGroup equals to userInGroupId
-    defaultGroupPostShouldBeFound("userInGroupId.equals=" + userInGroupId);
-
-    // Get all the groupPostList where userInGroup equals to (userInGroupId + 1)
-    defaultGroupPostShouldNotBeFound("userInGroupId.equals=" + (userInGroupId + 1));
-  }
-
   /**
    * Executes the search, and checks that the default entity is returned.
    */
@@ -484,6 +470,7 @@ class GroupPostResourceIT {
       .andExpect(jsonPath("$.[*].id").value(hasItem(groupPost.getId().intValue())))
       .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
       .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+      .andExpect(jsonPath("$.[*].avatar").value(hasItem(DEFAULT_AVATAR.toString())))
       .andExpect(jsonPath("$.[*].quickInfo").value(hasItem(DEFAULT_QUICK_INFO.toString())));
 
     // Check, that the count call also returns 1
@@ -532,7 +519,7 @@ class GroupPostResourceIT {
     GroupPost updatedGroupPost = groupPostRepository.findById(groupPost.getId()).get();
     // Disconnect from session so that the updates on updatedGroupPost are not directly saved in db
     em.detach(updatedGroupPost);
-    updatedGroupPost.uuid(UPDATED_UUID).name(UPDATED_NAME).quickInfo(UPDATED_QUICK_INFO);
+    updatedGroupPost.uuid(UPDATED_UUID).name(UPDATED_NAME).avatar(UPDATED_AVATAR).quickInfo(UPDATED_QUICK_INFO);
     GroupPostDTO groupPostDTO = groupPostMapper.toDto(updatedGroupPost);
 
     restGroupPostMockMvc
@@ -549,6 +536,7 @@ class GroupPostResourceIT {
     GroupPost testGroupPost = groupPostList.get(groupPostList.size() - 1);
     assertThat(testGroupPost.getUuid()).isEqualTo(UPDATED_UUID);
     assertThat(testGroupPost.getName()).isEqualTo(UPDATED_NAME);
+    assertThat(testGroupPost.getAvatar()).isEqualTo(UPDATED_AVATAR);
     assertThat(testGroupPost.getQuickInfo()).isEqualTo(UPDATED_QUICK_INFO);
 
     // Validate the GroupPost in Elasticsearch
@@ -641,7 +629,7 @@ class GroupPostResourceIT {
     GroupPost partialUpdatedGroupPost = new GroupPost();
     partialUpdatedGroupPost.setId(groupPost.getId());
 
-    partialUpdatedGroupPost.uuid(UPDATED_UUID).name(UPDATED_NAME).quickInfo(UPDATED_QUICK_INFO);
+    partialUpdatedGroupPost.uuid(UPDATED_UUID).name(UPDATED_NAME).avatar(UPDATED_AVATAR);
 
     restGroupPostMockMvc
       .perform(
@@ -657,7 +645,8 @@ class GroupPostResourceIT {
     GroupPost testGroupPost = groupPostList.get(groupPostList.size() - 1);
     assertThat(testGroupPost.getUuid()).isEqualTo(UPDATED_UUID);
     assertThat(testGroupPost.getName()).isEqualTo(UPDATED_NAME);
-    assertThat(testGroupPost.getQuickInfo()).isEqualTo(UPDATED_QUICK_INFO);
+    assertThat(testGroupPost.getAvatar()).isEqualTo(UPDATED_AVATAR);
+    assertThat(testGroupPost.getQuickInfo()).isEqualTo(DEFAULT_QUICK_INFO);
   }
 
   @Test
@@ -672,7 +661,7 @@ class GroupPostResourceIT {
     GroupPost partialUpdatedGroupPost = new GroupPost();
     partialUpdatedGroupPost.setId(groupPost.getId());
 
-    partialUpdatedGroupPost.uuid(UPDATED_UUID).name(UPDATED_NAME).quickInfo(UPDATED_QUICK_INFO);
+    partialUpdatedGroupPost.uuid(UPDATED_UUID).name(UPDATED_NAME).avatar(UPDATED_AVATAR).quickInfo(UPDATED_QUICK_INFO);
 
     restGroupPostMockMvc
       .perform(
@@ -688,6 +677,7 @@ class GroupPostResourceIT {
     GroupPost testGroupPost = groupPostList.get(groupPostList.size() - 1);
     assertThat(testGroupPost.getUuid()).isEqualTo(UPDATED_UUID);
     assertThat(testGroupPost.getName()).isEqualTo(UPDATED_NAME);
+    assertThat(testGroupPost.getAvatar()).isEqualTo(UPDATED_AVATAR);
     assertThat(testGroupPost.getQuickInfo()).isEqualTo(UPDATED_QUICK_INFO);
   }
 
@@ -803,6 +793,7 @@ class GroupPostResourceIT {
       .andExpect(jsonPath("$.[*].id").value(hasItem(groupPost.getId().intValue())))
       .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
       .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+      .andExpect(jsonPath("$.[*].avatar").value(hasItem(DEFAULT_AVATAR.toString())))
       .andExpect(jsonPath("$.[*].quickInfo").value(hasItem(DEFAULT_QUICK_INFO.toString())));
   }
 }

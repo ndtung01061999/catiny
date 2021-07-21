@@ -106,8 +106,6 @@ describe('FollowUser e2e test', () => {
 
     cy.setFieldSelectToLastOfEntity('followUserDetails');
 
-    cy.setFieldSelectToLastOfEntity('masterUser');
-
     cy.get(entityCreateSaveButtonSelector).click({ force: true });
     cy.scrollTo('top', { ensureScrollable: false });
     cy.get(entityCreateSaveButtonSelector).should('not.exist');

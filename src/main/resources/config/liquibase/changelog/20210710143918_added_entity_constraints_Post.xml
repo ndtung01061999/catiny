@@ -31,11 +31,5 @@
                                  constraintName="fk_post__post_share_parent_id"
                                  referencedColumnNames="id"
                                  referencedTableName="post"/>
-
-        <addForeignKeyConstraint baseColumnNames="poster_id"
-                                 baseTableName="post"
-                                 constraintName="fk_post__poster_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="master_user"/>
     </changeSet>
 </databaseChangeLog>

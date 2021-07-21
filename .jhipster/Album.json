@@ -10,7 +10,19 @@
     {
       "fieldName": "name",
       "fieldType": "String",
+      "javadoc": "name           : tên của album",
       "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "note",
+      "fieldType": "String",
+      "javadoc": "note           : trú thích của album (ví dụ album đại học)"
+    },
+    {
+      "fieldName": "avatar",
+      "fieldType": "byte[]",
+      "javadoc": "avatar         : @type Json -> ảnh đại diện của Album",
+      "fieldTypeBlobContent": "text"
     }
   ],
   "relationships": [

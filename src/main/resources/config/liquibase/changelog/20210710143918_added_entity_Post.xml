@@ -41,9 +41,6 @@
             <column name="post_share_parent_id" type="bigint">
                 <constraints nullable="true" />
             </column>
-            <column name="poster_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
     </changeSet>

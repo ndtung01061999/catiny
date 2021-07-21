@@ -19,6 +19,12 @@
       "javadoc": "nickname : biệt danh của người dùng"
     },
     {
+      "fieldName": "avatar",
+      "fieldType": "byte[]",
+      "javadoc": "avatar : @type Json -> ảnh đại diện của người dùng",
+      "fieldTypeBlobContent": "text"
+    },
+    {
       "fieldName": "quickInfo",
       "fieldType": "byte[]",
       "javadoc": "quickInfo      : @type Json -> thông tin nhanh về người dùng này dùng trong giới thiệu sơ khi chỉ chuột vào người dùng",
@@ -37,30 +43,9 @@
     },
     {
       "relationshipType": "one-to-one",
-      "otherEntityName": "userProfile",
-      "otherEntityRelationshipName": "masterUser",
-      "relationshipName": "myProfile",
-      "ownerSide": true
-    },
-    {
-      "relationshipType": "one-to-one",
-      "otherEntityName": "accountStatus",
-      "otherEntityRelationshipName": "masterUser",
-      "relationshipName": "myAccountStatus",
-      "ownerSide": true
-    },
-    {
-      "relationshipType": "one-to-one",
       "otherEntityName": "rankUser",
       "otherEntityRelationshipName": "masterUser",
       "relationshipName": "myRank",
-      "ownerSide": true
-    },
-    {
-      "relationshipType": "one-to-one",
-      "otherEntityName": "image",
-      "otherEntityRelationshipName": "masterUser",
-      "relationshipName": "avatar",
       "ownerSide": true
     },
     {
@@ -72,77 +57,27 @@
     },
     {
       "relationshipType": "one-to-many",
-      "otherEntityName": "pagePost",
-      "otherEntityRelationshipName": "masterUser",
-      "relationshipName": "myPage"
+      "otherEntityName": "baseInfo",
+      "otherEntityRelationshipName": "createdBy",
+      "relationshipName": "myBaseInfoCreated"
     },
     {
       "relationshipType": "one-to-many",
-      "otherEntityName": "fileInfo",
-      "otherEntityRelationshipName": "masterUser",
-      "relationshipName": "myFile"
+      "otherEntityName": "baseInfo",
+      "otherEntityRelationshipName": "modifiedBy",
+      "relationshipName": "myBaseInfoModified"
     },
     {
       "relationshipType": "one-to-many",
-      "otherEntityName": "notification",
-      "otherEntityRelationshipName": "masterUser",
-      "relationshipName": "myNotification"
+      "otherEntityName": "baseInfo",
+      "otherEntityRelationshipName": "owner",
+      "relationshipName": "ownerOf"
     },
     {
       "relationshipType": "one-to-many",
-      "otherEntityName": "friend",
+      "otherEntityName": "permission",
       "otherEntityRelationshipName": "masterUser",
-      "relationshipName": "myFriend"
-    },
-    {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "followUser",
-      "otherEntityRelationshipName": "masterUser",
-      "relationshipName": "myFollowUser"
-    },
-    {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "followGroup",
-      "otherEntityRelationshipName": "masterUser",
-      "relationshipName": "myFollowGroup"
-    },
-    {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "followPage",
-      "otherEntityRelationshipName": "masterUser",
-      "relationshipName": "myFollowPage"
-    },
-    {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "newsFeed",
-      "otherEntityRelationshipName": "masterUser",
-      "relationshipName": "myNewsFeed"
-    },
-    {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "todoList",
-      "otherEntityRelationshipName": "masterUser",
-      "relationshipName": "myTodoList"
-    },
-    {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "post",
-      "otherEntityRelationshipName": "poster",
-      "relationshipName": "myPost"
-    },
-    {
-      "relationshipType": "many-to-many",
-      "otherEntityName": "groupPost",
-      "otherEntityRelationshipName": "userInGroup",
-      "relationshipName": "myGroupPost",
-      "ownerSide": true
-    },
-    {
-      "relationshipType": "many-to-many",
-      "otherEntityName": "messageGroup",
-      "otherEntityRelationshipName": "masterUser",
-      "relationshipName": "messageGroup",
-      "ownerSide": true
+      "relationshipName": "permission"
     },
     {
       "relationshipType": "many-to-many",
@@ -150,18 +85,6 @@
       "otherEntityRelationshipName": "masterUser",
       "relationshipName": "topicInterest",
       "ownerSide": true
-    },
-    {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "postLike",
-      "otherEntityRelationshipName": "userLike",
-      "relationshipName": "myLike"
-    },
-    {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "postComment",
-      "otherEntityRelationshipName": "userComment",
-      "relationshipName": "myComment"
     }
   ],
   "javadoc": "@what?            -> The MasterUser entity.\\n@why?             -> User (mặc định của jhipster) không cho thêm cột (nếu thêm thì sau khó update)\\n@use-to:          -> Lưu thông tin cơ bản của một người dùng\\n@commonly-used-in -> Thường sử dụng khi thao tác với tài khoản trong service trên server\\n\\n@describe      \t  -> Những dữ liệu của tài khoản và thương xuyên sử dụng (trong service) sẽ được lưu ở đây",

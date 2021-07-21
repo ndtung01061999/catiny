@@ -1,13 +1,15 @@
 package com.regitiny.catiny.advance.repository.search.base;
 
-import com.regitiny.catiny.repository.search.FollowPageSearchRepository;
+import com.regitiny.catiny.advance.repository.CommonRepository;
+import com.regitiny.catiny.domain.FollowPage;
+import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 /**
- * Spring Data Elasticsearch repository for the {@link com.regitiny.catiny.domain.FollowPage} entity.
+ * Spring Data Elasticsearch repository for the {@link FollowPage} entity.
  * <p>
  * here contains simple queries same as JPA syntax.
  * if you want to write simple query then you should write to {@link com.regitiny.catiny.advance.repository.search.FollowPageAdvanceSearch}
  */
-public interface FollowPageBaseSearch extends FollowPageSearchRepository
+public interface FollowPageBaseSearch extends BaseSearch<FollowPage>, CommonRepository<FollowPage>, ElasticsearchRepository<FollowPage, Long>
 {
 }

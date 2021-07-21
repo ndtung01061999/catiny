@@ -2,14 +2,14 @@ package com.regitiny.catiny.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.regitiny.catiny.GeneratedByJHipster;
-import java.io.Serializable;
-import java.util.UUID;
-import javax.persistence.*;
-import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
-import org.springframework.data.elasticsearch.annotations.FieldType;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.UUID;
 
 /**
  * @what?            -> The PostLike entity.\n@why?             ->\n@use-to           -> Lưu thông tin về những lượt like của bài đăng\n@commonly-used-in ->\n\n@describe         ->
@@ -38,6 +38,8 @@ public class PostLike implements Serializable {
 
   @JsonIgnoreProperties(
     value = {
+      "historyUpdates",
+      "classInfo",
       "userProfile",
       "accountStatus",
       "deviceStatus",
@@ -67,6 +69,10 @@ public class PostLike implements Serializable {
       "topicInterest",
       "todoList",
       "event",
+      "createdBy",
+      "modifiedBy",
+      "owner",
+      "permissions",
     },
     allowSetters = true
   )
@@ -77,49 +83,15 @@ public class PostLike implements Serializable {
   @ManyToOne
   @JsonIgnoreProperties(
     value = {
-      "user",
-      "myProfile",
-      "myAccountStatus",
-      "myRank",
-      "avatar",
-      "baseInfo",
-      "myPages",
-      "myFiles",
-      "myNotifications",
-      "myFriends",
-      "myFollowUsers",
-      "myFollowGroups",
-      "myFollowPages",
-      "myNewsFeeds",
-      "myTodoLists",
-      "myPosts",
-      "myGroupPosts",
-      "messageGroups",
-      "topicInterests",
-      "myLikes",
-      "myComments",
-    },
-    allowSetters = true
-  )
-  private MasterUser userLike;
-
-  @ManyToOne
-  @JsonIgnoreProperties(
-    value = {
-      "baseInfo",
-      "postComments",
-      "postLikes",
-      "postShareChildren",
-      "groupPost",
-      "pagePost",
-      "postShareParent",
-      "poster",
-      "newsFeeds",
-      "topicInterests",
+      "baseInfo", "comments", "likes", "postShareChildren", "groupPost", "pagePost", "postShareParent", "newsFeeds", "topicInterests",
     },
     allowSetters = true
   )
   private Post post;
+
+  @ManyToOne
+  @JsonIgnoreProperties(value = { "baseInfo", "likes", "commentReplies", "post", "commentParent" }, allowSetters = true)
+  private PostComment postComment;
 
   // jhipster-needle-entity-add-field - JHipster will add fields here
   public Long getId() {
@@ -161,19 +133,6 @@ public class PostLike implements Serializable {
     this.baseInfo = baseInfo;
   }
 
-  public MasterUser getUserLike() {
-    return this.userLike;
-  }
-
-  public PostLike userLike(MasterUser masterUser) {
-    this.setUserLike(masterUser);
-    return this;
-  }
-
-  public void setUserLike(MasterUser masterUser) {
-    this.userLike = masterUser;
-  }
-
   public Post getPost() {
     return this.post;
   }
@@ -185,6 +144,19 @@ public class PostLike implements Serializable {
 
   public void setPost(Post post) {
     this.post = post;
+  }
+
+  public PostComment getPostComment() {
+    return this.postComment;
+  }
+
+  public PostLike postComment(PostComment postComment) {
+    this.setPostComment(postComment);
+    return this;
+  }
+
+  public void setPostComment(PostComment postComment) {
+    this.postComment = postComment;
   }
 
   // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

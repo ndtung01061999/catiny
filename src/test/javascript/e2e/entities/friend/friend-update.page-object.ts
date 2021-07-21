@@ -11,7 +11,6 @@ export default class FriendUpdatePage {
   friendTypeSelect: ElementFinder = element(by.css('select#friend-friendType'));
   baseInfoSelect: ElementFinder = element(by.css('select#friend-baseInfo'));
   friendDetailsSelect: ElementFinder = element(by.css('select#friend-friendDetails'));
-  masterUserSelect: ElementFinder = element(by.css('select#friend-masterUser'));
 
   getPageTitle() {
     return this.pageTitle;
@@ -68,22 +67,6 @@ export default class FriendUpdatePage {
     return this.friendDetailsSelect.element(by.css('option:checked')).getText();
   }
 
-  async masterUserSelectLastOption() {
-    await this.masterUserSelect.all(by.tagName('option')).last().click();
-  }
-
-  async masterUserSelectOption(option) {
-    await this.masterUserSelect.sendKeys(option);
-  }
-
-  getMasterUserSelect() {
-    return this.masterUserSelect;
-  }
-
-  async getMasterUserSelectedOption() {
-    return this.masterUserSelect.element(by.css('option:checked')).getText();
-  }
-
   async save() {
     await this.saveButton.click();
   }
@@ -103,7 +86,6 @@ export default class FriendUpdatePage {
     await this.friendTypeSelectLastOption();
     await this.baseInfoSelectLastOption();
     await this.friendDetailsSelectLastOption();
-    await this.masterUserSelectLastOption();
     await this.save();
     await waitUntilHidden(this.saveButton);
   }

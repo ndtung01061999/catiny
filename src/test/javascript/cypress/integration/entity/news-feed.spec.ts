@@ -102,13 +102,11 @@ describe('NewsFeed e2e test', () => {
       .invoke('val')
       .should('match', new RegExp('ceef04ac-47a9-45ef-b475-8752f9eb6467'));
 
-    cy.get(`[data-cy="score"]`).type('88100').should('have.value', '88100');
+    cy.get(`[data-cy="priorityIndex"]`).type('88100').should('have.value', '88100');
 
     cy.setFieldSelectToLastOfEntity('baseInfo');
 
     cy.setFieldSelectToLastOfEntity('post');
-
-    cy.setFieldSelectToLastOfEntity('masterUser');
 
     cy.get(entityCreateSaveButtonSelector).click({ force: true });
     cy.scrollTo('top', { ensureScrollable: false });

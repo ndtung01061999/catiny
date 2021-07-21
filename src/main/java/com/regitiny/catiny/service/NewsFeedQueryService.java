@@ -99,8 +99,8 @@ public class NewsFeedQueryService extends QueryService<NewsFeed> {
       if (criteria.getUuid() != null) {
         specification = specification.and(buildSpecification(criteria.getUuid(), NewsFeed_.uuid));
       }
-      if (criteria.getScore() != null) {
-        specification = specification.and(buildRangeSpecification(criteria.getScore(), NewsFeed_.score));
+      if (criteria.getPriorityIndex() != null) {
+        specification = specification.and(buildRangeSpecification(criteria.getPriorityIndex(), NewsFeed_.priorityIndex));
       }
       if (criteria.getBaseInfoId() != null) {
         specification =
@@ -111,12 +111,6 @@ public class NewsFeedQueryService extends QueryService<NewsFeed> {
       if (criteria.getPostId() != null) {
         specification =
           specification.and(buildSpecification(criteria.getPostId(), root -> root.join(NewsFeed_.post, JoinType.LEFT).get(Post_.id)));
-      }
-      if (criteria.getMasterUserId() != null) {
-        specification =
-          specification.and(
-            buildSpecification(criteria.getMasterUserId(), root -> root.join(NewsFeed_.masterUser, JoinType.LEFT).get(MasterUser_.id))
-          );
       }
     }
     return specification;

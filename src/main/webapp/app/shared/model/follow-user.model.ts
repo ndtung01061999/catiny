@@ -6,7 +6,6 @@ export interface IFollowUser {
   uuid?: string;
   baseInfo?: IBaseInfo | null;
   followUserDetails?: IMasterUser | null;
-  masterUser?: IMasterUser | null;
 }
 
 export const defaultValue: Readonly<IFollowUser> = {};

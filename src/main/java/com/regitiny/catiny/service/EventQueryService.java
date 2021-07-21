@@ -116,18 +116,6 @@ public class EventQueryService extends QueryService<Event> {
             buildSpecification(criteria.getBaseInfoId(), root -> root.join(Event_.baseInfo, JoinType.LEFT).get(BaseInfo_.id))
           );
       }
-      if (criteria.getOtherImageId() != null) {
-        specification =
-          specification.and(
-            buildSpecification(criteria.getOtherImageId(), root -> root.join(Event_.otherImages, JoinType.LEFT).get(Image_.id))
-          );
-      }
-      if (criteria.getOtherVideoId() != null) {
-        specification =
-          specification.and(
-            buildSpecification(criteria.getOtherVideoId(), root -> root.join(Event_.otherVideos, JoinType.LEFT).get(Video_.id))
-          );
-      }
     }
     return specification;
   }

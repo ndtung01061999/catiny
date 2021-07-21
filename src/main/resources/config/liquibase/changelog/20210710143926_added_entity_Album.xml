@@ -17,8 +17,14 @@
             <column name="uuid" type="${uuidType}" remarks="uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)">
                 <constraints nullable="false" unique="true" uniqueConstraintName="ux_album__uuid" />
             </column>
-            <column name="name" type="varchar(255)">
+            <column name="name" type="varchar(255)" remarks="name           : tên của album">
                 <constraints nullable="false" />
+            </column>
+            <column name="note" type="varchar(255)" remarks="note           : trú thích của album (ví dụ album đại học)">
+                <constraints nullable="true" />
+            </column>
+            <column name="avatar" type="${clobType}" remarks="avatar         : @type Json -&gt; ảnh đại diện của Album">
+                <constraints nullable="true" />
             </column>
             <column name="base_info_id" type="bigint">
                 <constraints nullable="true" unique="true" uniqueConstraintName="ux_album__base_info_id" />
@@ -59,6 +65,8 @@
             <column name="id" type="numeric"/>
             <column name="uuid" type="string"/>
             <column name="name" type="string"/>
+            <column name="note" type="string"/>
+            <column name="avatar" type="clob"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

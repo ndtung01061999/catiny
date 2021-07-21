@@ -23,9 +23,6 @@
             <column name="base_info_id" type="bigint">
                 <constraints nullable="true" unique="true" uniqueConstraintName="ux_post_comment__base_info_id" />
             </column>
-            <column name="user_comment_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
             <column name="post_id" type="bigint">
                 <constraints nullable="true" />
             </column>

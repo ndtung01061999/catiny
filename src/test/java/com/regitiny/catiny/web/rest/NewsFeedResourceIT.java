@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.regitiny.catiny.GeneratedByJHipster;
 import com.regitiny.catiny.IntegrationTest;
 import com.regitiny.catiny.domain.BaseInfo;
-import com.regitiny.catiny.domain.MasterUser;
 import com.regitiny.catiny.domain.NewsFeed;
 import com.regitiny.catiny.domain.Post;
 import com.regitiny.catiny.repository.NewsFeedRepository;
@@ -51,9 +50,9 @@ class NewsFeedResourceIT {
   private static final UUID DEFAULT_UUID = UUID.randomUUID();
   private static final UUID UPDATED_UUID = UUID.randomUUID();
 
-  private static final Double DEFAULT_SCORE = 1D;
-  private static final Double UPDATED_SCORE = 2D;
-  private static final Double SMALLER_SCORE = 1D - 1D;
+  private static final Long DEFAULT_PRIORITY_INDEX = 1L;
+  private static final Long UPDATED_PRIORITY_INDEX = 2L;
+  private static final Long SMALLER_PRIORITY_INDEX = 1L - 1L;
 
   private static final String ENTITY_API_URL = "/api/news-feeds";
   private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -91,7 +90,7 @@ class NewsFeedResourceIT {
    * if they test an entity which requires the current entity.
    */
   public static NewsFeed createEntity(EntityManager em) {
-    NewsFeed newsFeed = new NewsFeed().uuid(DEFAULT_UUID).score(DEFAULT_SCORE);
+    NewsFeed newsFeed = new NewsFeed().uuid(DEFAULT_UUID).priorityIndex(DEFAULT_PRIORITY_INDEX);
     return newsFeed;
   }
 
@@ -102,7 +101,7 @@ class NewsFeedResourceIT {
    * if they test an entity which requires the current entity.
    */
   public static NewsFeed createUpdatedEntity(EntityManager em) {
-    NewsFeed newsFeed = new NewsFeed().uuid(UPDATED_UUID).score(UPDATED_SCORE);
+    NewsFeed newsFeed = new NewsFeed().uuid(UPDATED_UUID).priorityIndex(UPDATED_PRIORITY_INDEX);
     return newsFeed;
   }
 
@@ -126,7 +125,7 @@ class NewsFeedResourceIT {
     assertThat(newsFeedList).hasSize(databaseSizeBeforeCreate + 1);
     NewsFeed testNewsFeed = newsFeedList.get(newsFeedList.size() - 1);
     assertThat(testNewsFeed.getUuid()).isEqualTo(DEFAULT_UUID);
-    assertThat(testNewsFeed.getScore()).isEqualTo(DEFAULT_SCORE);
+    assertThat(testNewsFeed.getPriorityIndex()).isEqualTo(DEFAULT_PRIORITY_INDEX);
 
     // Validate the NewsFeed in Elasticsearch
     verify(mockNewsFeedSearchRepository, times(1)).save(testNewsFeed);
@@ -185,7 +184,7 @@ class NewsFeedResourceIT {
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
       .andExpect(jsonPath("$.[*].id").value(hasItem(newsFeed.getId().intValue())))
       .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
-      .andExpect(jsonPath("$.[*].score").value(hasItem(DEFAULT_SCORE.doubleValue())));
+      .andExpect(jsonPath("$.[*].priorityIndex").value(hasItem(DEFAULT_PRIORITY_INDEX.intValue())));
   }
 
   @Test
@@ -201,7 +200,7 @@ class NewsFeedResourceIT {
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
       .andExpect(jsonPath("$.id").value(newsFeed.getId().intValue()))
       .andExpect(jsonPath("$.uuid").value(DEFAULT_UUID.toString()))
-      .andExpect(jsonPath("$.score").value(DEFAULT_SCORE.doubleValue()));
+      .andExpect(jsonPath("$.priorityIndex").value(DEFAULT_PRIORITY_INDEX.intValue()));
   }
 
   @Test
@@ -276,106 +275,106 @@ class NewsFeedResourceIT {
 
   @Test
   @Transactional
-  void getAllNewsFeedsByScoreIsEqualToSomething() throws Exception {
+  void getAllNewsFeedsByPriorityIndexIsEqualToSomething() throws Exception {
     // Initialize the database
     newsFeedRepository.saveAndFlush(newsFeed);
 
-    // Get all the newsFeedList where score equals to DEFAULT_SCORE
-    defaultNewsFeedShouldBeFound("score.equals=" + DEFAULT_SCORE);
+    // Get all the newsFeedList where priorityIndex equals to DEFAULT_PRIORITY_INDEX
+    defaultNewsFeedShouldBeFound("priorityIndex.equals=" + DEFAULT_PRIORITY_INDEX);
 
-    // Get all the newsFeedList where score equals to UPDATED_SCORE
-    defaultNewsFeedShouldNotBeFound("score.equals=" + UPDATED_SCORE);
+    // Get all the newsFeedList where priorityIndex equals to UPDATED_PRIORITY_INDEX
+    defaultNewsFeedShouldNotBeFound("priorityIndex.equals=" + UPDATED_PRIORITY_INDEX);
   }
 
   @Test
   @Transactional
-  void getAllNewsFeedsByScoreIsNotEqualToSomething() throws Exception {
+  void getAllNewsFeedsByPriorityIndexIsNotEqualToSomething() throws Exception {
     // Initialize the database
     newsFeedRepository.saveAndFlush(newsFeed);
 
-    // Get all the newsFeedList where score not equals to DEFAULT_SCORE
-    defaultNewsFeedShouldNotBeFound("score.notEquals=" + DEFAULT_SCORE);
+    // Get all the newsFeedList where priorityIndex not equals to DEFAULT_PRIORITY_INDEX
+    defaultNewsFeedShouldNotBeFound("priorityIndex.notEquals=" + DEFAULT_PRIORITY_INDEX);
 
-    // Get all the newsFeedList where score not equals to UPDATED_SCORE
-    defaultNewsFeedShouldBeFound("score.notEquals=" + UPDATED_SCORE);
+    // Get all the newsFeedList where priorityIndex not equals to UPDATED_PRIORITY_INDEX
+    defaultNewsFeedShouldBeFound("priorityIndex.notEquals=" + UPDATED_PRIORITY_INDEX);
   }
 
   @Test
   @Transactional
-  void getAllNewsFeedsByScoreIsInShouldWork() throws Exception {
+  void getAllNewsFeedsByPriorityIndexIsInShouldWork() throws Exception {
     // Initialize the database
     newsFeedRepository.saveAndFlush(newsFeed);
 
-    // Get all the newsFeedList where score in DEFAULT_SCORE or UPDATED_SCORE
-    defaultNewsFeedShouldBeFound("score.in=" + DEFAULT_SCORE + "," + UPDATED_SCORE);
+    // Get all the newsFeedList where priorityIndex in DEFAULT_PRIORITY_INDEX or UPDATED_PRIORITY_INDEX
+    defaultNewsFeedShouldBeFound("priorityIndex.in=" + DEFAULT_PRIORITY_INDEX + "," + UPDATED_PRIORITY_INDEX);
 
-    // Get all the newsFeedList where score equals to UPDATED_SCORE
-    defaultNewsFeedShouldNotBeFound("score.in=" + UPDATED_SCORE);
+    // Get all the newsFeedList where priorityIndex equals to UPDATED_PRIORITY_INDEX
+    defaultNewsFeedShouldNotBeFound("priorityIndex.in=" + UPDATED_PRIORITY_INDEX);
   }
 
   @Test
   @Transactional
-  void getAllNewsFeedsByScoreIsNullOrNotNull() throws Exception {
+  void getAllNewsFeedsByPriorityIndexIsNullOrNotNull() throws Exception {
     // Initialize the database
     newsFeedRepository.saveAndFlush(newsFeed);
 
-    // Get all the newsFeedList where score is not null
-    defaultNewsFeedShouldBeFound("score.specified=true");
+    // Get all the newsFeedList where priorityIndex is not null
+    defaultNewsFeedShouldBeFound("priorityIndex.specified=true");
 
-    // Get all the newsFeedList where score is null
-    defaultNewsFeedShouldNotBeFound("score.specified=false");
+    // Get all the newsFeedList where priorityIndex is null
+    defaultNewsFeedShouldNotBeFound("priorityIndex.specified=false");
   }
 
   @Test
   @Transactional
-  void getAllNewsFeedsByScoreIsGreaterThanOrEqualToSomething() throws Exception {
+  void getAllNewsFeedsByPriorityIndexIsGreaterThanOrEqualToSomething() throws Exception {
     // Initialize the database
     newsFeedRepository.saveAndFlush(newsFeed);
 
-    // Get all the newsFeedList where score is greater than or equal to DEFAULT_SCORE
-    defaultNewsFeedShouldBeFound("score.greaterThanOrEqual=" + DEFAULT_SCORE);
+    // Get all the newsFeedList where priorityIndex is greater than or equal to DEFAULT_PRIORITY_INDEX
+    defaultNewsFeedShouldBeFound("priorityIndex.greaterThanOrEqual=" + DEFAULT_PRIORITY_INDEX);
 
-    // Get all the newsFeedList where score is greater than or equal to UPDATED_SCORE
-    defaultNewsFeedShouldNotBeFound("score.greaterThanOrEqual=" + UPDATED_SCORE);
+    // Get all the newsFeedList where priorityIndex is greater than or equal to UPDATED_PRIORITY_INDEX
+    defaultNewsFeedShouldNotBeFound("priorityIndex.greaterThanOrEqual=" + UPDATED_PRIORITY_INDEX);
   }
 
   @Test
   @Transactional
-  void getAllNewsFeedsByScoreIsLessThanOrEqualToSomething() throws Exception {
+  void getAllNewsFeedsByPriorityIndexIsLessThanOrEqualToSomething() throws Exception {
     // Initialize the database
     newsFeedRepository.saveAndFlush(newsFeed);
 
-    // Get all the newsFeedList where score is less than or equal to DEFAULT_SCORE
-    defaultNewsFeedShouldBeFound("score.lessThanOrEqual=" + DEFAULT_SCORE);
+    // Get all the newsFeedList where priorityIndex is less than or equal to DEFAULT_PRIORITY_INDEX
+    defaultNewsFeedShouldBeFound("priorityIndex.lessThanOrEqual=" + DEFAULT_PRIORITY_INDEX);
 
-    // Get all the newsFeedList where score is less than or equal to SMALLER_SCORE
-    defaultNewsFeedShouldNotBeFound("score.lessThanOrEqual=" + SMALLER_SCORE);
+    // Get all the newsFeedList where priorityIndex is less than or equal to SMALLER_PRIORITY_INDEX
+    defaultNewsFeedShouldNotBeFound("priorityIndex.lessThanOrEqual=" + SMALLER_PRIORITY_INDEX);
   }
 
   @Test
   @Transactional
-  void getAllNewsFeedsByScoreIsLessThanSomething() throws Exception {
+  void getAllNewsFeedsByPriorityIndexIsLessThanSomething() throws Exception {
     // Initialize the database
     newsFeedRepository.saveAndFlush(newsFeed);
 
-    // Get all the newsFeedList where score is less than DEFAULT_SCORE
-    defaultNewsFeedShouldNotBeFound("score.lessThan=" + DEFAULT_SCORE);
+    // Get all the newsFeedList where priorityIndex is less than DEFAULT_PRIORITY_INDEX
+    defaultNewsFeedShouldNotBeFound("priorityIndex.lessThan=" + DEFAULT_PRIORITY_INDEX);
 
-    // Get all the newsFeedList where score is less than UPDATED_SCORE
-    defaultNewsFeedShouldBeFound("score.lessThan=" + UPDATED_SCORE);
+    // Get all the newsFeedList where priorityIndex is less than UPDATED_PRIORITY_INDEX
+    defaultNewsFeedShouldBeFound("priorityIndex.lessThan=" + UPDATED_PRIORITY_INDEX);
   }
 
   @Test
   @Transactional
-  void getAllNewsFeedsByScoreIsGreaterThanSomething() throws Exception {
+  void getAllNewsFeedsByPriorityIndexIsGreaterThanSomething() throws Exception {
     // Initialize the database
     newsFeedRepository.saveAndFlush(newsFeed);
 
-    // Get all the newsFeedList where score is greater than DEFAULT_SCORE
-    defaultNewsFeedShouldNotBeFound("score.greaterThan=" + DEFAULT_SCORE);
+    // Get all the newsFeedList where priorityIndex is greater than DEFAULT_PRIORITY_INDEX
+    defaultNewsFeedShouldNotBeFound("priorityIndex.greaterThan=" + DEFAULT_PRIORITY_INDEX);
 
-    // Get all the newsFeedList where score is greater than SMALLER_SCORE
-    defaultNewsFeedShouldBeFound("score.greaterThan=" + SMALLER_SCORE);
+    // Get all the newsFeedList where priorityIndex is greater than SMALLER_PRIORITY_INDEX
+    defaultNewsFeedShouldBeFound("priorityIndex.greaterThan=" + SMALLER_PRIORITY_INDEX);
   }
 
   @Test
@@ -416,25 +415,6 @@ class NewsFeedResourceIT {
     defaultNewsFeedShouldNotBeFound("postId.equals=" + (postId + 1));
   }
 
-  @Test
-  @Transactional
-  void getAllNewsFeedsByMasterUserIsEqualToSomething() throws Exception {
-    // Initialize the database
-    newsFeedRepository.saveAndFlush(newsFeed);
-    MasterUser masterUser = MasterUserResourceIT.createEntity(em);
-    em.persist(masterUser);
-    em.flush();
-    newsFeed.setMasterUser(masterUser);
-    newsFeedRepository.saveAndFlush(newsFeed);
-    Long masterUserId = masterUser.getId();
-
-    // Get all the newsFeedList where masterUser equals to masterUserId
-    defaultNewsFeedShouldBeFound("masterUserId.equals=" + masterUserId);
-
-    // Get all the newsFeedList where masterUser equals to (masterUserId + 1)
-    defaultNewsFeedShouldNotBeFound("masterUserId.equals=" + (masterUserId + 1));
-  }
-
   /**
    * Executes the search, and checks that the default entity is returned.
    */
@@ -445,7 +425,7 @@ class NewsFeedResourceIT {
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
       .andExpect(jsonPath("$.[*].id").value(hasItem(newsFeed.getId().intValue())))
       .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
-      .andExpect(jsonPath("$.[*].score").value(hasItem(DEFAULT_SCORE.doubleValue())));
+      .andExpect(jsonPath("$.[*].priorityIndex").value(hasItem(DEFAULT_PRIORITY_INDEX.intValue())));
 
     // Check, that the count call also returns 1
     restNewsFeedMockMvc
@@ -493,7 +473,7 @@ class NewsFeedResourceIT {
     NewsFeed updatedNewsFeed = newsFeedRepository.findById(newsFeed.getId()).get();
     // Disconnect from session so that the updates on updatedNewsFeed are not directly saved in db
     em.detach(updatedNewsFeed);
-    updatedNewsFeed.uuid(UPDATED_UUID).score(UPDATED_SCORE);
+    updatedNewsFeed.uuid(UPDATED_UUID).priorityIndex(UPDATED_PRIORITY_INDEX);
     NewsFeedDTO newsFeedDTO = newsFeedMapper.toDto(updatedNewsFeed);
 
     restNewsFeedMockMvc
@@ -509,7 +489,7 @@ class NewsFeedResourceIT {
     assertThat(newsFeedList).hasSize(databaseSizeBeforeUpdate);
     NewsFeed testNewsFeed = newsFeedList.get(newsFeedList.size() - 1);
     assertThat(testNewsFeed.getUuid()).isEqualTo(UPDATED_UUID);
-    assertThat(testNewsFeed.getScore()).isEqualTo(UPDATED_SCORE);
+    assertThat(testNewsFeed.getPriorityIndex()).isEqualTo(UPDATED_PRIORITY_INDEX);
 
     // Validate the NewsFeed in Elasticsearch
     verify(mockNewsFeedSearchRepository).save(testNewsFeed);
@@ -616,7 +596,7 @@ class NewsFeedResourceIT {
     assertThat(newsFeedList).hasSize(databaseSizeBeforeUpdate);
     NewsFeed testNewsFeed = newsFeedList.get(newsFeedList.size() - 1);
     assertThat(testNewsFeed.getUuid()).isEqualTo(UPDATED_UUID);
-    assertThat(testNewsFeed.getScore()).isEqualTo(DEFAULT_SCORE);
+    assertThat(testNewsFeed.getPriorityIndex()).isEqualTo(DEFAULT_PRIORITY_INDEX);
   }
 
   @Test
@@ -631,7 +611,7 @@ class NewsFeedResourceIT {
     NewsFeed partialUpdatedNewsFeed = new NewsFeed();
     partialUpdatedNewsFeed.setId(newsFeed.getId());
 
-    partialUpdatedNewsFeed.uuid(UPDATED_UUID).score(UPDATED_SCORE);
+    partialUpdatedNewsFeed.uuid(UPDATED_UUID).priorityIndex(UPDATED_PRIORITY_INDEX);
 
     restNewsFeedMockMvc
       .perform(
@@ -646,7 +626,7 @@ class NewsFeedResourceIT {
     assertThat(newsFeedList).hasSize(databaseSizeBeforeUpdate);
     NewsFeed testNewsFeed = newsFeedList.get(newsFeedList.size() - 1);
     assertThat(testNewsFeed.getUuid()).isEqualTo(UPDATED_UUID);
-    assertThat(testNewsFeed.getScore()).isEqualTo(UPDATED_SCORE);
+    assertThat(testNewsFeed.getPriorityIndex()).isEqualTo(UPDATED_PRIORITY_INDEX);
   }
 
   @Test
@@ -760,6 +740,6 @@ class NewsFeedResourceIT {
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
       .andExpect(jsonPath("$.[*].id").value(hasItem(newsFeed.getId().intValue())))
       .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
-      .andExpect(jsonPath("$.[*].score").value(hasItem(DEFAULT_SCORE.doubleValue())));
+      .andExpect(jsonPath("$.[*].priorityIndex").value(hasItem(DEFAULT_PRIORITY_INDEX.intValue())));
   }
 }

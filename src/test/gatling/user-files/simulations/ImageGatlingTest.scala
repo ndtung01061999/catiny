@@ -73,6 +73,12 @@ class ImageGatlingTest extends Simulation {
             .body(StringBody("""{
                 "uuid":null
                 , "name":"SAMPLE_TEXT"
+                , "width":"0"
+                , "height":"0"
+                , "quality":"0"
+                , "pixelSize":"0"
+                , "priorityIndex":"0"
+                , "dataSize":"0"
                 }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_image_url"))).exitHereIfFailed

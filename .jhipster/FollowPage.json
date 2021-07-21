@@ -21,12 +21,6 @@
       "otherEntityName": "pagePost",
       "otherEntityRelationshipName": "followPage",
       "relationshipName": "followPageDetails"
-    },
-    {
-      "relationshipType": "many-to-one",
-      "otherEntityName": "masterUser",
-      "otherEntityRelationshipName": "myFollowPage",
-      "relationshipName": "masterUser"
     }
   ],
   "javadoc": "@what?            -> The FollowPage entity.\\n@why?             ->\\n@use-to           -> Quản lý các trang mà người dùng đăng ký theo dõi\\n@commonly-used-in -> Chủ đề mà người dùng theo dõi\\n\\n@describe         ->",

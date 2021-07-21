@@ -111,6 +111,19 @@ export const EventUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 <Translate contentKey="catinyApp.event.help.uuid" />
               </UncontrolledTooltip>
               <ValidatedField label={translate('catinyApp.event.title')} id="event-title" name="title" data-cy="title" type="text" />
+              <UncontrolledTooltip target="titleLabel">
+                <Translate contentKey="catinyApp.event.help.title" />
+              </UncontrolledTooltip>
+              <ValidatedField
+                label={translate('catinyApp.event.avatar')}
+                id="event-avatar"
+                name="avatar"
+                data-cy="avatar"
+                type="textarea"
+              />
+              <UncontrolledTooltip target="avatarLabel">
+                <Translate contentKey="catinyApp.event.help.avatar" />
+              </UncontrolledTooltip>
               <ValidatedField
                 label={translate('catinyApp.event.content')}
                 id="event-content"
@@ -118,12 +131,18 @@ export const EventUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 data-cy="content"
                 type="textarea"
               />
+              <UncontrolledTooltip target="contentLabel">
+                <Translate contentKey="catinyApp.event.help.content" />
+              </UncontrolledTooltip>
               <ValidatedField label={translate('catinyApp.event.type')} id="event-type" name="type" data-cy="type" type="select">
                 <option value="DAY">{translate('catinyApp.EventType.DAY')}</option>
                 <option value="MONTH">{translate('catinyApp.EventType.MONTH')}</option>
                 <option value="YEAR">{translate('catinyApp.EventType.YEAR')}</option>
                 <option value="ONLY_ONE">{translate('catinyApp.EventType.ONLY_ONE')}</option>
               </ValidatedField>
+              <UncontrolledTooltip target="typeLabel">
+                <Translate contentKey="catinyApp.event.help.type" />
+              </UncontrolledTooltip>
               <ValidatedField
                 label={translate('catinyApp.event.description')}
                 id="event-description"
@@ -131,6 +150,9 @@ export const EventUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 data-cy="description"
                 type="textarea"
               />
+              <UncontrolledTooltip target="descriptionLabel">
+                <Translate contentKey="catinyApp.event.help.description" />
+              </UncontrolledTooltip>
               <ValidatedField
                 label={translate('catinyApp.event.startTime')}
                 id="event-startTime"
@@ -139,6 +161,9 @@ export const EventUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 type="datetime-local"
                 placeholder="YYYY-MM-DD HH:mm"
               />
+              <UncontrolledTooltip target="startTimeLabel">
+                <Translate contentKey="catinyApp.event.help.startTime" />
+              </UncontrolledTooltip>
               <ValidatedField
                 label={translate('catinyApp.event.endTime')}
                 id="event-endTime"
@@ -147,6 +172,9 @@ export const EventUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 type="datetime-local"
                 placeholder="YYYY-MM-DD HH:mm"
               />
+              <UncontrolledTooltip target="endTimeLabel">
+                <Translate contentKey="catinyApp.event.help.endTime" />
+              </UncontrolledTooltip>
               <ValidatedField
                 label={translate('catinyApp.event.tagLine')}
                 id="event-tagLine"
@@ -154,6 +182,29 @@ export const EventUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 data-cy="tagLine"
                 type="text"
               />
+              <UncontrolledTooltip target="tagLineLabel">
+                <Translate contentKey="catinyApp.event.help.tagLine" />
+              </UncontrolledTooltip>
+              <ValidatedField
+                label={translate('catinyApp.event.imageCollection')}
+                id="event-imageCollection"
+                name="imageCollection"
+                data-cy="imageCollection"
+                type="textarea"
+              />
+              <UncontrolledTooltip target="imageCollectionLabel">
+                <Translate contentKey="catinyApp.event.help.imageCollection" />
+              </UncontrolledTooltip>
+              <ValidatedField
+                label={translate('catinyApp.event.videoCollection')}
+                id="event-videoCollection"
+                name="videoCollection"
+                data-cy="videoCollection"
+                type="textarea"
+              />
+              <UncontrolledTooltip target="videoCollectionLabel">
+                <Translate contentKey="catinyApp.event.help.videoCollection" />
+              </UncontrolledTooltip>
               <ValidatedField
                 id="event-baseInfo"
                 name="baseInfoId"

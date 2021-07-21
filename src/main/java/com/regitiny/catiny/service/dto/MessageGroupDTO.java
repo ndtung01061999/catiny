@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
+import javax.persistence.Lob;
 import javax.validation.constraints.*;
 
 /**
@@ -34,6 +35,13 @@ public class MessageGroupDTO implements Serializable {
    */
   @ApiModelProperty(value = "groupName")
   private String groupName;
+
+  /**
+   * avatar : @type Json -> ảnh đại diện của MessageGroup
+   */
+  @ApiModelProperty(value = "avatar : @type Json -> ảnh đại diện của MessageGroup")
+  @Lob
+  private String avatar;
 
   /**
    * addBy
@@ -65,6 +73,14 @@ public class MessageGroupDTO implements Serializable {
 
   public void setGroupName(String groupName) {
     this.groupName = groupName;
+  }
+
+  public String getAvatar() {
+    return avatar;
+  }
+
+  public void setAvatar(String avatar) {
+    this.avatar = avatar;
   }
 
   public String getAddBy() {
@@ -111,6 +127,7 @@ public class MessageGroupDTO implements Serializable {
             "id=" + getId() +
             ", uuid='" + getUuid() + "'" +
             ", groupName='" + getGroupName() + "'" +
+            ", avatar='" + getAvatar() + "'" +
             ", addBy='" + getAddBy() + "'" +
             ", baseInfo=" + getBaseInfo() +
             "}";

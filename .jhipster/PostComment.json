@@ -23,20 +23,20 @@
     },
     {
       "relationshipType": "one-to-many",
+      "otherEntityName": "postLike",
+      "otherEntityRelationshipName": "postComment",
+      "relationshipName": "like"
+    },
+    {
+      "relationshipType": "one-to-many",
       "otherEntityName": "postComment",
       "otherEntityRelationshipName": "commentParent",
       "relationshipName": "commentReply"
     },
     {
       "relationshipType": "many-to-one",
-      "otherEntityName": "masterUser",
-      "otherEntityRelationshipName": "myComment",
-      "relationshipName": "userComment"
-    },
-    {
-      "relationshipType": "many-to-one",
       "otherEntityName": "post",
-      "otherEntityRelationshipName": "postComment",
+      "otherEntityRelationshipName": "comment",
       "relationshipName": "post"
     },
     {

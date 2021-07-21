@@ -6,8 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IBaseInfo } from 'app/shared/model/base-info.model';
 import { getEntities as getBaseInfos } from 'app/entities/base-info/base-info.reducer';
-import { IMasterUser } from 'app/shared/model/master-user.model';
-import { getEntities as getMasterUsers } from 'app/entities/master-user/master-user.reducer';
 import { IMessageGroup } from 'app/shared/model/message-group.model';
 import { getEntities as getMessageGroups } from 'app/entities/message-group/message-group.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './message-content.reducer';
@@ -22,7 +20,6 @@ export const MessageContentUpdate = (props: RouteComponentProps<{ id: string }>)
   const [isNew] = useState(!props.match.params || !props.match.params.id);
 
   const baseInfos = useAppSelector(state => state.baseInfo.entities);
-  const masterUsers = useAppSelector(state => state.masterUser.entities);
   const messageGroups = useAppSelector(state => state.messageGroup.entities);
   const messageContentEntity = useAppSelector(state => state.messageContent.entity);
   const loading = useAppSelector(state => state.messageContent.loading);
@@ -39,7 +36,6 @@ export const MessageContentUpdate = (props: RouteComponentProps<{ id: string }>)
     }
 
     dispatch(getBaseInfos({}));
-    dispatch(getMasterUsers({}));
     dispatch(getMessageGroups({}));
   }, []);
 
@@ -54,7 +50,6 @@ export const MessageContentUpdate = (props: RouteComponentProps<{ id: string }>)
       ...messageContentEntity,
       ...values,
       baseInfo: baseInfos.find(it => it.id.toString() === values.baseInfoId.toString()),
-      sender: masterUsers.find(it => it.id.toString() === values.senderId.toString()),
       messageGroup: messageGroups.find(it => it.id.toString() === values.messageGroupId.toString()),
     };
 
@@ -71,7 +66,6 @@ export const MessageContentUpdate = (props: RouteComponentProps<{ id: string }>)
       : {
           ...messageContentEntity,
           baseInfoId: messageContentEntity?.baseInfo?.id,
-          senderId: messageContentEntity?.sender?.id,
           messageGroupId: messageContentEntity?.messageGroup?.id,
         };
 
@@ -114,12 +108,35 @@ export const MessageContentUpdate = (props: RouteComponentProps<{ id: string }>)
                 <Translate contentKey="catinyApp.messageContent.help.uuid" />
               </UncontrolledTooltip>
               <ValidatedField
+                label={translate('catinyApp.messageContent.senderName')}
+                id="message-content-senderName"
+                name="senderName"
+                data-cy="senderName"
+                type="text"
+              />
+              <UncontrolledTooltip target="senderNameLabel">
+                <Translate contentKey="catinyApp.messageContent.help.senderName" />
+              </UncontrolledTooltip>
+              <ValidatedField
+                label={translate('catinyApp.messageContent.attach')}
+                id="message-content-attach"
+                name="attach"
+                data-cy="attach"
+                type="textarea"
+              />
+              <UncontrolledTooltip target="attachLabel">
+                <Translate contentKey="catinyApp.messageContent.help.attach" />
+              </UncontrolledTooltip>
+              <ValidatedField
                 label={translate('catinyApp.messageContent.content')}
                 id="message-content-content"
                 name="content"
                 data-cy="content"
                 type="textarea"
               />
+              <UncontrolledTooltip target="contentLabel">
+                <Translate contentKey="catinyApp.messageContent.help.content" />
+              </UncontrolledTooltip>
               <ValidatedField
                 label={translate('catinyApp.messageContent.status')}
                 id="message-content-status"
@@ -150,22 +167,6 @@ export const MessageContentUpdate = (props: RouteComponentProps<{ id: string }>)
                 <option value="" key="0" />
                 {baseInfos
                   ? baseInfos.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField
-                id="message-content-sender"
-                name="senderId"
-                data-cy="sender"
-                label={translate('catinyApp.messageContent.sender')}
-                type="select"
-              >
-                <option value="" key="0" />
-                {masterUsers
-                  ? masterUsers.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

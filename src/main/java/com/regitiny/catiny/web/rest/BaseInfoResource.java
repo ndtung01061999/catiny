@@ -1,7 +1,5 @@
 package com.regitiny.catiny.web.rest;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
-
 import com.regitiny.catiny.GeneratedByJHipster;
 import com.regitiny.catiny.repository.BaseInfoRepository;
 import com.regitiny.catiny.service.BaseInfoQueryService;
@@ -9,25 +7,26 @@ import com.regitiny.catiny.service.BaseInfoService;
 import com.regitiny.catiny.service.criteria.BaseInfoCriteria;
 import com.regitiny.catiny.service.dto.BaseInfoDTO;
 import com.regitiny.catiny.web.rest.errors.BadRequestAlertException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * REST controller for managing {@link com.regitiny.catiny.domain.BaseInfo}.
@@ -68,9 +67,11 @@ public class BaseInfoResource {
    * @throws URISyntaxException if the Location URI syntax is incorrect.
    */
   @PostMapping("/base-infos")
-  public ResponseEntity<BaseInfoDTO> createBaseInfo(@RequestBody BaseInfoDTO baseInfoDTO) throws URISyntaxException {
+  public ResponseEntity<BaseInfoDTO> createBaseInfo(@Valid @RequestBody BaseInfoDTO baseInfoDTO) throws URISyntaxException
+  {
     log.debug("REST request to save BaseInfo : {}", baseInfoDTO);
-    if (baseInfoDTO.getId() != null) {
+    if (baseInfoDTO.getId() != null)
+    {
       throw new BadRequestAlertException("A new baseInfo cannot already have an ID", ENTITY_NAME, "idexists");
     }
     BaseInfoDTO result = baseInfoService.save(baseInfoDTO);
@@ -93,7 +94,7 @@ public class BaseInfoResource {
   @PutMapping("/base-infos/{id}")
   public ResponseEntity<BaseInfoDTO> updateBaseInfo(
     @PathVariable(value = "id", required = false) final Long id,
-    @RequestBody BaseInfoDTO baseInfoDTO
+    @Valid @RequestBody BaseInfoDTO baseInfoDTO
   ) throws URISyntaxException {
     log.debug("REST request to update BaseInfo : {}, {}", id, baseInfoDTO);
     if (baseInfoDTO.getId() == null) {
@@ -128,7 +129,7 @@ public class BaseInfoResource {
   @PatchMapping(value = "/base-infos/{id}", consumes = "application/merge-patch+json")
   public ResponseEntity<BaseInfoDTO> partialUpdateBaseInfo(
     @PathVariable(value = "id", required = false) final Long id,
-    @RequestBody BaseInfoDTO baseInfoDTO
+    @NotNull @RequestBody BaseInfoDTO baseInfoDTO
   ) throws URISyntaxException {
     log.debug("REST request to partial update BaseInfo partially : {}, {}", id, baseInfoDTO);
     if (baseInfoDTO.getId() == null) {

@@ -10,8 +10,6 @@ import { IBaseInfo } from 'app/shared/model/base-info.model';
 import { getEntities as getBaseInfos } from 'app/entities/base-info/base-info.reducer';
 import { ITopicInterest } from 'app/shared/model/topic-interest.model';
 import { getEntities as getTopicInterests } from 'app/entities/topic-interest/topic-interest.reducer';
-import { IMasterUser } from 'app/shared/model/master-user.model';
-import { getEntities as getMasterUsers } from 'app/entities/master-user/master-user.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './group-post.reducer';
 import { IGroupPost } from 'app/shared/model/group-post.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -26,7 +24,6 @@ export const GroupPostUpdate = (props: RouteComponentProps<{ id: string }>) => {
   const groupProfiles = useAppSelector(state => state.groupProfile.entities);
   const baseInfos = useAppSelector(state => state.baseInfo.entities);
   const topicInterests = useAppSelector(state => state.topicInterest.entities);
-  const masterUsers = useAppSelector(state => state.masterUser.entities);
   const groupPostEntity = useAppSelector(state => state.groupPost.entity);
   const loading = useAppSelector(state => state.groupPost.loading);
   const updating = useAppSelector(state => state.groupPost.updating);
@@ -44,7 +41,6 @@ export const GroupPostUpdate = (props: RouteComponentProps<{ id: string }>) => {
     dispatch(getGroupProfiles({}));
     dispatch(getBaseInfos({}));
     dispatch(getTopicInterests({}));
-    dispatch(getMasterUsers({}));
   }, []);
 
   useEffect(() => {
@@ -127,6 +123,16 @@ export const GroupPostUpdate = (props: RouteComponentProps<{ id: string }>) => {
               />
               <UncontrolledTooltip target="nameLabel">
                 <Translate contentKey="catinyApp.groupPost.help.name" />
+              </UncontrolledTooltip>
+              <ValidatedField
+                label={translate('catinyApp.groupPost.avatar')}
+                id="group-post-avatar"
+                name="avatar"
+                data-cy="avatar"
+                type="textarea"
+              />
+              <UncontrolledTooltip target="avatarLabel">
+                <Translate contentKey="catinyApp.groupPost.help.avatar" />
               </UncontrolledTooltip>
               <ValidatedField
                 label={translate('catinyApp.groupPost.quickInfo')}

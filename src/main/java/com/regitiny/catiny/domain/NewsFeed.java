@@ -2,14 +2,14 @@ package com.regitiny.catiny.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.regitiny.catiny.GeneratedByJHipster;
-import java.io.Serializable;
-import java.util.UUID;
-import javax.persistence.*;
-import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
-import org.springframework.data.elasticsearch.annotations.FieldType;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.UUID;
 
 /**
  * @what?            -> The NewsFeed entity.\n@why?             -> người dùng mà xem trực tiếp các Post thì một số bài đăng sẽ không phù hợp dễ gây chán khi xem\n@use-to           -> Ở đây chứa thông tin của những Post hiển thị cho người dùng xem\n@commonly-used-in -> Được sử dụng trong phần hiển thị các bài đăng trên news feed\n\n@describe         -> trong phần bản tin thay vì hiển thị trực tiếp các Post cho người dùng xem\nta sẽ tính toán độ phù hợp và add vào bảng này sau đó cho người dùng xem
@@ -36,11 +36,16 @@ public class NewsFeed implements Serializable {
   @Column(name = "uuid", length = 36, nullable = false, unique = true)
   private UUID uuid;
 
-  @Column(name = "score")
-  private Double score;
+  /**
+   * priorityIndex  : chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)
+   */
+  @Column(name = "priority_index")
+  private Long priorityIndex;
 
   @JsonIgnoreProperties(
     value = {
+      "historyUpdates",
+      "classInfo",
       "userProfile",
       "accountStatus",
       "deviceStatus",
@@ -70,6 +75,10 @@ public class NewsFeed implements Serializable {
       "topicInterest",
       "todoList",
       "event",
+      "createdBy",
+      "modifiedBy",
+      "owner",
+      "permissions",
     },
     allowSetters = true
   )
@@ -80,49 +89,11 @@ public class NewsFeed implements Serializable {
   @ManyToOne
   @JsonIgnoreProperties(
     value = {
-      "baseInfo",
-      "postComments",
-      "postLikes",
-      "postShareChildren",
-      "groupPost",
-      "pagePost",
-      "postShareParent",
-      "poster",
-      "newsFeeds",
-      "topicInterests",
+      "baseInfo", "comments", "likes", "postShareChildren", "groupPost", "pagePost", "postShareParent", "newsFeeds", "topicInterests",
     },
     allowSetters = true
   )
   private Post post;
-
-  @ManyToOne
-  @JsonIgnoreProperties(
-    value = {
-      "user",
-      "myProfile",
-      "myAccountStatus",
-      "myRank",
-      "avatar",
-      "baseInfo",
-      "myPages",
-      "myFiles",
-      "myNotifications",
-      "myFriends",
-      "myFollowUsers",
-      "myFollowGroups",
-      "myFollowPages",
-      "myNewsFeeds",
-      "myTodoLists",
-      "myPosts",
-      "myGroupPosts",
-      "messageGroups",
-      "topicInterests",
-      "myLikes",
-      "myComments",
-    },
-    allowSetters = true
-  )
-  private MasterUser masterUser;
 
   // jhipster-needle-entity-add-field - JHipster will add fields here
   public Long getId() {
@@ -151,17 +122,17 @@ public class NewsFeed implements Serializable {
     this.uuid = uuid;
   }
 
-  public Double getScore() {
-    return this.score;
+  public Long getPriorityIndex() {
+    return this.priorityIndex;
   }
 
-  public NewsFeed score(Double score) {
-    this.score = score;
+  public NewsFeed priorityIndex(Long priorityIndex) {
+    this.priorityIndex = priorityIndex;
     return this;
   }
 
-  public void setScore(Double score) {
-    this.score = score;
+  public void setPriorityIndex(Long priorityIndex) {
+    this.priorityIndex = priorityIndex;
   }
 
   public BaseInfo getBaseInfo() {
@@ -190,19 +161,6 @@ public class NewsFeed implements Serializable {
     this.post = post;
   }
 
-  public MasterUser getMasterUser() {
-    return this.masterUser;
-  }
-
-  public NewsFeed masterUser(MasterUser masterUser) {
-    this.setMasterUser(masterUser);
-    return this;
-  }
-
-  public void setMasterUser(MasterUser masterUser) {
-    this.masterUser = masterUser;
-  }
-
   // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
   @Override
@@ -228,7 +186,7 @@ public class NewsFeed implements Serializable {
         return "NewsFeed{" +
             "id=" + getId() +
             ", uuid='" + getUuid() + "'" +
-            ", score=" + getScore() +
+            ", priorityIndex=" + getPriorityIndex() +
             "}";
     }
 }

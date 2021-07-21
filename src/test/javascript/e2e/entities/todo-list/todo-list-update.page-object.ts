@@ -11,7 +11,6 @@ export default class TodoListUpdatePage {
   titleInput: ElementFinder = element(by.css('input#todo-list-title'));
   contentInput: ElementFinder = element(by.css('textarea#todo-list-content'));
   baseInfoSelect: ElementFinder = element(by.css('select#todo-list-baseInfo'));
-  masterUserSelect: ElementFinder = element(by.css('select#todo-list-masterUser'));
 
   getPageTitle() {
     return this.pageTitle;
@@ -57,22 +56,6 @@ export default class TodoListUpdatePage {
     return this.baseInfoSelect.element(by.css('option:checked')).getText();
   }
 
-  async masterUserSelectLastOption() {
-    await this.masterUserSelect.all(by.tagName('option')).last().click();
-  }
-
-  async masterUserSelectOption(option) {
-    await this.masterUserSelect.sendKeys(option);
-  }
-
-  getMasterUserSelect() {
-    return this.masterUserSelect;
-  }
-
-  async getMasterUserSelectedOption() {
-    return this.masterUserSelect.element(by.css('option:checked')).getText();
-  }
-
   async save() {
     await this.saveButton.click();
   }
@@ -93,7 +76,6 @@ export default class TodoListUpdatePage {
     await waitUntilDisplayed(this.saveButton);
     await this.setContentInput('content');
     await this.baseInfoSelectLastOption();
-    await this.masterUserSelectLastOption();
     await this.save();
     await waitUntilHidden(this.saveButton);
   }

@@ -11,8 +11,6 @@ import { IGroupPost } from 'app/shared/model/group-post.model';
 import { getEntities as getGroupPosts } from 'app/entities/group-post/group-post.reducer';
 import { IPagePost } from 'app/shared/model/page-post.model';
 import { getEntities as getPagePosts } from 'app/entities/page-post/page-post.reducer';
-import { IMasterUser } from 'app/shared/model/master-user.model';
-import { getEntities as getMasterUsers } from 'app/entities/master-user/master-user.reducer';
 import { ITopicInterest } from 'app/shared/model/topic-interest.model';
 import { getEntities as getTopicInterests } from 'app/entities/topic-interest/topic-interest.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './post.reducer';
@@ -30,7 +28,6 @@ export const PostUpdate = (props: RouteComponentProps<{ id: string }>) => {
   const posts = useAppSelector(state => state.post.entities);
   const groupPosts = useAppSelector(state => state.groupPost.entities);
   const pagePosts = useAppSelector(state => state.pagePost.entities);
-  const masterUsers = useAppSelector(state => state.masterUser.entities);
   const topicInterests = useAppSelector(state => state.topicInterest.entities);
   const postEntity = useAppSelector(state => state.post.entity);
   const loading = useAppSelector(state => state.post.loading);
@@ -50,7 +47,6 @@ export const PostUpdate = (props: RouteComponentProps<{ id: string }>) => {
     dispatch(getPosts({}));
     dispatch(getGroupPosts({}));
     dispatch(getPagePosts({}));
-    dispatch(getMasterUsers({}));
     dispatch(getTopicInterests({}));
   }, []);
 
@@ -68,7 +64,6 @@ export const PostUpdate = (props: RouteComponentProps<{ id: string }>) => {
       postShareParent: posts.find(it => it.id.toString() === values.postShareParentId.toString()),
       groupPost: groupPosts.find(it => it.id.toString() === values.groupPostId.toString()),
       pagePost: pagePosts.find(it => it.id.toString() === values.pagePostId.toString()),
-      poster: masterUsers.find(it => it.id.toString() === values.posterId.toString()),
     };
 
     if (isNew) {
@@ -89,7 +84,6 @@ export const PostUpdate = (props: RouteComponentProps<{ id: string }>) => {
           groupPostId: postEntity?.groupPost?.id,
           pagePostId: postEntity?.pagePost?.id,
           postShareParentId: postEntity?.postShareParent?.id,
-          posterId: postEntity?.poster?.id,
         };
 
   return (
@@ -233,16 +227,6 @@ export const PostUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 <option value="" key="0" />
                 {posts
                   ? posts.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField id="post-poster" name="posterId" data-cy="poster" label={translate('catinyApp.post.poster')} type="select">
-                <option value="" key="0" />
-                {masterUsers
-                  ? masterUsers.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

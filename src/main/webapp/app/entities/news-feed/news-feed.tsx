@@ -194,17 +194,14 @@ export const NewsFeed = (props: RouteComponentProps<{ url: string }>) => {
                   <th className="hand" onClick={sort('uuid')}>
                     <Translate contentKey="catinyApp.newsFeed.uuid">Uuid</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
-                  <th className="hand" onClick={sort('score')}>
-                    <Translate contentKey="catinyApp.newsFeed.score">Score</Translate> <FontAwesomeIcon icon="sort" />
+                  <th className="hand" onClick={sort('priorityIndex')}>
+                    <Translate contentKey="catinyApp.newsFeed.priorityIndex">Priority Index</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
                   <th>
                     <Translate contentKey="catinyApp.newsFeed.baseInfo">Base Info</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
                   <th>
                     <Translate contentKey="catinyApp.newsFeed.post">Post</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th>
-                    <Translate contentKey="catinyApp.newsFeed.masterUser">Master User</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
                   <th />
                 </tr>
@@ -218,10 +215,9 @@ export const NewsFeed = (props: RouteComponentProps<{ url: string }>) => {
                       </Button>
                     </td>
                     <td>{newsFeed.uuid}</td>
-                    <td>{newsFeed.score}</td>
+                    <td>{newsFeed.priorityIndex}</td>
                     <td>{newsFeed.baseInfo ? <Link to={`base-info/${newsFeed.baseInfo.id}`}>{newsFeed.baseInfo.id}</Link> : ''}</td>
                     <td>{newsFeed.post ? <Link to={`post/${newsFeed.post.id}`}>{newsFeed.post.id}</Link> : ''}</td>
-                    <td>{newsFeed.masterUser ? <Link to={`master-user/${newsFeed.masterUser.id}`}>{newsFeed.masterUser.id}</Link> : ''}</td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${newsFeed.id}`} color="info" size="sm" data-cy="entityDetailsButton">

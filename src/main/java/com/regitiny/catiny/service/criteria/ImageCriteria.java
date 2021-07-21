@@ -33,6 +33,18 @@ public class ImageCriteria implements Serializable, Criteria {
 
   private StringFilter name;
 
+  private IntegerFilter width;
+
+  private IntegerFilter height;
+
+  private FloatFilter quality;
+
+  private IntegerFilter pixelSize;
+
+  private LongFilter priorityIndex;
+
+  private LongFilter dataSize;
+
   private LongFilter fileInfoId;
 
   private LongFilter baseInfoId;
@@ -40,8 +52,6 @@ public class ImageCriteria implements Serializable, Criteria {
   private LongFilter imageProcessedId;
 
   private LongFilter imageOriginalId;
-
-  private LongFilter eventId;
 
   private LongFilter albumId;
 
@@ -51,11 +61,16 @@ public class ImageCriteria implements Serializable, Criteria {
     this.id = other.id == null ? null : other.id.copy();
     this.uuid = other.uuid == null ? null : other.uuid.copy();
     this.name = other.name == null ? null : other.name.copy();
+    this.width = other.width == null ? null : other.width.copy();
+    this.height = other.height == null ? null : other.height.copy();
+    this.quality = other.quality == null ? null : other.quality.copy();
+    this.pixelSize = other.pixelSize == null ? null : other.pixelSize.copy();
+    this.priorityIndex = other.priorityIndex == null ? null : other.priorityIndex.copy();
+    this.dataSize = other.dataSize == null ? null : other.dataSize.copy();
     this.fileInfoId = other.fileInfoId == null ? null : other.fileInfoId.copy();
     this.baseInfoId = other.baseInfoId == null ? null : other.baseInfoId.copy();
     this.imageProcessedId = other.imageProcessedId == null ? null : other.imageProcessedId.copy();
     this.imageOriginalId = other.imageOriginalId == null ? null : other.imageOriginalId.copy();
-    this.eventId = other.eventId == null ? null : other.eventId.copy();
     this.albumId = other.albumId == null ? null : other.albumId.copy();
   }
 
@@ -107,6 +122,96 @@ public class ImageCriteria implements Serializable, Criteria {
 
   public void setName(StringFilter name) {
     this.name = name;
+  }
+
+  public IntegerFilter getWidth() {
+    return width;
+  }
+
+  public IntegerFilter width() {
+    if (width == null) {
+      width = new IntegerFilter();
+    }
+    return width;
+  }
+
+  public void setWidth(IntegerFilter width) {
+    this.width = width;
+  }
+
+  public IntegerFilter getHeight() {
+    return height;
+  }
+
+  public IntegerFilter height() {
+    if (height == null) {
+      height = new IntegerFilter();
+    }
+    return height;
+  }
+
+  public void setHeight(IntegerFilter height) {
+    this.height = height;
+  }
+
+  public FloatFilter getQuality() {
+    return quality;
+  }
+
+  public FloatFilter quality() {
+    if (quality == null) {
+      quality = new FloatFilter();
+    }
+    return quality;
+  }
+
+  public void setQuality(FloatFilter quality) {
+    this.quality = quality;
+  }
+
+  public IntegerFilter getPixelSize() {
+    return pixelSize;
+  }
+
+  public IntegerFilter pixelSize() {
+    if (pixelSize == null) {
+      pixelSize = new IntegerFilter();
+    }
+    return pixelSize;
+  }
+
+  public void setPixelSize(IntegerFilter pixelSize) {
+    this.pixelSize = pixelSize;
+  }
+
+  public LongFilter getPriorityIndex() {
+    return priorityIndex;
+  }
+
+  public LongFilter priorityIndex() {
+    if (priorityIndex == null) {
+      priorityIndex = new LongFilter();
+    }
+    return priorityIndex;
+  }
+
+  public void setPriorityIndex(LongFilter priorityIndex) {
+    this.priorityIndex = priorityIndex;
+  }
+
+  public LongFilter getDataSize() {
+    return dataSize;
+  }
+
+  public LongFilter dataSize() {
+    if (dataSize == null) {
+      dataSize = new LongFilter();
+    }
+    return dataSize;
+  }
+
+  public void setDataSize(LongFilter dataSize) {
+    this.dataSize = dataSize;
   }
 
   public LongFilter getFileInfoId() {
@@ -169,21 +274,6 @@ public class ImageCriteria implements Serializable, Criteria {
     this.imageOriginalId = imageOriginalId;
   }
 
-  public LongFilter getEventId() {
-    return eventId;
-  }
-
-  public LongFilter eventId() {
-    if (eventId == null) {
-      eventId = new LongFilter();
-    }
-    return eventId;
-  }
-
-  public void setEventId(LongFilter eventId) {
-    this.eventId = eventId;
-  }
-
   public LongFilter getAlbumId() {
     return albumId;
   }
@@ -212,18 +302,38 @@ public class ImageCriteria implements Serializable, Criteria {
       Objects.equals(id, that.id) &&
       Objects.equals(uuid, that.uuid) &&
       Objects.equals(name, that.name) &&
+      Objects.equals(width, that.width) &&
+      Objects.equals(height, that.height) &&
+      Objects.equals(quality, that.quality) &&
+      Objects.equals(pixelSize, that.pixelSize) &&
+      Objects.equals(priorityIndex, that.priorityIndex) &&
+      Objects.equals(dataSize, that.dataSize) &&
       Objects.equals(fileInfoId, that.fileInfoId) &&
       Objects.equals(baseInfoId, that.baseInfoId) &&
       Objects.equals(imageProcessedId, that.imageProcessedId) &&
       Objects.equals(imageOriginalId, that.imageOriginalId) &&
-      Objects.equals(eventId, that.eventId) &&
       Objects.equals(albumId, that.albumId)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, uuid, name, fileInfoId, baseInfoId, imageProcessedId, imageOriginalId, eventId, albumId);
+    return Objects.hash(
+      id,
+      uuid,
+      name,
+      width,
+      height,
+      quality,
+      pixelSize,
+      priorityIndex,
+      dataSize,
+      fileInfoId,
+      baseInfoId,
+      imageProcessedId,
+      imageOriginalId,
+      albumId
+    );
   }
 
   // prettier-ignore
@@ -233,11 +343,16 @@ public class ImageCriteria implements Serializable, Criteria {
             (id != null ? "id=" + id + ", " : "") +
             (uuid != null ? "uuid=" + uuid + ", " : "") +
             (name != null ? "name=" + name + ", " : "") +
+            (width != null ? "width=" + width + ", " : "") +
+            (height != null ? "height=" + height + ", " : "") +
+            (quality != null ? "quality=" + quality + ", " : "") +
+            (pixelSize != null ? "pixelSize=" + pixelSize + ", " : "") +
+            (priorityIndex != null ? "priorityIndex=" + priorityIndex + ", " : "") +
+            (dataSize != null ? "dataSize=" + dataSize + ", " : "") +
             (fileInfoId != null ? "fileInfoId=" + fileInfoId + ", " : "") +
             (baseInfoId != null ? "baseInfoId=" + baseInfoId + ", " : "") +
             (imageProcessedId != null ? "imageProcessedId=" + imageProcessedId + ", " : "") +
             (imageOriginalId != null ? "imageOriginalId=" + imageOriginalId + ", " : "") +
-            (eventId != null ? "eventId=" + eventId + ", " : "") +
             (albumId != null ? "albumId=" + albumId + ", " : "") +
             "}";
     }

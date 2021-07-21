@@ -109,31 +109,10 @@ public class MasterUserQueryService extends QueryService<MasterUser> {
         specification =
           specification.and(buildSpecification(criteria.getUserId(), root -> root.join(MasterUser_.user, JoinType.LEFT).get(User_.id)));
       }
-      if (criteria.getMyProfileId() != null) {
-        specification =
-          specification.and(
-            buildSpecification(criteria.getMyProfileId(), root -> root.join(MasterUser_.myProfile, JoinType.LEFT).get(UserProfile_.id))
-          );
-      }
-      if (criteria.getMyAccountStatusId() != null) {
-        specification =
-          specification.and(
-            buildSpecification(
-              criteria.getMyAccountStatusId(),
-              root -> root.join(MasterUser_.myAccountStatus, JoinType.LEFT).get(AccountStatus_.id)
-            )
-          );
-      }
       if (criteria.getMyRankId() != null) {
         specification =
           specification.and(
             buildSpecification(criteria.getMyRankId(), root -> root.join(MasterUser_.myRank, JoinType.LEFT).get(RankUser_.id))
-          );
-      }
-      if (criteria.getAvatarId() != null) {
-        specification =
-          specification.and(
-            buildSpecification(criteria.getAvatarId(), root -> root.join(MasterUser_.avatar, JoinType.LEFT).get(Image_.id))
           );
       }
       if (criteria.getBaseInfoId() != null) {
@@ -142,91 +121,34 @@ public class MasterUserQueryService extends QueryService<MasterUser> {
             buildSpecification(criteria.getBaseInfoId(), root -> root.join(MasterUser_.baseInfo, JoinType.LEFT).get(BaseInfo_.id))
           );
       }
-      if (criteria.getMyPageId() != null) {
-        specification =
-          specification.and(
-            buildSpecification(criteria.getMyPageId(), root -> root.join(MasterUser_.myPages, JoinType.LEFT).get(PagePost_.id))
-          );
-      }
-      if (criteria.getMyFileId() != null) {
-        specification =
-          specification.and(
-            buildSpecification(criteria.getMyFileId(), root -> root.join(MasterUser_.myFiles, JoinType.LEFT).get(FileInfo_.id))
-          );
-      }
-      if (criteria.getMyNotificationId() != null) {
+      if (criteria.getMyBaseInfoCreatedId() != null) {
         specification =
           specification.and(
             buildSpecification(
-              criteria.getMyNotificationId(),
-              root -> root.join(MasterUser_.myNotifications, JoinType.LEFT).get(Notification_.id)
+              criteria.getMyBaseInfoCreatedId(),
+              root -> root.join(MasterUser_.myBaseInfoCreateds, JoinType.LEFT).get(BaseInfo_.id)
             )
           );
       }
-      if (criteria.getMyFriendId() != null) {
-        specification =
-          specification.and(
-            buildSpecification(criteria.getMyFriendId(), root -> root.join(MasterUser_.myFriends, JoinType.LEFT).get(Friend_.id))
-          );
-      }
-      if (criteria.getMyFollowUserId() != null) {
+      if (criteria.getMyBaseInfoModifiedId() != null) {
         specification =
           specification.and(
             buildSpecification(
-              criteria.getMyFollowUserId(),
-              root -> root.join(MasterUser_.myFollowUsers, JoinType.LEFT).get(FollowUser_.id)
+              criteria.getMyBaseInfoModifiedId(),
+              root -> root.join(MasterUser_.myBaseInfoModifieds, JoinType.LEFT).get(BaseInfo_.id)
             )
           );
       }
-      if (criteria.getMyFollowGroupId() != null) {
+      if (criteria.getOwnerOfId() != null) {
         specification =
           specification.and(
-            buildSpecification(
-              criteria.getMyFollowGroupId(),
-              root -> root.join(MasterUser_.myFollowGroups, JoinType.LEFT).get(FollowGroup_.id)
-            )
+            buildSpecification(criteria.getOwnerOfId(), root -> root.join(MasterUser_.ownerOfs, JoinType.LEFT).get(BaseInfo_.id))
           );
       }
-      if (criteria.getMyFollowPageId() != null) {
+      if (criteria.getPermissionId() != null) {
         specification =
           specification.and(
-            buildSpecification(
-              criteria.getMyFollowPageId(),
-              root -> root.join(MasterUser_.myFollowPages, JoinType.LEFT).get(FollowPage_.id)
-            )
-          );
-      }
-      if (criteria.getMyNewsFeedId() != null) {
-        specification =
-          specification.and(
-            buildSpecification(criteria.getMyNewsFeedId(), root -> root.join(MasterUser_.myNewsFeeds, JoinType.LEFT).get(NewsFeed_.id))
-          );
-      }
-      if (criteria.getMyTodoListId() != null) {
-        specification =
-          specification.and(
-            buildSpecification(criteria.getMyTodoListId(), root -> root.join(MasterUser_.myTodoLists, JoinType.LEFT).get(TodoList_.id))
-          );
-      }
-      if (criteria.getMyPostId() != null) {
-        specification =
-          specification.and(
-            buildSpecification(criteria.getMyPostId(), root -> root.join(MasterUser_.myPosts, JoinType.LEFT).get(Post_.id))
-          );
-      }
-      if (criteria.getMyGroupPostId() != null) {
-        specification =
-          specification.and(
-            buildSpecification(criteria.getMyGroupPostId(), root -> root.join(MasterUser_.myGroupPosts, JoinType.LEFT).get(GroupPost_.id))
-          );
-      }
-      if (criteria.getMessageGroupId() != null) {
-        specification =
-          specification.and(
-            buildSpecification(
-              criteria.getMessageGroupId(),
-              root -> root.join(MasterUser_.messageGroups, JoinType.LEFT).get(MessageGroup_.id)
-            )
+            buildSpecification(criteria.getPermissionId(), root -> root.join(MasterUser_.permissions, JoinType.LEFT).get(Permission_.id))
           );
       }
       if (criteria.getTopicInterestId() != null) {
@@ -236,18 +158,6 @@ public class MasterUserQueryService extends QueryService<MasterUser> {
               criteria.getTopicInterestId(),
               root -> root.join(MasterUser_.topicInterests, JoinType.LEFT).get(TopicInterest_.id)
             )
-          );
-      }
-      if (criteria.getMyLikeId() != null) {
-        specification =
-          specification.and(
-            buildSpecification(criteria.getMyLikeId(), root -> root.join(MasterUser_.myLikes, JoinType.LEFT).get(PostLike_.id))
-          );
-      }
-      if (criteria.getMyCommentId() != null) {
-        specification =
-          specification.and(
-            buildSpecification(criteria.getMyCommentId(), root -> root.join(MasterUser_.myComments, JoinType.LEFT).get(PostComment_.id))
           );
       }
     }

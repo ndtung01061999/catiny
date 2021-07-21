@@ -57,7 +57,7 @@ public class HanhChinhVN implements Serializable {
    * code Example(\"916\")
    */
   @NotNull
-  @Column(name = "code", nullable = false)
+  @Column(name = "code", nullable = false, unique = true)
   private String code;
 
   /**

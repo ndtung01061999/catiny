@@ -1,11 +1,6 @@
 package com.regitiny.catiny.config;
 
 import com.regitiny.catiny.GeneratedByJHipster;
-import java.net.URI;
-import java.util.concurrent.TimeUnit;
-import javax.cache.configuration.MutableConfiguration;
-import javax.cache.expiry.CreatedExpiryPolicy;
-import javax.cache.expiry.Duration;
 import org.hibernate.cache.jcache.ConfigSettings;
 import org.redisson.Redisson;
 import org.redisson.config.ClusterServersConfig;
@@ -24,10 +19,17 @@ import org.springframework.context.annotation.Configuration;
 import tech.jhipster.config.JHipsterProperties;
 import tech.jhipster.config.cache.PrefixedKeyGenerator;
 
+import javax.cache.configuration.MutableConfiguration;
+import javax.cache.expiry.CreatedExpiryPolicy;
+import javax.cache.expiry.Duration;
+import java.net.URI;
+import java.util.concurrent.TimeUnit;
+
 @Configuration
 @EnableCaching
 @GeneratedByJHipster
-public class CacheConfiguration {
+public class CacheConfiguration
+{
 
   private GitProperties gitProperties;
   private BuildProperties buildProperties;
@@ -157,6 +159,19 @@ public class CacheConfiguration {
       createCache(cm, com.regitiny.catiny.domain.BaseInfo.class.getName(), jcacheConfiguration);
       createCache(cm, com.regitiny.catiny.domain.PagePost.class.getName() + ".followPages", jcacheConfiguration);
       createCache(cm, com.regitiny.catiny.domain.GroupPost.class.getName() + ".followGroups", jcacheConfiguration);
+      createCache(cm, com.regitiny.catiny.domain.MasterUser.class.getName() + ".myBaseInfoCreateds", jcacheConfiguration);
+      createCache(cm, com.regitiny.catiny.domain.MasterUser.class.getName() + ".myBaseInfoModifieds", jcacheConfiguration);
+      createCache(cm, com.regitiny.catiny.domain.MasterUser.class.getName() + ".ownerOfs", jcacheConfiguration);
+      createCache(cm, com.regitiny.catiny.domain.MasterUser.class.getName() + ".permissions", jcacheConfiguration);
+      createCache(cm, com.regitiny.catiny.domain.Post.class.getName() + ".comments", jcacheConfiguration);
+      createCache(cm, com.regitiny.catiny.domain.Post.class.getName() + ".likes", jcacheConfiguration);
+      createCache(cm, com.regitiny.catiny.domain.PostComment.class.getName() + ".likes", jcacheConfiguration);
+      createCache(cm, com.regitiny.catiny.domain.BaseInfo.class.getName() + ".permissions", jcacheConfiguration);
+      createCache(cm, com.regitiny.catiny.domain.Permission.class.getName(), jcacheConfiguration);
+      createCache(cm, com.regitiny.catiny.domain.ClassInfo.class.getName(), jcacheConfiguration);
+      createCache(cm, com.regitiny.catiny.domain.ClassInfo.class.getName() + ".baseInfos", jcacheConfiguration);
+      createCache(cm, com.regitiny.catiny.domain.BaseInfo.class.getName() + ".historyUpdates", jcacheConfiguration);
+      createCache(cm, com.regitiny.catiny.domain.HistoryUpdate.class.getName(), jcacheConfiguration);
       // jhipster-needle-redis-add-entry
     };
   }

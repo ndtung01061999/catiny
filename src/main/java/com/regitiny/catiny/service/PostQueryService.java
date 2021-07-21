@@ -107,17 +107,15 @@ public class PostQueryService extends QueryService<Post> {
             buildSpecification(criteria.getBaseInfoId(), root -> root.join(Post_.baseInfo, JoinType.LEFT).get(BaseInfo_.id))
           );
       }
-      if (criteria.getPostCommentId() != null) {
+      if (criteria.getCommentId() != null) {
         specification =
           specification.and(
-            buildSpecification(criteria.getPostCommentId(), root -> root.join(Post_.postComments, JoinType.LEFT).get(PostComment_.id))
+            buildSpecification(criteria.getCommentId(), root -> root.join(Post_.comments, JoinType.LEFT).get(PostComment_.id))
           );
       }
-      if (criteria.getPostLikeId() != null) {
+      if (criteria.getLikeId() != null) {
         specification =
-          specification.and(
-            buildSpecification(criteria.getPostLikeId(), root -> root.join(Post_.postLikes, JoinType.LEFT).get(PostLike_.id))
-          );
+          specification.and(buildSpecification(criteria.getLikeId(), root -> root.join(Post_.likes, JoinType.LEFT).get(PostLike_.id)));
       }
       if (criteria.getPostShareChildrenId() != null) {
         specification =
@@ -142,10 +140,6 @@ public class PostQueryService extends QueryService<Post> {
           specification.and(
             buildSpecification(criteria.getPostShareParentId(), root -> root.join(Post_.postShareParent, JoinType.LEFT).get(Post_.id))
           );
-      }
-      if (criteria.getPosterId() != null) {
-        specification =
-          specification.and(buildSpecification(criteria.getPosterId(), root -> root.join(Post_.poster, JoinType.LEFT).get(MasterUser_.id)));
       }
       if (criteria.getNewsFeedId() != null) {
         specification =

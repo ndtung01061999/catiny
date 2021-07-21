@@ -1,7 +1,7 @@
 package com.regitiny.catiny.advance.controller.model;
 
 import com.regitiny.catiny.service.dto.BaseInfoDTO;
-import com.regitiny.catiny.service.dto.MasterUserDTO;
+import com.regitiny.catiny.service.dto.PostCommentDTO;
 import com.regitiny.catiny.service.dto.PostDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -30,9 +30,9 @@ public class PostLikeModel implements Serializable
 
   private BaseInfoDTO baseInfo;
 
-  private MasterUserDTO userLike;
-
   private PostDTO post;
+
+  private PostCommentDTO postComment;
 
   @Data
   @Builder
@@ -51,9 +51,9 @@ public class PostLikeModel implements Serializable
 
     private BaseInfoDTO baseInfo;
 
-    private MasterUserDTO userLike;
-
     private PostDTO post;
+
+    private PostCommentDTO postComment;
   }
 
   @Data
@@ -73,8 +73,8 @@ public class PostLikeModel implements Serializable
 
     private BaseInfoDTO baseInfo;
 
-    private MasterUserDTO userLike;
-
     private PostDTO post;
+
+    private PostCommentDTO postComment;
   }
 }

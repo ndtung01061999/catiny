@@ -8,8 +8,6 @@ import { IBaseInfo } from 'app/shared/model/base-info.model';
 import { getEntities as getBaseInfos } from 'app/entities/base-info/base-info.reducer';
 import { IGroupPost } from 'app/shared/model/group-post.model';
 import { getEntities as getGroupPosts } from 'app/entities/group-post/group-post.reducer';
-import { IMasterUser } from 'app/shared/model/master-user.model';
-import { getEntities as getMasterUsers } from 'app/entities/master-user/master-user.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './follow-group.reducer';
 import { IFollowGroup } from 'app/shared/model/follow-group.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -23,7 +21,6 @@ export const FollowGroupUpdate = (props: RouteComponentProps<{ id: string }>) =>
 
   const baseInfos = useAppSelector(state => state.baseInfo.entities);
   const groupPosts = useAppSelector(state => state.groupPost.entities);
-  const masterUsers = useAppSelector(state => state.masterUser.entities);
   const followGroupEntity = useAppSelector(state => state.followGroup.entity);
   const loading = useAppSelector(state => state.followGroup.loading);
   const updating = useAppSelector(state => state.followGroup.updating);
@@ -40,7 +37,6 @@ export const FollowGroupUpdate = (props: RouteComponentProps<{ id: string }>) =>
 
     dispatch(getBaseInfos({}));
     dispatch(getGroupPosts({}));
-    dispatch(getMasterUsers({}));
   }, []);
 
   useEffect(() => {
@@ -55,7 +51,6 @@ export const FollowGroupUpdate = (props: RouteComponentProps<{ id: string }>) =>
       ...values,
       baseInfo: baseInfos.find(it => it.id.toString() === values.baseInfoId.toString()),
       followGroupDetails: groupPosts.find(it => it.id.toString() === values.followGroupDetailsId.toString()),
-      masterUser: masterUsers.find(it => it.id.toString() === values.masterUserId.toString()),
     };
 
     if (isNew) {
@@ -72,7 +67,6 @@ export const FollowGroupUpdate = (props: RouteComponentProps<{ id: string }>) =>
           ...followGroupEntity,
           baseInfoId: followGroupEntity?.baseInfo?.id,
           followGroupDetailsId: followGroupEntity?.followGroupDetails?.id,
-          masterUserId: followGroupEntity?.masterUser?.id,
         };
 
   return (
@@ -139,22 +133,6 @@ export const FollowGroupUpdate = (props: RouteComponentProps<{ id: string }>) =>
                 <option value="" key="0" />
                 {groupPosts
                   ? groupPosts.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField
-                id="follow-group-masterUser"
-                name="masterUserId"
-                data-cy="masterUser"
-                label={translate('catinyApp.followGroup.masterUser')}
-                type="select"
-              >
-                <option value="" key="0" />
-                {masterUsers
-                  ? masterUsers.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

@@ -304,25 +304,6 @@ class FollowUserResourceIT {
     defaultFollowUserShouldNotBeFound("followUserDetailsId.equals=" + (followUserDetailsId + 1));
   }
 
-  @Test
-  @Transactional
-  void getAllFollowUsersByMasterUserIsEqualToSomething() throws Exception {
-    // Initialize the database
-    followUserRepository.saveAndFlush(followUser);
-    MasterUser masterUser = MasterUserResourceIT.createEntity(em);
-    em.persist(masterUser);
-    em.flush();
-    followUser.setMasterUser(masterUser);
-    followUserRepository.saveAndFlush(followUser);
-    Long masterUserId = masterUser.getId();
-
-    // Get all the followUserList where masterUser equals to masterUserId
-    defaultFollowUserShouldBeFound("masterUserId.equals=" + masterUserId);
-
-    // Get all the followUserList where masterUser equals to (masterUserId + 1)
-    defaultFollowUserShouldNotBeFound("masterUserId.equals=" + (masterUserId + 1));
-  }
-
   /**
    * Executes the search, and checks that the default entity is returned.
    */

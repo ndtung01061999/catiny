@@ -10,7 +10,7 @@
     {
       "fieldName": "friendType",
       "fieldType": "FriendType",
-      "fieldValues": "FRIEND,BEST_FRIEND,FAMILY"
+      "fieldValues": "FRIEND,BEST_FRIEND,FAMILY,BLOCK"
     }
   ],
   "relationships": [
@@ -26,12 +26,6 @@
       "otherEntityName": "masterUser",
       "otherEntityRelationshipName": "friend",
       "relationshipName": "friendDetails"
-    },
-    {
-      "relationshipType": "many-to-one",
-      "otherEntityName": "masterUser",
-      "otherEntityRelationshipName": "myFriend",
-      "relationshipName": "masterUser"
     }
   ],
   "javadoc": "@what?            -> The Friend entity.\\n@why?             ->\\n@use-to           -> Quản lý phần kết bạn, các mối liên hệ bạn bè ...\\n@commonly-used-in -> Bạn bè và các liên kết bạn bè ...\\n\\n@describe         ->",

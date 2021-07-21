@@ -1,50 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <databaseChangeLog
-    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd
-                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
 
-    <!--
-        Added the entity BaseInfo.
-    -->
-    <changeSet id="20210710143934-1" author="jhipster">
-        <createTable tableName="base_info" remarks="BaseInfo">
-            <column name="id" type="bigint">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="process_status" type="varchar(255)" remarks="processStatus *: @defaultValue( DONE ) -&gt; tình trạng xử lý sử dụng trong phê duyệt">
-                <constraints nullable="true" />
-            </column>
-            <column name="owner" type="${clobType}" remarks="owner *        : @type Json -&gt; chủ sở hữu bản ghi này --&gt; nhớ sử dụng Set thay cho List">
-                <constraints nullable="true" />
-            </column>
-            <column name="role" type="${clobType}" remarks="role *         : @type Json -&gt; những role được phép thực hiện &lt;xem,sửa,xóa&gt;">
-                <constraints nullable="true" />
-            </column>
-            <column name="modified_class" type="varchar(255)" remarks="modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào">
-                <constraints nullable="true" />
-            </column>
-            <column name="created_date" type="${datetimeType}" remarks="createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)">
-                <constraints nullable="true" />
-            </column>
-            <column name="modified_date" type="${datetimeType}" remarks="modifiedDate * : thời gian sửa bản ghi này">
-                <constraints nullable="true" />
-            </column>
-            <column name="created_by" type="varchar(255)" remarks="createdBy *    : người tạo ra bản gi này (lần đầu tiên)">
-                <constraints nullable="true" />
-            </column>
-            <column name="modified_by" type="varchar(255)" remarks="modifiedBy *   : người sửa lại bản ghi này">
+  <!--
+      Added the entity BaseInfo.
+  -->
+  <changeSet id="20210710143934-1" author="jhipster">
+    <createTable tableName="base_info" remarks="BaseInfo">
+      <column name="id" type="bigint">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="uuid" type="${uuidType}"
+              remarks="uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)">
+        <constraints nullable="false" unique="true" uniqueConstraintName="ux_base_info__uuid"/>
+      </column>
+      <column name="process_status" type="varchar(255)"
+              remarks="processStatus *: @defaultValue( DONE ) -&gt; tình trạng xử lý sử dụng trong phê duyệt">
+        <constraints nullable="true"/>
+      </column>
+      <column name="modified_class" type="varchar(255)" remarks="modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào">
+        <constraints nullable="true"/>
+      </column>
+      <column name="created_date" type="${datetimeType}" remarks="createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="modified_date" type="${datetimeType}" remarks="modifiedDate * : thời gian sửa bản ghi này">
                 <constraints nullable="true" />
             </column>
             <column name="notes" type="${clobType}" remarks="notes *        : @type Json -&gt; chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json&quot;">
                 <constraints nullable="true" />
             </column>
-            <column name="history_update" type="${clobType}" remarks="historyUpdate *: @type Json -&gt; lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json">
+            <column name="deleted" type="boolean" remarks="deleted *      : @defaultValue( false ) -&gt; đánh dấu là đã xóa">
                 <constraints nullable="true" />
             </column>
-            <column name="deleted" type="boolean" remarks="deleted *      : @defaultValue( false ) -&gt; đánh dấu là đã xóa">
+            <column name="priority_index" type="bigint" remarks="priorityIndex *: chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)">
+                <constraints nullable="true" />
+            </column>
+            <column name="count_use" type="bigint" remarks="countUse *     : đếm số lần truy cập vào bản ghi này để xem sửa xóa">
+                <constraints nullable="true" />
+            </column>
+            <column name="class_info_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="created_by_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="modified_by_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="owner_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
@@ -69,17 +75,15 @@
                   separator=";"
                   tableName="base_info">
             <column name="id" type="numeric"/>
+          <column name="uuid" type="string"/>
             <column name="process_status" type="string"/>
-            <column name="owner" type="clob"/>
-            <column name="role" type="clob"/>
             <column name="modified_class" type="string"/>
             <column name="created_date" type="${datetimeType}"/>
             <column name="modified_date" type="${datetimeType}"/>
-            <column name="created_by" type="string"/>
-            <column name="modified_by" type="string"/>
             <column name="notes" type="clob"/>
-            <column name="history_update" type="clob"/>
             <column name="deleted" type="boolean"/>
+            <column name="priority_index" type="numeric"/>
+            <column name="count_use" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

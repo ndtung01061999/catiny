@@ -104,6 +104,11 @@ describe('GroupPost e2e test', () => {
 
     cy.get(`[data-cy="name"]`).type('cyan').should('have.value', 'cyan');
 
+    cy.get(`[data-cy="avatar"]`)
+      .type('../fake-data/blob/hipster.txt')
+      .invoke('val')
+      .should('match', new RegExp('../fake-data/blob/hipster.txt'));
+
     cy.get(`[data-cy="quickInfo"]`)
       .type('../fake-data/blob/hipster.txt')
       .invoke('val')

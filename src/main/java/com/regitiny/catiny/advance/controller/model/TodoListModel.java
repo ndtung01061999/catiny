@@ -1,7 +1,6 @@
 package com.regitiny.catiny.advance.controller.model;
 
 import com.regitiny.catiny.service.dto.BaseInfoDTO;
-import com.regitiny.catiny.service.dto.MasterUserDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,8 +34,6 @@ public class TodoListModel implements Serializable
 
   private BaseInfoDTO baseInfo;
 
-  private MasterUserDTO masterUser;
-
   @Data
   @Builder
   @NoArgsConstructor
@@ -58,8 +55,6 @@ public class TodoListModel implements Serializable
     private String content;
 
     private BaseInfoDTO baseInfo;
-
-    private MasterUserDTO masterUser;
   }
 
   @Data
@@ -83,7 +78,5 @@ public class TodoListModel implements Serializable
     private String content;
 
     private BaseInfoDTO baseInfo;
-
-    private MasterUserDTO masterUser;
   }
 }

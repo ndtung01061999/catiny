@@ -41,8 +41,6 @@ public class GroupPostCriteria implements Serializable, Criteria {
 
   private LongFilter topicInterestId;
 
-  private LongFilter userInGroupId;
-
   public GroupPostCriteria() {}
 
   public GroupPostCriteria(GroupPostCriteria other) {
@@ -53,7 +51,6 @@ public class GroupPostCriteria implements Serializable, Criteria {
     this.baseInfoId = other.baseInfoId == null ? null : other.baseInfoId.copy();
     this.myPostInGroupId = other.myPostInGroupId == null ? null : other.myPostInGroupId.copy();
     this.topicInterestId = other.topicInterestId == null ? null : other.topicInterestId.copy();
-    this.userInGroupId = other.userInGroupId == null ? null : other.userInGroupId.copy();
   }
 
   @Override
@@ -166,21 +163,6 @@ public class GroupPostCriteria implements Serializable, Criteria {
     this.topicInterestId = topicInterestId;
   }
 
-  public LongFilter getUserInGroupId() {
-    return userInGroupId;
-  }
-
-  public LongFilter userInGroupId() {
-    if (userInGroupId == null) {
-      userInGroupId = new LongFilter();
-    }
-    return userInGroupId;
-  }
-
-  public void setUserInGroupId(LongFilter userInGroupId) {
-    this.userInGroupId = userInGroupId;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -197,14 +179,13 @@ public class GroupPostCriteria implements Serializable, Criteria {
       Objects.equals(profileId, that.profileId) &&
       Objects.equals(baseInfoId, that.baseInfoId) &&
       Objects.equals(myPostInGroupId, that.myPostInGroupId) &&
-      Objects.equals(topicInterestId, that.topicInterestId) &&
-      Objects.equals(userInGroupId, that.userInGroupId)
+      Objects.equals(topicInterestId, that.topicInterestId)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, uuid, name, profileId, baseInfoId, myPostInGroupId, topicInterestId, userInGroupId);
+    return Objects.hash(id, uuid, name, profileId, baseInfoId, myPostInGroupId, topicInterestId);
   }
 
   // prettier-ignore
@@ -218,7 +199,6 @@ public class GroupPostCriteria implements Serializable, Criteria {
             (baseInfoId != null ? "baseInfoId=" + baseInfoId + ", " : "") +
             (myPostInGroupId != null ? "myPostInGroupId=" + myPostInGroupId + ", " : "") +
             (topicInterestId != null ? "topicInterestId=" + topicInterestId + ", " : "") +
-            (userInGroupId != null ? "userInGroupId=" + userInGroupId + ", " : "") +
             "}";
     }
 }

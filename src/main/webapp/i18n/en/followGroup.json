@@ -22,7 +22,6 @@
       "uuid": "Uuid",
       "baseInfo": "Base Info",
       "followGroupDetails": "Follow Group Details",
-      "masterUser": "Master User",
       "help": {
         "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)"
       }

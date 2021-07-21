@@ -2,16 +2,16 @@ package com.regitiny.catiny.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.regitiny.catiny.GeneratedByJHipster;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
-import javax.persistence.*;
-import javax.validation.constraints.*;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Type;
-import org.springframework.data.elasticsearch.annotations.FieldType;
 
 /**
  * @what?            -> The PagePost entity.\n@why?             ->\n@use-to           -> Lưu các Trang người dùng tạo ra\n@commonly-used-in -> Cũng tương tự như bài đăng của một người dùng những sẽ chuyên biệt về  một chủ đề\n\n@describe         ->
@@ -46,6 +46,13 @@ public class PagePost implements Serializable {
   private String name;
 
   /**
+   * avatar : @type Json -> ảnh đại diện của Page
+   */
+  @Lob
+  @Column(name = "avatar")
+  private String avatar;
+
+  /**
    * quickInfo      : @type Json ->thông tin nổi bật giới thiệu sơ qua về page
    */
   @Lob
@@ -59,6 +66,8 @@ public class PagePost implements Serializable {
 
   @JsonIgnoreProperties(
     value = {
+      "historyUpdates",
+      "classInfo",
       "userProfile",
       "accountStatus",
       "deviceStatus",
@@ -88,6 +97,10 @@ public class PagePost implements Serializable {
       "topicInterest",
       "todoList",
       "event",
+      "createdBy",
+      "modifiedBy",
+      "owner",
+      "permissions",
     },
     allowSetters = true
   )
@@ -99,49 +112,11 @@ public class PagePost implements Serializable {
   @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
   @JsonIgnoreProperties(
     value = {
-      "baseInfo",
-      "postComments",
-      "postLikes",
-      "postShareChildren",
-      "groupPost",
-      "pagePost",
-      "postShareParent",
-      "poster",
-      "newsFeeds",
-      "topicInterests",
+      "baseInfo", "comments", "likes", "postShareChildren", "groupPost", "pagePost", "postShareParent", "newsFeeds", "topicInterests",
     },
     allowSetters = true
   )
   private Set<Post> myPostInPages = new HashSet<>();
-
-  @ManyToOne
-  @JsonIgnoreProperties(
-    value = {
-      "user",
-      "myProfile",
-      "myAccountStatus",
-      "myRank",
-      "avatar",
-      "baseInfo",
-      "myPages",
-      "myFiles",
-      "myNotifications",
-      "myFriends",
-      "myFollowUsers",
-      "myFollowGroups",
-      "myFollowPages",
-      "myNewsFeeds",
-      "myTodoLists",
-      "myPosts",
-      "myGroupPosts",
-      "messageGroups",
-      "topicInterests",
-      "myLikes",
-      "myComments",
-    },
-    allowSetters = true
-  )
-  private MasterUser masterUser;
 
   @ManyToMany(mappedBy = "pagePosts")
   @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -186,6 +161,19 @@ public class PagePost implements Serializable {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public String getAvatar() {
+    return this.avatar;
+  }
+
+  public PagePost avatar(String avatar) {
+    this.avatar = avatar;
+    return this;
+  }
+
+  public void setAvatar(String avatar) {
+    this.avatar = avatar;
   }
 
   public String getQuickInfo() {
@@ -258,19 +246,6 @@ public class PagePost implements Serializable {
     this.myPostInPages = posts;
   }
 
-  public MasterUser getMasterUser() {
-    return this.masterUser;
-  }
-
-  public PagePost masterUser(MasterUser masterUser) {
-    this.setMasterUser(masterUser);
-    return this;
-  }
-
-  public void setMasterUser(MasterUser masterUser) {
-    this.masterUser = masterUser;
-  }
-
   public Set<TopicInterest> getTopicInterests() {
     return this.topicInterests;
   }
@@ -328,6 +303,7 @@ public class PagePost implements Serializable {
             "id=" + getId() +
             ", uuid='" + getUuid() + "'" +
             ", name='" + getName() + "'" +
+            ", avatar='" + getAvatar() + "'" +
             ", quickInfo='" + getQuickInfo() + "'" +
             "}";
     }

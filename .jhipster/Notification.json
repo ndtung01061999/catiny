@@ -30,12 +30,6 @@
       "otherEntityRelationshipName": "notification",
       "relationshipName": "baseInfo",
       "ownerSide": true
-    },
-    {
-      "relationshipType": "many-to-one",
-      "otherEntityName": "masterUser",
-      "otherEntityRelationshipName": "myNotification",
-      "relationshipName": "masterUser"
     }
   ],
   "javadoc": "@what?            -> The Notification entity.\\n@why?             ->\\n@use-to           -> Chứa những thông báo đến người dùng\\n@commonly-used-in -> Thường xuất hiện trong chức năng thông báo của người dùng\\n\\n@describe         ->",

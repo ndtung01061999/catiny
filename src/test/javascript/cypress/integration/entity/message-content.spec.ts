@@ -102,6 +102,13 @@ describe('MessageContent e2e test', () => {
       .invoke('val')
       .should('match', new RegExp('c0346bfb-f3dd-4e92-a115-b7ff77d5c5d8'));
 
+    cy.get(`[data-cy="senderName"]`).type('Shoes').should('have.value', 'Shoes');
+
+    cy.get(`[data-cy="attach"]`)
+      .type('../fake-data/blob/hipster.txt')
+      .invoke('val')
+      .should('match', new RegExp('../fake-data/blob/hipster.txt'));
+
     cy.get(`[data-cy="content"]`)
       .type('../fake-data/blob/hipster.txt')
       .invoke('val')
@@ -118,8 +125,6 @@ describe('MessageContent e2e test', () => {
       .should('match', new RegExp('../fake-data/blob/hipster.txt'));
 
     cy.setFieldSelectToLastOfEntity('baseInfo');
-
-    cy.setFieldSelectToLastOfEntity('sender');
 
     cy.setFieldSelectToLastOfEntity('messageGroup');
 

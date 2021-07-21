@@ -24,12 +24,6 @@
       "otherEntityRelationshipName": "todoList",
       "relationshipName": "baseInfo",
       "ownerSide": true
-    },
-    {
-      "relationshipType": "many-to-one",
-      "otherEntityName": "masterUser",
-      "otherEntityRelationshipName": "myTodoList",
-      "relationshipName": "masterUser"
     }
   ],
   "javadoc": "@what?            -> The TodoList entity.\\n@why?             ->\\n@use-to           -> Lưu danh sách công việc gợi ý cho người dùng thực hiện\\n@commonly-used-in -> Hiển thị bảng TodoList cho người dùng thực hiện\\n\\n@describe         ->",

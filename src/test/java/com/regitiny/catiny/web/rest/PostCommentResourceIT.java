@@ -10,10 +10,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.regitiny.catiny.GeneratedByJHipster;
 import com.regitiny.catiny.IntegrationTest;
 import com.regitiny.catiny.domain.BaseInfo;
-import com.regitiny.catiny.domain.MasterUser;
 import com.regitiny.catiny.domain.Post;
 import com.regitiny.catiny.domain.PostComment;
 import com.regitiny.catiny.domain.PostComment;
+import com.regitiny.catiny.domain.PostLike;
 import com.regitiny.catiny.repository.PostCommentRepository;
 import com.regitiny.catiny.repository.search.PostCommentSearchRepository;
 import com.regitiny.catiny.service.criteria.PostCommentCriteria;
@@ -296,6 +296,25 @@ class PostCommentResourceIT {
 
   @Test
   @Transactional
+  void getAllPostCommentsByLikeIsEqualToSomething() throws Exception {
+    // Initialize the database
+    postCommentRepository.saveAndFlush(postComment);
+    PostLike like = PostLikeResourceIT.createEntity(em);
+    em.persist(like);
+    em.flush();
+    postComment.addLike(like);
+    postCommentRepository.saveAndFlush(postComment);
+    Long likeId = like.getId();
+
+    // Get all the postCommentList where like equals to likeId
+    defaultPostCommentShouldBeFound("likeId.equals=" + likeId);
+
+    // Get all the postCommentList where like equals to (likeId + 1)
+    defaultPostCommentShouldNotBeFound("likeId.equals=" + (likeId + 1));
+  }
+
+  @Test
+  @Transactional
   void getAllPostCommentsByCommentReplyIsEqualToSomething() throws Exception {
     // Initialize the database
     postCommentRepository.saveAndFlush(postComment);
@@ -311,25 +330,6 @@ class PostCommentResourceIT {
 
     // Get all the postCommentList where commentReply equals to (commentReplyId + 1)
     defaultPostCommentShouldNotBeFound("commentReplyId.equals=" + (commentReplyId + 1));
-  }
-
-  @Test
-  @Transactional
-  void getAllPostCommentsByUserCommentIsEqualToSomething() throws Exception {
-    // Initialize the database
-    postCommentRepository.saveAndFlush(postComment);
-    MasterUser userComment = MasterUserResourceIT.createEntity(em);
-    em.persist(userComment);
-    em.flush();
-    postComment.setUserComment(userComment);
-    postCommentRepository.saveAndFlush(postComment);
-    Long userCommentId = userComment.getId();
-
-    // Get all the postCommentList where userComment equals to userCommentId
-    defaultPostCommentShouldBeFound("userCommentId.equals=" + userCommentId);
-
-    // Get all the postCommentList where userComment equals to (userCommentId + 1)
-    defaultPostCommentShouldNotBeFound("userCommentId.equals=" + (userCommentId + 1));
   }
 
   @Test

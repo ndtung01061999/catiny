@@ -51,7 +51,6 @@ export const FriendUpdate = (props: RouteComponentProps<{ id: string }>) => {
       ...values,
       baseInfo: baseInfos.find(it => it.id.toString() === values.baseInfoId.toString()),
       friendDetails: masterUsers.find(it => it.id.toString() === values.friendDetailsId.toString()),
-      masterUser: masterUsers.find(it => it.id.toString() === values.masterUserId.toString()),
     };
 
     if (isNew) {
@@ -69,7 +68,6 @@ export const FriendUpdate = (props: RouteComponentProps<{ id: string }>) => {
           friendType: 'FRIEND',
           baseInfoId: friendEntity?.baseInfo?.id,
           friendDetailsId: friendEntity?.friendDetails?.id,
-          masterUserId: friendEntity?.masterUser?.id,
         };
 
   return (
@@ -120,6 +118,7 @@ export const FriendUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 <option value="FRIEND">{translate('catinyApp.FriendType.FRIEND')}</option>
                 <option value="BEST_FRIEND">{translate('catinyApp.FriendType.BEST_FRIEND')}</option>
                 <option value="FAMILY">{translate('catinyApp.FriendType.FAMILY')}</option>
+                <option value="BLOCK">{translate('catinyApp.FriendType.BLOCK')}</option>
               </ValidatedField>
               <ValidatedField
                 id="friend-baseInfo"
@@ -142,22 +141,6 @@ export const FriendUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 name="friendDetailsId"
                 data-cy="friendDetails"
                 label={translate('catinyApp.friend.friendDetails')}
-                type="select"
-              >
-                <option value="" key="0" />
-                {masterUsers
-                  ? masterUsers.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField
-                id="friend-masterUser"
-                name="masterUserId"
-                data-cy="masterUser"
-                label={translate('catinyApp.friend.masterUser')}
                 type="select"
               >
                 <option value="" key="0" />

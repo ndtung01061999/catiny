@@ -38,6 +38,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Base64Utils;
 
 /**
  * Integration tests for the {@link AlbumResource} REST controller.
@@ -54,6 +55,12 @@ class AlbumResourceIT {
 
   private static final String DEFAULT_NAME = "AAAAAAAAAA";
   private static final String UPDATED_NAME = "BBBBBBBBBB";
+
+  private static final String DEFAULT_NOTE = "AAAAAAAAAA";
+  private static final String UPDATED_NOTE = "BBBBBBBBBB";
+
+  private static final String DEFAULT_AVATAR = "AAAAAAAAAA";
+  private static final String UPDATED_AVATAR = "BBBBBBBBBB";
 
   private static final String ENTITY_API_URL = "/api/albums";
   private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -97,7 +104,7 @@ class AlbumResourceIT {
    * if they test an entity which requires the current entity.
    */
   public static Album createEntity(EntityManager em) {
-    Album album = new Album().uuid(DEFAULT_UUID).name(DEFAULT_NAME);
+    Album album = new Album().uuid(DEFAULT_UUID).name(DEFAULT_NAME).note(DEFAULT_NOTE).avatar(DEFAULT_AVATAR);
     return album;
   }
 
@@ -108,7 +115,7 @@ class AlbumResourceIT {
    * if they test an entity which requires the current entity.
    */
   public static Album createUpdatedEntity(EntityManager em) {
-    Album album = new Album().uuid(UPDATED_UUID).name(UPDATED_NAME);
+    Album album = new Album().uuid(UPDATED_UUID).name(UPDATED_NAME).note(UPDATED_NOTE).avatar(UPDATED_AVATAR);
     return album;
   }
 
@@ -133,6 +140,8 @@ class AlbumResourceIT {
     Album testAlbum = albumList.get(albumList.size() - 1);
     assertThat(testAlbum.getUuid()).isEqualTo(DEFAULT_UUID);
     assertThat(testAlbum.getName()).isEqualTo(DEFAULT_NAME);
+    assertThat(testAlbum.getNote()).isEqualTo(DEFAULT_NOTE);
+    assertThat(testAlbum.getAvatar()).isEqualTo(DEFAULT_AVATAR);
 
     // Validate the Album in Elasticsearch
     verify(mockAlbumSearchRepository, times(1)).save(testAlbum);
@@ -209,7 +218,9 @@ class AlbumResourceIT {
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
       .andExpect(jsonPath("$.[*].id").value(hasItem(album.getId().intValue())))
       .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
-      .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
+      .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+      .andExpect(jsonPath("$.[*].note").value(hasItem(DEFAULT_NOTE)))
+      .andExpect(jsonPath("$.[*].avatar").value(hasItem(DEFAULT_AVATAR.toString())));
   }
 
   @SuppressWarnings({ "unchecked" })
@@ -243,7 +254,9 @@ class AlbumResourceIT {
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
       .andExpect(jsonPath("$.id").value(album.getId().intValue()))
       .andExpect(jsonPath("$.uuid").value(DEFAULT_UUID.toString()))
-      .andExpect(jsonPath("$.name").value(DEFAULT_NAME));
+      .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
+      .andExpect(jsonPath("$.note").value(DEFAULT_NOTE))
+      .andExpect(jsonPath("$.avatar").value(DEFAULT_AVATAR.toString()));
   }
 
   @Test
@@ -396,6 +409,84 @@ class AlbumResourceIT {
 
   @Test
   @Transactional
+  void getAllAlbumsByNoteIsEqualToSomething() throws Exception {
+    // Initialize the database
+    albumRepository.saveAndFlush(album);
+
+    // Get all the albumList where note equals to DEFAULT_NOTE
+    defaultAlbumShouldBeFound("note.equals=" + DEFAULT_NOTE);
+
+    // Get all the albumList where note equals to UPDATED_NOTE
+    defaultAlbumShouldNotBeFound("note.equals=" + UPDATED_NOTE);
+  }
+
+  @Test
+  @Transactional
+  void getAllAlbumsByNoteIsNotEqualToSomething() throws Exception {
+    // Initialize the database
+    albumRepository.saveAndFlush(album);
+
+    // Get all the albumList where note not equals to DEFAULT_NOTE
+    defaultAlbumShouldNotBeFound("note.notEquals=" + DEFAULT_NOTE);
+
+    // Get all the albumList where note not equals to UPDATED_NOTE
+    defaultAlbumShouldBeFound("note.notEquals=" + UPDATED_NOTE);
+  }
+
+  @Test
+  @Transactional
+  void getAllAlbumsByNoteIsInShouldWork() throws Exception {
+    // Initialize the database
+    albumRepository.saveAndFlush(album);
+
+    // Get all the albumList where note in DEFAULT_NOTE or UPDATED_NOTE
+    defaultAlbumShouldBeFound("note.in=" + DEFAULT_NOTE + "," + UPDATED_NOTE);
+
+    // Get all the albumList where note equals to UPDATED_NOTE
+    defaultAlbumShouldNotBeFound("note.in=" + UPDATED_NOTE);
+  }
+
+  @Test
+  @Transactional
+  void getAllAlbumsByNoteIsNullOrNotNull() throws Exception {
+    // Initialize the database
+    albumRepository.saveAndFlush(album);
+
+    // Get all the albumList where note is not null
+    defaultAlbumShouldBeFound("note.specified=true");
+
+    // Get all the albumList where note is null
+    defaultAlbumShouldNotBeFound("note.specified=false");
+  }
+
+  @Test
+  @Transactional
+  void getAllAlbumsByNoteContainsSomething() throws Exception {
+    // Initialize the database
+    albumRepository.saveAndFlush(album);
+
+    // Get all the albumList where note contains DEFAULT_NOTE
+    defaultAlbumShouldBeFound("note.contains=" + DEFAULT_NOTE);
+
+    // Get all the albumList where note contains UPDATED_NOTE
+    defaultAlbumShouldNotBeFound("note.contains=" + UPDATED_NOTE);
+  }
+
+  @Test
+  @Transactional
+  void getAllAlbumsByNoteNotContainsSomething() throws Exception {
+    // Initialize the database
+    albumRepository.saveAndFlush(album);
+
+    // Get all the albumList where note does not contain DEFAULT_NOTE
+    defaultAlbumShouldNotBeFound("note.doesNotContain=" + DEFAULT_NOTE);
+
+    // Get all the albumList where note does not contain UPDATED_NOTE
+    defaultAlbumShouldBeFound("note.doesNotContain=" + UPDATED_NOTE);
+  }
+
+  @Test
+  @Transactional
   void getAllAlbumsByBaseInfoIsEqualToSomething() throws Exception {
     // Initialize the database
     albumRepository.saveAndFlush(album);
@@ -442,7 +533,9 @@ class AlbumResourceIT {
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
       .andExpect(jsonPath("$.[*].id").value(hasItem(album.getId().intValue())))
       .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
-      .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
+      .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+      .andExpect(jsonPath("$.[*].note").value(hasItem(DEFAULT_NOTE)))
+      .andExpect(jsonPath("$.[*].avatar").value(hasItem(DEFAULT_AVATAR.toString())));
 
     // Check, that the count call also returns 1
     restAlbumMockMvc
@@ -490,7 +583,7 @@ class AlbumResourceIT {
     Album updatedAlbum = albumRepository.findById(album.getId()).get();
     // Disconnect from session so that the updates on updatedAlbum are not directly saved in db
     em.detach(updatedAlbum);
-    updatedAlbum.uuid(UPDATED_UUID).name(UPDATED_NAME);
+    updatedAlbum.uuid(UPDATED_UUID).name(UPDATED_NAME).note(UPDATED_NOTE).avatar(UPDATED_AVATAR);
     AlbumDTO albumDTO = albumMapper.toDto(updatedAlbum);
 
     restAlbumMockMvc
@@ -507,6 +600,8 @@ class AlbumResourceIT {
     Album testAlbum = albumList.get(albumList.size() - 1);
     assertThat(testAlbum.getUuid()).isEqualTo(UPDATED_UUID);
     assertThat(testAlbum.getName()).isEqualTo(UPDATED_NAME);
+    assertThat(testAlbum.getNote()).isEqualTo(UPDATED_NOTE);
+    assertThat(testAlbum.getAvatar()).isEqualTo(UPDATED_AVATAR);
 
     // Validate the Album in Elasticsearch
     verify(mockAlbumSearchRepository).save(testAlbum);
@@ -598,7 +693,7 @@ class AlbumResourceIT {
     Album partialUpdatedAlbum = new Album();
     partialUpdatedAlbum.setId(album.getId());
 
-    partialUpdatedAlbum.name(UPDATED_NAME);
+    partialUpdatedAlbum.name(UPDATED_NAME).note(UPDATED_NOTE);
 
     restAlbumMockMvc
       .perform(
@@ -614,6 +709,8 @@ class AlbumResourceIT {
     Album testAlbum = albumList.get(albumList.size() - 1);
     assertThat(testAlbum.getUuid()).isEqualTo(DEFAULT_UUID);
     assertThat(testAlbum.getName()).isEqualTo(UPDATED_NAME);
+    assertThat(testAlbum.getNote()).isEqualTo(UPDATED_NOTE);
+    assertThat(testAlbum.getAvatar()).isEqualTo(DEFAULT_AVATAR);
   }
 
   @Test
@@ -628,7 +725,7 @@ class AlbumResourceIT {
     Album partialUpdatedAlbum = new Album();
     partialUpdatedAlbum.setId(album.getId());
 
-    partialUpdatedAlbum.uuid(UPDATED_UUID).name(UPDATED_NAME);
+    partialUpdatedAlbum.uuid(UPDATED_UUID).name(UPDATED_NAME).note(UPDATED_NOTE).avatar(UPDATED_AVATAR);
 
     restAlbumMockMvc
       .perform(
@@ -644,6 +741,8 @@ class AlbumResourceIT {
     Album testAlbum = albumList.get(albumList.size() - 1);
     assertThat(testAlbum.getUuid()).isEqualTo(UPDATED_UUID);
     assertThat(testAlbum.getName()).isEqualTo(UPDATED_NAME);
+    assertThat(testAlbum.getNote()).isEqualTo(UPDATED_NOTE);
+    assertThat(testAlbum.getAvatar()).isEqualTo(UPDATED_AVATAR);
   }
 
   @Test
@@ -755,6 +854,8 @@ class AlbumResourceIT {
       .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
       .andExpect(jsonPath("$.[*].id").value(hasItem(album.getId().intValue())))
       .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
-      .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
+      .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+      .andExpect(jsonPath("$.[*].note").value(hasItem(DEFAULT_NOTE)))
+      .andExpect(jsonPath("$.[*].avatar").value(hasItem(DEFAULT_AVATAR.toString())));
   }
 }

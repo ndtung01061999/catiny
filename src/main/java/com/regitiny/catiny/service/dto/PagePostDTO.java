@@ -38,6 +38,13 @@ public class PagePostDTO implements Serializable {
   private String name;
 
   /**
+   * avatar : @type Json -> ảnh đại diện của Page
+   */
+  @ApiModelProperty(value = "avatar : @type Json -> ảnh đại diện của Page")
+  @Lob
+  private String avatar;
+
+  /**
    * quickInfo      : @type Json ->thông tin nổi bật giới thiệu sơ qua về page
    */
   @ApiModelProperty(value = "quickInfo      : @type Json ->thông tin nổi bật giới thiệu sơ qua về page")
@@ -47,8 +54,6 @@ public class PagePostDTO implements Serializable {
   private PageProfileDTO profile;
 
   private BaseInfoDTO baseInfo;
-
-  private MasterUserDTO masterUser;
 
   public Long getId() {
     return id;
@@ -74,6 +79,14 @@ public class PagePostDTO implements Serializable {
     this.name = name;
   }
 
+  public String getAvatar() {
+    return avatar;
+  }
+
+  public void setAvatar(String avatar) {
+    this.avatar = avatar;
+  }
+
   public String getQuickInfo() {
     return quickInfo;
   }
@@ -96,14 +109,6 @@ public class PagePostDTO implements Serializable {
 
   public void setBaseInfo(BaseInfoDTO baseInfo) {
     this.baseInfo = baseInfo;
-  }
-
-  public MasterUserDTO getMasterUser() {
-    return masterUser;
-  }
-
-  public void setMasterUser(MasterUserDTO masterUser) {
-    this.masterUser = masterUser;
   }
 
   @Override
@@ -134,10 +139,10 @@ public class PagePostDTO implements Serializable {
             "id=" + getId() +
             ", uuid='" + getUuid() + "'" +
             ", name='" + getName() + "'" +
+            ", avatar='" + getAvatar() + "'" +
             ", quickInfo='" + getQuickInfo() + "'" +
             ", profile=" + getProfile() +
             ", baseInfo=" + getBaseInfo() +
-            ", masterUser=" + getMasterUser() +
             "}";
     }
 }

@@ -9,10 +9,15 @@ export default class ImageUpdatePage {
   cancelButton: ElementFinder = element(by.id('cancel-save'));
   uuidInput: ElementFinder = element(by.css('input#image-uuid'));
   nameInput: ElementFinder = element(by.css('input#image-name'));
+  widthInput: ElementFinder = element(by.css('input#image-width'));
+  heightInput: ElementFinder = element(by.css('input#image-height'));
+  qualityInput: ElementFinder = element(by.css('input#image-quality'));
+  pixelSizeInput: ElementFinder = element(by.css('input#image-pixelSize'));
+  priorityIndexInput: ElementFinder = element(by.css('input#image-priorityIndex'));
+  dataSizeInput: ElementFinder = element(by.css('input#image-dataSize'));
   fileInfoSelect: ElementFinder = element(by.css('select#image-fileInfo'));
   baseInfoSelect: ElementFinder = element(by.css('select#image-baseInfo'));
   imageOriginalSelect: ElementFinder = element(by.css('select#image-imageOriginal'));
-  eventSelect: ElementFinder = element(by.css('select#image-event'));
 
   getPageTitle() {
     return this.pageTitle;
@@ -32,6 +37,54 @@ export default class ImageUpdatePage {
 
   async getNameInput() {
     return this.nameInput.getAttribute('value');
+  }
+
+  async setWidthInput(width) {
+    await this.widthInput.sendKeys(width);
+  }
+
+  async getWidthInput() {
+    return this.widthInput.getAttribute('value');
+  }
+
+  async setHeightInput(height) {
+    await this.heightInput.sendKeys(height);
+  }
+
+  async getHeightInput() {
+    return this.heightInput.getAttribute('value');
+  }
+
+  async setQualityInput(quality) {
+    await this.qualityInput.sendKeys(quality);
+  }
+
+  async getQualityInput() {
+    return this.qualityInput.getAttribute('value');
+  }
+
+  async setPixelSizeInput(pixelSize) {
+    await this.pixelSizeInput.sendKeys(pixelSize);
+  }
+
+  async getPixelSizeInput() {
+    return this.pixelSizeInput.getAttribute('value');
+  }
+
+  async setPriorityIndexInput(priorityIndex) {
+    await this.priorityIndexInput.sendKeys(priorityIndex);
+  }
+
+  async getPriorityIndexInput() {
+    return this.priorityIndexInput.getAttribute('value');
+  }
+
+  async setDataSizeInput(dataSize) {
+    await this.dataSizeInput.sendKeys(dataSize);
+  }
+
+  async getDataSizeInput() {
+    return this.dataSizeInput.getAttribute('value');
   }
 
   async fileInfoSelectLastOption() {
@@ -82,22 +135,6 @@ export default class ImageUpdatePage {
     return this.imageOriginalSelect.element(by.css('option:checked')).getText();
   }
 
-  async eventSelectLastOption() {
-    await this.eventSelect.all(by.tagName('option')).last().click();
-  }
-
-  async eventSelectOption(option) {
-    await this.eventSelect.sendKeys(option);
-  }
-
-  getEventSelect() {
-    return this.eventSelect;
-  }
-
-  async getEventSelectedOption() {
-    return this.eventSelect.element(by.css('option:checked')).getText();
-  }
-
   async save() {
     await this.saveButton.click();
   }
@@ -115,10 +152,21 @@ export default class ImageUpdatePage {
     await this.setUuidInput('64c99148-3908-465d-8c4a-e510e3ade974');
     await waitUntilDisplayed(this.saveButton);
     await this.setNameInput('name');
+    await waitUntilDisplayed(this.saveButton);
+    await this.setWidthInput('5');
+    await waitUntilDisplayed(this.saveButton);
+    await this.setHeightInput('5');
+    await waitUntilDisplayed(this.saveButton);
+    await this.setQualityInput('5');
+    await waitUntilDisplayed(this.saveButton);
+    await this.setPixelSizeInput('5');
+    await waitUntilDisplayed(this.saveButton);
+    await this.setPriorityIndexInput('5');
+    await waitUntilDisplayed(this.saveButton);
+    await this.setDataSizeInput('5');
     await this.fileInfoSelectLastOption();
     await this.baseInfoSelectLastOption();
     await this.imageOriginalSelectLastOption();
-    await this.eventSelectLastOption();
     await this.save();
     await waitUntilHidden(this.saveButton);
   }

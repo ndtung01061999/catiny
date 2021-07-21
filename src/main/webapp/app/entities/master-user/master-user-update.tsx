@@ -6,20 +6,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IUser } from 'app/shared/model/user.model';
 import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
-import { IUserProfile } from 'app/shared/model/user-profile.model';
-import { getEntities as getUserProfiles } from 'app/entities/user-profile/user-profile.reducer';
-import { IAccountStatus } from 'app/shared/model/account-status.model';
-import { getEntities as getAccountStatuses } from 'app/entities/account-status/account-status.reducer';
 import { IRankUser } from 'app/shared/model/rank-user.model';
 import { getEntities as getRankUsers } from 'app/entities/rank-user/rank-user.reducer';
-import { IImage } from 'app/shared/model/image.model';
-import { getEntities as getImages } from 'app/entities/image/image.reducer';
 import { IBaseInfo } from 'app/shared/model/base-info.model';
 import { getEntities as getBaseInfos } from 'app/entities/base-info/base-info.reducer';
-import { IGroupPost } from 'app/shared/model/group-post.model';
-import { getEntities as getGroupPosts } from 'app/entities/group-post/group-post.reducer';
-import { IMessageGroup } from 'app/shared/model/message-group.model';
-import { getEntities as getMessageGroups } from 'app/entities/message-group/message-group.reducer';
 import { ITopicInterest } from 'app/shared/model/topic-interest.model';
 import { getEntities as getTopicInterests } from 'app/entities/topic-interest/topic-interest.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './master-user.reducer';
@@ -34,13 +24,8 @@ export const MasterUserUpdate = (props: RouteComponentProps<{ id: string }>) => 
   const [isNew] = useState(!props.match.params || !props.match.params.id);
 
   const users = useAppSelector(state => state.userManagement.users);
-  const userProfiles = useAppSelector(state => state.userProfile.entities);
-  const accountStatuses = useAppSelector(state => state.accountStatus.entities);
   const rankUsers = useAppSelector(state => state.rankUser.entities);
-  const images = useAppSelector(state => state.image.entities);
   const baseInfos = useAppSelector(state => state.baseInfo.entities);
-  const groupPosts = useAppSelector(state => state.groupPost.entities);
-  const messageGroups = useAppSelector(state => state.messageGroup.entities);
   const topicInterests = useAppSelector(state => state.topicInterest.entities);
   const masterUserEntity = useAppSelector(state => state.masterUser.entity);
   const loading = useAppSelector(state => state.masterUser.loading);
@@ -57,13 +42,8 @@ export const MasterUserUpdate = (props: RouteComponentProps<{ id: string }>) => 
     }
 
     dispatch(getUsers({}));
-    dispatch(getUserProfiles({}));
-    dispatch(getAccountStatuses({}));
     dispatch(getRankUsers({}));
-    dispatch(getImages({}));
     dispatch(getBaseInfos({}));
-    dispatch(getGroupPosts({}));
-    dispatch(getMessageGroups({}));
     dispatch(getTopicInterests({}));
   }, []);
 
@@ -77,14 +57,9 @@ export const MasterUserUpdate = (props: RouteComponentProps<{ id: string }>) => 
     const entity = {
       ...masterUserEntity,
       ...values,
-      myGroupPosts: mapIdList(values.myGroupPosts),
-      messageGroups: mapIdList(values.messageGroups),
       topicInterests: mapIdList(values.topicInterests),
       user: users.find(it => it.id.toString() === values.userId.toString()),
-      myProfile: userProfiles.find(it => it.id.toString() === values.myProfileId.toString()),
-      myAccountStatus: accountStatuses.find(it => it.id.toString() === values.myAccountStatusId.toString()),
       myRank: rankUsers.find(it => it.id.toString() === values.myRankId.toString()),
-      avatar: images.find(it => it.id.toString() === values.avatarId.toString()),
       baseInfo: baseInfos.find(it => it.id.toString() === values.baseInfoId.toString()),
     };
 
@@ -101,13 +76,8 @@ export const MasterUserUpdate = (props: RouteComponentProps<{ id: string }>) => 
       : {
           ...masterUserEntity,
           userId: masterUserEntity?.user?.id,
-          myProfileId: masterUserEntity?.myProfile?.id,
-          myAccountStatusId: masterUserEntity?.myAccountStatus?.id,
           myRankId: masterUserEntity?.myRank?.id,
-          avatarId: masterUserEntity?.avatar?.id,
           baseInfoId: masterUserEntity?.baseInfo?.id,
-          myGroupPosts: masterUserEntity?.myGroupPosts?.map(e => e.id.toString()),
-          messageGroups: masterUserEntity?.messageGroups?.map(e => e.id.toString()),
           topicInterests: masterUserEntity?.topicInterests?.map(e => e.id.toString()),
         };
 
@@ -173,6 +143,16 @@ export const MasterUserUpdate = (props: RouteComponentProps<{ id: string }>) => 
                 <Translate contentKey="catinyApp.masterUser.help.nickname" />
               </UncontrolledTooltip>
               <ValidatedField
+                label={translate('catinyApp.masterUser.avatar')}
+                id="master-user-avatar"
+                name="avatar"
+                data-cy="avatar"
+                type="textarea"
+              />
+              <UncontrolledTooltip target="avatarLabel">
+                <Translate contentKey="catinyApp.masterUser.help.avatar" />
+              </UncontrolledTooltip>
+              <ValidatedField
                 label={translate('catinyApp.masterUser.quickInfo')}
                 id="master-user-quickInfo"
                 name="quickInfo"
@@ -199,38 +179,6 @@ export const MasterUserUpdate = (props: RouteComponentProps<{ id: string }>) => 
                   : null}
               </ValidatedField>
               <ValidatedField
-                id="master-user-myProfile"
-                name="myProfileId"
-                data-cy="myProfile"
-                label={translate('catinyApp.masterUser.myProfile')}
-                type="select"
-              >
-                <option value="" key="0" />
-                {userProfiles
-                  ? userProfiles.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField
-                id="master-user-myAccountStatus"
-                name="myAccountStatusId"
-                data-cy="myAccountStatus"
-                label={translate('catinyApp.masterUser.myAccountStatus')}
-                type="select"
-              >
-                <option value="" key="0" />
-                {accountStatuses
-                  ? accountStatuses.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField
                 id="master-user-myRank"
                 name="myRankId"
                 data-cy="myRank"
@@ -247,22 +195,6 @@ export const MasterUserUpdate = (props: RouteComponentProps<{ id: string }>) => 
                   : null}
               </ValidatedField>
               <ValidatedField
-                id="master-user-avatar"
-                name="avatarId"
-                data-cy="avatar"
-                label={translate('catinyApp.masterUser.avatar')}
-                type="select"
-              >
-                <option value="" key="0" />
-                {images
-                  ? images.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField
                 id="master-user-baseInfo"
                 name="baseInfoId"
                 data-cy="baseInfo"
@@ -272,40 +204,6 @@ export const MasterUserUpdate = (props: RouteComponentProps<{ id: string }>) => 
                 <option value="" key="0" />
                 {baseInfos
                   ? baseInfos.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField
-                label={translate('catinyApp.masterUser.myGroupPost')}
-                id="master-user-myGroupPost"
-                data-cy="myGroupPost"
-                type="select"
-                multiple
-                name="myGroupPosts"
-              >
-                <option value="" key="0" />
-                {groupPosts
-                  ? groupPosts.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField
-                label={translate('catinyApp.masterUser.messageGroup')}
-                id="master-user-messageGroup"
-                data-cy="messageGroup"
-                type="select"
-                multiple
-                name="messageGroups"
-              >
-                <option value="" key="0" />
-                {messageGroups
-                  ? messageGroups.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

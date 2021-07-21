@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, UncontrolledTooltip, Row, Col } from 'reactstrap';
-import { Translate } from 'react-jhipster';
+import { Translate, byteSize } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { getEntity } from './album.reducer';
@@ -42,8 +42,29 @@ export const AlbumDetail = (props: RouteComponentProps<{ id: string }>) => {
             <span id="name">
               <Translate contentKey="catinyApp.album.name">Name</Translate>
             </span>
+            <UncontrolledTooltip target="name">
+              <Translate contentKey="catinyApp.album.help.name" />
+            </UncontrolledTooltip>
           </dt>
           <dd>{albumEntity.name}</dd>
+          <dt>
+            <span id="note">
+              <Translate contentKey="catinyApp.album.note">Note</Translate>
+            </span>
+            <UncontrolledTooltip target="note">
+              <Translate contentKey="catinyApp.album.help.note" />
+            </UncontrolledTooltip>
+          </dt>
+          <dd>{albumEntity.note}</dd>
+          <dt>
+            <span id="avatar">
+              <Translate contentKey="catinyApp.album.avatar">Avatar</Translate>
+            </span>
+            <UncontrolledTooltip target="avatar">
+              <Translate contentKey="catinyApp.album.help.avatar" />
+            </UncontrolledTooltip>
+          </dt>
+          <dd>{albumEntity.avatar}</dd>
           <dt>
             <Translate contentKey="catinyApp.album.baseInfo">Base Info</Translate>
           </dt>

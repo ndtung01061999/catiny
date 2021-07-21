@@ -6,8 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IBaseInfo } from 'app/shared/model/base-info.model';
 import { getEntities as getBaseInfos } from 'app/entities/base-info/base-info.reducer';
-import { IMasterUser } from 'app/shared/model/master-user.model';
-import { getEntities as getMasterUsers } from 'app/entities/master-user/master-user.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './notification.reducer';
 import { INotification } from 'app/shared/model/notification.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -20,7 +18,6 @@ export const NotificationUpdate = (props: RouteComponentProps<{ id: string }>) =
   const [isNew] = useState(!props.match.params || !props.match.params.id);
 
   const baseInfos = useAppSelector(state => state.baseInfo.entities);
-  const masterUsers = useAppSelector(state => state.masterUser.entities);
   const notificationEntity = useAppSelector(state => state.notification.entity);
   const loading = useAppSelector(state => state.notification.loading);
   const updating = useAppSelector(state => state.notification.updating);
@@ -36,7 +33,6 @@ export const NotificationUpdate = (props: RouteComponentProps<{ id: string }>) =
     }
 
     dispatch(getBaseInfos({}));
-    dispatch(getMasterUsers({}));
   }, []);
 
   useEffect(() => {
@@ -50,7 +46,6 @@ export const NotificationUpdate = (props: RouteComponentProps<{ id: string }>) =
       ...notificationEntity,
       ...values,
       baseInfo: baseInfos.find(it => it.id.toString() === values.baseInfoId.toString()),
-      masterUser: masterUsers.find(it => it.id.toString() === values.masterUserId.toString()),
     };
 
     if (isNew) {
@@ -67,7 +62,6 @@ export const NotificationUpdate = (props: RouteComponentProps<{ id: string }>) =
           ...notificationEntity,
           notifyType: 'SYSTEM',
           baseInfoId: notificationEntity?.baseInfo?.id,
-          masterUserId: notificationEntity?.masterUser?.id,
         };
 
   return (
@@ -148,22 +142,6 @@ export const NotificationUpdate = (props: RouteComponentProps<{ id: string }>) =
                 <option value="" key="0" />
                 {baseInfos
                   ? baseInfos.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField
-                id="notification-masterUser"
-                name="masterUserId"
-                data-cy="masterUser"
-                label={translate('catinyApp.notification.masterUser')}
-                type="select"
-              >
-                <option value="" key="0" />
-                {masterUsers
-                  ? masterUsers.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

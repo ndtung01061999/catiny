@@ -1,7 +1,6 @@
 package com.regitiny.catiny.advance.controller.model;
 
 import com.regitiny.catiny.service.dto.BaseInfoDTO;
-import com.regitiny.catiny.service.dto.MasterUserDTO;
 import com.regitiny.catiny.service.dto.PageProfileDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -36,6 +35,10 @@ public class PagePostModel implements Serializable
   )
   private String name;
 
+  @ApiModelProperty("avatar : @type Json -> ảnh đại diện của Page")
+  @Lob
+  private String avatar;
+
   @ApiModelProperty("quickInfo      : @type Json ->thông tin nổi bật giới thiệu sơ qua về page")
   @Lob
   private String quickInfo;
@@ -43,8 +46,6 @@ public class PagePostModel implements Serializable
   private PageProfileDTO profile;
 
   private BaseInfoDTO baseInfo;
-
-  private MasterUserDTO masterUser;
 
   @Data
   @Builder
@@ -68,6 +69,10 @@ public class PagePostModel implements Serializable
     )
     private String name;
 
+    @ApiModelProperty("avatar : @type Json -> ảnh đại diện của Page")
+    @Lob
+    private String avatar;
+
     @ApiModelProperty("quickInfo      : @type Json ->thông tin nổi bật giới thiệu sơ qua về page")
     @Lob
     private String quickInfo;
@@ -75,8 +80,6 @@ public class PagePostModel implements Serializable
     private PageProfileDTO profile;
 
     private BaseInfoDTO baseInfo;
-
-    private MasterUserDTO masterUser;
   }
 
   @Data
@@ -101,6 +104,10 @@ public class PagePostModel implements Serializable
     )
     private String name;
 
+    @ApiModelProperty("avatar : @type Json -> ảnh đại diện của Page")
+    @Lob
+    private String avatar;
+
     @ApiModelProperty("quickInfo      : @type Json ->thông tin nổi bật giới thiệu sơ qua về page")
     @Lob
     private String quickInfo;
@@ -108,7 +115,5 @@ public class PagePostModel implements Serializable
     private PageProfileDTO profile;
 
     private BaseInfoDTO baseInfo;
-
-    private MasterUserDTO masterUser;
   }
 }

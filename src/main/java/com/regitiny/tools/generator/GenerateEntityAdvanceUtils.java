@@ -1,5 +1,8 @@
 package com.regitiny.tools.generator;
 
+import com.regitiny.catiny.advance.repository.CommonRepository;
+import com.regitiny.catiny.advance.repository.base.BaseRepository;
+import com.regitiny.catiny.advance.repository.search.base.BaseSearch;
 import com.regitiny.catiny.advance.service.LocalService;
 import com.regitiny.catiny.advance.service.impl.LocalServiceImpl;
 import com.regitiny.catiny.advance.service.mapper.EntityAdvanceMapper;
@@ -18,6 +21,7 @@ import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang.WordUtils;
 import org.mapstruct.Mapper;
+import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +38,7 @@ import java.util.stream.Collectors;
 public class GenerateEntityAdvanceUtils
 {
   private static final String BASE_PACKAGE = "com.regitiny.catiny";
+  private static final String DOMAIN_PACKAGE = BASE_PACKAGE + ".domain";
   private static final String ENTITY_NAME = "${entityName}";
 
   private static String entityName(String entityName)
@@ -109,6 +114,8 @@ public class GenerateEntityAdvanceUtils
     var interfaceBaseRepository = TypeSpec.interfaceBuilder(entityName + "BaseRepository")
       .addModifiers(Modifier.PUBLIC)
       .addJavadoc(javadoc)
+      .addSuperinterface(ParameterizedTypeName.get(ClassName.get(BaseRepository.class), ClassName.get(DOMAIN_PACKAGE, entityName)))
+      .addSuperinterface(ParameterizedTypeName.get(ClassName.get(CommonRepository.class), ClassName.get(DOMAIN_PACKAGE, entityName)))
       .addSuperinterface(ClassName.get(packageRepository, entityRepository))
       .build();
 
@@ -162,7 +169,11 @@ public class GenerateEntityAdvanceUtils
     var interfaceBaseSearch = TypeSpec.interfaceBuilder(entityBaseSearch)
       .addModifiers(Modifier.PUBLIC)
       .addJavadoc(javadoc)
-      .addSuperinterface(ClassName.get(packageSearch, entitySearch))
+      .addSuperinterface(ParameterizedTypeName.get(ClassName.get(BaseSearch.class), ClassName.get(DOMAIN_PACKAGE, entityName)))
+      .addSuperinterface(ParameterizedTypeName.get(ClassName.get(CommonRepository.class), ClassName.get(DOMAIN_PACKAGE, entityName)))
+      .addSuperinterface(ParameterizedTypeName.get(ClassName.get(ElasticsearchRepository.class),
+        ClassName.get(BASE_PACKAGE + ".domain", entityName),
+        ClassName.get(Long.class)))
       .build();
     var javaFileBaseSearch = JavaFile.builder(packageAdvanceSearch + ".base", interfaceBaseSearch).build();
     log.debug("...BaseSearch after generated : {}", javaFileBaseSearch.toString());

@@ -218,9 +218,6 @@ export const Post = (props: RouteComponentProps<{ url: string }>) => {
                   <th>
                     <Translate contentKey="catinyApp.post.postShareParent">Post Share Parent</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
-                  <th>
-                    <Translate contentKey="catinyApp.post.poster">Poster</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
                   <th />
                 </tr>
               </thead>
@@ -245,7 +242,6 @@ export const Post = (props: RouteComponentProps<{ url: string }>) => {
                     <td>{post.groupPost ? <Link to={`group-post/${post.groupPost.id}`}>{post.groupPost.id}</Link> : ''}</td>
                     <td>{post.pagePost ? <Link to={`page-post/${post.pagePost.id}`}>{post.pagePost.id}</Link> : ''}</td>
                     <td>{post.postShareParent ? <Link to={`post/${post.postShareParent.id}`}>{post.postShareParent.id}</Link> : ''}</td>
-                    <td>{post.poster ? <Link to={`master-user/${post.poster.id}`}>{post.poster.id}</Link> : ''}</td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${post.id}`} color="info" size="sm" data-cy="entityDetailsButton">

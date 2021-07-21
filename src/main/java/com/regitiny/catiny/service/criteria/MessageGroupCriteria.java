@@ -39,8 +39,6 @@ public class MessageGroupCriteria implements Serializable, Criteria {
 
   private LongFilter messageContentId;
 
-  private LongFilter masterUserId;
-
   public MessageGroupCriteria() {}
 
   public MessageGroupCriteria(MessageGroupCriteria other) {
@@ -50,7 +48,6 @@ public class MessageGroupCriteria implements Serializable, Criteria {
     this.addBy = other.addBy == null ? null : other.addBy.copy();
     this.baseInfoId = other.baseInfoId == null ? null : other.baseInfoId.copy();
     this.messageContentId = other.messageContentId == null ? null : other.messageContentId.copy();
-    this.masterUserId = other.masterUserId == null ? null : other.masterUserId.copy();
   }
 
   @Override
@@ -148,21 +145,6 @@ public class MessageGroupCriteria implements Serializable, Criteria {
     this.messageContentId = messageContentId;
   }
 
-  public LongFilter getMasterUserId() {
-    return masterUserId;
-  }
-
-  public LongFilter masterUserId() {
-    if (masterUserId == null) {
-      masterUserId = new LongFilter();
-    }
-    return masterUserId;
-  }
-
-  public void setMasterUserId(LongFilter masterUserId) {
-    this.masterUserId = masterUserId;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -178,14 +160,13 @@ public class MessageGroupCriteria implements Serializable, Criteria {
       Objects.equals(groupName, that.groupName) &&
       Objects.equals(addBy, that.addBy) &&
       Objects.equals(baseInfoId, that.baseInfoId) &&
-      Objects.equals(messageContentId, that.messageContentId) &&
-      Objects.equals(masterUserId, that.masterUserId)
+      Objects.equals(messageContentId, that.messageContentId)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, uuid, groupName, addBy, baseInfoId, messageContentId, masterUserId);
+    return Objects.hash(id, uuid, groupName, addBy, baseInfoId, messageContentId);
   }
 
   // prettier-ignore
@@ -198,7 +179,6 @@ public class MessageGroupCriteria implements Serializable, Criteria {
             (addBy != null ? "addBy=" + addBy + ", " : "") +
             (baseInfoId != null ? "baseInfoId=" + baseInfoId + ", " : "") +
             (messageContentId != null ? "messageContentId=" + messageContentId + ", " : "") +
-            (masterUserId != null ? "masterUserId=" + masterUserId + ", " : "") +
             "}";
     }
 }

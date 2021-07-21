@@ -201,9 +201,6 @@ export const PostComment = (props: RouteComponentProps<{ url: string }>) => {
                     <Translate contentKey="catinyApp.postComment.baseInfo">Base Info</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
                   <th>
-                    <Translate contentKey="catinyApp.postComment.userComment">User Comment</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th>
                     <Translate contentKey="catinyApp.postComment.post">Post</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
                   <th>
@@ -224,13 +221,6 @@ export const PostComment = (props: RouteComponentProps<{ url: string }>) => {
                     <td>{postComment.content}</td>
                     <td>
                       {postComment.baseInfo ? <Link to={`base-info/${postComment.baseInfo.id}`}>{postComment.baseInfo.id}</Link> : ''}
-                    </td>
-                    <td>
-                      {postComment.userComment ? (
-                        <Link to={`master-user/${postComment.userComment.id}`}>{postComment.userComment.id}</Link>
-                      ) : (
-                        ''
-                      )}
                     </td>
                     <td>{postComment.post ? <Link to={`post/${postComment.post.id}`}>{postComment.post.id}</Link> : ''}</td>
                     <td>

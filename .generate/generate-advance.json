@@ -204,6 +204,18 @@
         "com/regitiny/catiny/advance/controller/model/GroupPostModel.java": true
       }
     },
+    "Permission": {
+      "generated": {
+        "com/regitiny/catiny/advance/repository/search/base/PermissionBaseSearch.java": true,
+        "com/regitiny/catiny/advance/repository/PermissionAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/service/impl/PermissionAdvanceServiceImpl.java": true,
+        "com/regitiny/catiny/advance/repository/search/PermissionAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/service/PermissionAdvanceService.java": true,
+        "com/regitiny/catiny/advance/repository/base/PermissionBaseRepository.java": true,
+        "com/regitiny/catiny/advance/controller/model/PermissionModel.java": true,
+        "com/regitiny/catiny/advance/service/mapper/PermissionAdvanceMapper.java": true
+      }
+    },
     "TopicInterest": {
       "generated": {
         "com/regitiny/catiny/advance/controller/model/TopicInterestModel.java": true,
@@ -360,6 +372,18 @@
         "com/regitiny/catiny/advance/service/impl/PagePostAdvanceServiceImpl.java": true
       }
     },
+    "HistoryUpdate": {
+      "generated": {
+        "com/regitiny/catiny/advance/service/impl/HistoryUpdateAdvanceServiceImpl.java": true,
+        "com/regitiny/catiny/advance/repository/HistoryUpdateAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/repository/search/HistoryUpdateAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/repository/search/base/HistoryUpdateBaseSearch.java": true,
+        "com/regitiny/catiny/advance/controller/model/HistoryUpdateModel.java": true,
+        "com/regitiny/catiny/advance/repository/base/HistoryUpdateBaseRepository.java": true,
+        "com/regitiny/catiny/advance/service/mapper/HistoryUpdateAdvanceMapper.java": true,
+        "com/regitiny/catiny/advance/service/HistoryUpdateAdvanceService.java": true
+      }
+    },
     "HanhChinhVN": {
       "generated": {
         "com/regitiny/catiny/advance/repository/search/HanhChinhVNAdvanceSearch.java": true,
@@ -382,6 +406,18 @@
         "com/regitiny/catiny/advance/repository/TodoListAdvanceRepository.java": true,
         "com/regitiny/catiny/advance/repository/search/TodoListAdvanceSearch.java": true,
         "com/regitiny/catiny/advance/service/mapper/TodoListAdvanceMapper.java": true
+      }
+    },
+    "ClassInfo": {
+      "generated": {
+        "com/regitiny/catiny/advance/repository/ClassInfoAdvanceRepository.java": true,
+        "com/regitiny/catiny/advance/repository/search/ClassInfoAdvanceSearch.java": true,
+        "com/regitiny/catiny/advance/controller/model/ClassInfoModel.java": true,
+        "com/regitiny/catiny/advance/service/impl/ClassInfoAdvanceServiceImpl.java": true,
+        "com/regitiny/catiny/advance/repository/search/base/ClassInfoBaseSearch.java": true,
+        "com/regitiny/catiny/advance/service/mapper/ClassInfoAdvanceMapper.java": true,
+        "com/regitiny/catiny/advance/service/ClassInfoAdvanceService.java": true,
+        "com/regitiny/catiny/advance/repository/base/ClassInfoBaseRepository.java": true
       }
     }
   }

@@ -30,28 +30,43 @@ public class MessageContentDTO implements Serializable {
   )
   private UUID uuid;
 
+  /**
+   * senderName     : tên người gửi
+   */
+  @ApiModelProperty(value = "senderName     : tên người gửi")
+  private String senderName;
+
+  /**
+   * attachInfo     : đính kèm tệp ảnh video ...
+   */
+  @ApiModelProperty(value = "attachInfo     : đính kèm tệp ảnh video ...")
+  @Lob
+  private String attach;
+
+  /**
+   * content        : nội dung tin nhắn
+   */
+  @ApiModelProperty(value = "content        : nội dung tin nhắn")
   @Lob
   private String content;
 
   /**
-   * status : trạng thái của tin nhắn này, đã gửi chưa , ai đã nhận được , đã xem chưa đã thu hồi hay đã xóa...\n@type           : Json
+   * status         : trạng thái của tin nhắn này, đã gửi chưa , ai đã nhận được , đã xem chưa đã thu hồi hay đã xóa...
    */
   @ApiModelProperty(
-    value = "status : trạng thái của tin nhắn này, đã gửi chưa , ai đã nhận được , đã xem chưa đã thu hồi hay đã xóa...\n@type           : Json"
+    value = "status         : trạng thái của tin nhắn này, đã gửi chưa , ai đã nhận được , đã xem chưa đã thu hồi hay đã xóa..."
   )
   @Lob
   private String status;
 
   /**
-   * searchField : lưu content tin nhắn lọc dấu ... để sau này search
+   * searchField    : lưu content tin nhắn lọc dấu ... để sau này search
    */
-  @ApiModelProperty(value = "searchField : lưu content tin nhắn lọc dấu ... để sau này search")
+  @ApiModelProperty(value = "searchField    : lưu content tin nhắn lọc dấu ... để sau này search")
   @Lob
   private String searchField;
 
   private BaseInfoDTO baseInfo;
-
-  private MasterUserDTO sender;
 
   private MessageGroupDTO messageGroup;
 
@@ -69,6 +84,22 @@ public class MessageContentDTO implements Serializable {
 
   public void setUuid(UUID uuid) {
     this.uuid = uuid;
+  }
+
+  public String getSenderName() {
+    return senderName;
+  }
+
+  public void setSenderName(String senderName) {
+    this.senderName = senderName;
+  }
+
+  public String getAttach() {
+    return attach;
+  }
+
+  public void setAttach(String attach) {
+    this.attach = attach;
   }
 
   public String getContent() {
@@ -101,14 +132,6 @@ public class MessageContentDTO implements Serializable {
 
   public void setBaseInfo(BaseInfoDTO baseInfo) {
     this.baseInfo = baseInfo;
-  }
-
-  public MasterUserDTO getSender() {
-    return sender;
-  }
-
-  public void setSender(MasterUserDTO sender) {
-    this.sender = sender;
   }
 
   public MessageGroupDTO getMessageGroup() {
@@ -146,11 +169,12 @@ public class MessageContentDTO implements Serializable {
         return "MessageContentDTO{" +
             "id=" + getId() +
             ", uuid='" + getUuid() + "'" +
+            ", senderName='" + getSenderName() + "'" +
+            ", attach='" + getAttach() + "'" +
             ", content='" + getContent() + "'" +
             ", status='" + getStatus() + "'" +
             ", searchField='" + getSearchField() + "'" +
             ", baseInfo=" + getBaseInfo() +
-            ", sender=" + getSender() +
             ", messageGroup=" + getMessageGroup() +
             "}";
     }

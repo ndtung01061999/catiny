@@ -72,7 +72,7 @@ class NewsFeedGatlingTest extends Simulation {
             .headers(headers_http_authenticated)
             .body(StringBody("""{
                 "uuid":null
-                , "score":"0"
+                , "priorityIndex":"0"
                 }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_newsFeed_url"))).exitHereIfFailed

@@ -41,8 +41,6 @@ public class FileInfoCriteria implements Serializable, Criteria {
 
   private LongFilter baseInfoId;
 
-  private LongFilter masterUserId;
-
   public FileInfoCriteria() {}
 
   public FileInfoCriteria(FileInfoCriteria other) {
@@ -53,7 +51,6 @@ public class FileInfoCriteria implements Serializable, Criteria {
     this.path = other.path == null ? null : other.path.copy();
     this.dataSize = other.dataSize == null ? null : other.dataSize.copy();
     this.baseInfoId = other.baseInfoId == null ? null : other.baseInfoId.copy();
-    this.masterUserId = other.masterUserId == null ? null : other.masterUserId.copy();
   }
 
   @Override
@@ -166,21 +163,6 @@ public class FileInfoCriteria implements Serializable, Criteria {
     this.baseInfoId = baseInfoId;
   }
 
-  public LongFilter getMasterUserId() {
-    return masterUserId;
-  }
-
-  public LongFilter masterUserId() {
-    if (masterUserId == null) {
-      masterUserId = new LongFilter();
-    }
-    return masterUserId;
-  }
-
-  public void setMasterUserId(LongFilter masterUserId) {
-    this.masterUserId = masterUserId;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -197,14 +179,13 @@ public class FileInfoCriteria implements Serializable, Criteria {
       Objects.equals(typeFile, that.typeFile) &&
       Objects.equals(path, that.path) &&
       Objects.equals(dataSize, that.dataSize) &&
-      Objects.equals(baseInfoId, that.baseInfoId) &&
-      Objects.equals(masterUserId, that.masterUserId)
+      Objects.equals(baseInfoId, that.baseInfoId)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, uuid, nameFile, typeFile, path, dataSize, baseInfoId, masterUserId);
+    return Objects.hash(id, uuid, nameFile, typeFile, path, dataSize, baseInfoId);
   }
 
   // prettier-ignore
@@ -218,7 +199,6 @@ public class FileInfoCriteria implements Serializable, Criteria {
             (path != null ? "path=" + path + ", " : "") +
             (dataSize != null ? "dataSize=" + dataSize + ", " : "") +
             (baseInfoId != null ? "baseInfoId=" + baseInfoId + ", " : "") +
-            (masterUserId != null ? "masterUserId=" + masterUserId + ", " : "") +
             "}";
     }
 }

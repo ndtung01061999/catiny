@@ -2,16 +2,18 @@ package com.regitiny.catiny.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.regitiny.catiny.GeneratedByJHipster;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
-import javax.persistence.*;
-import javax.validation.constraints.*;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Type;
-import org.springframework.data.elasticsearch.annotations.FieldType;
 
 /**
  * @what?            -> The Image entity.\n@why?             ->\n@use-to           -> Lưu thông tin Ảnh mà người dùng upload lên\n@commonly-used-in ->\n\n@describe         ->
@@ -38,16 +40,59 @@ public class Image implements Serializable {
   @Column(name = "uuid", length = 36, nullable = false, unique = true)
   private UUID uuid;
 
+  /**
+   * name           : tên của ảnh . muốn lấy ảnh sẽ gọi theo tên này. sẽ ra một danh sách các anh gồm (ảnh nguyên gốc , các ảnh đã tối ưu , cắt ... từ ảnh gốc đó)
+   */
   @Column(name = "name")
   private String name;
 
-  @JsonIgnoreProperties(value = { "baseInfo", "masterUser" }, allowSetters = true)
+  /**
+   * width          : chiều rộng ảnh
+   */
+  @Column(name = "width")
+  private Integer width;
+
+  /**
+   * height         : chiều cao ảnh
+   */
+  @Column(name = "height")
+  private Integer height;
+
+  /**
+   * quality        : chất lượng sau khi xử lý
+   */
+  @DecimalMin(value = "0")
+  @DecimalMax(value = "1")
+  @Column(name = "quality")
+  private Float quality;
+
+  /**
+   * pixelSize      : kích thước của ảnh
+   */
+  @Column(name = "pixel_size")
+  private Integer pixelSize;
+
+  /**
+   * priorityIndex  : chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)
+   */
+  @Column(name = "priority_index")
+  private Long priorityIndex;
+
+  /**
+   * dataSize       : kích thước file theo byte
+   */
+  @Column(name = "data_size")
+  private Long dataSize;
+
+  @JsonIgnoreProperties(value = { "baseInfo" }, allowSetters = true)
   @OneToOne
   @JoinColumn(unique = true)
   private FileInfo fileInfo;
 
   @JsonIgnoreProperties(
     value = {
+      "historyUpdates",
+      "classInfo",
       "userProfile",
       "accountStatus",
       "deviceStatus",
@@ -77,6 +122,10 @@ public class Image implements Serializable {
       "topicInterest",
       "todoList",
       "event",
+      "createdBy",
+      "modifiedBy",
+      "owner",
+      "permissions",
     },
     allowSetters = true
   )
@@ -86,16 +135,12 @@ public class Image implements Serializable {
 
   @OneToMany(mappedBy = "imageOriginal")
   @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-  @JsonIgnoreProperties(value = { "fileInfo", "baseInfo", "imageProcesseds", "imageOriginal", "event", "albums" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "fileInfo", "baseInfo", "imageProcesseds", "imageOriginal", "albums" }, allowSetters = true)
   private Set<Image> imageProcesseds = new HashSet<>();
 
   @ManyToOne
-  @JsonIgnoreProperties(value = { "fileInfo", "baseInfo", "imageProcesseds", "imageOriginal", "event", "albums" }, allowSetters = true)
+  @JsonIgnoreProperties(value = { "fileInfo", "baseInfo", "imageProcesseds", "imageOriginal", "albums" }, allowSetters = true)
   private Image imageOriginal;
-
-  @ManyToOne
-  @JsonIgnoreProperties(value = { "baseInfo", "otherImages", "otherVideos" }, allowSetters = true)
-  private Event event;
 
   @ManyToMany(mappedBy = "images")
   @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -140,6 +185,84 @@ public class Image implements Serializable {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public Integer getWidth() {
+    return this.width;
+  }
+
+  public Image width(Integer width) {
+    this.width = width;
+    return this;
+  }
+
+  public void setWidth(Integer width) {
+    this.width = width;
+  }
+
+  public Integer getHeight() {
+    return this.height;
+  }
+
+  public Image height(Integer height) {
+    this.height = height;
+    return this;
+  }
+
+  public void setHeight(Integer height) {
+    this.height = height;
+  }
+
+  public Float getQuality() {
+    return this.quality;
+  }
+
+  public Image quality(Float quality) {
+    this.quality = quality;
+    return this;
+  }
+
+  public void setQuality(Float quality) {
+    this.quality = quality;
+  }
+
+  public Integer getPixelSize() {
+    return this.pixelSize;
+  }
+
+  public Image pixelSize(Integer pixelSize) {
+    this.pixelSize = pixelSize;
+    return this;
+  }
+
+  public void setPixelSize(Integer pixelSize) {
+    this.pixelSize = pixelSize;
+  }
+
+  public Long getPriorityIndex() {
+    return this.priorityIndex;
+  }
+
+  public Image priorityIndex(Long priorityIndex) {
+    this.priorityIndex = priorityIndex;
+    return this;
+  }
+
+  public void setPriorityIndex(Long priorityIndex) {
+    this.priorityIndex = priorityIndex;
+  }
+
+  public Long getDataSize() {
+    return this.dataSize;
+  }
+
+  public Image dataSize(Long dataSize) {
+    this.dataSize = dataSize;
+    return this;
+  }
+
+  public void setDataSize(Long dataSize) {
+    this.dataSize = dataSize;
   }
 
   public FileInfo getFileInfo() {
@@ -212,19 +335,6 @@ public class Image implements Serializable {
     this.imageOriginal = image;
   }
 
-  public Event getEvent() {
-    return this.event;
-  }
-
-  public Image event(Event event) {
-    this.setEvent(event);
-    return this;
-  }
-
-  public void setEvent(Event event) {
-    this.event = event;
-  }
-
   public Set<Album> getAlbums() {
     return this.albums;
   }
@@ -282,6 +392,12 @@ public class Image implements Serializable {
             "id=" + getId() +
             ", uuid='" + getUuid() + "'" +
             ", name='" + getName() + "'" +
+            ", width=" + getWidth() +
+            ", height=" + getHeight() +
+            ", quality=" + getQuality() +
+            ", pixelSize=" + getPixelSize() +
+            ", priorityIndex=" + getPriorityIndex() +
+            ", dataSize=" + getDataSize() +
             "}";
     }
 }

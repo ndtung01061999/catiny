@@ -1,52 +1,24 @@
 import { IUser } from 'app/shared/model/user.model';
-import { IUserProfile } from 'app/shared/model/user-profile.model';
-import { IAccountStatus } from 'app/shared/model/account-status.model';
 import { IRankUser } from 'app/shared/model/rank-user.model';
-import { IImage } from 'app/shared/model/image.model';
 import { IBaseInfo } from 'app/shared/model/base-info.model';
-import { IPagePost } from 'app/shared/model/page-post.model';
-import { IFileInfo } from 'app/shared/model/file-info.model';
-import { INotification } from 'app/shared/model/notification.model';
-import { IFriend } from 'app/shared/model/friend.model';
-import { IFollowUser } from 'app/shared/model/follow-user.model';
-import { IFollowGroup } from 'app/shared/model/follow-group.model';
-import { IFollowPage } from 'app/shared/model/follow-page.model';
-import { INewsFeed } from 'app/shared/model/news-feed.model';
-import { ITodoList } from 'app/shared/model/todo-list.model';
-import { IPost } from 'app/shared/model/post.model';
-import { IGroupPost } from 'app/shared/model/group-post.model';
-import { IMessageGroup } from 'app/shared/model/message-group.model';
+import { IPermission } from 'app/shared/model/permission.model';
 import { ITopicInterest } from 'app/shared/model/topic-interest.model';
-import { IPostLike } from 'app/shared/model/post-like.model';
-import { IPostComment } from 'app/shared/model/post-comment.model';
 
 export interface IMasterUser {
   id?: number;
   uuid?: string;
   fullName?: string;
   nickname?: string | null;
+  avatar?: string | null;
   quickInfo?: string | null;
   user?: IUser | null;
-  myProfile?: IUserProfile | null;
-  myAccountStatus?: IAccountStatus | null;
   myRank?: IRankUser | null;
-  avatar?: IImage | null;
   baseInfo?: IBaseInfo | null;
-  myPages?: IPagePost[] | null;
-  myFiles?: IFileInfo[] | null;
-  myNotifications?: INotification[] | null;
-  myFriends?: IFriend[] | null;
-  myFollowUsers?: IFollowUser[] | null;
-  myFollowGroups?: IFollowGroup[] | null;
-  myFollowPages?: IFollowPage[] | null;
-  myNewsFeeds?: INewsFeed[] | null;
-  myTodoLists?: ITodoList[] | null;
-  myPosts?: IPost[] | null;
-  myGroupPosts?: IGroupPost[] | null;
-  messageGroups?: IMessageGroup[] | null;
+  myBaseInfoCreateds?: IBaseInfo[] | null;
+  myBaseInfoModifieds?: IBaseInfo[] | null;
+  ownerOfs?: IBaseInfo[] | null;
+  permissions?: IPermission[] | null;
   topicInterests?: ITopicInterest[] | null;
-  myLikes?: IPostLike[] | null;
-  myComments?: IPostComment[] | null;
 }
 
 export const defaultValue: Readonly<IMasterUser> = {};

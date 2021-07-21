@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, UncontrolledTooltip, Row, Col } from 'reactstrap';
-import { Translate } from 'react-jhipster';
+import { Translate, byteSize } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { getEntity } from './message-group.reducer';
@@ -47,6 +47,15 @@ export const MessageGroupDetail = (props: RouteComponentProps<{ id: string }>) =
             </UncontrolledTooltip>
           </dt>
           <dd>{messageGroupEntity.groupName}</dd>
+          <dt>
+            <span id="avatar">
+              <Translate contentKey="catinyApp.messageGroup.avatar">Avatar</Translate>
+            </span>
+            <UncontrolledTooltip target="avatar">
+              <Translate contentKey="catinyApp.messageGroup.help.avatar" />
+            </UncontrolledTooltip>
+          </dt>
+          <dd>{messageGroupEntity.avatar}</dd>
           <dt>
             <span id="addBy">
               <Translate contentKey="catinyApp.messageGroup.addBy">Add By</Translate>

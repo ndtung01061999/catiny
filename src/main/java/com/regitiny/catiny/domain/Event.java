@@ -3,17 +3,15 @@ package com.regitiny.catiny.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.regitiny.catiny.GeneratedByJHipster;
 import com.regitiny.catiny.domain.enumeration.EventType;
-import java.io.Serializable;
-import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
-import javax.persistence.*;
-import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
-import org.springframework.data.elasticsearch.annotations.FieldType;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.time.Instant;
+import java.util.UUID;
 
 /**
  * @what?            -> The Event entity.\n@why?             ->\n@use-to           -> Lưu những sự kiện\n@commonly-used-in -> Tạo Sự kiện\n\n@describe         ->
@@ -40,32 +38,76 @@ public class Event implements Serializable {
   @Column(name = "uuid", length = 36, nullable = false, unique = true)
   private UUID uuid;
 
+  /**
+   * title          : tiêu đề event
+   */
   @Column(name = "title")
   private String title;
 
+  /**
+   * avatar         : @type Json -> ảnh đại diện event
+   */
+  @Lob
+  @Column(name = "avatar")
+  private String avatar;
+
+  /**
+   * content        : nội dung event
+   */
   @Lob
   @Column(name = "content")
   private String content;
 
+  /**
+   * type           :loại event
+   */
   @Enumerated(EnumType.STRING)
   @Column(name = "type")
   private EventType type;
 
+  /**
+   * description    : mô tả chi tết về event
+   */
   @Lob
   @Column(name = "description")
   private String description;
 
+  /**
+   * startTime      : thời gian bắt đầu
+   */
   @Column(name = "start_time")
   private Instant startTime;
 
+  /**
+   * endTime        : thời gian kết thúc
+   */
   @Column(name = "end_time")
   private Instant endTime;
 
+  /**
+   * tagLine        : thẻ cho event
+   */
   @Column(name = "tag_line")
   private String tagLine;
 
+  /**
+   * imageCollection: @type Json -> tập ảnh của event
+   */
+  @Lob
+  @Column(name = "image_collection")
+  private String imageCollection;
+
+  /**
+   * videoCollection: @type Json -> tập video của event
+   */
+  @Lob
+  @Column(name = "video_collection")
+  private String videoCollection;
+
   @JsonIgnoreProperties(
     value = {
+      "historyUpdates",
+      "classInfo",
       "userProfile",
       "accountStatus",
       "deviceStatus",
@@ -95,22 +137,16 @@ public class Event implements Serializable {
       "topicInterest",
       "todoList",
       "event",
+      "createdBy",
+      "modifiedBy",
+      "owner",
+      "permissions",
     },
     allowSetters = true
   )
   @OneToOne
   @JoinColumn(unique = true)
   private BaseInfo baseInfo;
-
-  @OneToMany(mappedBy = "event")
-  @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-  @JsonIgnoreProperties(value = { "fileInfo", "baseInfo", "imageProcesseds", "imageOriginal", "event", "albums" }, allowSetters = true)
-  private Set<Image> otherImages = new HashSet<>();
-
-  @OneToMany(mappedBy = "event")
-  @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-  @JsonIgnoreProperties(value = { "fileInfo", "baseInfo", "videoProcesseds", "videoStream", "videoOriginal", "event" }, allowSetters = true)
-  private Set<Video> otherVideos = new HashSet<>();
 
   // jhipster-needle-entity-add-field - JHipster will add fields here
   public Long getId() {
@@ -150,6 +186,19 @@ public class Event implements Serializable {
 
   public void setTitle(String title) {
     this.title = title;
+  }
+
+  public String getAvatar() {
+    return this.avatar;
+  }
+
+  public Event avatar(String avatar) {
+    this.avatar = avatar;
+    return this;
+  }
+
+  public void setAvatar(String avatar) {
+    this.avatar = avatar;
   }
 
   public String getContent() {
@@ -230,6 +279,32 @@ public class Event implements Serializable {
     this.tagLine = tagLine;
   }
 
+  public String getImageCollection() {
+    return this.imageCollection;
+  }
+
+  public Event imageCollection(String imageCollection) {
+    this.imageCollection = imageCollection;
+    return this;
+  }
+
+  public void setImageCollection(String imageCollection) {
+    this.imageCollection = imageCollection;
+  }
+
+  public String getVideoCollection() {
+    return this.videoCollection;
+  }
+
+  public Event videoCollection(String videoCollection) {
+    this.videoCollection = videoCollection;
+    return this;
+  }
+
+  public void setVideoCollection(String videoCollection) {
+    this.videoCollection = videoCollection;
+  }
+
   public BaseInfo getBaseInfo() {
     return this.baseInfo;
   }
@@ -241,68 +316,6 @@ public class Event implements Serializable {
 
   public void setBaseInfo(BaseInfo baseInfo) {
     this.baseInfo = baseInfo;
-  }
-
-  public Set<Image> getOtherImages() {
-    return this.otherImages;
-  }
-
-  public Event otherImages(Set<Image> images) {
-    this.setOtherImages(images);
-    return this;
-  }
-
-  public Event addOtherImage(Image image) {
-    this.otherImages.add(image);
-    image.setEvent(this);
-    return this;
-  }
-
-  public Event removeOtherImage(Image image) {
-    this.otherImages.remove(image);
-    image.setEvent(null);
-    return this;
-  }
-
-  public void setOtherImages(Set<Image> images) {
-    if (this.otherImages != null) {
-      this.otherImages.forEach(i -> i.setEvent(null));
-    }
-    if (images != null) {
-      images.forEach(i -> i.setEvent(this));
-    }
-    this.otherImages = images;
-  }
-
-  public Set<Video> getOtherVideos() {
-    return this.otherVideos;
-  }
-
-  public Event otherVideos(Set<Video> videos) {
-    this.setOtherVideos(videos);
-    return this;
-  }
-
-  public Event addOtherVideo(Video video) {
-    this.otherVideos.add(video);
-    video.setEvent(this);
-    return this;
-  }
-
-  public Event removeOtherVideo(Video video) {
-    this.otherVideos.remove(video);
-    video.setEvent(null);
-    return this;
-  }
-
-  public void setOtherVideos(Set<Video> videos) {
-    if (this.otherVideos != null) {
-      this.otherVideos.forEach(i -> i.setEvent(null));
-    }
-    if (videos != null) {
-      videos.forEach(i -> i.setEvent(this));
-    }
-    this.otherVideos = videos;
   }
 
   // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
@@ -331,12 +344,15 @@ public class Event implements Serializable {
             "id=" + getId() +
             ", uuid='" + getUuid() + "'" +
             ", title='" + getTitle() + "'" +
+            ", avatar='" + getAvatar() + "'" +
             ", content='" + getContent() + "'" +
             ", type='" + getType() + "'" +
             ", description='" + getDescription() + "'" +
             ", startTime='" + getStartTime() + "'" +
             ", endTime='" + getEndTime() + "'" +
             ", tagLine='" + getTagLine() + "'" +
+            ", imageCollection='" + getImageCollection() + "'" +
+            ", videoCollection='" + getVideoCollection() + "'" +
             "}";
     }
 }

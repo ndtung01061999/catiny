@@ -29,7 +29,7 @@
       "fieldName": "code",
       "fieldType": "String",
       "javadoc": "code Example(\"916\")",
-      "fieldValidateRules": ["required"]
+      "fieldValidateRules": ["required", "unique"]
     },
     {
       "fieldName": "parentCode",

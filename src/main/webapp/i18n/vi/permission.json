@@ -1,0 +1,42 @@
+{
+  "catinyApp": {
+    "permission": {
+      "home": {
+        "title": "Permissions",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Thêm mới một Permission",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Permission",
+        "search": "Tìm Permission",
+        "notFound": "No Permissions found"
+      },
+      "created": "Một Permission mới được tạo với định danh {{ param }}",
+      "updated": "Một Permission cập nhật với định danh {{ param }}",
+      "deleted": "Một Permission đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Permission {{ id }}?"
+      },
+      "detail": {
+        "title": "Permission"
+      },
+      "id": "ID",
+      "uuid": "Uuid",
+      "read": "Read",
+      "write": "Write",
+      "share": "Share",
+      "delete": "Delete",
+      "add": "Add",
+      "level": "Level",
+      "baseInfo": "Base Info",
+      "masterUser": "Master User",
+      "help": {
+        "uuid": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
+        "read": "quyền đọc",
+        "write": "quyền ghi và sửa",
+        "share": "quyền chia sẻ",
+        "delete": "quyền xóa",
+        "add": "quyền trao quyền cho user khác",
+        "level": "cấp độ 0-&gt;* số nhỏ hơn sẽ có quyền lớn hơn"
+      }
+    }
+  }
+}

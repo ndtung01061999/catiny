@@ -48,6 +48,15 @@ export const PagePostDetail = (props: RouteComponentProps<{ id: string }>) => {
           </dt>
           <dd>{pagePostEntity.name}</dd>
           <dt>
+            <span id="avatar">
+              <Translate contentKey="catinyApp.pagePost.avatar">Avatar</Translate>
+            </span>
+            <UncontrolledTooltip target="avatar">
+              <Translate contentKey="catinyApp.pagePost.help.avatar" />
+            </UncontrolledTooltip>
+          </dt>
+          <dd>{pagePostEntity.avatar}</dd>
+          <dt>
             <span id="quickInfo">
               <Translate contentKey="catinyApp.pagePost.quickInfo">Quick Info</Translate>
             </span>
@@ -64,10 +73,6 @@ export const PagePostDetail = (props: RouteComponentProps<{ id: string }>) => {
             <Translate contentKey="catinyApp.pagePost.baseInfo">Base Info</Translate>
           </dt>
           <dd>{pagePostEntity.baseInfo ? pagePostEntity.baseInfo.id : ''}</dd>
-          <dt>
-            <Translate contentKey="catinyApp.pagePost.masterUser">Master User</Translate>
-          </dt>
-          <dd>{pagePostEntity.masterUser ? pagePostEntity.masterUser.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/page-post" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

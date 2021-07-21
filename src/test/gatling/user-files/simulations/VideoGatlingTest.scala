@@ -73,6 +73,14 @@ class VideoGatlingTest extends Simulation {
             .body(StringBody("""{
                 "uuid":null
                 , "name":"SAMPLE_TEXT"
+                , "width":"0"
+                , "height":"0"
+                , "qualityImage":"0"
+                , "qualityAudio":"0"
+                , "quality":"0"
+                , "pixelSize":"0"
+                , "priorityIndex":"0"
+                , "dataSize":"0"
                 }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_video_url"))).exitHereIfFailed

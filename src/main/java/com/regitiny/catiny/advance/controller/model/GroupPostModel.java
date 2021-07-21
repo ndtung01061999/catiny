@@ -35,6 +35,10 @@ public class GroupPostModel implements Serializable
   )
   private String name;
 
+  @ApiModelProperty("avatar : @type Json -> ảnh đại diện của Group")
+  @Lob
+  private String avatar;
+
   @ApiModelProperty("quickInfo      : @type Json -> thông tin giới thiệu sơ qua của group này")
   @Lob
   private String quickInfo;
@@ -64,6 +68,10 @@ public class GroupPostModel implements Serializable
       value = "name           : tên của group này"
     )
     private String name;
+
+    @ApiModelProperty("avatar : @type Json -> ảnh đại diện của Group")
+    @Lob
+    private String avatar;
 
     @ApiModelProperty("quickInfo      : @type Json -> thông tin giới thiệu sơ qua của group này")
     @Lob
@@ -95,6 +103,10 @@ public class GroupPostModel implements Serializable
       value = "name           : tên của group này"
     )
     private String name;
+
+    @ApiModelProperty("avatar : @type Json -> ảnh đại diện của Group")
+    @Lob
+    private String avatar;
 
     @ApiModelProperty("quickInfo      : @type Json -> thông tin giới thiệu sơ qua của group này")
     @Lob

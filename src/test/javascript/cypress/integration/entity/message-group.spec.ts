@@ -104,6 +104,11 @@ describe('MessageGroup e2e test', () => {
 
     cy.get(`[data-cy="groupName"]`).type('toolset Hat').should('have.value', 'toolset Hat');
 
+    cy.get(`[data-cy="avatar"]`)
+      .type('../fake-data/blob/hipster.txt')
+      .invoke('val')
+      .should('match', new RegExp('../fake-data/blob/hipster.txt'));
+
     cy.get(`[data-cy="addBy"]`).type('Persevering Island Toys').should('have.value', 'Persevering Island Toys');
 
     cy.setFieldSelectToLastOfEntity('baseInfo');

@@ -117,12 +117,6 @@ public class FileInfoQueryService extends QueryService<FileInfo> {
             buildSpecification(criteria.getBaseInfoId(), root -> root.join(FileInfo_.baseInfo, JoinType.LEFT).get(BaseInfo_.id))
           );
       }
-      if (criteria.getMasterUserId() != null) {
-        specification =
-          specification.and(
-            buildSpecification(criteria.getMasterUserId(), root -> root.join(FileInfo_.masterUser, JoinType.LEFT).get(MasterUser_.id))
-          );
-      }
     }
     return specification;
   }

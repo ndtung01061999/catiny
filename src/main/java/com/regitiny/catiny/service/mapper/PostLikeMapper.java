@@ -8,11 +8,11 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link PostLike} and its DTO {@link PostLikeDTO}.
  */
-@Mapper(componentModel = "spring", uses = { BaseInfoMapper.class, MasterUserMapper.class, PostMapper.class })
+@Mapper(componentModel = "spring", uses = { BaseInfoMapper.class, PostMapper.class, PostCommentMapper.class })
 @GeneratedByJHipster
 public interface PostLikeMapper extends EntityMapper<PostLikeDTO, PostLike> {
   @Mapping(target = "baseInfo", source = "baseInfo", qualifiedByName = "id")
-  @Mapping(target = "userLike", source = "userLike", qualifiedByName = "id")
   @Mapping(target = "post", source = "post", qualifiedByName = "id")
+  @Mapping(target = "postComment", source = "postComment", qualifiedByName = "id")
   PostLikeDTO toDto(PostLike s);
 }

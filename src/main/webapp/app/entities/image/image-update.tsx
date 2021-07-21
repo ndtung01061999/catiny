@@ -9,8 +9,6 @@ import { getEntities as getFileInfos } from 'app/entities/file-info/file-info.re
 import { IBaseInfo } from 'app/shared/model/base-info.model';
 import { getEntities as getBaseInfos } from 'app/entities/base-info/base-info.reducer';
 import { getEntities as getImages } from 'app/entities/image/image.reducer';
-import { IEvent } from 'app/shared/model/event.model';
-import { getEntities as getEvents } from 'app/entities/event/event.reducer';
 import { IAlbum } from 'app/shared/model/album.model';
 import { getEntities as getAlbums } from 'app/entities/album/album.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './image.reducer';
@@ -27,7 +25,6 @@ export const ImageUpdate = (props: RouteComponentProps<{ id: string }>) => {
   const fileInfos = useAppSelector(state => state.fileInfo.entities);
   const baseInfos = useAppSelector(state => state.baseInfo.entities);
   const images = useAppSelector(state => state.image.entities);
-  const events = useAppSelector(state => state.event.entities);
   const albums = useAppSelector(state => state.album.entities);
   const imageEntity = useAppSelector(state => state.image.entity);
   const loading = useAppSelector(state => state.image.loading);
@@ -46,7 +43,6 @@ export const ImageUpdate = (props: RouteComponentProps<{ id: string }>) => {
     dispatch(getFileInfos({}));
     dispatch(getBaseInfos({}));
     dispatch(getImages({}));
-    dispatch(getEvents({}));
     dispatch(getAlbums({}));
   }, []);
 
@@ -63,7 +59,6 @@ export const ImageUpdate = (props: RouteComponentProps<{ id: string }>) => {
       fileInfo: fileInfos.find(it => it.id.toString() === values.fileInfoId.toString()),
       baseInfo: baseInfos.find(it => it.id.toString() === values.baseInfoId.toString()),
       imageOriginal: images.find(it => it.id.toString() === values.imageOriginalId.toString()),
-      event: events.find(it => it.id.toString() === values.eventId.toString()),
     };
 
     if (isNew) {
@@ -81,7 +76,6 @@ export const ImageUpdate = (props: RouteComponentProps<{ id: string }>) => {
           fileInfoId: imageEntity?.fileInfo?.id,
           baseInfoId: imageEntity?.baseInfo?.id,
           imageOriginalId: imageEntity?.imageOriginal?.id,
-          eventId: imageEntity?.event?.id,
         };
 
   return (
@@ -123,6 +117,62 @@ export const ImageUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 <Translate contentKey="catinyApp.image.help.uuid" />
               </UncontrolledTooltip>
               <ValidatedField label={translate('catinyApp.image.name')} id="image-name" name="name" data-cy="name" type="text" />
+              <UncontrolledTooltip target="nameLabel">
+                <Translate contentKey="catinyApp.image.help.name" />
+              </UncontrolledTooltip>
+              <ValidatedField label={translate('catinyApp.image.width')} id="image-width" name="width" data-cy="width" type="text" />
+              <UncontrolledTooltip target="widthLabel">
+                <Translate contentKey="catinyApp.image.help.width" />
+              </UncontrolledTooltip>
+              <ValidatedField label={translate('catinyApp.image.height')} id="image-height" name="height" data-cy="height" type="text" />
+              <UncontrolledTooltip target="heightLabel">
+                <Translate contentKey="catinyApp.image.help.height" />
+              </UncontrolledTooltip>
+              <ValidatedField
+                label={translate('catinyApp.image.quality')}
+                id="image-quality"
+                name="quality"
+                data-cy="quality"
+                type="text"
+                validate={{
+                  min: { value: 0, message: translate('entity.validation.min', { min: 0 }) },
+                  max: { value: 1, message: translate('entity.validation.max', { max: 1 }) },
+                  validate: v => isNumber(v) || translate('entity.validation.number'),
+                }}
+              />
+              <UncontrolledTooltip target="qualityLabel">
+                <Translate contentKey="catinyApp.image.help.quality" />
+              </UncontrolledTooltip>
+              <ValidatedField
+                label={translate('catinyApp.image.pixelSize')}
+                id="image-pixelSize"
+                name="pixelSize"
+                data-cy="pixelSize"
+                type="text"
+              />
+              <UncontrolledTooltip target="pixelSizeLabel">
+                <Translate contentKey="catinyApp.image.help.pixelSize" />
+              </UncontrolledTooltip>
+              <ValidatedField
+                label={translate('catinyApp.image.priorityIndex')}
+                id="image-priorityIndex"
+                name="priorityIndex"
+                data-cy="priorityIndex"
+                type="text"
+              />
+              <UncontrolledTooltip target="priorityIndexLabel">
+                <Translate contentKey="catinyApp.image.help.priorityIndex" />
+              </UncontrolledTooltip>
+              <ValidatedField
+                label={translate('catinyApp.image.dataSize')}
+                id="image-dataSize"
+                name="dataSize"
+                data-cy="dataSize"
+                type="text"
+              />
+              <UncontrolledTooltip target="dataSizeLabel">
+                <Translate contentKey="catinyApp.image.help.dataSize" />
+              </UncontrolledTooltip>
               <ValidatedField
                 id="image-fileInfo"
                 name="fileInfoId"
@@ -165,16 +215,6 @@ export const ImageUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 <option value="" key="0" />
                 {images
                   ? images.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField id="image-event" name="eventId" data-cy="event" label={translate('catinyApp.image.event')} type="select">
-                <option value="" key="0" />
-                {events
-                  ? events.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

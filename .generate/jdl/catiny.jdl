@@ -9,16 +9,16 @@ filter *
 
 
 enum StatusName
-{
-	ONLINE
-	OFFLINE
-	BUSY
-	TEMPORARILY_ABSENT
+{  
+  ONLINE
+  OFFLINE
+  BUSY
+  TEMPORARILY_ABSENT
 }
 
 enum DeviceType
 {
-	MOBILE
+  MOBILE
   TABLE
   DESKTOP
   LAPTOP
@@ -53,6 +53,7 @@ enum FriendType
   FRIEND
   BEST_FRIEND
   FAMILY
+  BLOCK
 }
 enum ProcessStatus
 {
@@ -120,7 +121,7 @@ entity HanhChinhVN
     /** nameWithType Example("Quận Ninh Kiều") */
     nameWithType String  required
     /** code Example("916") */
-    code String required
+    code String required unique
     /** parentCode Example("92") , equal to 0 is the city*/
     parentCode String required
     /** path Example("Ninh Kiều, Cần Thơ")*/
@@ -249,8 +250,11 @@ entity Album
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
+    /** name           : tên của album */
     name String required
-    /** avatar : @type Json -> ảnh đại diện của Album */
+    /** note           : trú thích của album (ví dụ album đại học) */
+    note String 
+    /** avatar         : @type Json -> ảnh đại diện của Album */
     avatar TextBlob
 }
 /**
@@ -435,8 +439,8 @@ entity Image
     height Integer
     /** quality        : chất lượng sau khi xử lý */
     quality Float min(0) max(1)
-    /** size           : kích thước của ảnh */
-    size Integer
+    /** pixelSize      : kích thước của ảnh */
+    pixelSize Integer
     /** priorityIndex  : chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)*/
     priorityIndex Long
     /** dataSize       : kích thước file theo byte */
@@ -506,6 +510,8 @@ entity MessageContent
 {
     /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
     uuid UUID required unique
+    /** senderName     : tên người gửi */
+    senderName String
 
     /** attachInfo     : đính kèm tệp ảnh video ... */
     attach TextBlob
@@ -647,8 +653,8 @@ entity Video
     qualityAudio Float min(0) max(1)
     /** quality        : chất lượng chung sau khi xử lý */
     quality Float min(0) max(1)
-    /** size           : kích thước của ảnh */
-    size Integer
+    /** pixelSize      : kích thước của ảnh */
+    pixelSize Integer
     /** priorityIndex  : chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)*/
     priorityIndex Long
     /** dataSize       : kích thước file theo byte */
@@ -747,8 +753,9 @@ relationship OneToMany
     MessageGroup to MessageContent
     Image{imageProcessed} to Image{imageOriginal}
     Video{videoProcessed} to Video{videoOriginal}
-    Post to PostComment
-    Post to PostLike
+    Post{comment} to PostComment
+    Post{like} to PostLike
+    PostComment{like} to PostLike
     Post{postShareChildren} to Post{postShareParent}
     PostComment{commentReply} to PostComment{commentParent}
     VideoStream to VideoLiveStreamBuffer
@@ -765,44 +772,80 @@ relationship ManyToMany
 relationship OneToOne
 {
     MasterUser to User with jpaDerivedIdentifier
-    MasterUser{myProfile} to UserProfile
-    MasterUser{myAccountStatus} to AccountStatus
+//    MasterUser{myProfile} to UserProfile
+//    MasterUser{myAccountStatus} to AccountStatus
     MasterUser{myRank} to RankUser
 }
 relationship OneToMany
 {
-    MasterUser{myPage} to PagePost
-    MasterUser{myFile} to FileInfo
-    MasterUser{myNotification} to Notification
-    MasterUser{myFriend} to Friend{masterUser}
-    MasterUser{myFollowUser} to FollowUser{masterUser}
-    MasterUser{myFollowGroup} to FollowGroup{masterUser}
-    MasterUser{myFollowPage} to FollowPage{masterUser}
-    MasterUser{myNewsFeed} to NewsFeed
-    MasterUser{myTodoList} to TodoList
-    MasterUser{myPost} to Post{poster}
+//    MasterUser{myPage} to PagePost
+//    MasterUser{myFile} to FileInfo
+//    MasterUser{myNotification} to Notification
+//    MasterUser{myFriend} to Friend{masterUser}
+//    MasterUser{myFollowUser} to FollowUser{masterUser}
+//    MasterUser{myFollowGroup} to FollowGroup{masterUser}
+//    MasterUser{myFollowPage} to FollowPage{masterUser}
+//    MasterUser{myNewsFeed} to NewsFeed
+//    MasterUser{myTodoList} to TodoList
+//    MasterUser{myPost} to Post{poster}
 //  with  BaseInfo
     MasterUser{myBaseInfoCreated} to BaseInfo{createdBy}
     MasterUser{myBaseInfoModified} to BaseInfo{modifiedBy}
-    MasterUser{myBaseInfoOwner} to BaseInfo{owner}
+    MasterUser{OwnerOf} to BaseInfo{owner}
     MasterUser to Permission
 }
 relationship ManyToOne
 {
     Friend{friendDetails} to MasterUser
     FollowUser{followUserDetails} to MasterUser
-    MessageContent{sender} to MasterUser
-    PostLike{userLike} to MasterUser{myLike}
-    PostComment{userComment} to MasterUser{myComment}
+//    MessageContent{sender} to MasterUser
+//    PostLike{userLike} to MasterUser{myLike}
+//    PostComment{userComment} to MasterUser{myComment}
 }
 relationship ManyToMany
 {
-    MasterUser{myGroupPost} to GroupPost{userInGroup}
-    MasterUser to MessageGroup
+//    MasterUser{myGroupPost} to GroupPost{userInGroup}
+//    MasterUser to MessageGroup
     MasterUser to TopicInterest
+}
+
+/** BaseInfo */
+entity BaseInfo
+{
+	  /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
+    uuid UUID required unique
+    /** processStatus *: @defaultValue( DONE ) -> tình trạng xử lý sử dụng trong phê duyệt */
+    processStatus ProcessStatus
+    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
+    modifiedClass String
+    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
+    createdDate  Instant
+    /** modifiedDate * : thời gian sửa bản ghi này */
+    modifiedDate  Instant
+    /** notes *        : @type Json -> chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json" */
+    notes TextBlob
+    /** deleted *      : @defaultValue( false ) -> đánh dấu là đã xóa */
+    deleted Boolean
+    /** priorityIndex *: chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao) */
+    priorityIndex Long
+    /** countUse *     : đếm số lần truy cập vào bản ghi này để xem sửa xóa **/
+    countUse Long
+}
+entity ClassInfo
+{
+    /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
+    uuid UUID required unique
+    /** packageName *  : tên package */
+    namePackage String
+    /** fullName *     : tên đầy đủ của class . package+ClassName */
+    fullName String required unique
+    /** classname *    : tên của class */
+    className String
 }
 entity Permission
 {
+	 /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
+    uuid UUID required unique
     /** quyền đọc */
     read Boolean
     /** quyền ghi và sửa*/
@@ -816,25 +859,14 @@ entity Permission
     /** cấp độ 0->* số nhỏ hơn sẽ có quyền lớn hơn */
     level Integer
 }
-/** BaseInfo */
-entity BaseInfo
+entity HistoryUpdate
 {
-    /** processStatus *: @defaultValue( DONE ) -> tình trạng xử lý sử dụng trong phê duyệt */
-    processStatus ProcessStatus
-    /** modifiedClass *: thực hiện sửa đổi bản ghi này ở service class nào */
-    modifiedClass String
-    /** entityPKName * : thực hiện sửa đổi bản ghi này ở service class nào */
-    entityPKName String
-    /** createdDate *  : thời gian tạo ra bản ghi này (lần đầu tiên) */
-    createdDate  Instant
-    /** modifiedDate * : thời gian sửa bản ghi này */
-    modifiedDate  Instant
-    /** notes *        : @type Json -> chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json" */
-    notes TextBlob
-    /** historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
-    historyUpdate TextBlob
-    /** deleted *      : @defaultValue( false ) -> đánh dấu là đã xóa */
-    deleted Boolean
+	  /** uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend) */
+    uuid UUID required unique
+    /** version        : phiên bản (bắt đầu từ 0)*/
+    version Integer
+    /** content        : @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json */
+    content TextBlob
 }
 relationship OneToOne
 {
@@ -876,4 +908,9 @@ relationship OneToOne
 relationship ManyToOne
 {
     Permission to BaseInfo
+    BaseInfo to ClassInfo
+}
+relationship OneToMany
+{
+    BaseInfo to HistoryUpdate
 }

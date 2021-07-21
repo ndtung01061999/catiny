@@ -11,7 +11,6 @@ import com.regitiny.catiny.GeneratedByJHipster;
 import com.regitiny.catiny.IntegrationTest;
 import com.regitiny.catiny.domain.BaseInfo;
 import com.regitiny.catiny.domain.FollowPage;
-import com.regitiny.catiny.domain.MasterUser;
 import com.regitiny.catiny.domain.PagePost;
 import com.regitiny.catiny.repository.FollowPageRepository;
 import com.regitiny.catiny.repository.search.FollowPageSearchRepository;
@@ -303,25 +302,6 @@ class FollowPageResourceIT {
 
     // Get all the followPageList where followPageDetails equals to (followPageDetailsId + 1)
     defaultFollowPageShouldNotBeFound("followPageDetailsId.equals=" + (followPageDetailsId + 1));
-  }
-
-  @Test
-  @Transactional
-  void getAllFollowPagesByMasterUserIsEqualToSomething() throws Exception {
-    // Initialize the database
-    followPageRepository.saveAndFlush(followPage);
-    MasterUser masterUser = MasterUserResourceIT.createEntity(em);
-    em.persist(masterUser);
-    em.flush();
-    followPage.setMasterUser(masterUser);
-    followPageRepository.saveAndFlush(followPage);
-    Long masterUserId = masterUser.getId();
-
-    // Get all the followPageList where masterUser equals to masterUserId
-    defaultFollowPageShouldBeFound("masterUserId.equals=" + masterUserId);
-
-    // Get all the followPageList where masterUser equals to (masterUserId + 1)
-    defaultFollowPageShouldNotBeFound("masterUserId.equals=" + (masterUserId + 1));
   }
 
   /**

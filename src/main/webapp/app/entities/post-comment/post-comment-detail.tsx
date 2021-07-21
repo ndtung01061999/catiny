@@ -49,10 +49,6 @@ export const PostCommentDetail = (props: RouteComponentProps<{ id: string }>) =>
           </dt>
           <dd>{postCommentEntity.baseInfo ? postCommentEntity.baseInfo.id : ''}</dd>
           <dt>
-            <Translate contentKey="catinyApp.postComment.userComment">User Comment</Translate>
-          </dt>
-          <dd>{postCommentEntity.userComment ? postCommentEntity.userComment.id : ''}</dd>
-          <dt>
             <Translate contentKey="catinyApp.postComment.post">Post</Translate>
           </dt>
           <dd>{postCommentEntity.post ? postCommentEntity.post.id : ''}</dd>

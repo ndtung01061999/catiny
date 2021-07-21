@@ -1,11 +1,11 @@
-id;uuid;name
-1;0b0b095f-5612-4bfa-97e5-ec855b96754a;mint South
-2;3457e8b3-4f57-4835-8f71-9441cff57dcb;Integration
-3;f4546f98-ec99-4330-bb0b-9fd2a6edc6e4;Concrete Metal
-4;6c01d984-d3e3-47e3-8e0a-f7cf6ffb9515;RAM
-5;abd86fa5-c427-486f-a7ed-bc3902e2e37c;Turkmenistan
-6;efcafb7f-922b-4496-80e1-1da49431ac33;Specialist Plastic
-7;b6ec478b-8ab5-4846-b392-ebb055fa5c56;deposit Investment
-8;110d5716-d21f-4af5-93cf-c07ea576348a;Account
-9;dd7b575f-2363-4f8e-a0b3-43e09b247baf;aggregate
-10;ad2640b7-4c27-4da2-8947-398fbfc0ca0d;cultivate
+id;uuid;name;note;avatar
+1;0b0b095f-5612-4bfa-97e5-ec855b96754a;mint South;forecast;../fake-data/blob/hipster.txt
+2;e8b34f57-835c-4f71-9441-cff57dcb3e3b;framework redefine Cambridgeshire;Savings Chair;../fake-data/blob/hipster.txt
+3;9fd2a6ed-c6e4-4523-b0aa-496c01d984d3;turquoise indigo Shoes;blockchains pixel Incredible;../fake-data/blob/hipster.txt
+4;d16abd86-fa5c-4427-86fe-7edbc3902e2e;Buckinghamshire;Chief Data;../fake-data/blob/hipster.txt
+5;fb7f922b-4964-40e1-9da4-9431ac33af47;info-mediaries;Accounts Borders;../fake-data/blob/hipster.txt
+6;8ab5846b-392e-4bb0-95fa-5c566a1f9771;Outdoors;Practical Computer;../fake-data/blob/hipster.txt
+7;af593cfc-07ea-4576-b48a-197add7b575f;Integrated;Utah Shoes content-based;../fake-data/blob/hipster.txt
+8;09b247ba-f163-43ad-a640-b74c27da2894;salmon Developer;Shoes Shirt Granite;../fake-data/blob/hipster.txt
+9;c330a9f3-ea16-4657-bf47-819e095c11a8;technologies;Manat Technician port;../fake-data/blob/hipster.txt
+10;e504b25d-cbe5-489a-bf9f-ad61077ae864;synthesizing program Liberia;index 5th Tchad;../fake-data/blob/hipster.txt

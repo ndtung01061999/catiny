@@ -13,11 +13,5 @@
                                  constraintName="fk_notification__base_info_id"
                                  referencedColumnNames="id"
                                  referencedTableName="base_info"/>
-
-        <addForeignKeyConstraint baseColumnNames="master_user_id"
-                                 baseTableName="notification"
-                                 constraintName="fk_notification__master_user_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="master_user"/>
     </changeSet>
 </databaseChangeLog>

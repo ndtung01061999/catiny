@@ -9,7 +9,41 @@
     },
     {
       "fieldName": "name",
-      "fieldType": "String"
+      "fieldType": "String",
+      "javadoc": "name           : tên của ảnh . muốn lấy ảnh sẽ gọi theo tên này. sẽ ra một danh sách các anh gồm (ảnh nguyên gốc , các ảnh đã tối ưu , cắt ... từ ảnh gốc đó)"
+    },
+    {
+      "fieldName": "width",
+      "fieldType": "Integer",
+      "javadoc": "width          : chiều rộng ảnh"
+    },
+    {
+      "fieldName": "height",
+      "fieldType": "Integer",
+      "javadoc": "height         : chiều cao ảnh"
+    },
+    {
+      "fieldName": "quality",
+      "fieldType": "Float",
+      "javadoc": "quality        : chất lượng sau khi xử lý",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMin": "0",
+      "fieldValidateRulesMax": "1"
+    },
+    {
+      "fieldName": "pixelSize",
+      "fieldType": "Integer",
+      "javadoc": "pixelSize      : kích thước của ảnh"
+    },
+    {
+      "fieldName": "priorityIndex",
+      "fieldType": "Long",
+      "javadoc": "priorityIndex  : chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)"
+    },
+    {
+      "fieldName": "dataSize",
+      "fieldType": "Long",
+      "javadoc": "dataSize       : kích thước file theo byte"
     }
   ],
   "relationships": [
@@ -38,12 +72,6 @@
       "otherEntityName": "image",
       "otherEntityRelationshipName": "imageProcessed",
       "relationshipName": "imageOriginal"
-    },
-    {
-      "relationshipType": "many-to-one",
-      "otherEntityName": "event",
-      "otherEntityRelationshipName": "otherImage",
-      "relationshipName": "event"
     },
     {
       "relationshipType": "many-to-many",

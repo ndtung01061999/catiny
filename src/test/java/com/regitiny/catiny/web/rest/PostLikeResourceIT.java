@@ -10,8 +10,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.regitiny.catiny.GeneratedByJHipster;
 import com.regitiny.catiny.IntegrationTest;
 import com.regitiny.catiny.domain.BaseInfo;
-import com.regitiny.catiny.domain.MasterUser;
 import com.regitiny.catiny.domain.Post;
+import com.regitiny.catiny.domain.PostComment;
 import com.regitiny.catiny.domain.PostLike;
 import com.regitiny.catiny.repository.PostLikeRepository;
 import com.regitiny.catiny.repository.search.PostLikeSearchRepository;
@@ -288,25 +288,6 @@ class PostLikeResourceIT {
 
   @Test
   @Transactional
-  void getAllPostLikesByUserLikeIsEqualToSomething() throws Exception {
-    // Initialize the database
-    postLikeRepository.saveAndFlush(postLike);
-    MasterUser userLike = MasterUserResourceIT.createEntity(em);
-    em.persist(userLike);
-    em.flush();
-    postLike.setUserLike(userLike);
-    postLikeRepository.saveAndFlush(postLike);
-    Long userLikeId = userLike.getId();
-
-    // Get all the postLikeList where userLike equals to userLikeId
-    defaultPostLikeShouldBeFound("userLikeId.equals=" + userLikeId);
-
-    // Get all the postLikeList where userLike equals to (userLikeId + 1)
-    defaultPostLikeShouldNotBeFound("userLikeId.equals=" + (userLikeId + 1));
-  }
-
-  @Test
-  @Transactional
   void getAllPostLikesByPostIsEqualToSomething() throws Exception {
     // Initialize the database
     postLikeRepository.saveAndFlush(postLike);
@@ -322,6 +303,25 @@ class PostLikeResourceIT {
 
     // Get all the postLikeList where post equals to (postId + 1)
     defaultPostLikeShouldNotBeFound("postId.equals=" + (postId + 1));
+  }
+
+  @Test
+  @Transactional
+  void getAllPostLikesByPostCommentIsEqualToSomething() throws Exception {
+    // Initialize the database
+    postLikeRepository.saveAndFlush(postLike);
+    PostComment postComment = PostCommentResourceIT.createEntity(em);
+    em.persist(postComment);
+    em.flush();
+    postLike.setPostComment(postComment);
+    postLikeRepository.saveAndFlush(postLike);
+    Long postCommentId = postComment.getId();
+
+    // Get all the postLikeList where postComment equals to postCommentId
+    defaultPostLikeShouldBeFound("postCommentId.equals=" + postCommentId);
+
+    // Get all the postLikeList where postComment equals to (postCommentId + 1)
+    defaultPostLikeShouldNotBeFound("postCommentId.equals=" + (postCommentId + 1));
   }
 
   /**

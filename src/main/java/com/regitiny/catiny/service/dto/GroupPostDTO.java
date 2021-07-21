@@ -38,6 +38,13 @@ public class GroupPostDTO implements Serializable {
   private String name;
 
   /**
+   * avatar : @type Json -> ảnh đại diện của Group
+   */
+  @ApiModelProperty(value = "avatar : @type Json -> ảnh đại diện của Group")
+  @Lob
+  private String avatar;
+
+  /**
    * quickInfo      : @type Json -> thông tin giới thiệu sơ qua của group này
    */
   @ApiModelProperty(value = "quickInfo      : @type Json -> thông tin giới thiệu sơ qua của group này")
@@ -70,6 +77,14 @@ public class GroupPostDTO implements Serializable {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public String getAvatar() {
+    return avatar;
+  }
+
+  public void setAvatar(String avatar) {
+    this.avatar = avatar;
   }
 
   public String getQuickInfo() {
@@ -124,6 +139,7 @@ public class GroupPostDTO implements Serializable {
             "id=" + getId() +
             ", uuid='" + getUuid() + "'" +
             ", name='" + getName() + "'" +
+            ", avatar='" + getAvatar() + "'" +
             ", quickInfo='" + getQuickInfo() + "'" +
             ", profile=" + getProfile() +
             ", baseInfo=" + getBaseInfo() +

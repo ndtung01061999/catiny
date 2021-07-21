@@ -31,13 +31,65 @@ public class VideoDTO implements Serializable {
 
   private String name;
 
+  /**
+   * width          : chiều rộng video
+   */
+  @ApiModelProperty(value = "width          : chiều rộng video")
+  private Integer width;
+
+  /**
+   * height         : chiều cao video
+   */
+  @ApiModelProperty(value = "height         : chiều cao video")
+  private Integer height;
+
+  /**
+   * qualityImage   : chất lượng ảnh sau khi xử lý
+   */
+  @DecimalMin(value = "0")
+  @DecimalMax(value = "1")
+  @ApiModelProperty(value = "qualityImage   : chất lượng ảnh sau khi xử lý")
+  private Float qualityImage;
+
+  /**
+   * qualityAudio   : chất lượng âm thanh sau khi xử lý
+   */
+  @DecimalMin(value = "0")
+  @DecimalMax(value = "1")
+  @ApiModelProperty(value = "qualityAudio   : chất lượng âm thanh sau khi xử lý")
+  private Float qualityAudio;
+
+  /**
+   * quality        : chất lượng chung sau khi xử lý
+   */
+  @DecimalMin(value = "0")
+  @DecimalMax(value = "1")
+  @ApiModelProperty(value = "quality        : chất lượng chung sau khi xử lý")
+  private Float quality;
+
+  /**
+   * pixelSize      : kích thước của ảnh
+   */
+  @ApiModelProperty(value = "pixelSize      : kích thước của ảnh")
+  private Integer pixelSize;
+
+  /**
+   * priorityIndex  : chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)
+   */
+  @ApiModelProperty(value = "priorityIndex  : chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)")
+  private Long priorityIndex;
+
+  /**
+   * dataSize       : kích thước file theo byte
+   */
+  @ApiModelProperty(value = "dataSize       : kích thước file theo byte")
+  private Long dataSize;
+
   private FileInfoDTO fileInfo;
 
   private BaseInfoDTO baseInfo;
 
   private VideoDTO videoOriginal;
-
-  private EventDTO event;
 
   public Long getId() {
     return id;
@@ -63,6 +115,70 @@ public class VideoDTO implements Serializable {
     this.name = name;
   }
 
+  public Integer getWidth() {
+    return width;
+  }
+
+  public void setWidth(Integer width) {
+    this.width = width;
+  }
+
+  public Integer getHeight() {
+    return height;
+  }
+
+  public void setHeight(Integer height) {
+    this.height = height;
+  }
+
+  public Float getQualityImage() {
+    return qualityImage;
+  }
+
+  public void setQualityImage(Float qualityImage) {
+    this.qualityImage = qualityImage;
+  }
+
+  public Float getQualityAudio() {
+    return qualityAudio;
+  }
+
+  public void setQualityAudio(Float qualityAudio) {
+    this.qualityAudio = qualityAudio;
+  }
+
+  public Float getQuality() {
+    return quality;
+  }
+
+  public void setQuality(Float quality) {
+    this.quality = quality;
+  }
+
+  public Integer getPixelSize() {
+    return pixelSize;
+  }
+
+  public void setPixelSize(Integer pixelSize) {
+    this.pixelSize = pixelSize;
+  }
+
+  public Long getPriorityIndex() {
+    return priorityIndex;
+  }
+
+  public void setPriorityIndex(Long priorityIndex) {
+    this.priorityIndex = priorityIndex;
+  }
+
+  public Long getDataSize() {
+    return dataSize;
+  }
+
+  public void setDataSize(Long dataSize) {
+    this.dataSize = dataSize;
+  }
+
   public FileInfoDTO getFileInfo() {
     return fileInfo;
   }
@@ -85,14 +201,6 @@ public class VideoDTO implements Serializable {
 
   public void setVideoOriginal(VideoDTO videoOriginal) {
     this.videoOriginal = videoOriginal;
-  }
-
-  public EventDTO getEvent() {
-    return event;
-  }
-
-  public void setEvent(EventDTO event) {
-    this.event = event;
   }
 
   @Override
@@ -123,10 +231,17 @@ public class VideoDTO implements Serializable {
             "id=" + getId() +
             ", uuid='" + getUuid() + "'" +
             ", name='" + getName() + "'" +
+            ", width=" + getWidth() +
+            ", height=" + getHeight() +
+            ", qualityImage=" + getQualityImage() +
+            ", qualityAudio=" + getQualityAudio() +
+            ", quality=" + getQuality() +
+            ", pixelSize=" + getPixelSize() +
+            ", priorityIndex=" + getPriorityIndex() +
+            ", dataSize=" + getDataSize() +
             ", fileInfo=" + getFileInfo() +
             ", baseInfo=" + getBaseInfo() +
             ", videoOriginal=" + getVideoOriginal() +
-            ", event=" + getEvent() +
             "}";
     }
 }

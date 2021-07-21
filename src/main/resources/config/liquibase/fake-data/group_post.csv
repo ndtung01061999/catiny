@@ -1,11 +1,11 @@
-id;uuid;name;quick_info
-1;78d89e99-90e8-40d7-9e88-1295860a44f6;Music Pines;../fake-data/blob/hipster.txt
-2;a49d2d76-0bb2-46c5-8b55-a4c2cb1beba6;deposit violet array;../fake-data/blob/hipster.txt
-3;340c066c-179f-4ecb-b64f-87933f0a881c;optimizing;../fake-data/blob/hipster.txt
-4;2a9cd152-6a7c-480e-a9b5-bc17b103dce9;Generic;../fake-data/blob/hipster.txt
-5;3e755751-166d-4b35-96cf-3c952a859edd;haptic GB;../fake-data/blob/hipster.txt
-6;a7a0134d-487e-4874-b056-b2070ef8a40a;cutting-edge index;../fake-data/blob/hipster.txt
-7;5be7869f-ccce-48a7-9414-78694fe5b2c9;Officer;../fake-data/blob/hipster.txt
-8;01c76e5f-0397-4e13-b88c-4d4b97f36703;circuit AGP HTTP;../fake-data/blob/hipster.txt
-9;41f1811f-5d74-422d-9d17-7b00cf3e9afe;Oregon enterprise Garden;../fake-data/blob/hipster.txt
-10;44ae8d88-1d79-49aa-8aff-1dd6470aa70d;Refined Berkshire;../fake-data/blob/hipster.txt
+id;uuid;name;avatar;quick_info
+1;78d89e99-90e8-40d7-9e88-1295860a44f6;Music Pines;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+2;a49d2d76-0bb2-46c5-8b55-a4c2cb1beba6;deposit violet array;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+3;340c066c-179f-4ecb-b64f-87933f0a881c;optimizing;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+4;2a9cd152-6a7c-480e-a9b5-bc17b103dce9;Generic;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+5;3e755751-166d-4b35-96cf-3c952a859edd;haptic GB;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+6;a7a0134d-487e-4874-b056-b2070ef8a40a;cutting-edge index;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+7;5be7869f-ccce-48a7-9414-78694fe5b2c9;Officer;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+8;01c76e5f-0397-4e13-b88c-4d4b97f36703;circuit AGP HTTP;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+9;41f1811f-5d74-422d-9d17-7b00cf3e9afe;Oregon enterprise Garden;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt
+10;44ae8d88-1d79-49aa-8aff-1dd6470aa70d;Refined Berkshire;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt

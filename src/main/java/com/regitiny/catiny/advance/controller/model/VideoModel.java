@@ -1,7 +1,6 @@
 package com.regitiny.catiny.advance.controller.model;
 
 import com.regitiny.catiny.service.dto.BaseInfoDTO;
-import com.regitiny.catiny.service.dto.EventDTO;
 import com.regitiny.catiny.service.dto.FileInfoDTO;
 import com.regitiny.catiny.service.dto.VideoDTO;
 import io.swagger.annotations.ApiModelProperty;
@@ -10,6 +9,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.UUID;
@@ -31,13 +32,41 @@ public class VideoModel implements Serializable
 
   private String name;
 
+  @ApiModelProperty("width          : chiều rộng video")
+  private Integer width;
+
+  @ApiModelProperty("height         : chiều cao video")
+  private Integer height;
+
+  @DecimalMin("0")
+  @DecimalMax("1")
+  @ApiModelProperty("qualityImage   : chất lượng ảnh sau khi xử lý")
+  private Float qualityImage;
+
+  @DecimalMin("0")
+  @DecimalMax("1")
+  @ApiModelProperty("qualityAudio   : chất lượng âm thanh sau khi xử lý")
+  private Float qualityAudio;
+
+  @DecimalMin("0")
+  @DecimalMax("1")
+  @ApiModelProperty("quality        : chất lượng chung sau khi xử lý")
+  private Float quality;
+
+  @ApiModelProperty("pixelSize      : kích thước của ảnh")
+  private Integer pixelSize;
+
+  @ApiModelProperty("priorityIndex  : chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)")
+  private Long priorityIndex;
+
+  @ApiModelProperty("dataSize       : kích thước file theo byte")
+  private Long dataSize;
+
   private FileInfoDTO fileInfo;
 
   private BaseInfoDTO baseInfo;
 
   private VideoDTO videoOriginal;
-
-  private EventDTO event;
 
   @Data
   @Builder
@@ -56,13 +85,41 @@ public class VideoModel implements Serializable
 
     private String name;
 
+    @ApiModelProperty("width          : chiều rộng video")
+    private Integer width;
+
+    @ApiModelProperty("height         : chiều cao video")
+    private Integer height;
+
+    @DecimalMin("0")
+    @DecimalMax("1")
+    @ApiModelProperty("qualityImage   : chất lượng ảnh sau khi xử lý")
+    private Float qualityImage;
+
+    @DecimalMin("0")
+    @DecimalMax("1")
+    @ApiModelProperty("qualityAudio   : chất lượng âm thanh sau khi xử lý")
+    private Float qualityAudio;
+
+    @DecimalMin("0")
+    @DecimalMax("1")
+    @ApiModelProperty("quality        : chất lượng chung sau khi xử lý")
+    private Float quality;
+
+    @ApiModelProperty("pixelSize      : kích thước của ảnh")
+    private Integer pixelSize;
+
+    @ApiModelProperty("priorityIndex  : chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)")
+    private Long priorityIndex;
+
+    @ApiModelProperty("dataSize       : kích thước file theo byte")
+    private Long dataSize;
+
     private FileInfoDTO fileInfo;
 
     private BaseInfoDTO baseInfo;
 
     private VideoDTO videoOriginal;
-
-    private EventDTO event;
   }
 
   @Data
@@ -82,12 +139,40 @@ public class VideoModel implements Serializable
 
     private String name;
 
+    @ApiModelProperty("width          : chiều rộng video")
+    private Integer width;
+
+    @ApiModelProperty("height         : chiều cao video")
+    private Integer height;
+
+    @DecimalMin("0")
+    @DecimalMax("1")
+    @ApiModelProperty("qualityImage   : chất lượng ảnh sau khi xử lý")
+    private Float qualityImage;
+
+    @DecimalMin("0")
+    @DecimalMax("1")
+    @ApiModelProperty("qualityAudio   : chất lượng âm thanh sau khi xử lý")
+    private Float qualityAudio;
+
+    @DecimalMin("0")
+    @DecimalMax("1")
+    @ApiModelProperty("quality        : chất lượng chung sau khi xử lý")
+    private Float quality;
+
+    @ApiModelProperty("pixelSize      : kích thước của ảnh")
+    private Integer pixelSize;
+
+    @ApiModelProperty("priorityIndex  : chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)")
+    private Long priorityIndex;
+
+    @ApiModelProperty("dataSize       : kích thước file theo byte")
+    private Long dataSize;
+
     private FileInfoDTO fileInfo;
 
     private BaseInfoDTO baseInfo;
 
     private VideoDTO videoOriginal;
-
-    private EventDTO event;
   }
 }

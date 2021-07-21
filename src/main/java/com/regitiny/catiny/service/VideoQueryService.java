@@ -98,6 +98,30 @@ public class VideoQueryService extends QueryService<Video> {
       if (criteria.getName() != null) {
         specification = specification.and(buildStringSpecification(criteria.getName(), Video_.name));
       }
+      if (criteria.getWidth() != null) {
+        specification = specification.and(buildRangeSpecification(criteria.getWidth(), Video_.width));
+      }
+      if (criteria.getHeight() != null) {
+        specification = specification.and(buildRangeSpecification(criteria.getHeight(), Video_.height));
+      }
+      if (criteria.getQualityImage() != null) {
+        specification = specification.and(buildRangeSpecification(criteria.getQualityImage(), Video_.qualityImage));
+      }
+      if (criteria.getQualityAudio() != null) {
+        specification = specification.and(buildRangeSpecification(criteria.getQualityAudio(), Video_.qualityAudio));
+      }
+      if (criteria.getQuality() != null) {
+        specification = specification.and(buildRangeSpecification(criteria.getQuality(), Video_.quality));
+      }
+      if (criteria.getPixelSize() != null) {
+        specification = specification.and(buildRangeSpecification(criteria.getPixelSize(), Video_.pixelSize));
+      }
+      if (criteria.getPriorityIndex() != null) {
+        specification = specification.and(buildRangeSpecification(criteria.getPriorityIndex(), Video_.priorityIndex));
+      }
+      if (criteria.getDataSize() != null) {
+        specification = specification.and(buildRangeSpecification(criteria.getDataSize(), Video_.dataSize));
+      }
       if (criteria.getFileInfoId() != null) {
         specification =
           specification.and(
@@ -127,10 +151,6 @@ public class VideoQueryService extends QueryService<Video> {
           specification.and(
             buildSpecification(criteria.getVideoOriginalId(), root -> root.join(Video_.videoOriginal, JoinType.LEFT).get(Video_.id))
           );
-      }
-      if (criteria.getEventId() != null) {
-        specification =
-          specification.and(buildSpecification(criteria.getEventId(), root -> root.join(Video_.event, JoinType.LEFT).get(Event_.id)));
       }
     }
     return specification;

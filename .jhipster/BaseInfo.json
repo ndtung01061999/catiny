@@ -2,22 +2,19 @@
   "name": "BaseInfo",
   "fields": [
     {
+      "fieldName": "uuid",
+      "fieldType": "UUID",
+      "javadoc": "uuid *         : this is reference key (client) .primary key được sử dụng trong các service còn uuid này để định danh giao tiếp với client(frontend)",
+      "fieldValidateRules": [
+        "required",
+        "unique"
+      ]
+    },
+    {
       "fieldName": "processStatus",
       "fieldType": "ProcessStatus",
       "javadoc": "processStatus *: @defaultValue( DONE ) -> tình trạng xử lý sử dụng trong phê duyệt",
       "fieldValues": "NOT_PROCESSED,PROCESSING,PROCESSED,NEED_PROCESS,NEED_PROCESS_NOW,NEED_HANDLE,NEED_HANDLE_NOW,ERROR,DONE"
-    },
-    {
-      "fieldName": "owner",
-      "fieldType": "byte[]",
-      "javadoc": "owner *        : @type Json -> chủ sở hữu bản ghi này --> nhớ sử dụng Set thay cho List",
-      "fieldTypeBlobContent": "text"
-    },
-    {
-      "fieldName": "role",
-      "fieldType": "byte[]",
-      "javadoc": "role *         : @type Json -> những role được phép thực hiện <xem,sửa,xóa>",
-      "fieldTypeBlobContent": "text"
     },
     {
       "fieldName": "modifiedClass",
@@ -35,34 +32,40 @@
       "javadoc": "modifiedDate * : thời gian sửa bản ghi này"
     },
     {
-      "fieldName": "createdBy",
-      "fieldType": "String",
-      "javadoc": "createdBy *    : người tạo ra bản gi này (lần đầu tiên)"
-    },
-    {
-      "fieldName": "modifiedBy",
-      "fieldType": "String",
-      "javadoc": "modifiedBy *   : người sửa lại bản ghi này"
-    },
-    {
       "fieldName": "notes",
       "fieldType": "byte[]",
       "javadoc": "notes *        : @type Json -> chú thích thêm hoặc những lưu ý cho bản ghi này ở dưới dạng Json\"",
       "fieldTypeBlobContent": "text"
     },
     {
-      "fieldName": "historyUpdate",
-      "fieldType": "byte[]",
-      "javadoc": "historyUpdate *: @type Json -> lịch sử cập nhật bản ghi này, những bản ghi cũ sẽ được lưu lại ở đây dưới dạng json",
-      "fieldTypeBlobContent": "text"
-    },
-    {
       "fieldName": "deleted",
       "fieldType": "Boolean",
       "javadoc": "deleted *      : @defaultValue( false ) -> đánh dấu là đã xóa"
+    },
+    {
+      "fieldName": "priorityIndex",
+      "fieldType": "Long",
+      "javadoc": "priorityIndex *: chỉ số ưu tiên (số lớn nhỏ ưu tiên càng cao)"
+    },
+    {
+      "fieldName": "countUse",
+      "fieldType": "Long",
+      "javadoc": "countUse *     : đếm số lần truy cập vào bản ghi này để xem sửa xóa"
     }
   ],
   "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "historyUpdate",
+      "otherEntityRelationshipName": "baseInfo",
+      "relationshipName": "historyUpdate"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "classInfo",
+      "otherEntityRelationshipName": "baseInfo",
+      "relationshipName": "classInfo"
+    },
     {
       "relationshipType": "one-to-one",
       "otherEntityName": "userProfile",
@@ -265,6 +268,30 @@
       "otherEntityRelationshipName": "baseInfo",
       "relationshipName": "event",
       "ownerSide": false
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "masterUser",
+      "otherEntityRelationshipName": "myBaseInfoCreated",
+      "relationshipName": "createdBy"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "masterUser",
+      "otherEntityRelationshipName": "myBaseInfoModified",
+      "relationshipName": "modifiedBy"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "masterUser",
+      "otherEntityRelationshipName": "ownerOf",
+      "relationshipName": "owner"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "permission",
+      "otherEntityRelationshipName": "baseInfo",
+      "relationshipName": "permission"
     }
   ],
   "javadoc": "BaseInfo",

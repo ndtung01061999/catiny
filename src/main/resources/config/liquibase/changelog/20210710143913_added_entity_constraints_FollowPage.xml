@@ -19,11 +19,5 @@
                                  constraintName="fk_follow_page__follow_page_details_id"
                                  referencedColumnNames="id"
                                  referencedTableName="page_post"/>
-
-        <addForeignKeyConstraint baseColumnNames="master_user_id"
-                                 baseTableName="follow_page"
-                                 constraintName="fk_follow_page__master_user_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="master_user"/>
     </changeSet>
 </databaseChangeLog>

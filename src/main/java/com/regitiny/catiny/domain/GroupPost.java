@@ -2,16 +2,16 @@ package com.regitiny.catiny.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.regitiny.catiny.GeneratedByJHipster;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
-import javax.persistence.*;
-import javax.validation.constraints.*;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Type;
-import org.springframework.data.elasticsearch.annotations.FieldType;
 
 /**
  * @what?            -> The GroupPost entity\n@why?             -> mọi người cần tạo ra một nhóm riêng hoặc chung để có thể trao đổi\n@use-to           -> quản lý nhóm\n@commonly-used-in -> các nhóm\n\n@describe         ->
@@ -46,6 +46,13 @@ public class GroupPost implements Serializable {
   private String name;
 
   /**
+   * avatar : @type Json -> ảnh đại diện của Group
+   */
+  @Lob
+  @Column(name = "avatar")
+  private String avatar;
+
+  /**
    * quickInfo      : @type Json -> thông tin giới thiệu sơ qua của group này
    */
   @Lob
@@ -59,6 +66,8 @@ public class GroupPost implements Serializable {
 
   @JsonIgnoreProperties(
     value = {
+      "historyUpdates",
+      "classInfo",
       "userProfile",
       "accountStatus",
       "deviceStatus",
@@ -88,6 +97,10 @@ public class GroupPost implements Serializable {
       "topicInterest",
       "todoList",
       "event",
+      "createdBy",
+      "modifiedBy",
+      "owner",
+      "permissions",
     },
     allowSetters = true
   )
@@ -99,16 +112,7 @@ public class GroupPost implements Serializable {
   @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
   @JsonIgnoreProperties(
     value = {
-      "baseInfo",
-      "postComments",
-      "postLikes",
-      "postShareChildren",
-      "groupPost",
-      "pagePost",
-      "postShareParent",
-      "poster",
-      "newsFeeds",
-      "topicInterests",
+      "baseInfo", "comments", "likes", "postShareChildren", "groupPost", "pagePost", "postShareParent", "newsFeeds", "topicInterests",
     },
     allowSetters = true
   )
@@ -118,36 +122,6 @@ public class GroupPost implements Serializable {
   @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
   @JsonIgnoreProperties(value = { "baseInfo", "posts", "pagePosts", "groupPosts", "masterUsers" }, allowSetters = true)
   private Set<TopicInterest> topicInterests = new HashSet<>();
-
-  @ManyToMany(mappedBy = "myGroupPosts")
-  @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-  @JsonIgnoreProperties(
-    value = {
-      "user",
-      "myProfile",
-      "myAccountStatus",
-      "myRank",
-      "avatar",
-      "baseInfo",
-      "myPages",
-      "myFiles",
-      "myNotifications",
-      "myFriends",
-      "myFollowUsers",
-      "myFollowGroups",
-      "myFollowPages",
-      "myNewsFeeds",
-      "myTodoLists",
-      "myPosts",
-      "myGroupPosts",
-      "messageGroups",
-      "topicInterests",
-      "myLikes",
-      "myComments",
-    },
-    allowSetters = true
-  )
-  private Set<MasterUser> userInGroups = new HashSet<>();
 
   // jhipster-needle-entity-add-field - JHipster will add fields here
   public Long getId() {
@@ -187,6 +161,19 @@ public class GroupPost implements Serializable {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public String getAvatar() {
+    return this.avatar;
+  }
+
+  public GroupPost avatar(String avatar) {
+    this.avatar = avatar;
+    return this;
+  }
+
+  public void setAvatar(String avatar) {
+    this.avatar = avatar;
   }
 
   public String getQuickInfo() {
@@ -290,37 +277,6 @@ public class GroupPost implements Serializable {
     this.topicInterests = topicInterests;
   }
 
-  public Set<MasterUser> getUserInGroups() {
-    return this.userInGroups;
-  }
-
-  public GroupPost userInGroups(Set<MasterUser> masterUsers) {
-    this.setUserInGroups(masterUsers);
-    return this;
-  }
-
-  public GroupPost addUserInGroup(MasterUser masterUser) {
-    this.userInGroups.add(masterUser);
-    masterUser.getMyGroupPosts().add(this);
-    return this;
-  }
-
-  public GroupPost removeUserInGroup(MasterUser masterUser) {
-    this.userInGroups.remove(masterUser);
-    masterUser.getMyGroupPosts().remove(this);
-    return this;
-  }
-
-  public void setUserInGroups(Set<MasterUser> masterUsers) {
-    if (this.userInGroups != null) {
-      this.userInGroups.forEach(i -> i.removeMyGroupPost(this));
-    }
-    if (masterUsers != null) {
-      masterUsers.forEach(i -> i.addMyGroupPost(this));
-    }
-    this.userInGroups = masterUsers;
-  }
-
   // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
   @Override
@@ -347,6 +303,7 @@ public class GroupPost implements Serializable {
             "id=" + getId() +
             ", uuid='" + getUuid() + "'" +
             ", name='" + getName() + "'" +
+            ", avatar='" + getAvatar() + "'" +
             ", quickInfo='" + getQuickInfo() + "'" +
             "}";
     }

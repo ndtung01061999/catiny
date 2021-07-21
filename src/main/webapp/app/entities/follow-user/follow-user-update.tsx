@@ -51,7 +51,6 @@ export const FollowUserUpdate = (props: RouteComponentProps<{ id: string }>) => 
       ...values,
       baseInfo: baseInfos.find(it => it.id.toString() === values.baseInfoId.toString()),
       followUserDetails: masterUsers.find(it => it.id.toString() === values.followUserDetailsId.toString()),
-      masterUser: masterUsers.find(it => it.id.toString() === values.masterUserId.toString()),
     };
 
     if (isNew) {
@@ -68,7 +67,6 @@ export const FollowUserUpdate = (props: RouteComponentProps<{ id: string }>) => 
           ...followUserEntity,
           baseInfoId: followUserEntity?.baseInfo?.id,
           followUserDetailsId: followUserEntity?.followUserDetails?.id,
-          masterUserId: followUserEntity?.masterUser?.id,
         };
 
   return (
@@ -130,22 +128,6 @@ export const FollowUserUpdate = (props: RouteComponentProps<{ id: string }>) => 
                 name="followUserDetailsId"
                 data-cy="followUserDetails"
                 label={translate('catinyApp.followUser.followUserDetails')}
-                type="select"
-              >
-                <option value="" key="0" />
-                {masterUsers
-                  ? masterUsers.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField
-                id="follow-user-masterUser"
-                name="masterUserId"
-                data-cy="masterUser"
-                label={translate('catinyApp.followUser.masterUser')}
                 type="select"
               >
                 <option value="" key="0" />
